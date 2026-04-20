@@ -17,7 +17,7 @@ export function Hero() {
     <section
       id="hero"
       aria-labelledby="hero-title"
-      className="relative isolate overflow-hidden pt-28 md:pt-36 pb-24 md:pb-32"
+      className="relative isolate flex min-h-[100dvh] flex-col justify-center overflow-hidden pt-20 pb-10 md:pt-24 md:pb-14"
     >
       {/* Background */}
       <div aria-hidden className="absolute inset-0 -z-10 bg-grid" />
@@ -96,7 +96,7 @@ export function Hero() {
           <motion.div
             variants={float}
             animate="animate"
-            className="col-span-1 lg:col-span-5"
+            className="hidden lg:col-span-5 lg:block"
           >
             <div className="relative">
               <div
