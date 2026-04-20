@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useUIStore } from "@/store/useUIStore";
 
-const IDS = ["features", "how", "security", "pricing"];
+const IDS = ["features", "how", "security", "analytics"];
 
 export function ScrollSpy() {
   const setActiveSection = useUIStore((s) => s.setActiveSection);

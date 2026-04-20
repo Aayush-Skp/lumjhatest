@@ -36,7 +36,7 @@ export const site = {
       { id: "features", label: "Features" },
       { id: "how", label: "How it works" },
       { id: "security", label: "Security" },
-      { id: "pricing", label: "Pricing" },
+      { id: "analytics", label: "Analytics" },
     ],
     cta: { primary: "Try Lumjha", secondary: "Log in" },
   },
