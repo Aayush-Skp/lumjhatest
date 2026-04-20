@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { GlowBackdrop } from "@/components/ui/GlowBackdrop";
 import { ChatMock } from "@/components/ui/ChatMock";
+import { AnimatedLogoMark } from "@/components/ui/AnimatedLogoMark";
 import { site } from "@/content/site";
 import { fadeUp, float, stagger } from "@/lib/motion";
 import { useUIStore } from "@/store/useUIStore";
@@ -20,7 +21,7 @@ export function Hero() {
       className="relative isolate flex min-h-[100dvh] flex-col justify-center overflow-hidden pt-20 pb-10 md:pt-24 md:pb-14"
     >
       {/* Background */}
-      <div aria-hidden className="absolute inset-0 -z-10 bg-grid" />
+      <div aria-hidden className="absolute inset-0 -z-20 bg-grid" />
       <GlowBackdrop position="top" size={1100} intensity={0.7} color="rgb(var(--brand-400) / 0.4)" />
       <GlowBackdrop
         position="bottom"
@@ -28,6 +29,17 @@ export function Hero() {
         intensity={0.3}
         color="rgb(var(--brand-500) / 0.35)"
       />
+
+      {/* Animated AI badge — sits behind the chat box on the right, shifted
+          further down so it reads as a subtle glowing accent. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-y-0 right-0 -z-10 flex items-center justify-end overflow-visible"
+      >
+        <AnimatedLogoMark
+          className="h-[48vh] max-h-[360px] w-auto translate-x-[4%] translate-y-[22%] opacity-[0.14] md:h-[56vh] md:max-h-[420px] md:translate-x-[-2%] md:translate-y-[26%] md:opacity-[0.15] lg:h-[62vh] lg:max-h-[480px] lg:translate-x-[-8%] lg:translate-y-[30%] lg:opacity-[0.16]"
+        />
+      </div>
 
       <Container>
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-8">
