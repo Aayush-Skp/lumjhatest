@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { Rocket, Calendar } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
 import { site } from "@/content/site";
 import { fadeUp, stagger, viewport } from "@/lib/motion";
 import { useUIStore } from "@/store/useUIStore";
@@ -38,8 +37,18 @@ export function CTA() {
             className="pointer-events-none absolute inset-0 -z-10 bg-grid opacity-60"
           />
 
-          <motion.div variants={fadeUp}>
-            <Badge tone="brand">{site.cta.eyebrow}</Badge>
+          <motion.div variants={fadeUp} className="flex items-center justify-center gap-3">
+            <span
+              aria-hidden
+              className="h-px w-10 bg-gradient-to-r from-transparent via-brand-300 to-brand-300/60 shadow-[0_0_14px_rgb(var(--brand-300)/0.55)]"
+            />
+            <span className="font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-brand-200">
+              {site.cta.eyebrow}
+            </span>
+            <span
+              aria-hidden
+              className="h-px w-10 bg-gradient-to-l from-transparent via-brand-300 to-brand-300/60 shadow-[0_0_14px_rgb(var(--brand-300)/0.55)]"
+            />
           </motion.div>
           <motion.h2
             id="cta-title"

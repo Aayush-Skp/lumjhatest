@@ -50,8 +50,14 @@ export function PipelineDiagram({ steps }: { steps: Step[] }) {
                   >
                     <Icon className="h-8 w-8 text-brand-300" strokeWidth={1.5} />
                   </div>
-                  <span className="absolute -top-2 -right-2 flex h-7 w-7 items-center justify-center rounded-full bg-brand-300 text-bg-0 text-xs font-semibold shadow-[0_0_18px_rgb(var(--brand-300)/0.6)]">
-                    {s.n}
+                  <span
+                    className="absolute -top-2.5 -right-2.5 flex h-7 w-7 items-center justify-center rounded-xl border border-brand-300/40 bg-gradient-to-br from-bg-2 to-bg-3 font-mono text-xs font-semibold text-brand-200 ring-[3px] ring-bg-0 shadow-[0_6px_18px_rgb(var(--brand-500)/0.45)]"
+                  >
+                    <span
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 rounded-[inherit] bg-brand-300/5"
+                    />
+                    <span className="relative">{String(s.n).padStart(2, "0")}</span>
                   </span>
                 </div>
                 <h4 className="font-display text-base font-semibold text-fg-high">{s.title}</h4>
@@ -79,8 +85,10 @@ export function PipelineDiagram({ steps }: { steps: Step[] }) {
                     style={{ filter: "drop-shadow(0 0 24px rgb(var(--brand-400) / 0.3))" }}
                   >
                     <Icon className="h-6 w-6 text-brand-300" strokeWidth={1.5} />
-                    <span className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-brand-300 text-bg-0 text-[10px] font-semibold">
-                      {s.n}
+                    <span
+                      className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-lg border border-brand-300/40 bg-gradient-to-br from-bg-2 to-bg-3 font-mono text-[10px] font-semibold text-brand-200 ring-2 ring-bg-0 shadow-[0_4px_12px_rgb(var(--brand-500)/0.4)]"
+                    >
+                      {String(s.n).padStart(2, "0")}
                     </span>
                   </div>
                   {!isLast ? (
