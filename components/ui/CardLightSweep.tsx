@@ -37,55 +37,70 @@ export function CardLightSweep({ radius = 16, className }: Props) {
           "drop-shadow(0 0 2px rgb(var(--brand-100) / 0.85)) drop-shadow(0 0 10px rgb(var(--brand-200) / 0.45))",
       }}
     >
-      {/* Soft trailing aura — a slightly longer, dimmer dash that travels
-          with the core beam, giving the thin line a "ray" quality. */}
-      <motion.rect
-        x="0"
-        y="0"
-        width="100%"
-        height="100%"
-        rx={radius}
-        ry={radius}
-        fill="none"
-        stroke="rgb(var(--brand-200))"
-        strokeOpacity={0.2}
-        strokeWidth={0.3}
-        strokeLinecap="round"
-        pathLength={1}
-        strokeDasharray="0.22 0.78"
-        initial={{ strokeDashoffset: 0.02 }}
-        animate={{ strokeDashoffset: -0.98 }}
+      {/* Group wrapper — fades the ray in as it starts its loop and fades
+          it out as it approaches the end, so the entry/exit are smooth
+          instead of popping in at the corner. */}
+      <motion.g
+        initial={{ opacity: 0 }}
+        animate={{ opacity: [0, 1, 1, 0] }}
         transition={{
           duration: 3.6,
-          ease: [0.33, 0, 0.4, 1],
+          times: [0, 0.18, 0.82, 1],
+          ease: "easeInOut",
           repeat: Infinity,
           repeatDelay: 4.5,
         }}
-      />
-      {/* Core beam — thin, bright segment. */}
-      <motion.rect
-        x="0"
-        y="0"
-        width="100%"
-        height="100%"
-        rx={radius}
-        ry={radius}
-        fill="none"
-        stroke="rgb(var(--brand-100))"
-        strokeOpacity={0.95}
-        strokeWidth={0.3}
-        strokeLinecap="round"
-        pathLength={1}
-        strokeDasharray="0.14 0.86"
-        initial={{ strokeDashoffset: 0 }}
-        animate={{ strokeDashoffset: -1 }}
-        transition={{
-          duration: 3.6,
-          ease: [0.33, 0, 0.4, 1],
-          repeat: Infinity,
-          repeatDelay: 4.5,
-        }}
-      />
+      >
+        {/* Soft trailing aura — a slightly longer, dimmer dash that travels
+            with the core beam, giving the thin line a "ray" quality. */}
+        <motion.rect
+          x="0"
+          y="0"
+          width="100%"
+          height="100%"
+          rx={radius}
+          ry={radius}
+          fill="none"
+          stroke="rgb(var(--brand-200))"
+          strokeOpacity={0.3}
+          strokeWidth={0.3}
+          strokeLinecap="round"
+          pathLength={1}
+          strokeDasharray="0.22 0.78"
+          initial={{ strokeDashoffset: 0.02 }}
+          animate={{ strokeDashoffset: -0.98 }}
+          transition={{
+            duration: 3.6,
+            ease: [0.33, 0, 0.4, 1],
+            repeat: Infinity,
+            repeatDelay: 4.5,
+          }}
+        />
+        {/* Core beam — thin, bright segment. */}
+        <motion.rect
+          x="0"
+          y="0"
+          width="100%"
+          height="100%"
+          rx={radius}
+          ry={radius}
+          fill="none"
+          stroke="rgb(var(--brand-100))"
+          strokeOpacity={0.95}
+          strokeWidth={0.3}
+          strokeLinecap="round"
+          pathLength={1}
+          strokeDasharray="0.14 0.86"
+          initial={{ strokeDashoffset: 0 }}
+          animate={{ strokeDashoffset: -1 }}
+          transition={{
+            duration: 3.6,
+            ease: [0.33, 0, 0.4, 1],
+            repeat: Infinity,
+            repeatDelay: 4.5,
+          }}
+        />
+      </motion.g>
     </svg>
   );
 }
