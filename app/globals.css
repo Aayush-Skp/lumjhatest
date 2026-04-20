@@ -1,26 +1,266 @@
 @import "tailwindcss";
 
+/* =========================================================
+   Lumjha AI — design tokens
+   Every color, radius, shadow lives here. Edit one place.
+   ========================================================= */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Surfaces (cool near-black → elevated card) */
+  --bg-0: 4 9 15;
+  --bg-1: 10 21 32;
+  --bg-2: 15 32 48;
+  --bg-3: 21 42 64;
+
+  /* Brand — Lumjha Blue */
+  --brand-50: 230 246 255;
+  --brand-100: 190 230 255;
+  --brand-200: 126 208 255;
+  --brand-300: 56 182 255;
+  --brand-400: 30 150 220;
+  --brand-500: 14 111 174;
+  --brand-600: 8 81 127;
+  --brand-700: 5 56 82;
+  --brand-900: 2 23 36;
+
+  /* Glow */
+  --glow-cyan: 56 182 255;
+  --glow-deep: 8 81 127;
+
+  /* Text */
+  --fg-high: 232 244 255;
+  --fg-mid: 168 189 209;
+  --fg-low: 107 129 151;
+
+  /* Stroke */
+  --stroke: 126 208 255;
+
+  /* Semantic */
+  --success: 62 230 168;
+  --warn: 255 181 71;
+  --danger: 255 107 107;
+}
+
+/* Alternate themes (swap via <html data-theme="aurora">) */
+[data-theme="midnight"] {
+  --bg-0: 2 5 12;
+  --bg-1: 6 14 24;
+  --bg-3: 14 30 50;
+  --brand-300: 88 200 255;
+  --brand-400: 56 168 232;
+}
+
+[data-theme="aurora"] {
+  --brand-300: 122 212 255;
+  --brand-400: 58 186 232;
+  --brand-500: 24 126 184;
+  --fg-high: 236 248 255;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg-0: rgb(var(--bg-0) / <alpha-value>);
+  --color-bg-1: rgb(var(--bg-1) / <alpha-value>);
+  --color-bg-2: rgb(var(--bg-2) / <alpha-value>);
+  --color-bg-3: rgb(var(--bg-3) / <alpha-value>);
+
+  --color-brand-50: rgb(var(--brand-50) / <alpha-value>);
+  --color-brand-100: rgb(var(--brand-100) / <alpha-value>);
+  --color-brand-200: rgb(var(--brand-200) / <alpha-value>);
+  --color-brand-300: rgb(var(--brand-300) / <alpha-value>);
+  --color-brand-400: rgb(var(--brand-400) / <alpha-value>);
+  --color-brand-500: rgb(var(--brand-500) / <alpha-value>);
+  --color-brand-600: rgb(var(--brand-600) / <alpha-value>);
+  --color-brand-700: rgb(var(--brand-700) / <alpha-value>);
+
+  --color-fg-high: rgb(var(--fg-high) / <alpha-value>);
+  --color-fg-mid: rgb(var(--fg-mid) / <alpha-value>);
+  --color-fg-low: rgb(var(--fg-low) / <alpha-value>);
+
+  --color-stroke: rgb(var(--stroke) / <alpha-value>);
+
+  --color-success: rgb(var(--success) / <alpha-value>);
+  --color-warn: rgb(var(--warn) / <alpha-value>);
+  --color-danger: rgb(var(--danger) / <alpha-value>);
+
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-inter-tight);
+  --font-mono: var(--font-jetbrains);
+
+  --radius-xl: 0.9rem;
+  --radius-2xl: 1.25rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* =========================================================
+   Base
+   ========================================================= */
+
+html,
+body {
+  background: rgb(var(--bg-0));
+  color: rgb(var(--fg-mid));
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgb(var(--brand-300) / 0.28);
+  color: rgb(var(--fg-high));
+}
+
+/* Focus */
+:focus-visible {
+  outline: 2px solid rgb(var(--brand-300));
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* =========================================================
+   Utilities
+   ========================================================= */
+
+.bg-grid {
+  background-image:
+    radial-gradient(
+      circle at 1px 1px,
+      rgb(var(--stroke) / 0.12) 1px,
+      transparent 1px
+    );
+  background-size: 28px 28px;
+  mask-image: radial-gradient(
+    ellipse 80% 60% at 50% 0%,
+    #000 30%,
+    transparent 75%
+  );
+}
+
+.text-gradient-brand {
+  background: linear-gradient(
+    180deg,
+    rgb(var(--fg-high)) 0%,
+    rgb(var(--brand-200)) 55%,
+    rgb(var(--brand-300)) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.glass {
+  background: rgb(var(--bg-3) / 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgb(var(--stroke) / 0.14);
+}
+
+.glass-strong {
+  background: rgb(var(--bg-2) / 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgb(var(--stroke) / 0.18);
+}
+
+/* Conic gradient border for feature cards */
+.gradient-border {
+  position: relative;
+  isolation: isolate;
+  border-radius: 1.25rem;
+  background: rgb(var(--bg-3) / 0.7);
+}
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--angle, 0deg),
+    rgb(var(--brand-300) / 0) 0deg,
+    rgb(var(--brand-300) / 0.6) 90deg,
+    rgb(var(--brand-200) / 0.2) 180deg,
+    rgb(var(--brand-300) / 0) 270deg,
+    rgb(var(--brand-300) / 0) 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.9;
+}
+.gradient-border[data-animated="true"]::before {
+  animation: spinAngle 6s linear infinite;
+}
+@property --angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@keyframes spinAngle {
+  to {
+    --angle: 360deg;
+  }
+}
+
+/* Animated dashed flow (diagrams) */
+.dash-flow {
+  stroke-dasharray: 6 6;
+  animation: dashmove 2s linear infinite;
+}
+@keyframes dashmove {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+
+/* Soft pulse used behind hero + section headers */
+.glow-pulse {
+  animation: glowPulse 6s ease-in-out infinite;
+}
+@keyframes glowPulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.95;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: rgb(var(--bg-0));
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--bg-3));
+  border-radius: 999px;
+  border: 2px solid rgb(var(--bg-0));
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--brand-500));
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
 }
