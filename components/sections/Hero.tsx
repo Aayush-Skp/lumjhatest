@@ -37,7 +37,7 @@ export function Hero() {
         className="pointer-events-none absolute inset-y-0 right-0 -z-10 flex items-center justify-end overflow-visible"
       >
         <AnimatedLogoMark
-          className="h-[48vh] max-h-[360px] w-auto translate-x-[4%] translate-y-[22%] opacity-[0.14] md:h-[56vh] md:max-h-[420px] md:translate-x-[-2%] md:translate-y-[26%] md:opacity-[0.15] lg:h-[62vh] lg:max-h-[480px] lg:translate-x-[-8%] lg:translate-y-[30%] lg:opacity-[0.16]"
+          className="h-[48vh] max-h-[360px] w-auto translate-x-[4%] translate-y-[34%] opacity-[0.10] md:h-[56vh] md:max-h-[420px] md:translate-x-[-2%] md:translate-y-[40%] md:opacity-[0.11] lg:h-[62vh] lg:max-h-[480px] lg:translate-x-[-8%] lg:translate-y-[46%] lg:opacity-[0.12]"
         />
       </div>
 
