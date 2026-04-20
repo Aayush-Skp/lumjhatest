@@ -3,7 +3,6 @@
 import type { ReactNode } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/cn";
-import { Badge } from "./Badge";
 import { fadeUp, stagger, viewport } from "@/lib/motion";
 
 type Props = {
@@ -34,8 +33,32 @@ export function SectionHeader({
       )}
     >
       {eyebrow ? (
-        <motion.div variants={fadeUp}>
-          <Badge tone="brand">{eyebrow}</Badge>
+        <motion.div
+          variants={fadeUp}
+          className={cn(
+            "flex items-center gap-3",
+            align === "center" && "justify-center",
+          )}
+        >
+          <span
+            aria-hidden
+            className={cn(
+              "h-px w-10",
+              align === "center"
+                ? "bg-gradient-to-r from-transparent via-brand-300 to-brand-300/60"
+                : "bg-gradient-to-r from-brand-300 to-brand-300/0",
+              "shadow-[0_0_14px_rgb(var(--brand-300)/0.55)]",
+            )}
+          />
+          <span className="font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-brand-200">
+            {eyebrow}
+          </span>
+          {align === "center" ? (
+            <span
+              aria-hidden
+              className="h-px w-10 bg-gradient-to-l from-transparent via-brand-300 to-brand-300/60 shadow-[0_0_14px_rgb(var(--brand-300)/0.55)]"
+            />
+          ) : null}
         </motion.div>
       ) : null}
       <motion.h2
