@@ -4,9 +4,9 @@ import { motion } from "framer-motion";
 import { ArrowDown, Sparkles, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { GlowBackdrop } from "@/components/ui/GlowBackdrop";
 import { ChatMock } from "@/components/ui/ChatMock";
 import { AnimatedLogoMark } from "@/components/ui/AnimatedLogoMark";
+import { CardLightSweep } from "@/components/ui/CardLightSweep";
 import { site } from "@/content/site";
 import { fadeUp, float, stagger } from "@/lib/motion";
 import { useUIStore } from "@/store/useUIStore";
@@ -20,15 +20,8 @@ export function Hero() {
       aria-labelledby="hero-title"
       className="relative isolate flex min-h-[100dvh] flex-col justify-center overflow-hidden pt-20 pb-10 md:pt-24 md:pb-14"
     >
-      {/* Background */}
+      {/* Background — just the faint dotted grid; no radial glow backdrop. */}
       <div aria-hidden className="absolute inset-0 -z-20 bg-grid" />
-      <GlowBackdrop position="top" size={1100} intensity={0.7} color="rgb(var(--brand-400) / 0.4)" />
-      <GlowBackdrop
-        position="bottom"
-        size={700}
-        intensity={0.3}
-        color="rgb(var(--brand-500) / 0.35)"
-      />
 
       {/* Animated AI badge — sits behind the chat box on the right, shifted
           further down so it reads as a subtle glowing accent. */}
@@ -111,15 +104,9 @@ export function Hero() {
             className="hidden lg:col-span-5 lg:block"
           >
             <div className="relative">
-              <div
-                aria-hidden
-                className="pointer-events-none absolute -inset-10 -z-10 rounded-[48px] blur-3xl"
-                style={{
-                  background:
-                    "radial-gradient(closest-side, rgb(var(--brand-400)/0.35), transparent 70%)",
-                }}
-              />
               <ChatMock lines={site.chatDemo} eager />
+              {/* Minimal ray of light that occasionally traces the card outline */}
+              <CardLightSweep radius={16} />
             </div>
           </motion.div>
         </div>
