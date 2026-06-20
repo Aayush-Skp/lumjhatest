@@ -8,10 +8,8 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { site } from "@/content/site";
 import { fadeUp, stagger, viewport } from "@/lib/motion";
-import { useUIStore } from "@/store/useUIStore";
 
 export function Pricing() {
-  const { openDemo } = useUIStore();
   const { pricing } = site;
 
   return (
@@ -70,7 +68,7 @@ export function Pricing() {
                     variant={tier.featured ? "primary" : "outline"}
                     size="md"
                     className="w-full"
-                    onClick={openDemo}
+                    href={site.urls.login}
                   >
                     {tier.cta}
                   </Button>

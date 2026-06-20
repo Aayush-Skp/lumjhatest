@@ -37,6 +37,11 @@ export const site = {
     tagline: "Clone Your Best Agent. Automate Your Growth.",
   },
 
+  // External app entry — all login / start / get-started CTAs point here.
+  urls: {
+    login: "https://app.lumjha.ai/login",
+  },
+
   nav: {
     links: [
       { id: "platform", label: "Platform" },

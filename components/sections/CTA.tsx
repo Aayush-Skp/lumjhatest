@@ -64,10 +64,20 @@ export function CTA() {
             {site.cta.sub}
           </motion.p>
           <motion.div variants={fadeUp} className="flex flex-wrap justify-center gap-3">
-            <Button variant="primary" size="lg" icon={<Rocket />} onClick={openDemo}>
+            <Button
+              variant="primary"
+              size="lg"
+              icon={<Rocket />}
+              href={site.urls.login}
+            >
               {site.cta.primary}
             </Button>
-            <Button variant="outline" size="lg" icon={<Calendar />}>
+            <Button
+              variant="outline"
+              size="lg"
+              icon={<Calendar />}
+              onClick={openDemo}
+            >
               {site.cta.secondary}
             </Button>
           </motion.div>

@@ -9,11 +9,8 @@ import { AnimatedLogoMark } from "@/components/ui/AnimatedLogoMark";
 import { CardLightSweep } from "@/components/ui/CardLightSweep";
 import { site } from "@/content/site";
 import { fadeUp, float, stagger } from "@/lib/motion";
-import { useUIStore } from "@/store/useUIStore";
 
 export function Hero() {
-  const { openDemo } = useUIStore();
-
   return (
     <section
       id="hero"
@@ -66,7 +63,7 @@ export function Hero() {
                 variant="primary"
                 size="lg"
                 icon={<Sparkles />}
-                onClick={openDemo}
+                href={site.urls.login}
               >
                 {site.hero.ctas.primary}
               </Button>

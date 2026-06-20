@@ -12,7 +12,7 @@ import { useUIStore } from "@/store/useUIStore";
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
-  const { navOpen, toggleNav, closeNav, activeSection, openDemo } = useUIStore();
+  const { navOpen, toggleNav, closeNav, activeSection } = useUIStore();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -63,10 +63,10 @@ export function Nav() {
         </nav>
 
         <div className="hidden items-center gap-2 md:flex">
-          <Button variant="ghost" size="sm">
+          <Button variant="ghost" size="sm" href={site.urls.login}>
             {site.nav.cta.secondary}
           </Button>
-          <Button variant="primary" size="sm" onClick={openDemo}>
+          <Button variant="primary" size="sm" href={site.urls.login}>
             {site.nav.cta.primary}
           </Button>
         </div>
@@ -101,17 +101,21 @@ export function Nav() {
                 </a>
               ))}
               <div className="mt-3 flex gap-2">
-                <Button variant="outline" size="sm" className="flex-1">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="flex-1"
+                  href={site.urls.login}
+                  onClick={closeNav}
+                >
                   {site.nav.cta.secondary}
                 </Button>
                 <Button
                   variant="primary"
                   size="sm"
                   className="flex-1"
-                  onClick={() => {
-                    closeNav();
-                    openDemo();
-                  }}
+                  href={site.urls.login}
+                  onClick={closeNav}
                 >
                   {site.nav.cta.primary}
                 </Button>

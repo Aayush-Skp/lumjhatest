@@ -13,6 +13,10 @@ type ButtonProps = HTMLMotionProps<"button"> & {
   icon?: ReactNode;
   iconRight?: ReactNode;
   children?: ReactNode;
+  /** When provided, the button renders as an anchor link. */
+  href?: string;
+  target?: string;
+  rel?: string;
 };
 
 const V: Record<Variant, string> = {
@@ -37,26 +41,24 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     iconRight,
     className,
     children,
+    href,
+    target,
+    rel,
     ...rest
   },
   ref,
 ) {
-  return (
-    <motion.button
-      ref={ref}
-      whileHover={{ y: -1 }}
-      whileTap={{ y: 0, scale: 0.99 }}
-      transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-      className={cn(
-        "group relative inline-flex items-center justify-center gap-2 rounded-xl font-medium tracking-tight outline-none transition-all",
-        "focus-visible:ring-2 focus-visible:ring-brand-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-0",
-        "disabled:opacity-50 disabled:cursor-not-allowed",
-        V[variant],
-        S[size],
-        className,
-      )}
-      {...rest}
-    >
+  const classes = cn(
+    "group relative inline-flex items-center justify-center gap-2 rounded-xl font-medium tracking-tight outline-none transition-all",
+    "focus-visible:ring-2 focus-visible:ring-brand-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-0",
+    "disabled:opacity-50 disabled:cursor-not-allowed",
+    V[variant],
+    S[size],
+    className,
+  );
+
+  const inner = (
+    <>
       {icon ? (
         <span className="-ml-0.5 [&_svg]:h-4 [&_svg]:w-4">{icon}</span>
       ) : null}
@@ -64,6 +66,36 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       {iconRight ? (
         <span className="-mr-0.5 [&_svg]:h-4 [&_svg]:w-4">{iconRight}</span>
       ) : null}
+    </>
+  );
+
+  if (href) {
+    return (
+      <motion.a
+        href={href}
+        target={target}
+        rel={rel}
+        whileHover={{ y: -1 }}
+        whileTap={{ y: 0, scale: 0.99 }}
+        transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+        className={classes}
+        {...(rest as unknown as HTMLMotionProps<"a">)}
+      >
+        {inner}
+      </motion.a>
+    );
+  }
+
+  return (
+    <motion.button
+      ref={ref}
+      whileHover={{ y: -1 }}
+      whileTap={{ y: 0, scale: 0.99 }}
+      transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+      className={classes}
+      {...rest}
+    >
+      {inner}
     </motion.button>
   );
 });
