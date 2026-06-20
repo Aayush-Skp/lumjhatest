@@ -16,10 +16,12 @@ import { CTA } from "@/components/sections/CTA";
 import { Footer } from "@/components/sections/Footer";
 import { DemoModal } from "@/components/sections/DemoModal";
 import { ScrollSpy } from "@/components/sections/ScrollSpy";
+import { BFCacheGuard } from "@/components/sections/BFCacheGuard";
 
 export default function Home() {
   return (
     <>
+      <BFCacheGuard />
       <ScrollSpy />
       <Nav />
       <main className="relative flex-1">

@@ -28,13 +28,16 @@ export function Roadmap() {
           className="relative w-full"
         >
           {/* Connector line — runs exactly between the first and last block
-              centers (each block is centered in its 1/4 column, so centers sit
-              at 12.5% and 87.5%). */}
+              centers. Each block is centered in its 1/4 column, so the centers
+              sit at 12.5% and 87.5%: start at left 12.5% and span 75% width.
+              NOTE: an absolutely-positioned <svg> is a replaced element, so an
+              explicit width is required — `right` alone is ignored when width
+              is auto, which would collapse the line to its intrinsic size. */}
           <svg
             aria-hidden
             viewBox="0 0 1000 2"
             preserveAspectRatio="none"
-            className="absolute top-[34px] left-[12.5%] right-[12.5%] hidden h-px md:block"
+            className="absolute top-[34px] left-[12.5%] hidden h-px w-3/4 md:block"
           >
             <line
               x1="0"
