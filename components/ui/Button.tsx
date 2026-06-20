@@ -21,7 +21,7 @@ type ButtonProps = HTMLMotionProps<"button"> & {
 
 const V: Record<Variant, string> = {
   primary:
-    "bg-gradient-to-b from-brand-300 to-brand-500 text-bg-0 shadow-[0_0_0_1px_rgb(var(--brand-300)/0.4),0_10px_40px_-8px_rgb(var(--brand-400)/0.55)] hover:shadow-[0_0_0_1px_rgb(var(--brand-300)/0.55),0_14px_44px_-6px_rgb(var(--brand-300)/0.7)]",
+    "bg-gradient-to-b from-brand-300 to-brand-500 text-bg-0 shadow-[var(--shadow-btn)] hover:shadow-[var(--shadow-btn-hover)]",
   ghost: "bg-transparent text-fg-high hover:bg-bg-3/60",
   outline:
     "border border-stroke/25 bg-bg-2/30 text-fg-high hover:border-brand-300/50 hover:bg-bg-2/60",

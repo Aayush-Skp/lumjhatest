@@ -67,7 +67,7 @@ export function LeadCapture() {
           >
             <div
               aria-hidden
-              className="pointer-events-none absolute -inset-10 -z-10 rounded-[48px] blur-3xl"
+              className="soft-glow pointer-events-none absolute -inset-10 -z-10 rounded-[48px] blur-3xl"
               style={{
                 background:
                   "radial-gradient(closest-side, rgb(var(--brand-400)/0.3), transparent 70%)",

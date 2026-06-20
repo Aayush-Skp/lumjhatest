@@ -39,6 +39,18 @@
   --success: 62 230 168;
   --warn: 255 181 71;
   --danger: 255 107 107;
+
+  /* Elevation — themeable so light mode can drop the brand glow.
+     Dark: a brand-tinted glow that reads as a bright halo. */
+  --shadow-btn:
+    0 0 0 1px rgb(var(--brand-300) / 0.4),
+    0 10px 40px -8px rgb(var(--brand-400) / 0.55);
+  --shadow-btn-hover:
+    0 0 0 1px rgb(var(--brand-300) / 0.55),
+    0 14px 44px -6px rgb(var(--brand-300) / 0.7);
+  --shadow-card-hover:
+    0 0 0 1px rgb(var(--brand-300) / 0.18),
+    0 30px 80px -40px rgb(var(--brand-300) / 0.45);
 }
 
 /* =========================================================
@@ -82,6 +94,19 @@
   --success: 9 132 85;
   --warn: 176 116 16;
   --danger: 199 54 54;
+
+  /* Elevation — neutral, soft shadows instead of a brand glow, with only a
+     faint brand ring so buttons/cards read as crisp panels (no smudge). */
+  --shadow-btn:
+    0 1px 2px rgb(15 23 42 / 0.1),
+    0 8px 18px -8px rgb(var(--brand-500) / 0.3);
+  --shadow-btn-hover:
+    0 2px 4px rgb(15 23 42 / 0.12),
+    0 12px 24px -8px rgb(var(--brand-500) / 0.42);
+  --shadow-card-hover:
+    0 0 0 1px rgb(var(--brand-300) / 0.18),
+    0 1px 2px rgb(15 23 42 / 0.04),
+    0 18px 40px -24px rgb(15 23 42 / 0.18);
 }
 
 /* Alternate themes (swap via <html data-theme="aurora">) */
@@ -334,6 +359,24 @@ body {
 }
 [data-theme="light"] ::-webkit-scrollbar-thumb:hover {
   background: rgb(var(--brand-400));
+}
+
+/* Brand glows read as muddy clouds on a light canvas — drop their intensity
+   so they become a faint tint instead of a smudge. */
+[data-theme="light"] .glow-pulse {
+  animation-name: glowPulseLight;
+}
+@keyframes glowPulseLight {
+  0%,
+  100% {
+    opacity: 0.16;
+  }
+  50% {
+    opacity: 0.28;
+  }
+}
+[data-theme="light"] .soft-glow {
+  opacity: 0.4;
 }
 
 /* Respect reduced motion */

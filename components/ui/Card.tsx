@@ -34,7 +34,7 @@ export function Card({
         BASE,
         STYLES[variant],
         interactive &&
-          "group hover:border-brand-300/25 hover:bg-bg-3/80 hover:shadow-[0_0_0_1px_rgb(var(--brand-300)/0.18),0_30px_80px_-40px_rgb(var(--brand-300)/0.45)]",
+          "group hover:border-brand-300/25 hover:bg-bg-3/80 hover:shadow-[var(--shadow-card-hover)]",
         variant === "gradient-border" && "h-full",
         innerClassName,
       )}
