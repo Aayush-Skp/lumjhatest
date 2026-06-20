@@ -41,6 +41,49 @@
   --danger: 255 107 107;
 }
 
+/* =========================================================
+   Light theme — full token set (premium, cool-neutral).
+   Surfaces invert to a light-gray page with white elevated
+   cards; brand + text + semantics are tuned for contrast on
+   light backgrounds. Every component reads these tokens, so
+   the whole site adapts automatically.
+   ========================================================= */
+[data-theme="light"] {
+  /* Surfaces — light gray page → white cards (higher = more elevated) */
+  --bg-0: 236 241 247;
+  --bg-1: 241 245 250;
+  --bg-2: 247 250 253;
+  --bg-3: 255 255 255;
+
+  /* Brand — deepened so it reads on light surfaces and as button fills */
+  --brand-50: 239 248 255;
+  --brand-100: 207 234 252;
+  --brand-200: 16 100 165;
+  --brand-300: 18 118 188;
+  --brand-400: 14 100 162;
+  --brand-500: 11 82 134;
+  --brand-600: 8 64 106;
+  --brand-700: 6 48 80;
+  --brand-900: 3 26 44;
+
+  /* Glow */
+  --glow-cyan: 52 160 224;
+  --glow-deep: 18 118 188;
+
+  /* Text — slate scale */
+  --fg-high: 16 27 42;
+  --fg-mid: 58 74 96;
+  --fg-low: 96 112 134;
+
+  /* Stroke — cool slate, used at low opacity for soft borders */
+  --stroke: 79 108 142;
+
+  /* Semantic — legible on light */
+  --success: 9 132 85;
+  --warn: 176 116 16;
+  --danger: 199 54 54;
+}
+
 /* Alternate themes (swap via <html data-theme="aurora">) */
 [data-theme="midnight"] {
   --bg-0: 2 5 12;
@@ -247,6 +290,50 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(var(--brand-500));
+}
+
+/* =========================================================
+   Light theme refinements
+   Tokens flip automatically; these tune a few effects that
+   were authored for a dark canvas (frosted panels, the heading
+   gradient, scrollbar) so they read crisply on light surfaces.
+   ========================================================= */
+[data-theme="light"] .glass {
+  background: rgb(var(--bg-3) / 0.72);
+  border-color: rgb(var(--stroke) / 0.16);
+  box-shadow:
+    0 1px 2px rgb(15 23 42 / 0.04),
+    0 10px 30px -20px rgb(15 23 42 / 0.15);
+}
+
+[data-theme="light"] .glass-strong {
+  background: rgb(var(--bg-3) / 0.85);
+  border-color: rgb(var(--stroke) / 0.2);
+  box-shadow:
+    0 2px 6px rgb(15 23 42 / 0.05),
+    0 30px 60px -32px rgb(15 23 42 / 0.2);
+}
+
+[data-theme="light"] .gradient-border {
+  background: rgb(var(--bg-3) / 0.9);
+}
+
+[data-theme="light"] .text-gradient-brand {
+  background: linear-gradient(
+    180deg,
+    rgb(var(--fg-high)) 0%,
+    rgb(var(--brand-500)) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: rgb(var(--stroke) / 0.45);
+}
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--brand-400));
 }
 
 /* Respect reduced motion */

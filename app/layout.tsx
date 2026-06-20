@@ -48,6 +48,10 @@ export const metadata: Metadata = {
   },
 };
 
+// Runs before first paint to set the saved theme (default: dark), so there is
+// no flash of the wrong theme on load.
+const themeInitScript = `(function(){try{var t=localStorage.getItem('lumjha-theme');document.documentElement.dataset.theme=(t==='light'||t==='dark')?t:'dark';}catch(e){document.documentElement.dataset.theme='dark';}})();`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -56,9 +60,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      data-theme="dark"
+      suppressHydrationWarning
       className={`${inter.variable} ${interTight.variable} ${jetbrains.variable} h-full antialiased`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className="min-h-full flex flex-col bg-bg-0 text-fg-mid selection:bg-brand-300/30 selection:text-fg-high">
         {children}
       </body>

@@ -6,6 +6,7 @@ import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { Button } from "@/components/ui/Button";
 import { Logo } from "@/components/ui/Logo";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { Container } from "@/components/ui/Container";
 import { site } from "@/content/site";
 import { useUIStore } from "@/store/useUIStore";
@@ -63,6 +64,7 @@ export function Nav() {
         </nav>
 
         <div className="hidden items-center gap-2 md:flex">
+          <ThemeToggle />
           <Button variant="ghost" size="sm" href={site.urls.login}>
             {site.nav.cta.secondary}
           </Button>
@@ -71,14 +73,17 @@ export function Nav() {
           </Button>
         </div>
 
-        <button
-          type="button"
-          onClick={toggleNav}
-          aria-label="Toggle navigation"
-          className="flex h-10 w-10 items-center justify-center rounded-xl border border-stroke/10 bg-bg-2/60 text-fg-high md:hidden"
-        >
-          {navOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
+          <button
+            type="button"
+            onClick={toggleNav}
+            aria-label="Toggle navigation"
+            className="flex h-10 w-10 items-center justify-center rounded-xl border border-stroke/10 bg-bg-2/60 text-fg-high"
+          >
+            {navOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
       </Container>
 
       <AnimatePresence>
