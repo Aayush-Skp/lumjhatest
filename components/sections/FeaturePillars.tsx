@@ -22,7 +22,7 @@ export function FeaturePillars() {
               Everything a modern AI agent should already do.
             </span>
           }
-          description="Four capabilities built into every Lumjha workspace — grounded answers, persistent context, structured leads, and live insights."
+          description="Capabilities built into every Lumjha workspace — grounded answers, persistent context, structured leads, appointments, live insights, and verified citations."
         />
 
         <motion.div
@@ -30,7 +30,7 @@ export function FeaturePillars() {
           initial="hidden"
           whileInView="show"
           viewport={viewport}
-          className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4"
+          className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
         >
           {site.pillars.map(({ icon: Icon, title, description }) => (
             <motion.div key={title} variants={fadeUp} className="h-full">

@@ -12,7 +12,7 @@ export function CTA() {
   const { openDemo } = useUIStore();
   return (
     <section
-      id="pricing"
+      id="get-started"
       aria-labelledby="cta-title"
       className="relative py-24 md:py-32"
     >

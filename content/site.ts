@@ -10,9 +10,12 @@ import {
   MessagesSquare,
   Target,
   BarChart3,
+  CalendarCheck,
+  BadgeCheck,
   Lock,
   KeyRound,
   ShieldCheck,
+  Boxes,
   Database,
   Gauge,
   HardDrive,
@@ -22,6 +25,9 @@ import {
   Tag,
   Signal,
   FileText,
+  Bot,
+  Search,
+  ScrollText,
 } from "lucide-react";
 
 export const site = {
@@ -33,49 +39,82 @@ export const site = {
 
   nav: {
     links: [
+      { id: "platform", label: "Platform" },
       { id: "features", label: "Features" },
       { id: "how", label: "How it works" },
+      { id: "pricing", label: "Pricing" },
       { id: "security", label: "Security" },
-      { id: "analytics", label: "Analytics" },
     ],
-    cta: { primary: "Try Lumjha", secondary: "Log in" },
+    cta: { primary: "Start Free", secondary: "Log in" },
   },
 
   hero: {
     eyebrow: "RAG-Powered · No-Code Builder · Custom Knowledge",
     headline: ["Clone Your Best Agent.", "Automate Your Growth."],
-    sub: "Deploy a no-code AI assistant that memorizes every document in your business and speaks in your exact brand voice. Engage customers 24/7 across Website, WhatsApp, and Instagram — and get qualified leads while you sleep.",
+    sub: "Deploy a no-code AI assistant that learns every document, page, and policy in your business and speaks in your exact brand voice. Engage customers 24/7 across Website, WhatsApp, Instagram, Facebook, and Telegram — capture qualified leads and book appointments while you sleep.",
     ctas: {
       primary: "Build Your Agent Free",
       secondary: "See how it works",
     },
     proof: [
-      "Reduces support costs by 40%",
-      "No credit card required",
+      "100% grounded in your data",
       "Live in minutes",
+      "14-day full-feature trial",
     ],
   },
 
   trust: [
     { value: "24/7", label: "Always on" },
-    { value: "7+", label: "Channels" },
+    { value: "5+", label: "Channels" },
     { value: "0", label: "Lines of code" },
     { value: "100%", label: "Grounded data" },
   ],
+
+  platform: {
+    eyebrow: "The Platform",
+    title: "Three modules, one knowledge base.",
+    description:
+      "Most tools give you a chatbot. Lumjha gives you a complete AI layer for customer engagement — three modules that share a single, secure knowledge base, so everything your agent learns is instantly available everywhere.",
+    modules: [
+      {
+        icon: Bot as LucideIcon,
+        name: "Chatbot",
+        tag: "Always-on agent",
+        description:
+          "Your always-on conversational agent — answers questions, captures leads, books appointments, and talks to customers across every channel in your brand voice.",
+      },
+      {
+        icon: Search as LucideIcon,
+        name: "Site Search",
+        tag: "AI-native search",
+        description:
+          "AI-native search across your entire site and document library. Visitors ask a question; Lumjha returns the precise, summarized answer with sources — not ten blue links.",
+      },
+      {
+        icon: ScrollText as LucideIcon,
+        name: "Policy Vault",
+        tag: "Verbatim & cited",
+        description:
+          "Ask in plain language; Policy Vault understands your intent, finds the exact passage in your uploaded policies, contracts, or compliance docs, and returns it word-for-word with a citation. Where the Chatbot generates and Site Search summarizes, Policy Vault quotes the source as-is.",
+      },
+    ],
+    footer:
+      "Start with the Chatbot; add Site Search and Policy Vault when you're ready — they snap onto the same knowledge base with no re-setup.",
+  },
 
   channels: {
     eyebrow: "Omnichannel",
     title: "Meet your customers wherever they already are.",
     description:
-      "One agent, one knowledge base, seven channels. Roll Lumjha out on your website, your socials, your messaging apps — even your storefront and calendar.",
+      "One agent, one knowledge base, every channel. Roll Lumjha out on your website, your socials, and your messaging apps — no separate bots, no duplicated content.",
     list: [
       { id: "web", name: "Website", tag: "Embed widget" },
       { id: "whatsapp", name: "WhatsApp", tag: "Business API" },
       { id: "instagram", name: "Instagram", tag: "DMs + comments" },
       { id: "facebook", name: "Facebook", tag: "Messenger" },
       { id: "telegram", name: "Telegram", tag: "Bot API" },
-      { id: "gcal", name: "Google Calendar", tag: "Bookings" },
       { id: "shopify", name: "Shopify", tag: "Storefront" },
+      { id: "gcal", name: "Google Calendar", tag: "Appointments" },
     ],
     footer: "Plus custom integrations via webhooks and REST API.",
   },
@@ -100,10 +139,22 @@ export const site = {
         "Structured lead capture baked into the chat — turn conversations into pipeline.",
     },
     {
+      icon: CalendarCheck as LucideIcon,
+      title: "Appointment Booking",
+      description:
+        "The agent checks availability and books straight into your Google Calendar.",
+    },
+    {
       icon: BarChart3 as LucideIcon,
       title: "Performance Insights",
       description:
-        "Token usage, message counts, sentiment and intent — all surfaced on the dashboard.",
+        "Track usage, message counts, lead status, sentiment and intent — all on the dashboard.",
+    },
+    {
+      icon: BadgeCheck as LucideIcon,
+      title: "Verbatim Verification",
+      description:
+        "With Policy Vault, every quoted phrase is checked word-for-word against the source; unverified answers are flagged.",
     },
   ],
 
@@ -123,7 +174,7 @@ export const site = {
         n: 2,
         title: "Text Extraction",
         detail:
-          "Content lifted from PDF / Word / CSV. Pages converted to clean readable text.",
+          "Content lifted from PDF / Word / Excel / Markdown / text. Converted to clean readable text.",
       },
       {
         n: 3,
@@ -144,6 +195,7 @@ export const site = {
           "Raw files → secure storage · Text → database · Embeddings → vector DB.",
       },
     ],
+    formats: "Supported file types: PDF · DOCX · XLSX · Markdown · TXT",
   },
 
   rag: {
@@ -207,6 +259,12 @@ export const site = {
         description:
           "Guardrails against unsafe or off-topic output; tool use is scoped and auditable.",
       },
+      {
+        icon: Boxes as LucideIcon,
+        title: "Data Isolation",
+        description:
+          "Your knowledge base is yours alone — never shared across workspaces, never blended with another client's data.",
+      },
     ],
   },
 
@@ -216,24 +274,24 @@ export const site = {
     items: [
       "We do NOT access private or restricted website data.",
       "We do NOT use your data outside your workspace.",
-      "We do NOT answer without your knowledge base when configured.",
+      "We do NOT train without your configured consent.",
       "We do NOT expose your data to other clients.",
+      "We NEVER delete your data — when a plan lapses, access is locked, not erased.",
     ],
   },
 
   leads: {
     eyebrow: "Leads",
     title: "Capture leads inside the conversation.",
-    copy: "Leads are captured inside the conversation — gradually, conversationally. When required fields complete, a structured lead record is saved and linked back to the chat session. Export, filter, and manage from one dashboard.",
+    copy: "Leads are captured inside the conversation — gradually, conversationally. When required fields complete, a structured lead record is saved and linked back to the chat session. Track, filter, and export from one dashboard.",
     demo: [
-      { role: "bot", text: "What's your name?" },
+      { role: "bot", text: "Happy to help! Who am I speaking with?" },
       { role: "user", text: "Priya Sharma" },
-      { role: "bot", text: "Great — best phone to reach you?" },
-      { role: "user", text: "+91 98xxxxxx21" },
-      { role: "bot", text: "What are you interested in?" },
-      { role: "user", text: "Enterprise plan, 200 seats" },
+      { role: "bot", text: "Thanks, Priya — best email to reach you?" },
+      { role: "user", text: "priya@acme.co — Enterprise plan, ~200 seats" },
     ] as { role: "bot" | "user"; text: string }[],
     savedToast: "Lead saved to dashboard",
+    pipeline: "New → Contacted → Qualified → Converted / Lost",
   },
 
   analytics: {
@@ -246,7 +304,7 @@ export const site = {
       { icon: Signal as LucideIcon, label: "Lead signals", value: "38 hot" },
     ],
     footer:
-      "These insights feed back into your ops — improve the bot, spot demand, optimize conversion.",
+      "Real-time notification counts surface unread messages, new leads, and new sessions. These insights feed back into your app — improve the bot, spot demand, optimize conversion.",
   },
 
   roadmap: {
@@ -260,10 +318,93 @@ export const site = {
     ],
   },
 
+  pricing: {
+    eyebrow: "Pricing",
+    title: "Start free. Scale without complexity.",
+    description:
+      "Every account starts with a 14-day trial of all three modules — Chatbot, Site Search, and Policy Vault — no credit card required.",
+    tiers: [
+      {
+        name: "Free",
+        price: "$0",
+        cadence: "forever",
+        blurb: "Testing & demos",
+        featured: false,
+        cta: "Start free",
+        features: [
+          "1 chatbot",
+          "1 channel",
+          "50 replies / month",
+          "1 document",
+          "Lead capture & pipeline",
+          "Basic analytics",
+        ],
+      },
+      {
+        name: "Gold",
+        price: "$49",
+        cadence: "/mo",
+        blurb: "SMBs & consultants",
+        featured: true,
+        cta: "Get started",
+        features: [
+          "1 chatbot",
+          "3 channels",
+          "2,000 replies / month",
+          "15 documents",
+          "Advanced analytics",
+          "Priority support",
+        ],
+      },
+      {
+        name: "Platinum",
+        price: "$89",
+        cadence: "/mo",
+        blurb: "Agencies & multi-location",
+        featured: false,
+        cta: "Get started",
+        features: [
+          "3 chatbots",
+          "5 channels",
+          "5,000 replies / month",
+          "25 documents",
+          "Add-ons across all agents",
+          "Priority support",
+        ],
+      },
+      {
+        name: "Custom",
+        price: "Let's talk",
+        cadence: "",
+        blurb: "Enterprise & regulated",
+        featured: false,
+        cta: "Talk to sales",
+        features: [
+          "Custom chatbots",
+          "Unlimited channels",
+          "Custom replies & documents",
+          "Add-on modules included",
+          "Dedicated support + SLA",
+        ],
+      },
+    ],
+    addons: {
+      title: "Premium add-on modules",
+      note: "Unlock on any paid plan — free during your 14-day trial.",
+      items: [
+        { name: "Site Search", price: "+$15", cadence: "/mo", save: "" },
+        { name: "Policy Vault", price: "+$15", cadence: "/mo", save: "" },
+        { name: "Bundle (both)", price: "+$25", cadence: "/mo", save: "save $5/mo" },
+      ],
+    },
+    footnote:
+      "Every plan includes SSL security, GDPR-ready data handling, your data never deleted, and cancel-anytime billing.",
+  },
+
   cta: {
     eyebrow: "Get started",
     title: "Your data is your asset. Make it work for you.",
-    sub: "Spin up your first Lumjha agent in under 5 minutes — no credit card, no code.",
+    sub: "Spin up your first Lumjha agent in under 5 minutes — no credit card, no code. Get the Chatbot, Site Search, and Policy Vault free for 14 days.",
     primary: "Start Free",
     secondary: "Book a Demo",
   },
@@ -271,14 +412,24 @@ export const site = {
   footer: {
     pitch:
       "Clone your best agent. Automate your growth. Lumjha is the no-code AI layer for modern customer engagement.",
+    contact: "info@lumjha.ai",
     columns: [
+      {
+        title: "Platform",
+        links: [
+          { label: "Chatbot", href: "#platform" },
+          { label: "Site Search", href: "#platform" },
+          { label: "Policy Vault", href: "#platform" },
+          { label: "How it works", href: "#how" },
+        ],
+      },
       {
         title: "Product",
         links: [
           { label: "Features", href: "#features" },
-          { label: "How it works", href: "#how" },
-          { label: "Security", href: "#security" },
           { label: "Pricing", href: "#pricing" },
+          { label: "Security", href: "#security" },
+          { label: "Integrations", href: "#channels" },
         ],
       },
       {
@@ -295,30 +446,31 @@ export const site = {
           { label: "Privacy", href: "#" },
           { label: "Terms", href: "#" },
           { label: "Data Processing", href: "#" },
+          { label: "Data Deletion", href: "#" },
         ],
       },
     ],
-    copyright: "© 2026 Lumjha AI. All rights reserved.",
+    copyright: "© 2026 Lumjha. All rights reserved.",
   },
 
   chatDemo: [
     {
       role: "user" as const,
-      text: "What's included in the Pro plan?",
+      text: "Do you ship internationally?",
     },
     {
       role: "bot" as const,
-      text: "Pro includes unlimited chats, 3 channels, lead capture, and 10K monthly tokens. You can upgrade anytime from the dashboard.",
-      cite: "pricing.pdf · p.2",
+      text: "Yes — we ship to 40+ countries. Standard delivery is 5–7 business days, with express options at checkout. Want me to check rates for your region?",
+      cite: "shipping.pdf · §1",
     },
     {
       role: "user" as const,
-      text: "Can I connect WhatsApp?",
+      text: "What's your refund policy?",
     },
     {
       role: "bot" as const,
-      text: "Yes — any Pro workspace supports Website, WhatsApp and Instagram simultaneously.",
-      cite: "integrations.md · §3",
+      text: "Refunds are accepted within 30 days of delivery on unused items.",
+      cite: "Returns Policy · §2 — verified ✓",
     },
   ],
 

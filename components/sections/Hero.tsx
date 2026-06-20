@@ -104,7 +104,7 @@ export function Hero() {
             className="hidden lg:col-span-5 lg:block"
           >
             <div className="relative">
-              <ChatMock lines={site.chatDemo} eager />
+              <ChatMock lines={site.chatDemo} title="Lumjha Agent · Sales Bot" eager />
               {/* Minimal ray of light that occasionally traces the card outline */}
               <CardLightSweep radius={16} />
             </div>

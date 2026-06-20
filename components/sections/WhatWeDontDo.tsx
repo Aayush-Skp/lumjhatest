@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Ban } from "lucide-react";
+import { cn } from "@/lib/cn";
 import { Container } from "@/components/ui/Container";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { site } from "@/content/site";
@@ -27,11 +28,14 @@ export function WhatWeDontDo() {
           viewport={viewport}
           className="grid w-full grid-cols-1 gap-4 md:grid-cols-2"
         >
-          {site.denials.items.map((item) => (
+          {site.denials.items.map((item, i) => (
             <motion.div
               key={item}
               variants={fadeUp}
-              className="group relative flex items-start gap-4 overflow-hidden rounded-2xl border border-stroke/10 bg-bg-3/60 p-5 pl-6 backdrop-blur-xl transition-colors hover:border-danger/30"
+              className={cn(
+                "group relative flex items-start gap-4 overflow-hidden rounded-2xl border border-stroke/10 bg-bg-3/60 p-5 pl-6 backdrop-blur-xl transition-colors hover:border-danger/30",
+                i === site.denials.items.length - 1 && "md:col-span-2",
+              )}
             >
               <span
                 aria-hidden

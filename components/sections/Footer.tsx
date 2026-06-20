@@ -35,12 +35,18 @@ export function Footer() {
   return (
     <footer className="relative border-t border-stroke/10 bg-bg-1/60 pt-16 pb-8 backdrop-blur-xl">
       <Container className="flex flex-col gap-14">
-        <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
+        <div className="grid grid-cols-2 gap-10 md:grid-cols-3 lg:grid-cols-6">
           <div className="col-span-2 flex max-w-sm flex-col gap-4">
             <Logo />
             <p className="text-sm leading-relaxed text-fg-mid">
               {site.footer.pitch}
             </p>
+            <a
+              href={`mailto:${site.footer.contact}`}
+              className="text-sm font-medium text-brand-200 transition-colors hover:text-brand-100"
+            >
+              {site.footer.contact}
+            </a>
           </div>
           {site.footer.columns.map((col) => (
             <div key={col.title} className="flex flex-col gap-3">

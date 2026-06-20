@@ -27,16 +27,19 @@ export function Roadmap() {
           viewport={viewport}
           className="relative w-full"
         >
+          {/* Connector line — runs exactly between the first and last block
+              centers (each block is centered in its 1/4 column, so centers sit
+              at 12.5% and 87.5%). */}
           <svg
             aria-hidden
             viewBox="0 0 1000 2"
             preserveAspectRatio="none"
-            className="absolute top-[34px] left-0 hidden h-px w-full md:block"
+            className="absolute top-[34px] left-[12.5%] right-[12.5%] hidden h-px md:block"
           >
             <line
-              x1="40"
+              x1="0"
               y1="1"
-              x2="960"
+              x2="1000"
               y2="1"
               stroke="rgb(var(--brand-300) / 0.45)"
               strokeWidth="1.25"
@@ -45,8 +48,12 @@ export function Roadmap() {
           </svg>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-4 md:gap-5">
             {site.roadmap.items.map((item, i) => (
-              <motion.div key={item} variants={fadeUp} className="flex flex-col gap-4">
-                <div className="relative mx-auto flex h-[68px] w-[68px] items-center justify-center rounded-2xl border border-brand-300/25 bg-bg-3/80 backdrop-blur-xl md:mx-0">
+              <motion.div
+                key={item}
+                variants={fadeUp}
+                className="flex flex-col items-center gap-4 text-center"
+              >
+                <div className="relative flex h-[68px] w-[68px] items-center justify-center rounded-2xl border border-brand-300/25 bg-bg-3/80 backdrop-blur-xl">
                   <span className="font-mono text-lg font-semibold text-brand-300">
                     0{i + 1}
                   </span>
@@ -58,7 +65,7 @@ export function Roadmap() {
                     }}
                   />
                 </div>
-                <p className="text-sm leading-relaxed text-fg-mid md:max-w-[220px]">
+                <p className="max-w-[220px] text-sm leading-relaxed text-fg-mid">
                   {item}
                 </p>
               </motion.div>

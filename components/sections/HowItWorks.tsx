@@ -26,6 +26,9 @@ export function HowItWorks() {
           description={site.pipeline.description}
         />
         <PipelineDiagram steps={site.pipeline.steps} />
+        <div className="flex items-center gap-2.5 rounded-full border border-stroke/15 bg-bg-2/60 px-4 py-2 font-mono text-[11px] uppercase tracking-wider text-fg-low backdrop-blur-xl">
+          {site.pipeline.formats}
+        </div>
       </Container>
     </section>
   );

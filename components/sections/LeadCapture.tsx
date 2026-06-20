@@ -27,7 +27,7 @@ export function LeadCapture() {
               {site.leads.copy}
             </p>
             <div className="flex flex-wrap gap-3 text-xs text-fg-low">
-              {["Name", "Phone", "Interest", "Source", "Session ID"].map((t) => (
+              {["Name", "Email", "Interest", "Source", "Session ID"].map((t) => (
                 <span
                   key={t}
                   className="rounded-full border border-stroke/15 bg-bg-3/60 px-3 py-1 font-mono"
@@ -35,6 +35,26 @@ export function LeadCapture() {
                   {t}
                 </span>
               ))}
+            </div>
+
+            <div className="flex flex-col gap-2 pt-1">
+              <span className="font-mono text-[11px] uppercase tracking-wider text-fg-low">
+                Lead pipeline
+              </span>
+              <div className="flex flex-wrap items-center gap-x-1.5 gap-y-2">
+                {site.leads.pipeline.split(" → ").map((stage, i, arr) => (
+                  <span key={stage} className="flex items-center gap-1.5">
+                    <span className="rounded-lg border border-brand-300/20 bg-brand-300/10 px-2.5 py-1 text-xs font-medium text-brand-200">
+                      {stage}
+                    </span>
+                    {i < arr.length - 1 ? (
+                      <span aria-hidden className="text-fg-low">
+                        →
+                      </span>
+                    ) : null}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
 

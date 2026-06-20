@@ -24,24 +24,26 @@ const jetbrains = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://lumjha.ai"),
   title: {
-    default: "Lumjha AI — Clone Your Best Agent. Automate Your Growth.",
-    template: "%s · Lumjha AI",
+    default: "Lumjha — No-Code AI Agents Trained on Your Business",
+    template: "%s · Lumjha",
   },
   description:
-    "A no-code, RAG-powered AI chatbot that memorizes every document in your business, speaks in your brand voice, and engages customers 24/7 across Website, WhatsApp, and Instagram.",
+    "Build a no-code AI assistant that knows every document, page, and policy in your business. Answer customers 24/7 across your website, WhatsApp, Instagram, Facebook, and Telegram — and capture qualified leads while you sleep.",
   keywords: [
     "AI chatbot",
-    "RAG",
-    "customer engagement",
-    "lead generation",
-    "WhatsApp bot",
-    "Instagram bot",
-    "no-code",
+    "no-code AI agent",
+    "RAG chatbot",
+    "AI site search",
+    "policy assistant",
+    "customer support automation",
+    "lead generation chatbot",
+    "WhatsApp chatbot",
+    "omnichannel AI",
   ],
   openGraph: {
-    title: "Lumjha AI — Clone Your Best Agent. Automate Your Growth.",
+    title: "Clone your best agent. Automate your growth.",
     description:
-      "Deploy a no-code AI assistant grounded in your documents. Engage customers across Web, WhatsApp, and Instagram — and qualify leads 24/7.",
+      "One knowledge base. Three AI modules — Chatbot, Site Search, Policy Vault. Live across every channel in minutes.",
     type: "website",
   },
 };

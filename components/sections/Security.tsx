@@ -26,7 +26,7 @@ export function Security() {
           initial="hidden"
           whileInView="show"
           viewport={viewport}
-          className="grid w-full grid-cols-1 gap-5 md:grid-cols-3"
+          className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4"
         >
           {site.security.items.map(({ icon: Icon, title, description }) => (
             <motion.div key={title} variants={fadeUp} className="h-full">
