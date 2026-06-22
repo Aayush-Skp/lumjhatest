@@ -24,6 +24,10 @@ export function Channels() {
           description={site.channels.description}
         />
 
+        <p className="-mt-4 text-center font-display text-xl font-semibold tracking-tight text-gradient-brand sm:text-2xl">
+          {site.channels.headline}
+        </p>
+
         <motion.div
           variants={stagger(0.06)}
           initial="hidden"

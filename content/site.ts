@@ -110,6 +110,7 @@ export const site = {
   channels: {
     eyebrow: "Omnichannel Activations",
     title: "Meet your customers where they are.",
+    headline: "One source, multiple activations.",
     description:
       "One intelligent ai agent, one knowledge base, activate everyone. Activate Lumjha ai out on your website, your socials, and your messaging apps — no separate bots, no duplicated content.",
     list: [
