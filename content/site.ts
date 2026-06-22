@@ -104,14 +104,14 @@ export const site = {
       },
     ],
     footer:
-      "Start with the Intelligent AI Chatbot; add Website Search and Policy Vault (Exact Answers) when you're ready — they snap onto the same knowledge base with no re-setup.",
+      "Start with the Intelligent AI Chatbot; add Website Search and Policy Vault (Exact Answers) when you're ready — they reference onto the same knowledge base and source of truth with no re-setup.",
   },
 
   channels: {
-    eyebrow: "Omnichannel",
-    title: "Meet your customers wherever they already are.",
+    eyebrow: "Omnichannel Activations",
+    title: "Meet your customers where they are.",
     description:
-      "One agent, one knowledge base, every channel. Roll Lumjha out on your website, your socials, and your messaging apps — no separate bots, no duplicated content.",
+      "One intelligent ai agent, one knowledge base, activate everyone. Activate Lumjha ai out on your website, your socials, and your messaging apps — no separate bots, no duplicated content.",
     list: [
       { id: "web", name: "Website", tag: "Embed widget" },
       { id: "whatsapp", name: "WhatsApp", tag: "Business API" },
