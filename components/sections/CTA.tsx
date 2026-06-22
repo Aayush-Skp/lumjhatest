@@ -55,7 +55,11 @@ export function CTA() {
             variants={fadeUp}
             className="max-w-3xl font-display text-3xl font-semibold leading-tight tracking-tight text-gradient-brand sm:text-4xl md:text-5xl"
           >
-            {site.cta.title}
+            {site.cta.title.split(/(?<=\.)\s+/).map((line, i) => (
+              <span key={i} className="block">
+                {line}
+              </span>
+            ))}
           </motion.h2>
           <motion.p
             variants={fadeUp}
