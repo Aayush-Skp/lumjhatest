@@ -41,9 +41,9 @@ export const metadata: Metadata = {
     "omnichannel AI",
   ],
   openGraph: {
-    title: "Clone your best agent. Automate your growth.",
+    title: "Enable Your best agent. Automate your growth.",
     description:
-      "One knowledge base. Three AI modules — Chatbot, Site Search, Policy Vault. Live across every channel in minutes.",
+      "One knowledge base. Three AI modules — Intelligent AI Chatbot, Website Search, Policy Vault (Exact Answers). Live across every channel in minutes.",
     type: "website",
   },
 };

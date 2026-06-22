@@ -76,35 +76,35 @@ export const site = {
   ],
 
   platform: {
-    eyebrow: "The Platform",
-    title: "Three modules, one knowledge base.",
+    eyebrow: "Your AI intelligence platform",
+    title: "Three lead management modules, one knowledge base.",
     description:
       "Most tools give you a chatbot. Lumjha gives you a complete AI layer for customer engagement — three modules that share a single, secure knowledge base, so everything your agent learns is instantly available everywhere.",
     modules: [
       {
         icon: Bot as LucideIcon,
-        name: "Chatbot",
+        name: "Intelligent AI Chatbot",
         tag: "Always-on agent",
         description:
           "Your always-on conversational agent — answers questions, captures leads, books appointments, and talks to customers across every channel in your brand voice.",
       },
       {
         icon: Search as LucideIcon,
-        name: "Site Search",
+        name: "Website Search",
         tag: "AI-native search",
         description:
           "AI-native search across your entire site and document library. Visitors ask a question; Lumjha returns the precise, summarized answer with sources — not ten blue links.",
       },
       {
         icon: ScrollText as LucideIcon,
-        name: "Policy Vault",
+        name: "Policy Vault (Exact Answers)",
         tag: "Verbatim & cited",
         description:
-          "Ask in plain language; Policy Vault understands your intent, finds the exact passage in your uploaded policies, contracts, or compliance docs, and returns it word-for-word with a citation. Where the Chatbot generates and Site Search summarizes, Policy Vault quotes the source as-is.",
+          "Ask in plain language; Policy Vault understands your intent, finds the exact passage in your uploaded policies, contracts, or compliance documentation, and returns it word-for-word with a citation. Where the Intelligent AI Chatbot generates and Website Search summarizes, Policy Vault quotes the source as-is.",
       },
     ],
     footer:
-      "Start with the Chatbot; add Site Search and Policy Vault when you're ready — they snap onto the same knowledge base with no re-setup.",
+      "Start with the Intelligent AI Chatbot; add Website Search and Policy Vault (Exact Answers) when you're ready — they snap onto the same knowledge base with no re-setup.",
   },
 
   channels: {
@@ -159,7 +159,7 @@ export const site = {
       icon: BadgeCheck as LucideIcon,
       title: "Verbatim Verification",
       description:
-        "With Policy Vault, every quoted phrase is checked word-for-word against the source; unverified answers are flagged.",
+        "With Policy Vault (Exact Answers), every quoted phrase is checked word-for-word against the source; unverified answers are flagged.",
     },
   ],
 
@@ -327,7 +327,7 @@ export const site = {
     eyebrow: "Pricing",
     title: "Start free. Scale without complexity.",
     description:
-      "Every account starts with a 14-day trial of all three modules — Chatbot, Site Search, and Policy Vault — no credit card required.",
+      "Every account starts with a 14-day trial of all three modules — Intelligent AI Chatbot, Website Search, and Policy Vault (Exact Answers) — no credit card required.",
     tiers: [
       {
         name: "Free",
@@ -397,8 +397,8 @@ export const site = {
       title: "Premium add-on modules",
       note: "Unlock on any paid plan — free during your 14-day trial.",
       items: [
-        { name: "Site Search", price: "+$15", cadence: "/mo", save: "" },
-        { name: "Policy Vault", price: "+$15", cadence: "/mo", save: "" },
+        { name: "Website Search", price: "+$15", cadence: "/mo", save: "" },
+        { name: "Policy Vault (Exact Answers)", price: "+$15", cadence: "/mo", save: "" },
         { name: "Bundle (both)", price: "+$25", cadence: "/mo", save: "save $5/mo" },
       ],
     },
@@ -409,7 +409,7 @@ export const site = {
   cta: {
     eyebrow: "Get started",
     title: "Your data is your asset. Make it work for you.",
-    sub: "Spin up your first Lumjha agent in under 5 minutes — no credit card, no code. Get the Chatbot, Site Search, and Policy Vault free for 14 days.",
+    sub: "Spin up your first Lumjha agent in under 5 minutes — no credit card, no code. Get the Intelligent AI Chatbot, Website Search, and Policy Vault (Exact Answers) free for 14 days.",
     primary: "Start Free",
     secondary: "Book a Demo",
   },
@@ -422,9 +422,9 @@ export const site = {
       {
         title: "Platform",
         links: [
-          { label: "Chatbot", href: "#platform" },
-          { label: "Site Search", href: "#platform" },
-          { label: "Policy Vault", href: "#platform" },
+          { label: "Intelligent AI Chatbot", href: "#platform" },
+          { label: "Website Search", href: "#platform" },
+          { label: "Policy Vault (Exact Answers)", href: "#platform" },
           { label: "How it works", href: "#how" },
         ],
       },
