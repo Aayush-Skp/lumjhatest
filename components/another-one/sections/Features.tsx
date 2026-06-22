@@ -7,7 +7,7 @@ import {
   BarChart3,
   BadgeCheck,
 } from "lucide-react";
-import Eyebrow from "@/components/another-one/ui/Eyebrow";
+import SectionHeader from "@/components/another-one/ui/SectionHeader";
 import Reveal from "@/components/another-one/ui/Reveal";
 
 type Pillar = {
@@ -106,11 +106,12 @@ function PillarCard({ pillar }: { pillar: Pillar }) {
 export default function Features({ id }: { id?: string }) {
   return (
     <section id={id} className="a1-section py-24 md:py-32">
-      <div className="mx-auto max-w-6xl px-6">
-        <Eyebrow>Core Pillars</Eyebrow>
-        <h2 className="mt-3 max-w-2xl font-display text-display-lg text-[var(--color-text-primary)]">
-          Everything a modern AI agent should already do.
-        </h2>
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <SectionHeader
+          eyebrow="Core Pillars"
+          title="Everything a modern AI agent should already do."
+          body="Six capabilities every modern AI agent should ship with — accuracy, continuity, conversion, and verifiable answers, out of the box."
+        />
 
         <div className="mt-14 grid grid-cols-1 gap-4 md:grid-cols-3">
           {PILLARS.map((p, i) => (

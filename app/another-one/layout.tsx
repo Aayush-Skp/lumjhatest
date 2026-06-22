@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Syne, DM_Sans } from "next/font/google";
+import SmoothScroll from "@/components/another-one/ui/SmoothScroll";
 
 // Display + body fonts for the rebuilt route. Loaded here (a nested layout)
 // rather than the root layout so the existing Inter-based site is untouched.
@@ -20,7 +21,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Clone Your Best Agent · Automate Your Growth",
+  title: "Create Your Best Agent · Automate Your Growth",
   description:
     "Deploy a no-code AI assistant that learns every document, page, and policy in your business — live across Website, WhatsApp, Instagram, Facebook, and Telegram in minutes.",
 };
@@ -32,6 +33,7 @@ export default function AnotherOneLayout({
     <div
       className={`${syne.variable} ${dmSans.variable} lumjha-rebuild relative min-h-screen w-full overflow-x-clip`}
     >
+      <SmoothScroll />
       {children}
     </div>
   );

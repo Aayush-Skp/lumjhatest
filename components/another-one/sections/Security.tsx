@@ -1,6 +1,7 @@
 import type { ComponentType, SVGProps } from "react";
 import { Lock, KeyRound, ShieldCheck, Database, X, Check } from "lucide-react";
 import Eyebrow from "@/components/another-one/ui/Eyebrow";
+import SectionHeader from "@/components/another-one/ui/SectionHeader";
 import Reveal from "@/components/another-one/ui/Reveal";
 
 type Control = {
@@ -46,11 +47,12 @@ const TRANSPARENCY: { text: string; positive?: boolean }[] = [
 export default function Security({ id }: { id?: string }) {
   return (
     <section id={id} className="a1-section a1-elevated py-24 md:py-32">
-      <div className="mx-auto max-w-6xl px-6">
-        <Eyebrow>Security</Eyebrow>
-        <h2 className="mt-3 max-w-2xl font-display text-display-lg text-[var(--color-text-primary)]">
-          Your data, your control — always.
-        </h2>
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <SectionHeader
+          eyebrow="Security"
+          title="Your data, your control — always."
+          body="Every protected route is authenticated, every session validated, and your knowledge base stays isolated — yours alone."
+        />
 
         <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {CONTROLS.map(({ icon: Icon, title, body }, i) => (

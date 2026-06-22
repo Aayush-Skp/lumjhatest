@@ -27,7 +27,7 @@ export default function RAG({ id }: { id?: string }) {
 
   return (
     <section id={id} className="a1-section py-24 md:py-32">
-      <div className="mx-auto max-w-3xl px-6 text-center">
+      <div className="mx-auto max-w-3xl px-4 sm:px-6 text-center">
         <Eyebrow>Retrieval-Augmented Generation</Eyebrow>
         <h2 className="mt-3 font-display text-display-lg text-[var(--color-text-primary)]">
           RAG, tuned to your business.
@@ -35,7 +35,7 @@ export default function RAG({ id }: { id?: string }) {
       </div>
 
       {/* Flow chain */}
-      <div className="mx-auto mt-14 max-w-4xl px-6">
+      <div className="mx-auto mt-14 max-w-4xl px-4 sm:px-6">
         <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
           {FLOW.map(({ icon: Icon, label, sub }, i) => {
             const on = i === active;
