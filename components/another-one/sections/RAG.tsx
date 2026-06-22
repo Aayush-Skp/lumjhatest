@@ -1,8 +1,6 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import { MessageSquare, Search, Sparkles, CheckCircle2, Database } from "lucide-react";
 import Eyebrow from "@/components/another-one/ui/Eyebrow";
+import StageRail from "@/components/another-one/ui/StageRail";
 
 const FLOW = [
   { icon: MessageSquare, label: "Input", sub: "User query" },
@@ -18,13 +16,6 @@ const STEPS = [
 ];
 
 export default function RAG({ id }: { id?: string }) {
-  const [active, setActive] = useState(0);
-
-  useEffect(() => {
-    const t = setInterval(() => setActive((a) => (a + 1) % FLOW.length), 1400);
-    return () => clearInterval(t);
-  }, []);
-
   return (
     <section id={id} className="a1-section py-24 md:py-32">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 text-center">
@@ -36,51 +27,35 @@ export default function RAG({ id }: { id?: string }) {
 
       {/* Flow chain */}
       <div className="mx-auto mt-14 max-w-4xl px-4 sm:px-6">
-        <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
-          {FLOW.map(({ icon: Icon, label, sub }, i) => {
-            const on = i === active;
-            return (
-              <div key={label} className="flex flex-1 items-center gap-3">
-                <div
-                  className="flex-1 rounded-2xl border bg-[var(--color-bg-2)] p-4 text-center transition-all duration-300"
-                  style={{
-                    borderColor: on
-                      ? "var(--color-accent)"
-                      : "var(--color-border)",
-                    boxShadow: on ? "0 0 24px var(--color-accent-glow)" : "none",
-                    transform: on ? "translateY(-4px)" : "none",
-                  }}
-                >
-                  <div
-                    className="mx-auto flex h-10 w-10 items-center justify-center rounded-lg transition-colors duration-300"
-                    style={{
-                      color: on
-                        ? "var(--color-accent)"
-                        : "var(--color-text-secondary)",
-                      background: on
-                        ? "var(--color-accent-dim)"
-                        : "var(--color-bg-3)",
-                    }}
-                  >
-                    <Icon className="h-5 w-5" aria-hidden />
-                  </div>
-                  <p className="mt-3 font-display text-body-md font-semibold text-[var(--color-text-primary)]">
-                    {label}
-                  </p>
-                  <p className="font-mono text-caption text-[var(--color-text-muted)]">
-                    {sub}
-                  </p>
+        <StageRail
+          direction="rtl"
+          className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center"
+        >
+          {FLOW.map(({ icon: Icon, label, sub }, i) => (
+            <div key={label} className="flex flex-1 items-center gap-3">
+              <div
+                data-rail-box=""
+                className="relative z-10 flex-1 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-2)] p-4 text-center transition-all duration-300"
+              >
+                <div className="a1-rail-icon mx-auto flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--color-bg-3)] text-[var(--color-text-secondary)] transition-colors duration-300">
+                  <Icon className="h-5 w-5" aria-hidden />
                 </div>
-                {i < FLOW.length - 1 && (
-                  <span
-                    aria-hidden
-                    className="hidden h-px w-6 shrink-0 bg-[var(--color-border-bright)] sm:block"
-                  />
-                )}
+                <p className="mt-3 font-display text-body-md font-semibold text-[var(--color-text-primary)]">
+                  {label}
+                </p>
+                <p className="font-mono text-caption text-[var(--color-text-muted)]">
+                  {sub}
+                </p>
               </div>
-            );
-          })}
-        </div>
+              {i < FLOW.length - 1 && (
+                <span
+                  aria-hidden
+                  className="hidden h-px w-6 shrink-0 bg-[var(--color-border-bright)] sm:block"
+                />
+              )}
+            </div>
+          ))}
+        </StageRail>
 
         {/* Knowledge DB */}
         <div className="mt-6 flex justify-center">

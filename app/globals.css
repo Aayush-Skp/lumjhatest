@@ -560,6 +560,18 @@ html {
   pointer-events: none;
 }
 
+/* Trail highlight — applied by PageTrail to anchored cards as the trail's
+   leading edge scrolls past them (e.g. the pipeline stages light up in turn). */
+.lumjha-rebuild .a1-trail-on {
+  border-color: var(--color-accent) !important;
+  box-shadow: 0 0 30px -2px var(--color-accent-glow) !important;
+  transform: translateY(-6px) !important;
+}
+.lumjha-rebuild .a1-trail-on .a1-rail-icon {
+  color: var(--color-accent);
+  background: var(--color-accent-dim);
+}
+
 /* Nav link underline that slides in from the left on hover */
 .lumjha-rebuild .a1-navlink::after {
   content: "";

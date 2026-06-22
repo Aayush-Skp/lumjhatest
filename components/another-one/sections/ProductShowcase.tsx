@@ -103,6 +103,19 @@ export default function ProductShowcase({ id }: { id?: string }) {
       className="relative"
       style={{ height: `${PRODUCTS.length * 118}vh` }}
     >
+      {/* Trail anchors — give the single page trail a gentle S through this
+          (sticky, tall) section without measuring the pinned content. */}
+      <span
+        aria-hidden
+        data-trail="center"
+        className="pointer-events-none absolute left-[16%] top-[20%]"
+      />
+      <span
+        aria-hidden
+        data-trail="center"
+        className="pointer-events-none absolute right-[16%] top-[68%]"
+      />
+
       <div className="sticky top-0 flex h-screen items-center overflow-hidden border-t border-[var(--color-border)]">
         <FloatingOrb
           size={360}
@@ -113,12 +126,35 @@ export default function ProductShowcase({ id }: { id?: string }) {
         />
 
         <div className="relative z-10 mx-auto w-full max-w-6xl px-4 sm:px-6">
-          {/* Section header */}
-          <div className="mb-6 flex items-center justify-between gap-3 lg:mb-10">
+          {/* Section header — centred: eyebrow, product tabs, counter */}
+          <div className="mb-6 flex flex-col items-center gap-3 lg:mb-10">
             <Eyebrow>The Platform · One knowledge base</Eyebrow>
-            <span className="shrink-0 font-mono text-caption text-[var(--color-text-muted)]">
-              {String(active + 1).padStart(2, "0")} /{" "}
-              {String(PRODUCTS.length).padStart(2, "0")}
+
+            <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 font-mono text-caption">
+              {PRODUCTS.map((p, i) => (
+                <span key={p.key} className="flex items-center gap-2">
+                  {i > 0 && (
+                    <span className="text-[var(--color-text-muted)]">·</span>
+                  )}
+                  <span
+                    className="transition-colors duration-300"
+                    style={{
+                      color:
+                        i === active ? p.accent : "var(--color-text-muted)",
+                      fontWeight: i === active ? 600 : 400,
+                    }}
+                  >
+                    {p.eyebrow}
+                  </span>
+                </span>
+              ))}
+            </div>
+
+            <span className="font-mono text-caption text-[var(--color-text-muted)]">
+              <span style={{ color: product.accent }}>
+                {String(active + 1).padStart(2, "0")}
+              </span>{" "}
+              / {String(PRODUCTS.length).padStart(2, "0")}
             </span>
           </div>
 
@@ -159,18 +195,20 @@ export default function ProductShowcase({ id }: { id?: string }) {
                     transition={{ duration: 0.4, ease }}
                   >
                     <span
-                      className="inline-flex items-center rounded-full border px-3 py-1 font-mono text-caption"
+                      className="inline-flex items-center gap-1.5 self-start rounded-full px-2.5 py-1 font-mono text-caption"
                       style={{
-                        borderColor: "var(--color-border-bright)",
                         color: product.accent,
+                        backgroundColor: `color-mix(in srgb, ${product.accent} 14%, transparent)`,
                       }}
                     >
+                      <span
+                        aria-hidden
+                        className="h-1.5 w-1.5 rounded-full"
+                        style={{ backgroundColor: product.accent }}
+                      />
                       {product.tag}
                     </span>
-                    <p className="mt-4 font-body text-caption uppercase tracking-widest text-[var(--color-text-secondary)]">
-                      {product.eyebrow}
-                    </p>
-                    <h2 className="mt-2 font-display text-display-md text-[var(--color-text-primary)] lg:text-display-lg">
+                    <h2 className="mt-3 font-display text-display-md text-[var(--color-text-primary)] lg:text-display-lg">
                       {product.title}
                     </h2>
                     <p className="mt-3 max-w-md font-body text-body-md text-[var(--color-text-secondary)] lg:mt-5 lg:text-body-lg">

@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node probe3.mjs)",
+      "Bash(pkill -f \"remote-debugging-port=9222\")",
+      "Bash(rm -f /tmp/shot.mjs /tmp/inspect.mjs /tmp/test_pl.mjs /tmp/attrcase.mjs /tmp/pipe.mjs /tmp/probe.mjs /tmp/probe2.mjs /tmp/probe3.mjs /tmp/scroll_*.png /tmp/trail_top.png /tmp/pltest.png /tmp/pipe_hl.png /tmp/chrome.log)"
+    ],
+    "additionalDirectories": [
+      "/tmp"
+    ]
+  }
+}

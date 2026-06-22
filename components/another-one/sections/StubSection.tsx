@@ -6,6 +6,10 @@ interface StubSectionProps {
   title: string;
   body?: string;
   elevated?: boolean;
+  /** Header layout — "split" (default) or "center" (everything stacked). */
+  align?: "split" | "center";
+  /** Centre mode only: keep the title and body each on a single line. */
+  nowrap?: boolean;
 }
 
 /**
@@ -18,17 +22,24 @@ export default function StubSection({
   title,
   body,
   elevated,
+  align = "split",
+  nowrap,
 }: StubSectionProps) {
   return (
     <section
       id={id}
       className={`a1-section py-24 md:py-32 ${elevated ? "a1-elevated" : ""}`}
     >
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <SectionHeader eyebrow={eyebrow} title={title} body={body} />
-        <p className="mt-8 inline-flex rounded-full border border-[var(--color-border)] px-3 py-1 font-mono text-caption text-[var(--color-text-muted)]">
-          Section in progress
-        </p>
+      <div
+        className={`mx-auto max-w-6xl px-4 sm:px-6 ${align === "center" ? "flex flex-col items-center" : ""}`}
+      >
+        <SectionHeader
+          eyebrow={eyebrow}
+          title={title}
+          body={body}
+          align={align}
+          nowrap={nowrap}
+        />
       </div>
     </section>
   );
