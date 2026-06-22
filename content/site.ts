@@ -34,7 +34,7 @@ export const site = {
   brand: {
     name: "Lumjha",
     wordmark: "Lumjha",
-    tagline: "Clone Your Best Agent. Automate Your Growth.",
+    tagline: "Enable Your best agent. Automate your growth.",
   },
 
   // External app entry — all login / start / get-started CTAs point here.
@@ -55,7 +55,7 @@ export const site = {
 
   hero: {
     eyebrow: "RAG-Powered · No-Code Builder · Custom Knowledge",
-    headline: ["Clone Your Best Agent.", "Automate Your Growth."],
+    headline: ["Enable Your best agent. Automate your growth."],
     sub: "Deploy a no-code AI assistant that learns every document, page, and policy in your business and speaks in your exact brand voice. Engage customers 24/7 across Website, WhatsApp, Instagram, Facebook, and Telegram — capture qualified leads and book appointments while you sleep.",
     ctas: {
       primary: "Build Your Agent Free",
@@ -416,7 +416,7 @@ export const site = {
 
   footer: {
     pitch:
-      "Clone your best agent. Automate your growth. Lumjha is the no-code AI layer for modern customer engagement.",
+      "Enable Your best agent. Automate your growth. Lumjha is the no-code AI layer for modern customer engagement.",
     contact: "info@lumjha.ai",
     columns: [
       {
