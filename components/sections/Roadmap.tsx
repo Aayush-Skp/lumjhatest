@@ -11,7 +11,7 @@ export function Roadmap() {
     <section
       id="roadmap"
       aria-labelledby="roadmap-title"
-      className="relative py-24 md:py-32"
+      className="relative py-16 md:py-24"
     >
       <Container className="flex flex-col items-center gap-14">
         <SectionHeader

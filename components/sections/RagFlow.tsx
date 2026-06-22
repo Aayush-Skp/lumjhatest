@@ -12,7 +12,7 @@ export function RagFlow() {
     <section
       id="rag"
       aria-labelledby="rag-title"
-      className="relative py-24 md:py-32"
+      className="relative py-16 md:py-24"
     >
       <Container className="flex flex-col gap-14">
         <SectionHeader

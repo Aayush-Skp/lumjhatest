@@ -10,7 +10,7 @@ export function DataArchitecture() {
     <section
       id="architecture"
       aria-labelledby="arch-title"
-      className="relative py-24 md:py-32"
+      className="relative py-16 md:py-24"
     >
       <Container className="flex flex-col gap-14">
         <SectionHeader

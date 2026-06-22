@@ -11,7 +11,7 @@ export function HowItWorks() {
     <section
       id="how"
       aria-labelledby="how-title"
-      className="relative py-24 md:py-32"
+      className="relative py-16 md:py-24"
     >
       <GlowBackdrop
         position="center"

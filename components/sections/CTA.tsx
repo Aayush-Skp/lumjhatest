@@ -14,7 +14,7 @@ export function CTA() {
     <section
       id="get-started"
       aria-labelledby="cta-title"
-      className="relative py-24 md:py-32"
+      className="relative py-16 md:py-24"
     >
       <Container>
         <motion.div

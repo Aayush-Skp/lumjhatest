@@ -13,7 +13,7 @@ export function Channels() {
     <section
       id="channels"
       aria-labelledby="channels-title"
-      className="relative py-24 md:py-28"
+      className="relative py-16 md:py-24"
     >
       <Container className="flex flex-col items-center gap-12">
         <SectionHeader

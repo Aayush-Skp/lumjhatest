@@ -13,7 +13,7 @@ export function LeadCapture() {
     <section
       id="leads"
       aria-labelledby="leads-title"
-      className="relative py-24 md:py-32"
+      className="relative py-16 md:py-24"
     >
       <Container>
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">

@@ -15,7 +15,7 @@ export function Hero() {
     <section
       id="hero"
       aria-labelledby="hero-title"
-      className="relative isolate flex min-h-[100dvh] flex-col justify-center overflow-hidden pt-20 pb-10 md:pt-24 md:pb-14"
+      className="relative isolate flex flex-col overflow-hidden pt-24 pb-16 md:pt-28 md:pb-20 lg:min-h-[100dvh] lg:justify-center lg:pt-24 lg:pb-14"
     >
       {/* Background — just the faint dotted grid; no radial glow backdrop. */}
       <div aria-hidden className="absolute inset-0 -z-20 bg-grid" />
