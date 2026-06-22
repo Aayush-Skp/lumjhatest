@@ -1,4 +1,4 @@
-import Eyebrow from "@/components/another-one/ui/Eyebrow";
+import SectionHeader from "@/components/another-one/ui/SectionHeader";
 
 interface StubSectionProps {
   id: string;
@@ -24,16 +24,8 @@ export default function StubSection({
       id={id}
       className={`a1-section py-24 md:py-32 ${elevated ? "a1-elevated" : ""}`}
     >
-      <div className="mx-auto max-w-6xl px-6">
-        <Eyebrow>{eyebrow}</Eyebrow>
-        <h2 className="mt-3 max-w-2xl font-display text-display-lg text-[var(--color-text-primary)]">
-          {title}
-        </h2>
-        {body && (
-          <p className="mt-6 max-w-2xl font-body text-body-lg text-[var(--color-text-secondary)]">
-            {body}
-          </p>
-        )}
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <SectionHeader eyebrow={eyebrow} title={title} body={body} />
         <p className="mt-8 inline-flex rounded-full border border-[var(--color-border)] px-3 py-1 font-mono text-caption text-[var(--color-text-muted)]">
           Section in progress
         </p>

@@ -178,7 +178,7 @@ function PlanCard({ plan }: { plan: Plan }) {
 export default function Pricing({ id }: { id?: string }) {
   return (
     <section id={id} className="a1-section a1-elevated py-24 md:py-32">
-      <div className="mx-auto max-w-3xl px-6 text-center">
+      <div className="mx-auto max-w-3xl px-4 sm:px-6 text-center">
         <Eyebrow>Pricing</Eyebrow>
         <h2 className="mt-3 font-display text-display-lg text-[var(--color-text-primary)]">
           Start free. Scale without complexity.
@@ -189,7 +189,7 @@ export default function Pricing({ id }: { id?: string }) {
         </p>
       </div>
 
-      <div className="mx-auto mt-16 grid max-w-6xl grid-cols-1 gap-5 px-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mx-auto mt-16 grid max-w-6xl grid-cols-1 gap-5 px-4 sm:px-6 sm:grid-cols-2 lg:grid-cols-4">
         {PLANS.map((p, i) => (
           <Reveal key={p.name} delay={i * 0.08} className="h-full">
             <PlanCard plan={p} />
@@ -198,7 +198,7 @@ export default function Pricing({ id }: { id?: string }) {
       </div>
 
       {/* Add-ons */}
-      <div className="mx-auto mt-10 max-w-6xl px-6">
+      <div className="mx-auto mt-10 max-w-6xl px-4 sm:px-6">
         <p className="mb-4 font-mono text-caption uppercase tracking-widest text-[var(--color-text-muted)]">
           Add-on modules · any paid plan
         </p>
@@ -226,7 +226,7 @@ export default function Pricing({ id }: { id?: string }) {
         </div>
       </div>
 
-      <p className="mx-auto mt-10 max-w-6xl px-6 text-center font-body text-body-sm text-[var(--color-text-muted)]">
+      <p className="mx-auto mt-10 max-w-6xl px-4 sm:px-6 text-center font-body text-body-sm text-[var(--color-text-muted)]">
         Every plan includes SSL security, GDPR-ready data handling, your data
         never deleted, and cancel-anytime billing.
       </p>

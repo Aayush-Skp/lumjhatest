@@ -7,8 +7,8 @@ import Eyebrow from "@/components/another-one/ui/Eyebrow";
 import FloatingOrb from "@/components/another-one/ui/FloatingOrb";
 import AnimatedCounter from "@/components/another-one/ui/AnimatedCounter";
 
-const ChatbotDemo = dynamic(
-  () => import("@/components/another-one/sections/ChatbotDemo"),
+const HeroDashboard = dynamic(
+  () => import("@/components/another-one/sections/HeroDashboard"),
   { ssr: false },
 );
 
@@ -16,7 +16,7 @@ const LOGIN_URL = "https://app.lumjha.ai/login";
 
 // Headline split into words; the period after each sentence pulses to accent.
 const SENTENCES = [
-  ["Clone", "Your", "Best", "Agent."],
+  ["Create", "Your", "Best", "Agent."],
   ["Automate", "Your", "Growth."],
 ];
 
@@ -71,7 +71,7 @@ export default function Hero({ id }: { id?: string }) {
       <FloatingOrb size={400} color="#5EEAD4" opacity={0.15} top={-40} right={-60} />
       <FloatingOrb size={300} color="#818CF8" opacity={0.1} bottom={20} left={-40} />
 
-      <div className="relative z-10 mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-12 px-6 lg:grid-cols-[45%_55%]">
+      <div className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-10 px-3 sm:px-5 lg:grid-cols-[40%_60%] lg:gap-8">
         {/* Left column */}
         <div>
           <motion.div {...fade(0.4)}>
@@ -191,15 +191,15 @@ export default function Hero({ id }: { id?: string }) {
           </motion.dl>
         </div>
 
-        {/* Right column — chat demo */}
+        {/* Right column — interactive mock dashboard */}
         <motion.div
           initial={{ opacity: 0, x: reduced ? 0 : 40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.7, delay: 1.7, ease: [0.22, 1, 0.36, 1] }}
           className="flex justify-center lg:justify-end"
         >
-          <div className="mt-5 w-full max-w-[360px] lg:rotate-2">
-            <ChatbotDemo />
+          <div className="mt-5 w-full max-w-120 lg:max-w-none">
+            <HeroDashboard />
           </div>
         </motion.div>
       </div>

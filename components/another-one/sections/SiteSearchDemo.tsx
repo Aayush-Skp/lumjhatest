@@ -168,7 +168,7 @@ export default function SiteSearchDemo({ id }: { id?: string }) {
       className="relative overflow-hidden bg-[var(--color-bg-2)] py-24 md:py-32"
     >
       <FloatingOrb size={280} color="#818CF8" opacity={0.1} top={80} left={-60} />
-      <div className="relative z-10 mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-6 lg:grid-cols-2">
+      <div className="relative z-10 mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-4 sm:px-6 lg:grid-cols-2">
         <div>
           <Eyebrow>Site Search</Eyebrow>
           <h2 className="mt-3 max-w-md font-display text-display-lg text-[var(--color-text-primary)]">

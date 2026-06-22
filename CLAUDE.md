@@ -8,7 +8,7 @@
 ## 1. Project Identity
 
 **Product:** Lumjha — a no-code AI agent platform  
-**Tagline:** Clone your best agent. Automate your growth.  
+**Tagline:** Create your best agent. Automate your growth.  
 **Core value prop:** One knowledge base → three AI modules (Chatbot, Site Search, Policy Vault) → live across Website, WhatsApp, Instagram, Facebook, Telegram in minutes, no code.  
 **Target audience:** SMB owners, marketing leads, SaaS founders, e-commerce operators — people who are not engineers but need enterprise-grade AI support.  
 **Live app:** https://app.lumjha.ai/login  
@@ -100,7 +100,7 @@ Logo | Platform | Features | How it works | Pricing | Security
 ### 4.2 Hero
 ```
 Headline (animated, word-by-word reveal):
-  "Clone Your Best Agent."
+  "Create Your Best Agent."
   "Automate Your Growth."
 
 Subheadline:
@@ -373,7 +373,7 @@ CTAs: [Start Free →]  [Book a Demo]
 
 ### 4.14 Footer
 ```
-Logo + tagline: "Clone your best agent. Automate your growth.
+Logo + tagline: "Create your best agent. Automate your growth.
 Lumjha is the no-code AI layer for modern customer engagement."
 Contact: info@lumjha.ai
 

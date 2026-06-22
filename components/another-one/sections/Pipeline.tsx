@@ -1,6 +1,6 @@
 import type { ComponentType, SVGProps } from "react";
 import { Upload, FileText, Scissors, Cpu, Database } from "lucide-react";
-import Eyebrow from "@/components/another-one/ui/Eyebrow";
+import SectionHeader from "@/components/another-one/ui/SectionHeader";
 import Reveal from "@/components/another-one/ui/Reveal";
 
 type Stage = {
@@ -46,15 +46,12 @@ const STAGES: Stage[] = [
 export default function Pipeline({ id }: { id?: string }) {
   return (
     <section id={id} className="a1-section a1-elevated py-24 md:py-32">
-      <div className="mx-auto max-w-6xl px-6">
-        <Eyebrow>Pipeline</Eyebrow>
-        <h2 className="mt-3 max-w-2xl font-display text-display-lg text-[var(--color-text-primary)]">
-          From your content to intelligent answers.
-        </h2>
-        <p className="mt-6 max-w-2xl font-body text-body-lg text-[var(--color-text-secondary)]">
-          Five deterministic stages turn raw documents into semantically
-          searchable knowledge your agent can reason with.
-        </p>
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <SectionHeader
+          eyebrow="Pipeline"
+          title="From your content to intelligent answers."
+          body="Five deterministic stages turn raw documents into semantically searchable knowledge your agent can reason with."
+        />
 
         <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
           {STAGES.map(({ no, icon: Icon, title, body }, i) => (

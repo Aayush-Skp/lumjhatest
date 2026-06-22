@@ -41,12 +41,12 @@ function rotate<T>(arr: T[], by: number): T[] {
 function ChannelTile({ channel }: { channel: Channel }) {
   const { Icon, color, name } = channel;
   return (
-    <div className="flex h-24 items-center justify-center px-1 md:h-32">
+    <div className="flex h-20 items-center justify-center px-1 md:h-32">
       <div
-        className="flex h-16 w-16 items-center justify-center rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-2)] shadow-[0_12px_36px_rgba(0,0,0,0.4)] md:h-24 md:w-24"
+        className="flex h-11 w-11 items-center justify-center rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-2)] shadow-[0_12px_36px_rgba(0,0,0,0.4)] sm:h-16 sm:w-16 sm:rounded-2xl md:h-24 md:w-24"
         title={name}
       >
-        <Icon style={{ color }} className="h-8 w-8 md:h-12 md:w-12" aria-hidden />
+        <Icon style={{ color }} className="h-5 w-5 sm:h-8 sm:w-8 md:h-12 md:w-12" aria-hidden />
       </div>
     </div>
   );
@@ -92,7 +92,7 @@ export default function OmniChannel({ id }: { id?: string }) {
       className="a1-section a1-elevated overflow-hidden py-24 md:py-32"
     >
       {/* Description on top */}
-      <div className="mx-auto max-w-3xl px-6 text-center">
+      <div className="mx-auto max-w-3xl px-4 sm:px-6 text-center">
         <Eyebrow>Omnichannel</Eyebrow>
         <h2 className="mt-3 font-display text-display-lg text-[var(--color-text-primary)]">
           Meet your customers wherever they already are.
@@ -105,7 +105,7 @@ export default function OmniChannel({ id }: { id?: string }) {
       </div>
 
       {/* Slot-machine reels below */}
-      <div className="mx-auto mt-14 grid max-w-5xl grid-cols-6 gap-1.5 px-6 md:gap-4">
+      <div className="mx-auto mt-14 grid max-w-5xl grid-cols-6 gap-1.5 px-4 sm:px-6 md:gap-4">
         {Array.from({ length: REELS }).map((_, i) => (
           <SlotReel
             key={i}
@@ -117,7 +117,7 @@ export default function OmniChannel({ id }: { id?: string }) {
         ))}
       </div>
 
-      <p className="mx-auto mt-10 max-w-3xl px-6 text-center font-body text-body-sm text-[var(--color-text-muted)]">
+      <p className="mx-auto mt-10 max-w-3xl px-4 sm:px-6 text-center font-body text-body-sm text-[var(--color-text-muted)]">
         Plus custom integrations via webhooks and REST API.
       </p>
     </section>
