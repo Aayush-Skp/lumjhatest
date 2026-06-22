@@ -2,7 +2,7 @@
 
 import type { ComponentType, SVGProps } from "react";
 import { TrendingUp, MessageCircle, Smile, Flame } from "lucide-react";
-import Eyebrow from "@/components/another-one/ui/Eyebrow";
+import SectionHeader from "@/components/another-one/ui/SectionHeader";
 import AnimatedCounter from "@/components/another-one/ui/AnimatedCounter";
 import Reveal from "@/components/another-one/ui/Reveal";
 
@@ -54,16 +54,12 @@ const STATS: Stat[] = [
 export default function Analytics({ id }: { id?: string }) {
   return (
     <section id={id} className="a1-section a1-elevated py-24 md:py-32">
-      <div className="mx-auto max-w-6xl px-6">
-        <Eyebrow>Analytics</Eyebrow>
-        <h2 className="mt-3 max-w-2xl font-display text-display-lg text-[var(--color-text-primary)]">
-          Every conversation, summarized automatically.
-        </h2>
-        <p className="mt-6 max-w-2xl font-body text-body-lg text-[var(--color-text-secondary)]">
-          Real-time counts surface unread messages, new leads, and new sessions.
-          These insights feed back into your app — improve the bot, spot demand,
-          optimize conversion.
-        </p>
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <SectionHeader
+          eyebrow="Analytics"
+          title="Every conversation, summarized automatically."
+          body="Real-time counts surface unread messages, new leads, and new sessions. These insights feed back into your app — improve the bot, spot demand, optimize conversion."
+        />
 
         <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {STATS.map(({ icon: Icon, prefix, value, suffix, label, color, bars }, i) => (

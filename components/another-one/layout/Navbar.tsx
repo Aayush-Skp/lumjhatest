@@ -49,7 +49,7 @@ export default function Navbar() {
           : "1px solid transparent",
       }}
     >
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+      <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 sm:px-6 py-4">
         <a href="#hero" aria-label="Lumjha home" className="shrink-0">
           <Wordmark />
         </a>

@@ -15,7 +15,7 @@ const ACTIVE_STAGE = 2;
 export default function Leads({ id }: { id?: string }) {
   return (
     <section id={id} className="a1-section py-24 md:py-32">
-      <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-6 lg:grid-cols-2">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-4 sm:px-6 lg:grid-cols-2">
         <div>
           <Eyebrow>Leads</Eyebrow>
           <h2 className="mt-3 max-w-md font-display text-display-lg text-[var(--color-text-primary)]">

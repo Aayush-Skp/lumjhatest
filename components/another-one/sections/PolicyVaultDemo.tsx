@@ -214,7 +214,7 @@ export default function PolicyVaultDemo({ id }: { id?: string }) {
   return (
     <section id={id} className="relative overflow-hidden py-24 md:py-32">
       <FloatingOrb size={300} color="#FCD34D" opacity={0.1} top={60} right={-60} />
-      <div className="relative z-10 mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-6 lg:grid-cols-2">
+      <div className="relative z-10 mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-4 sm:px-6 lg:grid-cols-2">
         <div>
           <Eyebrow>Policy Vault</Eyebrow>
           <h2 className="mt-3 max-w-md font-display text-display-lg text-[var(--color-text-primary)]">

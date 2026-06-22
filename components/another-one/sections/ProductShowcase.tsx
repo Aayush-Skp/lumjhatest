@@ -101,7 +101,7 @@ export default function ProductShowcase({ id }: { id?: string }) {
       id={id}
       ref={ref}
       className="relative"
-      style={{ height: `${PRODUCTS.length * 135}vh` }}
+      style={{ height: `${PRODUCTS.length * 118}vh` }}
     >
       <div className="sticky top-0 flex h-screen items-center overflow-hidden border-t border-[var(--color-border)]">
         <FloatingOrb
@@ -112,23 +112,23 @@ export default function ProductShowcase({ id }: { id?: string }) {
           right={-80}
         />
 
-        <div className="relative z-10 mx-auto w-full max-w-6xl px-6">
+        <div className="relative z-10 mx-auto w-full max-w-6xl px-4 sm:px-6">
           {/* Section header */}
-          <div className="mb-10 flex items-center justify-between">
+          <div className="mb-6 flex items-center justify-between gap-3 lg:mb-10">
             <Eyebrow>The Platform · One knowledge base</Eyebrow>
-            <span className="font-mono text-caption text-[var(--color-text-muted)]">
+            <span className="shrink-0 font-mono text-caption text-[var(--color-text-muted)]">
               {String(active + 1).padStart(2, "0")} /{" "}
               {String(PRODUCTS.length).padStart(2, "0")}
             </span>
           </div>
 
-          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
+          <div className="grid grid-cols-1 items-center gap-6 lg:grid-cols-2 lg:gap-16">
             {/* Example (left) — reveals from the top. Children are absolutely
                 stacked so the swap crossfades without layout shift and the new
                 product appears instantly even on fast scroll (no skipping). */}
             <div
               id={product.anchor}
-              className="relative order-2 h-[min(460px,68vh)] lg:order-1"
+              className="relative order-2 h-[42vh] lg:order-1 lg:h-[min(460px,68vh)]"
             >
               <AnimatePresence initial={false}>
                 {inView && (
@@ -147,7 +147,7 @@ export default function ProductShowcase({ id }: { id?: string }) {
             </div>
 
             {/* Description (right) — reveals from the bottom */}
-            <div className="relative order-1 h-[min(340px,52vh)] lg:order-2 lg:h-[min(460px,68vh)]">
+            <div className="relative order-1 h-[38vh] lg:order-2 lg:h-[min(460px,68vh)]">
               <AnimatePresence initial={false}>
                 {inView && (
                   <motion.div
@@ -170,10 +170,10 @@ export default function ProductShowcase({ id }: { id?: string }) {
                     <p className="mt-4 font-body text-caption uppercase tracking-widest text-[var(--color-text-secondary)]">
                       {product.eyebrow}
                     </p>
-                    <h2 className="mt-2 font-display text-display-lg text-[var(--color-text-primary)]">
+                    <h2 className="mt-2 font-display text-display-md text-[var(--color-text-primary)] lg:text-display-lg">
                       {product.title}
                     </h2>
-                    <p className="mt-5 max-w-md font-body text-body-lg text-[var(--color-text-secondary)]">
+                    <p className="mt-3 max-w-md font-body text-body-md text-[var(--color-text-secondary)] lg:mt-5 lg:text-body-lg">
                       {product.body}
                     </p>
                   </motion.div>
@@ -183,7 +183,7 @@ export default function ProductShowcase({ id }: { id?: string }) {
           </div>
 
           {/* Step indicators */}
-          <div className="mt-12 flex items-center gap-2">
+          <div className="mt-6 flex items-center gap-2 lg:mt-12">
             {PRODUCTS.map((p, i) => (
               <span
                 key={p.key}

@@ -91,7 +91,7 @@ export default function AnotherOnePage() {
             id="get-started"
             className="a1-section py-24 text-center md:py-32"
           >
-            <div className="mx-auto max-w-3xl px-6">
+            <div className="mx-auto max-w-3xl px-4 sm:px-6">
               <h2 className="font-display text-display-lg text-[var(--color-text-primary)]">
                 Your data is your asset. Make it work for you.
               </h2>
@@ -126,13 +126,13 @@ export default function AnotherOnePage() {
 
       {/* Footer */}
       <footer className="border-t border-[var(--color-border)] bg-[var(--color-bg-2)] py-12">
-        <div className="mx-auto flex max-w-6xl flex-col items-start gap-4 px-6 md:flex-row md:items-center md:justify-between">
+        <div className="mx-auto flex max-w-6xl flex-col items-start gap-4 px-4 sm:px-6 md:flex-row md:items-center md:justify-between">
           <div>
             <span className="font-display text-xl font-extrabold text-[var(--color-text-primary)]">
               Lum<span className="text-[var(--color-accent)]">jha</span>
             </span>
             <p className="mt-2 max-w-sm font-body text-body-sm text-[var(--color-text-secondary)]">
-              Clone your best agent. Automate your growth.
+              Create your best agent. Automate your growth.
             </p>
           </div>
           <div className="flex flex-col gap-1 font-body text-body-sm text-[var(--color-text-secondary)] md:items-end">
