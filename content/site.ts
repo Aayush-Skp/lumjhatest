@@ -281,7 +281,7 @@ export const site = {
       "We do NOT use your data outside your workspace.",
       "We do NOT train without your configured consent.",
       "We do NOT expose your data to other clients.",
-      "We NEVER modify or delete your data — when a plan lapses, access is locked, not erased.",
+      "We never modify or delete your data — when a plan lapses, access is locked, not erased.",
       "Answers are not generated from unknown sources; only your managed and uploaded data is used.",
       "You never lose control of your data.",
       "Nothing is hidden from your account—you have complete visibility into chats, leads, and answers."
@@ -440,23 +440,24 @@ export const site = {
           { label: "Integrations", href: "#channels" },
         ],
       },
-      {
-        title: "Company",
-        links: [
-          { label: "About", href: "#" },
-          { label: "Blog", href: "#" },
-          { label: "Contact", href: "#" },
-        ],
-      },
-      {
-        title: "Legal",
-        links: [
-          { label: "Privacy", href: "#" },
-          { label: "Terms", href: "#" },
-          { label: "Data Processing", href: "#" },
-          { label: "Data Deletion", href: "#" },
-        ],
-      },
+      // Commented out for now — Company & Legal columns.
+      // {
+      //   title: "Company",
+      //   links: [
+      //     { label: "About", href: "#" },
+      //     { label: "Blog", href: "#" },
+      //     { label: "Contact", href: "#" },
+      //   ],
+      // },
+      // {
+      //   title: "Legal",
+      //   links: [
+      //     { label: "Privacy", href: "#" },
+      //     { label: "Terms", href: "#" },
+      //     { label: "Data Processing", href: "#" },
+      //     { label: "Data Deletion", href: "#" },
+      //   ],
+      // },
     ],
     copyright: "© 2026 Lumjha. All rights reserved.",
   },
