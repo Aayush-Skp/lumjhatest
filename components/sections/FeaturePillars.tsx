@@ -19,7 +19,7 @@ export function FeaturePillars() {
           eyebrow="Core Pillars"
           title={
             <span id="features-title">
-              Everything a modern AI agent should already do.
+              Built to answer, convert, and book — automatically.
             </span>
           }
           description="Capabilities built into every Lumjha workspace — grounded answers, persistent context, structured leads, appointments, live insights, and verified citations."
