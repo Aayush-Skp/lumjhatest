@@ -166,7 +166,7 @@ export const site = {
 
   pipeline: {
     eyebrow: "Pipeline",
-    title: "From your content to intelligent answers.",
+    title: "From your content to intelligent answers, every time.",
     description:
       "Five deterministic stages turn raw documents into semantically searchable knowledge your agent can reason with.",
     steps: [
@@ -206,7 +206,7 @@ export const site = {
 
   rag: {
     eyebrow: "Retrieval-Augmented Generation",
-    title: "Retrieval-Augmented Generation, tuned to your business.",
+    title: "Retrieval-Augmented Generation, tuned to your business, answers that is accurate, everytime.",
     beats: [
       "The system analyzes the user's query.",
       "Semantic search pulls the most relevant chunks from your knowledge base.",
@@ -245,7 +245,7 @@ export const site = {
 
   security: {
     eyebrow: "Security",
-    title: "Your data, your control — always.",
+    title: "You manage and control your data, always.",
     items: [
       {
         icon: KeyRound as LucideIcon,
@@ -255,7 +255,7 @@ export const site = {
       },
       {
         icon: Lock as LucideIcon,
-        title: "Session Security",
+        title: "Session and App Security",
         description:
           "Secure session tokens for chat; validation on every request.",
       },
@@ -269,20 +269,22 @@ export const site = {
         icon: Boxes as LucideIcon,
         title: "Data Isolation",
         description:
-          "Your knowledge base is yours alone — never shared across workspaces, never blended with another client's data.",
+          "Your knowledge base is yours 100% — never shared across workspaces, never blended with another client's data.",
       },
     ],
   },
 
   denials: {
     eyebrow: "Transparency",
-    title: "Transparency, in plain language.",
+    title: "Robust Solution with relatable Transparency.",
     items: [
-      "We do NOT access private or restricted website data.",
       "We do NOT use your data outside your workspace.",
       "We do NOT train without your configured consent.",
       "We do NOT expose your data to other clients.",
-      "We NEVER delete your data — when a plan lapses, access is locked, not erased.",
+      "We NEVER modify or delete your data — when a plan lapses, access is locked, not erased.",
+      "Answers are not generated from unknown sources; only your managed and uploaded data is used.",
+      "You never lose control of your data.",
+      "Nothing is hidden from your account—you have complete visibility into chats, leads, and answers."
     ],
   },
 
@@ -292,17 +294,17 @@ export const site = {
     copy: "Leads are captured inside the conversation — gradually, conversationally. When required fields complete, a structured lead record is saved and linked back to the chat session. Track, filter, and export from one dashboard.",
     demo: [
       { role: "bot", text: "Happy to help! Who am I speaking with?" },
-      { role: "user", text: "Priya Sharma" },
-      { role: "bot", text: "Thanks, Priya — best email to reach you?" },
-      { role: "user", text: "priya@acme.co — Enterprise plan, ~200 seats" },
+      { role: "user", text: "Paula Johnson" },
+      { role: "bot", text: "Thanks, Paula — best email to reach you?" },
+      { role: "user", text: "paula@acme.co — Enterprise plan, ~200 seats" },
     ] as { role: "bot" | "user"; text: string }[],
     savedToast: "Lead saved to dashboard",
     pipeline: "New → Contacted → Qualified → Converted / Lost",
   },
 
   analytics: {
-    eyebrow: "Analytics",
-    title: "Every conversation, summarized automatically.",
+    eyebrow: "Analytics and Reporting",
+    title: "Every conversation, summarized, analyzed and reported automatically.",
     tiles: [
       { icon: ArrowUpRight as LucideIcon, label: "User intent", value: "+28%" },
       { icon: Tag as LucideIcon, label: "Topics discussed", value: "142" },
@@ -310,7 +312,7 @@ export const site = {
       { icon: Signal as LucideIcon, label: "Lead signals", value: "38 hot" },
     ],
     footer:
-      "Real-time notification counts surface unread messages, new leads, and new sessions. These insights feed back into your app — improve the bot, spot demand, optimize conversion.",
+      "Real-time notification counts surface unread messages, new leads, and new sessions. These insights feed back into your app — improve the bot, spot demand, optimize conversion and much more.",
   },
 
   roadmap: {
@@ -398,13 +400,13 @@ export const site = {
       title: "Premium add-on modules",
       note: "Unlock on any paid plan — free during your 14-day trial.",
       items: [
-        { name: "Website Search", price: "+$15", cadence: "/mo", save: "" },
-        { name: "Policy Vault (Exact Answers)", price: "+$15", cadence: "/mo", save: "" },
-        { name: "Bundle (both)", price: "+$25", cadence: "/mo", save: "save $5/mo" },
+        { name: "Website Search", price: "+$25", cadence: "/mo", save: "" },
+        { name: "Policy Vault (Exact Answers)", price: "+$25", cadence: "/mo", save: "" },
+        { name: "Bundle (both)", price: "+$40", cadence: "/mo", save: "save $5/mo" },
       ],
     },
     footnote:
-      "Every plan includes SSL security, GDPR-ready data handling, your data never deleted, and cancel-anytime billing.",
+      "Every plan includes SSL security, your data never deleted, and cancel-anytime billing.",
   },
 
   cta: {

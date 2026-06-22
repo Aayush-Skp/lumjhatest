@@ -117,9 +117,9 @@ export function RagDiagram() {
             <span className="font-display text-sm font-semibold text-fg-high">
               Knowledge Database
             </span>
-            <span className="font-mono text-[11px] tracking-wide text-fg-low">
+            {/* <span className="font-mono text-[11px] tracking-wide text-fg-low">
               Qdrant · vector embeddings
-            </span>
+            </span> */}
           </div>
         </motion.div>
       </div>

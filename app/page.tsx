@@ -10,7 +10,7 @@ import { Security } from "@/components/sections/Security";
 import { WhatWeDontDo } from "@/components/sections/WhatWeDontDo";
 import { LeadCapture } from "@/components/sections/LeadCapture";
 import { Analytics } from "@/components/sections/Analytics";
-import { Roadmap } from "@/components/sections/Roadmap";
+// import { Roadmap } from "@/components/sections/Roadmap";
 import { Pricing } from "@/components/sections/Pricing";
 import { CTA } from "@/components/sections/CTA";
 import { Footer } from "@/components/sections/Footer";
@@ -36,7 +36,7 @@ export default function Home() {
         <WhatWeDontDo />
         <LeadCapture />
         <Analytics />
-        <Roadmap />
+        {/* <Roadmap /> */}
         <Pricing />
         <CTA />
       </main>
