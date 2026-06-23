@@ -10,6 +10,13 @@ const nextConfig: NextConfig = {
       fallback: [],
     };
   },
+  async redirects() {
+    return [
+      // The page is served only at the root; hitting /another-one directly
+      // bounces back to / so the content lives on a single canonical URL.
+      { source: "/another-one", destination: "/", permanent: true },
+    ];
+  },
 };
 
 export default nextConfig;
