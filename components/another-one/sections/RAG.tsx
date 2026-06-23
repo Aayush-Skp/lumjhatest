@@ -29,7 +29,7 @@ export default function RAG({ id }: { id?: string }) {
       {/* Flow chain */}
       <div className="mx-auto mt-14 max-w-4xl px-4 sm:px-6">
         <StageRail
-          direction="rtl"
+          direction="ltr"
           className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center"
         >
           {FLOW.map(({ icon: Icon, label, sub }, i) => (
@@ -63,7 +63,7 @@ export default function RAG({ id }: { id?: string }) {
           <div className="inline-flex items-center gap-2 rounded-full border border-[var(--color-indigo)]/40 bg-[var(--color-indigo-dim)] px-4 py-2">
             <Database className="h-4 w-4 text-[var(--color-indigo)]" aria-hidden />
             <span className="font-mono text-caption text-[var(--color-text-secondary)]">
-              Knowledge Database · Qdrant · vector embeddings
+              Knowledge Base
             </span>
           </div>
         </div>

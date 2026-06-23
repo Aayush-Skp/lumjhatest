@@ -109,7 +109,7 @@ export const site = {
 
   channels: {
     eyebrow: "Omnichannel",
-    title: "Meet your customers wherever they already are.",
+    title: "Meet your customers where they already are.",
     description:
       "One agent, one knowledge base, every channel. Roll Lumjha out on your website, your socials, and your messaging apps — no separate bots, no duplicated content.",
     list: [
@@ -172,8 +172,7 @@ export const site = {
       {
         n: 1,
         title: "Data Ingestion",
-        detail:
-          "Files uploaded or websites crawled. Metadata stored securely.",
+        detail: "Files uploaded or websites crawled. Metadata stored securely.",
       },
       {
         n: 2,
@@ -399,7 +398,12 @@ export const site = {
       items: [
         { name: "Site Search", price: "+$15", cadence: "/mo", save: "" },
         { name: "Policy Vault", price: "+$15", cadence: "/mo", save: "" },
-        { name: "Bundle (both)", price: "+$25", cadence: "/mo", save: "save $5/mo" },
+        {
+          name: "Bundle (both)",
+          price: "+$25",
+          cadence: "/mo",
+          save: "save $5/mo",
+        },
       ],
     },
     footnote:

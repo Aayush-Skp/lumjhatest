@@ -120,13 +120,11 @@ export default function Hero({ id }: { id?: string }) {
 
           <motion.p
             {...fade(0.9)}
-            className="mt-6 max-w-2xl font-body text-body-lg text-[var(--color-text-secondary)]"
+            className="mt-6 max-w-3xl font-body text-body-lg leading-relaxed text-[var(--color-text-secondary)]"
           >
-            Deploy a no-code AI assistant that learns every document, page, and
-            policy in your business — and speaks in your exact brand voice.
-            Engage customers 24/7 across Website, WhatsApp, Instagram, Facebook,
-            and Telegram. Capture qualified leads and book appointments while you
-            sleep.
+            A no-code AI assistant that learns your business and speaks in your
+            brand voice — engaging customers 24/7 across every channel, capturing
+            leads and booking appointments while you sleep.
           </motion.p>
 
           {/* CTAs */}

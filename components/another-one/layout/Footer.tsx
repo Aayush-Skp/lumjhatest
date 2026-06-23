@@ -34,21 +34,12 @@ const COLUMNS: LinkColumn[] = [
     ],
   },
   {
-    heading: "Company",
-    links: [
-      { label: "About", href: "#" },
-      { label: "Blog", href: "#" },
-      { label: "Careers", href: "#" },
-      { label: "Contact", href: "mailto:info@lumjha.ai" },
-    ],
-  },
-  {
     heading: "Legal",
     links: [
       { label: "Privacy", href: "#" },
       { label: "Terms", href: "#" },
-      { label: "Data Processing", href: "#" },
-      { label: "Data Deletion", href: "#" },
+      // { label: "Data Processing", href: "#" },
+      // { label: "Data Deletion", href: "#" },
     ],
   },
 ];
@@ -180,7 +171,7 @@ export default function Footer() {
         </div>
 
         {/* Link columns */}
-        <div className="grid grid-cols-2 gap-x-8 gap-y-10 py-8 md:grid-cols-4">
+        <div className="grid grid-cols-2 gap-x-8 gap-y-10 py-8 md:grid-cols-3">
           {COLUMNS.map((col) => (
             <nav key={col.heading} aria-label={col.heading}>
               <h3 className="font-mono text-caption uppercase tracking-[0.2em] text-[var(--color-text-muted)]">

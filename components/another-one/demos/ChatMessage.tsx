@@ -1,13 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Check, Lock } from "lucide-react";
+import { Check } from "lucide-react";
 import type { ChatMessage as ChatMessageType } from "@/lib/chatScripts";
 
 /**
  * A single chat bubble. User messages sit right with the accent fill; agent
  * messages sit left on a surface bubble with an "L" avatar and an optional
- * citation pill.
+ * verified tag (a subtle "grounded / verified" badge, not a document citation).
  */
 export default function ChatMessage({ message }: { message: ChatMessageType }) {
   const isUser = message.role === "user";
@@ -47,18 +47,17 @@ export default function ChatMessage({ message }: { message: ChatMessageType }) {
 
         {message.citation && (
           <span
-            className="inline-flex items-center gap-1.5 rounded-md border px-2 py-1 font-mono text-[11px]"
+            className="inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-mono text-[10px]"
             style={{
-              background: "var(--color-citation-bg)",
-              borderColor: "var(--color-citation-border)",
-              color: message.verified
-                ? "var(--color-success)"
-                : "var(--color-text-secondary)",
+              background:
+                "color-mix(in srgb, var(--color-success) 12%, transparent)",
+              borderColor:
+                "color-mix(in srgb, var(--color-success) 30%, transparent)",
+              color: "var(--color-success)",
             }}
           >
-            {message.verified ? <Check size={12} /> : <Lock size={11} />}
+            <Check size={11} />
             {message.citation}
-            {message.verified ? " — verified" : ""}
           </span>
         )}
       </div>

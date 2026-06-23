@@ -88,9 +88,9 @@ const PLANS: Plan[] = [
 ];
 
 const ADDONS = [
-  { name: "Site Search", price: "+$15/mo", note: "" },
-  { name: "Policy Vault", price: "+$15/mo", note: "" },
-  { name: "Bundle (both)", price: "+$25/mo", note: "save $5/mo" },
+  { name: "Site Search", price: "+$25/mo", note: "" },
+  { name: "Policy Vault", price: "+$25/mo", note: "" },
+  { name: "Bundle (both)", price: "+$45/mo", note: "save $5/mo" },
 ];
 
 function PlanCard({ plan }: { plan: Plan }) {

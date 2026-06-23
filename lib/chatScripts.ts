@@ -25,7 +25,6 @@ export const chatbotScript: ChatMessage[] = [
   {
     role: "agent",
     text: "Yes — we ship to 40+ countries. Standard delivery is 5–7 business days, with express options at checkout. Want me to check rates for your region?",
-    citation: "shipping.pdf · §1",
     delay: 600,
     typingDuration: 1200,
   },
@@ -37,8 +36,6 @@ export const chatbotScript: ChatMessage[] = [
   {
     role: "agent",
     text: "Refunds are accepted within 30 days of delivery on unused items.",
-    citation: "Returns Policy · §2",
-    verified: true,
     delay: 600,
     typingDuration: 1000,
   },

@@ -22,13 +22,13 @@ const QUERIES: Query[] = [
         title: "Returns Policy",
         excerpt:
           "Refunds accepted within 30 days of delivery on unused items in original condition…",
-        source: "Returns Policy · Page 2",
+        url: "/policies/returns",
       },
       {
         title: "FAQ — Shipping & Returns",
         excerpt:
           "For international orders, return shipping costs are covered by the customer…",
-        source: "FAQ Doc · Page 5",
+        url: "/faq#returns",
       },
     ],
   },
@@ -39,13 +39,13 @@ const QUERIES: Query[] = [
         title: "Shipping Rates",
         excerpt:
           "Express delivery is calculated at checkout by destination and weight, typically 1–3 business days…",
-        source: "shipping.pdf · Page 1",
+        url: "/shipping/rates",
       },
       {
         title: "FAQ — Shipping & Returns",
         excerpt:
           "Express shipping is available to 40+ countries with live carrier rates at checkout…",
-        source: "FAQ Doc · Page 3",
+        url: "/faq#shipping",
       },
     ],
   },
