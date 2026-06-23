@@ -88,9 +88,9 @@ const PLANS: Plan[] = [
 ];
 
 const ADDONS = [
-  { name: "Site Search", price: "+$15/mo", note: "" },
-  { name: "Policy Vault", price: "+$15/mo", note: "" },
-  { name: "Bundle (both)", price: "+$25/mo", note: "save $5/mo" },
+  { name: "Site Search", price: "+$25/mo", note: "" },
+  { name: "Policy Vault", price: "+$25/mo", note: "" },
+  { name: "Bundle (both)", price: "+$45/mo", note: "save $5/mo" },
 ];
 
 function PlanCard({ plan }: { plan: Plan }) {
@@ -178,10 +178,11 @@ function PlanCard({ plan }: { plan: Plan }) {
 export default function Pricing({ id }: { id?: string }) {
   return (
     <section id={id} className="a1-section a1-elevated py-24 md:py-32">
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 text-center">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 text-center">
         <Eyebrow>Pricing</Eyebrow>
         <h2 className="mt-3 font-display text-display-lg text-[var(--color-text-primary)]">
-          Start free. Scale without complexity.
+          Start <span className="text-[var(--color-accent)]">free</span>. Scale
+          without complexity.
         </h2>
         <p className="mx-auto mt-6 max-w-2xl font-body text-body-lg text-[var(--color-text-secondary)]">
           Every account starts with a 14-day trial of all three modules —

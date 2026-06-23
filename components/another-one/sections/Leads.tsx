@@ -18,8 +18,11 @@ export default function Leads({ id }: { id?: string }) {
       <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-4 sm:px-6 lg:grid-cols-2">
         <div>
           <Eyebrow>Leads</Eyebrow>
-          <h2 className="mt-3 max-w-md font-display text-display-lg text-[var(--color-text-primary)]">
-            Capture leads inside the conversation.
+          <h2 className="mt-3 max-w-lg font-display text-display-lg text-[var(--color-text-primary)]">
+            Capture leads{" "}
+            <span className="text-[var(--color-accent)]">
+              inside the conversation.
+            </span>
           </h2>
           <p className="mt-6 max-w-md font-body text-body-lg text-[var(--color-text-secondary)]">
             Leads are captured gradually, conversationally. When required fields

@@ -199,6 +199,11 @@ body {
       transparent 1px
     );
   background-size: 28px 28px;
+  -webkit-mask-image: radial-gradient(
+    ellipse 80% 60% at 50% 0%,
+    #000 30%,
+    transparent 75%
+  );
   mask-image: radial-gradient(
     ellipse 80% 60% at 50% 0%,
     #000 30%,
@@ -526,6 +531,14 @@ html {
 .lumjha-rebuild .a1-section {
   position: relative;
 }
+
+/* Even, non-orphaned heading wraps so section titles don't break into ragged
+   single-word lines. Progressive enhancement: browsers without text-wrap
+   support fall back to normal wrapping. */
+.lumjha-rebuild h2,
+.lumjha-rebuild h3 {
+  text-wrap: balance;
+}
 .lumjha-rebuild .a1-section::before {
   content: "";
   position: absolute;
@@ -558,6 +571,18 @@ html {
   box-shadow: 0 0 40px 8px var(--color-accent-glow);
   opacity: 0.5;
   pointer-events: none;
+}
+
+/* Trail highlight — applied by PageTrail to anchored cards as the trail's
+   leading edge scrolls past them (e.g. the pipeline stages light up in turn). */
+.lumjha-rebuild .a1-trail-on {
+  border-color: var(--color-accent) !important;
+  box-shadow: 0 0 30px -2px var(--color-accent-glow) !important;
+  transform: translateY(-6px) !important;
+}
+.lumjha-rebuild .a1-trail-on .a1-rail-icon {
+  color: var(--color-accent);
+  background: var(--color-accent-dim);
 }
 
 /* Nav link underline that slides in from the left on hover */

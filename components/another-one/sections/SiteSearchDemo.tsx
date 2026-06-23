@@ -22,13 +22,13 @@ const QUERIES: Query[] = [
         title: "Returns Policy",
         excerpt:
           "Refunds accepted within 30 days of delivery on unused items in original condition…",
-        source: "Returns Policy · Page 2",
+        url: "/policies/returns",
       },
       {
         title: "FAQ — Shipping & Returns",
         excerpt:
           "For international orders, return shipping costs are covered by the customer…",
-        source: "FAQ Doc · Page 5",
+        url: "/faq#returns",
       },
     ],
   },
@@ -39,13 +39,13 @@ const QUERIES: Query[] = [
         title: "Shipping Rates",
         excerpt:
           "Express delivery is calculated at checkout by destination and weight, typically 1–3 business days…",
-        source: "shipping.pdf · Page 1",
+        url: "/shipping/rates",
       },
       {
         title: "FAQ — Shipping & Returns",
         excerpt:
           "Express shipping is available to 40+ countries with live carrier rates at checkout…",
-        source: "FAQ Doc · Page 3",
+        url: "/faq#shipping",
       },
     ],
   },
@@ -171,8 +171,9 @@ export default function SiteSearchDemo({ id }: { id?: string }) {
       <div className="relative z-10 mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-4 sm:px-6 lg:grid-cols-2">
         <div>
           <Eyebrow>Site Search</Eyebrow>
-          <h2 className="mt-3 max-w-md font-display text-display-lg text-[var(--color-text-primary)]">
-            Answers, not ten blue links.
+          <h2 className="mt-3 max-w-lg font-display text-display-lg text-[var(--color-text-primary)]">
+            <span className="text-[var(--color-accent)]">Answers</span>, not ten
+            blue links.
           </h2>
           <p className="mt-6 max-w-md font-body text-body-lg text-[var(--color-text-secondary)]">
             AI-native search across your entire site and document library.

@@ -173,8 +173,7 @@ export const site = {
       {
         n: 1,
         title: "Data Ingestion",
-        detail:
-          "Files uploaded or websites crawled. Metadata stored securely.",
+        detail: "Files uploaded or websites crawled. Metadata stored securely.",
       },
       {
         n: 2,

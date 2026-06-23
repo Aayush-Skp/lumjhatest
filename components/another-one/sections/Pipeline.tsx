@@ -2,6 +2,7 @@ import type { ComponentType, SVGProps } from "react";
 import { Upload, FileText, Scissors, Cpu, Database } from "lucide-react";
 import SectionHeader from "@/components/another-one/ui/SectionHeader";
 import Reveal from "@/components/another-one/ui/Reveal";
+import StageRail from "@/components/another-one/ui/StageRail";
 
 type Stage = {
   no: string;
@@ -49,16 +50,27 @@ export default function Pipeline({ id }: { id?: string }) {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeader
           eyebrow="Pipeline"
-          title="From your content to intelligent answers."
+          title={
+            <>
+              From your content to{" "}
+              <span className="text-[var(--color-accent)]">
+                intelligent answers.
+              </span>
+            </>
+          }
           body="Five deterministic stages turn raw documents into semantically searchable knowledge your agent can reason with."
         />
 
-        <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        <StageRail
+          direction="ltr"
+          className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5"
+        >
           {STAGES.map(({ no, icon: Icon, title, body }, i) => (
             <Reveal
               key={no}
               delay={i * 0.06}
-              className="group relative flex h-full min-h-[230px] flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-2)] p-5 transition-all duration-300 hover:-translate-y-1.5 hover:border-[var(--color-accent)]"
+              data-rail-box=""
+              className="group relative z-10 flex h-full min-h-[230px] flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-2)] p-5 transition-all duration-300 hover:-translate-y-1.5 hover:border-[var(--color-accent)]"
             >
               {/* ghost number watermark */}
               <span
@@ -83,7 +95,7 @@ export default function Pipeline({ id }: { id?: string }) {
               </p>
             </Reveal>
           ))}
-        </div>
+        </StageRail>
 
         <p className="mt-8 font-mono text-caption text-[var(--color-text-muted)]">
           Supported file types: PDF · DOCX · XLSX · Markdown · TXT

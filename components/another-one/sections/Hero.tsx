@@ -1,16 +1,10 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { ArrowRight, ArrowDown, Check } from "lucide-react";
 import Eyebrow from "@/components/another-one/ui/Eyebrow";
 import FloatingOrb from "@/components/another-one/ui/FloatingOrb";
 import AnimatedCounter from "@/components/another-one/ui/AnimatedCounter";
-
-const HeroDashboard = dynamic(
-  () => import("@/components/another-one/sections/HeroDashboard"),
-  { ssr: false },
-);
 
 const LOGIN_URL = "https://app.lumjha.ai/login";
 
@@ -55,7 +49,7 @@ export default function Hero({ id }: { id?: string }) {
   return (
     <section
       id={id}
-      className="relative flex min-h-screen items-center overflow-hidden pb-16 pt-28"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden pb-16 pt-28 text-center"
     >
       {/* Background: grid overlay + ambient orbs + central glow */}
       <div className="a1-grid absolute inset-0" aria-hidden />
@@ -71,17 +65,15 @@ export default function Hero({ id }: { id?: string }) {
       <FloatingOrb size={400} color="#5EEAD4" opacity={0.15} top={-40} right={-60} />
       <FloatingOrb size={300} color="#818CF8" opacity={0.1} bottom={20} left={-40} />
 
-      <div className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-10 px-3 sm:px-5 lg:grid-cols-[40%_60%] lg:gap-8">
-        {/* Left column */}
-        <div>
-          <motion.div {...fade(0.4)}>
-            <Eyebrow>No-Code AI Agents</Eyebrow>
-          </motion.div>
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center px-4 sm:px-6">
+        <motion.div {...fade(0.4)}>
+          <Eyebrow>No-Code AI Agents</Eyebrow>
+        </motion.div>
 
-          <h1
-            className="mt-3 font-display text-display-lg text-[var(--color-text-primary)]"
-            style={{ perspective: 800 }}
-          >
+        <h1
+          className="mt-4 font-display text-[clamp(2.75rem,8vw,7rem)] leading-[1.02] text-[var(--color-text-primary)]"
+          style={{ perspective: 800 }}
+        >
             {SENTENCES.map((sentence, si) => {
               // Global word index so the stagger runs across both lines.
               const offset = SENTENCES.slice(0, si).reduce(
@@ -128,13 +120,11 @@ export default function Hero({ id }: { id?: string }) {
 
           <motion.p
             {...fade(0.9)}
-            className="mt-5 max-w-lg font-body text-body-md text-[var(--color-text-secondary)]"
+            className="mt-6 max-w-3xl font-body text-body-lg leading-relaxed text-[var(--color-text-secondary)]"
           >
-            Deploy a no-code AI assistant that learns every document, page, and
-            policy in your business — and speaks in your exact brand voice.
-            Engage customers 24/7 across Website, WhatsApp, Instagram, Facebook,
-            and Telegram. Capture qualified leads and book appointments while you
-            sleep.
+            A no-code AI assistant that learns your business and speaks in your
+            brand voice — engaging customers 24/7 across every channel, capturing
+            leads and booking appointments while you sleep.
           </motion.p>
 
           {/* CTAs */}
@@ -189,20 +179,14 @@ export default function Hero({ id }: { id?: string }) {
               </div>
             ))}
           </motion.dl>
-        </div>
-
-        {/* Right column — interactive mock dashboard */}
-        <motion.div
-          initial={{ opacity: 0, x: reduced ? 0 : 40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, delay: 1.7, ease: [0.22, 1, 0.36, 1] }}
-          className="flex justify-center lg:justify-end"
-        >
-          <div className="mt-5 w-full max-w-120 lg:max-w-none">
-            <HeroDashboard />
-          </div>
-        </motion.div>
       </div>
+
+      {/* Trail anchor — the page trail starts down the centre of the hero. */}
+      <span
+        aria-hidden
+        data-trail="center"
+        className="pointer-events-none absolute bottom-[10%] left-1/2"
+      />
     </section>
   );
 }
