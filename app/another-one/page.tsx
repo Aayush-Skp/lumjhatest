@@ -2,9 +2,9 @@
 
 import dynamic from "next/dynamic";
 import Navbar from "@/components/another-one/layout/Navbar";
+import Footer from "@/components/another-one/layout/Footer";
 import Hero from "@/components/another-one/sections/Hero";
 import SectionReveal from "@/components/another-one/ui/SectionReveal";
-import StubSection from "@/components/another-one/sections/StubSection";
 import { PageTrail } from "@/components/another-one/ui/PageTrail";
 import OmniChannel from "@/components/another-one/sections/OmniChannel";
 import Features from "@/components/another-one/sections/Features";
@@ -64,14 +64,6 @@ export default function AnotherOnePage() {
           </SectionReveal>
 
           <SectionReveal>
-            <StubSection
-              id="roadmap"
-              eyebrow="Roadmap"
-              title="Future enhancements, already scoped."
-            />
-          </SectionReveal>
-
-          <SectionReveal>
             <Pricing id="pricing" />
           </SectionReveal>
 
@@ -114,30 +106,8 @@ export default function AnotherOnePage() {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-[var(--color-border)] bg-[var(--color-bg-2)] py-12">
-        <div className="mx-auto flex max-w-6xl flex-col items-start gap-4 px-4 sm:px-6 md:flex-row md:items-center md:justify-between">
-          <div>
-            <span className="font-display text-xl font-extrabold text-[var(--color-text-primary)]">
-              Lum<span className="text-[var(--color-accent)]">jha</span>
-            </span>
-            <p className="mt-2 max-w-sm font-body text-body-sm text-[var(--color-text-secondary)]">
-              Create your best agent. Automate your growth.
-            </p>
-          </div>
-          <div className="flex flex-col gap-1 font-body text-body-sm text-[var(--color-text-secondary)] md:items-end">
-            <a
-              href="mailto:info@lumjha.ai"
-              className="transition-colors hover:text-[var(--color-accent)]"
-            >
-              info@lumjha.ai
-            </a>
-            <span className="font-mono text-caption text-[var(--color-text-muted)]">
-              © 2026 Lumjha. All rights reserved.
-            </span>
-          </div>
-        </div>
-      </footer>
+      {/* Footer — full viewport, giant wordmark */}
+      <Footer />
     </>
   );
 }

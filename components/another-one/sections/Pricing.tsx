@@ -178,10 +178,11 @@ function PlanCard({ plan }: { plan: Plan }) {
 export default function Pricing({ id }: { id?: string }) {
   return (
     <section id={id} className="a1-section a1-elevated py-24 md:py-32">
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 text-center">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 text-center">
         <Eyebrow>Pricing</Eyebrow>
         <h2 className="mt-3 font-display text-display-lg text-[var(--color-text-primary)]">
-          Start free. Scale without complexity.
+          Start <span className="text-[var(--color-accent)]">free</span>. Scale
+          without complexity.
         </h2>
         <p className="mx-auto mt-6 max-w-2xl font-body text-body-lg text-[var(--color-text-secondary)]">
           Every account starts with a 14-day trial of all three modules —

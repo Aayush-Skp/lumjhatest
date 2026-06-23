@@ -57,7 +57,14 @@ export default function Analytics({ id }: { id?: string }) {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeader
           eyebrow="Analytics"
-          title="Every conversation, summarized automatically."
+          title={
+            <>
+              Every conversation,{" "}
+              <span className="text-[var(--color-accent)]">
+                summarized automatically.
+              </span>
+            </>
+          }
           body="Real-time counts surface unread messages, new leads, and new sessions. These insights feed back into your app — improve the bot, spot demand, optimize conversion."
         />
 

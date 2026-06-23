@@ -55,25 +55,39 @@ export function PageTrail() {
     const base = el.getBoundingClientRect();
     const baseTop = base.top + window.scrollY;
 
-    const nodes = Array.from(
-      document.querySelectorAll<HTMLElement>("[data-trail]"),
-    );
+    // Build anchors from EVERY section (so the curve weaves evenly through the
+    // whole page, not just the 2–3 hand-placed spots) plus any explicit
+    // `data-trail` spans for finer shaping inside tall/sticky sections.
+    const ys: number[] = [];
 
-    // Weave the trail across the FULL width, crossing through the (centred)
-    // content like a ribbon. Anchors drive WHERE it weaves vertically; a wide
-    // ±amp horizontal swing that alternates side per anchor makes it cross back
-    // and forth over the sections.
-    const cx = cw / 2;
-    const amp = Math.min(cw * 0.42, 460);
+    document
+      .querySelectorAll<HTMLElement>("main section[id]")
+      .forEach((node) => {
+        const r = node.getBoundingClientRect();
+        const top = r.top + window.scrollY - baseTop;
+        ys.push(top + r.height / 2);
+      });
 
-    const pts: [number, number][] = [[cx, 0]];
-    nodes.forEach((node, i) => {
+    document.querySelectorAll<HTMLElement>("[data-trail]").forEach((node) => {
       const r = node.getBoundingClientRect();
       const top = r.top + window.scrollY - baseTop;
       const pos = node.dataset.trail || "center";
       let y = top + r.height / 2;
       if (pos === "over") y = top - GAP;
       else if (pos === "under") y = top + r.height + GAP;
+      ys.push(y);
+    });
+
+    ys.sort((a, b) => a - b);
+
+    // Weave across the FULL width, crossing through the (centred) content like a
+    // ribbon. A wide ±amp swing that alternates side per anchor makes it cross
+    // back and forth, leading the eye down the page.
+    const cx = cw / 2;
+    const amp = Math.min(cw * 0.42, 460);
+
+    const pts: [number, number][] = [[cx, 0]];
+    ys.forEach((y, i) => {
       pts.push([cx + (i % 2 === 0 ? -amp : amp), y]);
     });
     pts.push([cx, ch]);
@@ -119,6 +133,35 @@ export function PageTrail() {
 
     const el = ref.current;
 
+    // Sample the path ONCE into parallel arrays (length / x / y). The scroll
+    // loop then maps viewport-Y → drawn-length by binary-searching this table
+    // and interpolating — no getPointAtLength()/getBoundingClientRect() per
+    // frame (those forced ~21 SVG geometry calls + a reflow every frame, the
+    // main remaining source of scroll jank).
+    const SAMPLES = 260;
+    const lens = new Float64Array(SAMPLES + 1);
+    const sxs = new Float64Array(SAMPLES + 1);
+    const sys = new Float64Array(SAMPLES + 1);
+    for (let i = 0; i <= SAMPLES; i++) {
+      const len = (total * i) / SAMPLES;
+      const pt = path.getPointAtLength(len);
+      lens[i] = len;
+      sxs[i] = pt.x;
+      sys[i] = pt.y;
+    }
+
+    // Cache layout-dependent metrics; reading getBoundingClientRect /
+    // scrollHeight inside the scroll handler forces a synchronous reflow every
+    // frame (jank). These only change on layout, so refresh them on resize.
+    let containerTop = 0;
+    let scrollable = 0;
+    const measure = () => {
+      if (!el) return;
+      containerTop = el.getBoundingClientRect().top + window.scrollY;
+      scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    };
+    measure();
+
     const apply = () => {
       frame = 0;
       if (!el) return;
@@ -128,24 +171,37 @@ export function PageTrail() {
       // scroll (the trail "arrives" with you). Mapping by scroll fraction ×
       // path length instead leaves the edge pinned above the fold for most of
       // the page — it only catches up near the bottom.
-      const containerTop = el.getBoundingClientRect().top + window.scrollY;
+      //
       // Track the viewport centre once scrolled, but ramp the lead in from the
       // top edge over the first viewport so the trail reads as EMPTY at rest
       // (no half-drawn fill behind the hero) and only grows as you scroll.
       const vh = window.innerHeight;
       const ramp = Math.min(1, window.scrollY / vh);
-      const targetLocalY = window.scrollY + vh * 0.5 * ramp - containerTop;
+      // Near the bottom, the viewport centre can never reach the container's
+      // bottom edge, so the fill would stall mid-section. Ramp the lead from the
+      // viewport centre (0.5) down to its bottom (1.0) over the final viewport
+      // so the trail completes right as you hit the end of the page.
+      const endRamp = Math.min(
+        1,
+        Math.max(0, (window.scrollY - (scrollable - vh)) / vh),
+      );
+      const leadFrac = 0.5 + 0.5 * endRamp;
+      const targetLocalY =
+        window.scrollY + vh * leadFrac * ramp - containerTop;
 
-      // The path's y is monotonically increasing (anchors in document order),
-      // so binary-search the length whose point sits at targetLocalY.
+      // The sampled y values increase monotonically (anchors in document
+      // order), so binary-search the table for targetLocalY, then linearly
+      // interpolate the drawn length and the bulb's x/y between samples.
       let lo = 0;
-      let hi = total;
-      for (let k = 0; k < 20; k++) {
-        const mid = (lo + hi) / 2;
-        if (path.getPointAtLength(mid).y < targetLocalY) lo = mid;
+      let hi = SAMPLES;
+      while (hi - lo > 1) {
+        const mid = (lo + hi) >> 1;
+        if (sys[mid] < targetLocalY) lo = mid;
         else hi = mid;
       }
-      const drawn = Math.min(total, Math.max(0, (lo + hi) / 2));
+      const span = sys[hi] - sys[lo] || 1;
+      const f = Math.min(1, Math.max(0, (targetLocalY - sys[lo]) / span));
+      const drawn = Math.min(total, Math.max(0, lens[lo] + (lens[hi] - lens[lo]) * f));
 
       // Real geometric lengths (px), not a pathLength=1 fraction — the latter is
       // not reliably honoured for style-set stroke-dasharray, which left the
@@ -154,8 +210,9 @@ export function PageTrail() {
 
       if (bulb && total > 0) {
         if (drawn > 2 && drawn < total - 2) {
-          const pt = path.getPointAtLength(drawn);
-          bulb.setAttribute("transform", `translate(${pt.x} ${pt.y})`);
+          const bx = sxs[lo] + (sxs[hi] - sxs[lo]) * f;
+          const by = sys[lo] + (sys[hi] - sys[lo]) * f;
+          bulb.setAttribute("transform", `translate(${bx} ${by})`);
           bulb.style.opacity = "1";
         } else {
           bulb.style.opacity = "0";
@@ -168,12 +225,17 @@ export function PageTrail() {
       frame = window.requestAnimationFrame(apply);
     };
 
+    const onResize = () => {
+      measure();
+      onScroll();
+    };
+
     apply();
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    window.addEventListener("resize", onResize);
     return () => {
       window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      window.removeEventListener("resize", onResize);
       if (frame) window.cancelAnimationFrame(frame);
     };
   }, [w, h, d]);
@@ -212,9 +274,6 @@ export function PageTrail() {
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeDasharray="0 99999"
-            style={{
-              filter: "drop-shadow(0 0 6px var(--color-accent-glow))",
-            }}
           />
 
           {/* Glowing bulb at the leading edge of the fill */}

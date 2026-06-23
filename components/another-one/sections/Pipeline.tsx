@@ -50,7 +50,14 @@ export default function Pipeline({ id }: { id?: string }) {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeader
           eyebrow="Pipeline"
-          title="From your content to intelligent answers."
+          title={
+            <>
+              From your content to{" "}
+              <span className="text-[var(--color-accent)]">
+                intelligent answers.
+              </span>
+            </>
+          }
           body="Five deterministic stages turn raw documents into semantically searchable knowledge your agent can reason with."
         />
 

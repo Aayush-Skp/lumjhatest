@@ -28,6 +28,12 @@ export default function StageRail({
     if (!row) return;
     let frame = 0;
 
+    // Cache the boxes once — querySelectorAll every scroll frame is wasteful.
+    const boxes = Array.from(
+      row.querySelectorAll<HTMLElement>("[data-rail-box]"),
+    );
+    const n = boxes.length || 1;
+
     const apply = () => {
       frame = 0;
       const r = row.getBoundingClientRect();
@@ -38,10 +44,6 @@ export default function StageRail({
       const end = vh * 0.35;
       const p = Math.min(1, Math.max(0, (start - r.top) / (start - end)));
 
-      const boxes = Array.from(
-        row.querySelectorAll<HTMLElement>("[data-rail-box]"),
-      );
-      const n = boxes.length || 1;
       boxes.forEach((box, i) => {
         const idx = direction === "rtl" ? n - 1 - i : i;
         // Light a box once the sweep has (almost) reached its far edge.

@@ -109,7 +109,13 @@ export default function Features({ id }: { id?: string }) {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeader
           eyebrow="Core Pillars"
-          title="Everything a modern AI agent should already do."
+          title={
+            <>
+              Everything a{" "}
+              <span className="text-[var(--color-accent)]">modern AI agent</span>{" "}
+              should already do.
+            </>
+          }
           body="Six capabilities every modern AI agent should ship with — accuracy, continuity, conversion, and verifiable answers, out of the box."
         />
 

@@ -18,10 +18,11 @@ const STEPS = [
 export default function RAG({ id }: { id?: string }) {
   return (
     <section id={id} className="a1-section py-24 md:py-32">
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 text-center">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 text-center">
         <Eyebrow>Retrieval-Augmented Generation</Eyebrow>
         <h2 className="mt-3 font-display text-display-lg text-[var(--color-text-primary)]">
-          RAG, tuned to your business.
+          Your <span className="text-[var(--color-accent)]">agent</span>, tuned
+          to your business.
         </h2>
       </div>
 

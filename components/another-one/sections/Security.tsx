@@ -50,7 +50,13 @@ export default function Security({ id }: { id?: string }) {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeader
           eyebrow="Security"
-          title="Your data, your control — always."
+          title={
+            <>
+              Your data,{" "}
+              <span className="text-[var(--color-accent)]">your control</span> —
+              always.
+            </>
+          }
           body="Every protected route is authenticated, every session validated, and your knowledge base stays isolated — yours alone."
         />
 
@@ -77,8 +83,9 @@ export default function Security({ id }: { id?: string }) {
         {/* Transparency */}
         <div className="mt-16 border-t border-[var(--color-border)] pt-16">
           <Eyebrow>Transparency</Eyebrow>
-          <h2 className="mt-3 max-w-2xl font-display text-display-md text-[var(--color-text-primary)]">
-            Transparency, in plain language.
+          <h2 className="mt-3 max-w-4xl font-display text-display-md text-[var(--color-text-primary)]">
+            Transparency, in{" "}
+            <span className="text-[var(--color-accent)]">plain language.</span>
           </h2>
 
           <ul className="mt-8 flex flex-col gap-2">

@@ -69,7 +69,7 @@ function SlotReel({
     direction === "up" ? { y: ["0%", "-50%"] } : { y: ["-50%", "0%"] };
 
   return (
-    <div className="relative h-[340px] overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,#000_15%,#000_85%,transparent)] md:h-[460px]">
+    <div className="relative h-[340px] overflow-hidden [-webkit-mask-image:linear-gradient(to_bottom,transparent,#000_15%,#000_85%,transparent)] [mask-image:linear-gradient(to_bottom,transparent,#000_15%,#000_85%,transparent)] md:h-[460px]">
       <motion.div
         className="flex flex-col"
         animate={reduced ? undefined : anim}
@@ -92,10 +92,13 @@ export default function OmniChannel({ id }: { id?: string }) {
       className="a1-section a1-elevated overflow-hidden py-24 md:py-32"
     >
       {/* Description on top */}
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 text-center">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 text-center">
         <Eyebrow>Omnichannel</Eyebrow>
         <h2 className="mt-3 font-display text-display-lg text-[var(--color-text-primary)]">
-          Meet your customers wherever they already are.
+          Meet your customers{" "}
+          <span className="text-[var(--color-accent)]">
+            wherever they already are.
+          </span>
         </h2>
         <p className="mx-auto mt-6 max-w-2xl font-body text-body-lg text-[var(--color-text-secondary)]">
           One agent, one knowledge base, every channel. Roll Lumjha out on your

@@ -199,6 +199,11 @@ body {
       transparent 1px
     );
   background-size: 28px 28px;
+  -webkit-mask-image: radial-gradient(
+    ellipse 80% 60% at 50% 0%,
+    #000 30%,
+    transparent 75%
+  );
   mask-image: radial-gradient(
     ellipse 80% 60% at 50% 0%,
     #000 30%,
@@ -525,6 +530,14 @@ html {
    visually distinct while the page curve still glows through. */
 .lumjha-rebuild .a1-section {
   position: relative;
+}
+
+/* Even, non-orphaned heading wraps so section titles don't break into ragged
+   single-word lines. Progressive enhancement: browsers without text-wrap
+   support fall back to normal wrapping. */
+.lumjha-rebuild h2,
+.lumjha-rebuild h3 {
+  text-wrap: balance;
 }
 .lumjha-rebuild .a1-section::before {
   content: "";
