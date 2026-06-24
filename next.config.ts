@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     return {
       // beforeFiles runs before filesystem routes, so this overrides the
       // existing app/page.tsx and serves the /another-one page at the root.
-      beforeFiles: [{ source: "/", destination: "/another-one" }],
+      beforeFiles: [{ source: "/", destination: "/solutions" }],
       afterFiles: [],
       fallback: [],
     };
@@ -14,7 +14,7 @@ const nextConfig: NextConfig = {
     return [
       // The page is served only at the root; hitting /another-one directly
       // bounces back to / so the content lives on a single canonical URL.
-      { source: "/another-one", destination: "/", permanent: true },
+      { source: "/solutions", destination: "/", permanent: true },
     ];
   },
 };

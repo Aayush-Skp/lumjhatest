@@ -33,8 +33,8 @@ const PRODUCTS: Product[] = [
     anchor: "chatbot-demo",
     eyebrow: "Chatbot",
     tag: "Always-on agent",
-    title: "Your always-on agent.",
-    body: "Your always-on conversational agent — answers questions, captures leads, books appointments, and talks to customers across every channel in your brand voice.",
+    title: "Your always-on ai agent.",
+    body: "Your always-on conversational ai agent — answers questions, captures leads, books appointments, and talks to customers across every channel in your brand voice.",
     accent: "var(--color-accent)",
   },
   {

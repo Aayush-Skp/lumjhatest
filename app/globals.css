@@ -627,3 +627,62 @@ html {
     linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 40px 40px;
 }
+
+/* Long-form legal prose (Privacy / Terms). Styles raw semantic markup so the
+   page files stay readable — no per-element utility soup. Scoped to the brand
+   tokens via .lumjha-rebuild. */
+.lumjha-rebuild .legal-prose > section {
+  margin-bottom: 2.5rem;
+}
+.lumjha-rebuild .legal-prose h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  font-size: 1.35rem;
+  line-height: 1.25;
+  color: var(--color-text-primary);
+  margin-bottom: 1rem;
+}
+.lumjha-rebuild .legal-prose h4 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--color-text-primary);
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.lumjha-rebuild .legal-prose p {
+  font-family: var(--font-body);
+  font-size: var(--text-body-md);
+  line-height: 1.75;
+  color: var(--color-text-secondary);
+  margin-bottom: 0.85rem;
+}
+.lumjha-rebuild .legal-prose ul {
+  list-style: disc;
+  padding-left: 1.35rem;
+  margin-bottom: 0.85rem;
+}
+.lumjha-rebuild .legal-prose li {
+  font-family: var(--font-body);
+  font-size: var(--text-body-md);
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  margin-bottom: 0.5rem;
+}
+.lumjha-rebuild .legal-prose strong {
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+.lumjha-rebuild .legal-prose a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.lumjha-rebuild .legal-prose a:hover {
+  text-decoration: underline;
+}
+.lumjha-rebuild .legal-prose p:last-child,
+.lumjha-rebuild .legal-prose li:last-child {
+  margin-bottom: 0;
+}
