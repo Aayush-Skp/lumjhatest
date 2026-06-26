@@ -4,8 +4,15 @@ import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Menu, X } from "lucide-react";
 
-const NAV_LINKS = [
-  { label: "Platform", href: "#platform" },
+export interface NavLink {
+  label: string;
+  href: string;
+}
+
+// Default links target the /another-one route's section ids. The /solutions
+// route uses different ids, so it passes its own `links` prop (see below).
+const DEFAULT_NAV_LINKS: NavLink[] = [
+  { label: "Platform", href: "#product-showcase" },
   { label: "Features", href: "#features" },
   { label: "How it works", href: "#pipeline" },
   { label: "Pricing", href: "#pricing" },
@@ -30,7 +37,7 @@ function Wordmark() {
   );
 }
 
-export default function Navbar() {
+export default function Navbar({ links = DEFAULT_NAV_LINKS }: { links?: NavLink[] }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const reduced = useReducedMotion();
@@ -64,7 +71,7 @@ export default function Navbar() {
 
         {/* Desktop links */}
         <ul className="hidden items-center gap-8 md:flex">
-          {NAV_LINKS.map((link) => (
+          {links.map((link) => (
             <li key={link.href}>
               <a
                 href={link.href}
@@ -117,7 +124,7 @@ export default function Navbar() {
           className="border-t border-[var(--color-border)] bg-[var(--color-bg-2)] px-6 py-6 md:hidden"
         >
           <ul className="flex flex-col gap-1">
-            {NAV_LINKS.map((link) => (
+            {links.map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}

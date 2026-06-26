@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import Navbar from "@/components/another-one/layout/Navbar";
+import Navbar, { type NavLink } from "@/components/another-one/layout/Navbar";
 import Footer from "@/components/another-one/layout/Footer";
 import SectionReveal from "@/components/another-one/ui/SectionReveal";
 import { PageTrail } from "@/components/another-one/ui/PageTrail";
@@ -21,10 +21,20 @@ const ProductShowcase = dynamic(
   { ssr: false },
 );
 
+// Nav links mapped to this page's actual section ids (they differ from the
+// /another-one route, so we override the Navbar's defaults here).
+const SOLUTIONS_NAV_LINKS: NavLink[] = [
+  { label: "Platform", href: "#product-showcase" },
+  { label: "Features", href: "#value-pillars" },
+  { label: "How it works", href: "#how-it-works" },
+  { label: "Pricing", href: "#pricing" },
+  { label: "Security", href: "#trust" },
+];
+
 export default function SolutionsPage() {
   return (
     <>
-      <Navbar />
+      <Navbar links={SOLUTIONS_NAV_LINKS} />
       <main className="relative">
         <PageTrail />
         <div className="relative z-10">
@@ -104,7 +114,7 @@ export default function SolutionsPage() {
         </div>
       </main>
 
-      <Footer />
+      <Footer quickLinks={SOLUTIONS_NAV_LINKS} />
     </>
   );
 }

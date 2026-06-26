@@ -13,17 +13,19 @@ interface LinkColumn {
   links: LinkItem[];
 }
 
-const COLUMNS: LinkColumn[] = [
-  {
-    heading: "Quick links",
-    links: [
-      { label: "Platform", href: "#product-showcase" },
-      { label: "Features", href: "#features" },
-      { label: "How it works", href: "#pipeline" },
-      { label: "Pricing", href: "#pricing" },
-      { label: "Security", href: "#security" },
-    ],
-  },
+export type { LinkItem };
+
+// Default "Quick links" target the /another-one route's section ids. The
+// /solutions route uses different ids, so it overrides via the `quickLinks` prop.
+const DEFAULT_QUICK_LINKS: LinkItem[] = [
+  { label: "Platform", href: "#product-showcase" },
+  { label: "Features", href: "#features" },
+  { label: "How it works", href: "#pipeline" },
+  { label: "Pricing", href: "#pricing" },
+  { label: "Security", href: "#security" },
+];
+
+const SECONDARY_COLUMNS: LinkColumn[] = [
   {
     heading: "Platform",
     links: [
@@ -51,7 +53,15 @@ const WORDMARK =
 // Torch radius (px) of the revealed circle around the cursor.
 const TORCH = "radial-gradient(circle 200px at var(--mx) var(--my), #000 0%, #000 38%, transparent 72%)";
 
-export default function Footer() {
+export default function Footer({
+  quickLinks = DEFAULT_QUICK_LINKS,
+}: {
+  quickLinks?: LinkItem[];
+}) {
+  const COLUMNS: LinkColumn[] = [
+    { heading: "Quick links", links: quickLinks },
+    ...SECONDARY_COLUMNS,
+  ];
   const rootRef = useRef<HTMLElement>(null);
   const spotRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef(0);
