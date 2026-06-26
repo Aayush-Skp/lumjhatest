@@ -23,15 +23,22 @@ const LOGIN_URL = "https://app.lumjha.ai/login";
 
 function Wordmark() {
   return (
-    <span className="flex flex-col leading-none">
-      <span className="font-display text-2xl font-extrabold tracking-tight text-[var(--color-text-primary)]">
+    <span className="flex items-center gap-3">
+      {/* Logo */}
+      <span className="font-display text-2xl font-extrabold leading-none tracking-tight text-[var(--color-text-primary)]">
         Lum<span className="text-[var(--color-accent)]">jha</span>
         <span className="ml-1 align-baseline text-xs font-semibold text-[var(--color-accent)]">
           AI
         </span>
       </span>
-      <span className="mt-1 font-body text-[0.65rem] font-medium tracking-wide text-[var(--color-text-secondary)]">
-        Knowledgebase, Activated Everywhere.
+
+      {/* Divider */}
+      <span aria-hidden className="h-7 w-px bg-[var(--color-border-bright)]" />
+
+      {/* Stacked tagline — sized to match the "AI" mark */}
+      <span className="flex flex-col font-body text-xs font-medium leading-[1.25] tracking-wide text-[var(--color-text-secondary)]">
+        <span>Knowledgebase</span>
+        <span>Activated Everywhere</span>
       </span>
     </span>
   );
