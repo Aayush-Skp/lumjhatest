@@ -48,7 +48,7 @@ export default function SolutionsHero({ id }: { id?: string }) {
   return (
     <section
       id={id}
-      className="relative flex min-h-screen items-center justify-center overflow-hidden pb-16 pt-28 text-center"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden pb-16 pt-28"
     >
       <div className="a1-grid absolute inset-0" aria-hidden />
       <div
@@ -63,13 +63,15 @@ export default function SolutionsHero({ id }: { id?: string }) {
       <FloatingOrb size={400} color="#5EEAD4" opacity={0.15} top={-40} right={-60} />
       <FloatingOrb size={300} color="#818CF8" opacity={0.1} bottom={20} left={-40} />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center px-4 sm:px-6">
+      <div className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:gap-12">
+        {/* Left column — hero copy */}
+        <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
         <motion.div {...fade(0.4)}>
           <Eyebrow>Built for Growing Businesses</Eyebrow>
         </motion.div>
 
         <h1
-          className="mt-4 font-display text-[clamp(2.75rem,8vw,7rem)] leading-[1.02] text-[var(--color-text-primary)]"
+          className="mt-4 font-display text-[clamp(2.25rem,5.5vw,4rem)] leading-[1.05] text-[var(--color-text-primary)]"
           style={{ perspective: 800 }}
         >
           {SENTENCES.map((sentence, si) => {
@@ -117,14 +119,14 @@ export default function SolutionsHero({ id }: { id?: string }) {
 
         <motion.p
           {...fade(0.9)}
-          className="mt-6 max-w-3xl font-body text-body-lg leading-relaxed text-[var(--color-text-secondary)]"
+          className="mt-6 max-w-xl font-body text-body-lg leading-relaxed text-[var(--color-text-secondary)]"
         >
           Lumjha answers your customers&apos; questions, captures sales leads, and
           books appointments — around the clock, on platform(s) they already use
           — so you can focus on running your business.
         </motion.p>
 
-        <motion.div {...fade(1.1)} className="mt-6 flex flex-wrap items-center gap-3">
+        <motion.div {...fade(1.1)} className="mt-6 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
           <a
             href={LOGIN_URL}
             target="_blank"
@@ -141,7 +143,7 @@ export default function SolutionsHero({ id }: { id?: string }) {
           </a>
         </motion.div>
 
-        <motion.ul {...fade(1.3)} className="mt-5 flex flex-wrap gap-2">
+        <motion.ul {...fade(1.3)} className="mt-5 flex flex-wrap justify-center gap-2 lg:justify-start">
           {TRUST_PILLS.map((pill) => (
             <li
               key={pill}
@@ -153,7 +155,7 @@ export default function SolutionsHero({ id }: { id?: string }) {
           ))}
         </motion.ul>
 
-        <motion.dl {...fade(1.5)} className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
+        <motion.dl {...fade(1.5)} className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-4 lg:justify-start">
           {STATS.map((stat, i) => (
             <div key={stat.label} className="flex items-center gap-6">
               {i > 0 && (
@@ -173,6 +175,37 @@ export default function SolutionsHero({ id }: { id?: string }) {
             </div>
           ))}
         </motion.dl>
+        </div>
+
+        {/* Right column — product video */}
+        <motion.div
+          initial={{ opacity: 0, y: reduced ? 0 : 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="relative w-full"
+        >
+          {/* Accent glow behind the frame */}
+          <div
+            aria-hidden
+            className="absolute -inset-4 -z-10 rounded-[2rem] opacity-60 blur-2xl"
+            style={{
+              background:
+                "radial-gradient(60% 60% at 50% 40%, var(--color-accent-glow) 0%, transparent 70%)",
+            }}
+          />
+          <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-[var(--color-border-bright)] bg-[var(--color-bg-2)] shadow-[0_24px_70px_-20px_rgba(0,0,0,0.6)]">
+            <iframe
+              className="absolute inset-0 h-full w-full"
+              src="https://www.youtube.com/embed/A-OHo8X1z1U?si=rlGx2vetnMOpZVUc"
+              title="Lumjha product overview"
+              loading="lazy"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            />
+          </div>
+        </motion.div>
       </div>
 
       <span
