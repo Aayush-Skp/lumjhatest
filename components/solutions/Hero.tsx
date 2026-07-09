@@ -48,7 +48,7 @@ export default function SolutionsHero({ id }: { id?: string }) {
   return (
     <section
       id={id}
-      className="relative flex min-h-screen items-center justify-center overflow-hidden pb-16 pt-28"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden pb-20 pt-28 md:pb-24 md:pt-36"
     >
       <div className="a1-grid absolute inset-0" aria-hidden />
       <div
@@ -63,7 +63,7 @@ export default function SolutionsHero({ id }: { id?: string }) {
       <FloatingOrb size={400} color="#5EEAD4" opacity={0.15} top={-40} right={-60} />
       <FloatingOrb size={300} color="#818CF8" opacity={0.1} bottom={20} left={-40} />
 
-      <div className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:gap-12">
+      <div className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-14 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16">
         {/* Left column — hero copy */}
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
         <motion.div {...fade(0.4)}>
@@ -71,7 +71,7 @@ export default function SolutionsHero({ id }: { id?: string }) {
         </motion.div>
 
         <h1
-          className="mt-4 font-display text-[clamp(1.85rem,3.2vw,2.6rem)] leading-[1.08] text-[var(--color-text-primary)]"
+          className="mt-7 font-display text-[clamp(1.55rem,3.2vw,2.7rem)] leading-[1.12] text-[var(--color-text-primary)]"
           style={{ perspective: 800 }}
         >
           {SENTENCES.map((sentence, si) => {
@@ -126,24 +126,24 @@ export default function SolutionsHero({ id }: { id?: string }) {
           — so you can focus on running your business.
         </motion.p>
 
-        <motion.div {...fade(1.1)} className="mt-6 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
+        <motion.div {...fade(1.1)} className="mt-9 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
           <a
             href={LOGIN_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-[var(--color-accent)] px-6 py-3 font-body font-semibold text-body-md text-[var(--color-text-inverse)] transition-all duration-200 hover:brightness-110 hover:shadow-[0_0_24px_var(--color-accent-glow)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+            className="inline-flex items-center gap-2 rounded-full bg-[var(--color-accent)] px-7 py-3.5 font-body font-semibold text-body-md text-[var(--color-text-inverse)] transition-all duration-200 hover:brightness-110 hover:shadow-[0_0_24px_var(--color-accent-glow)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
           >
             Get Started Free <ArrowRight size={16} />
           </a>
           <a
             href="#how-it-works"
-            className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border-bright)] bg-transparent px-6 py-3 font-body font-medium text-body-md text-[var(--color-text-primary)] transition-all duration-200 hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+            className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border-bright)] bg-transparent px-7 py-3.5 font-body font-medium text-body-md text-[var(--color-text-primary)] transition-all duration-200 hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
           >
             See how it helps <ArrowDown size={16} />
           </a>
         </motion.div>
 
-        <motion.ul {...fade(1.3)} className="mt-5 flex flex-wrap justify-center gap-2 lg:justify-start">
+        <motion.ul {...fade(1.3)} className="mt-7 flex flex-wrap justify-center gap-2.5 lg:justify-start">
           {TRUST_PILLS.map((pill) => (
             <li
               key={pill}
@@ -155,7 +155,7 @@ export default function SolutionsHero({ id }: { id?: string }) {
           ))}
         </motion.ul>
 
-        <motion.dl {...fade(1.5)} className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-4 lg:justify-start">
+        <motion.dl {...fade(1.5)} className="mt-11 flex w-full max-w-xl flex-wrap items-center justify-center gap-x-8 gap-y-5 border-t border-[var(--color-border)] pt-8 lg:justify-start">
           {STATS.map((stat, i) => (
             <div key={stat.label} className="flex items-center gap-6">
               {i > 0 && (
