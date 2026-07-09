@@ -31,6 +31,9 @@ const CHANNELS: Channel[] = [
 
 const REELS = 6;
 const DURATIONS = [16, 23, 14, 20, 26, 18];
+// Symmetric fade from the edges inward: outermost reels are faintest, the
+// center two are full opacity — so focus lands on the middle columns.
+const REEL_OPACITY = [0.3, 0.6, 1, 1, 0.6, 0.3];
 
 function rotate<T>(arr: T[], by: number): T[] {
   const n = arr.length;
@@ -57,11 +60,13 @@ function SlotReel({
   duration,
   direction,
   reduced,
+  opacity,
 }: {
   order: Channel[];
   duration: number;
   direction: "up" | "down";
   reduced: boolean | null;
+  opacity: number;
 }) {
   // Duplicate the list so a -50% / +50% shift loops seamlessly.
   const items = [...order, ...order];
@@ -69,7 +74,10 @@ function SlotReel({
     direction === "up" ? { y: ["0%", "-50%"] } : { y: ["-50%", "0%"] };
 
   return (
-    <div className="relative h-[340px] overflow-hidden [-webkit-mask-image:linear-gradient(to_bottom,transparent,#000_15%,#000_85%,transparent)] [mask-image:linear-gradient(to_bottom,transparent,#000_15%,#000_85%,transparent)] md:h-[460px]">
+    <div
+      style={{ opacity }}
+      className="relative h-[340px] overflow-hidden [-webkit-mask-image:linear-gradient(to_bottom,transparent,#000_15%,#000_85%,transparent)] [mask-image:linear-gradient(to_bottom,transparent,#000_15%,#000_85%,transparent)] md:h-[460px]"
+    >
       <motion.div
         className="flex flex-col"
         animate={reduced ? undefined : anim}
@@ -116,6 +124,7 @@ export default function OmniChannel({ id }: { id?: string }) {
             duration={DURATIONS[i]}
             direction={i % 2 === 0 ? "up" : "down"}
             reduced={reduced}
+            opacity={REEL_OPACITY[i]}
           />
         ))}
       </div>
