@@ -37,7 +37,7 @@ function Wordmark() {
 
       {/* Stacked tagline — sized to match the "AI" mark */}
       <span className="flex flex-col font-body text-xs font-medium leading-[1.25] tracking-wide text-[var(--color-text-secondary)]">
-        <span>Knowledgebase</span>
+        <span>Knowledgebase,</span>
         <span>Activated Everywhere</span>
       </span>
     </span>

@@ -71,7 +71,7 @@ export default function SolutionsHero({ id }: { id?: string }) {
         </motion.div>
 
         <h1
-          className="mt-4 font-display text-[clamp(2.25rem,5.5vw,4rem)] leading-[1.05] text-[var(--color-text-primary)]"
+          className="mt-4 font-display text-[clamp(1.85rem,3.2vw,2.6rem)] leading-[1.08] text-[var(--color-text-primary)]"
           style={{ perspective: 800 }}
         >
           {SENTENCES.map((sentence, si) => {
