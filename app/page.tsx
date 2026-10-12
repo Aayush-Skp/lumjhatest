@@ -141,52 +141,64 @@ const PLATFORM_TABS: {
   heading: ReactNode;
   body: string;
 }[] = [
-  {
-    id: "chatbot",
-    label: "Chat Bot",
-    cardTitle: "Lumjha - Chat Bot",
-    heading: (
-      <>
-        Automate <Highlight>Customer Support</Highlight>
-        <br />
-        Across Every Channel.
-      </>
-    ),
-    body: "Deliver instant, accurate answers across your website, messaging apps, and social platforms. Lumjha engages visitors, captures lead data naturally during chat, and schedules meetings directly into your calendar.",
-  },
-  {
-    id: "site-search",
-    label: "Site Search",
-    cardTitle: "Lumjha - Site Search",
-    heading: (
-      <>
-        <Highlight>Search</Highlight>
-        <br />
-        That Actually Answers.
-      </>
-    ),
-    body: "Upgrade site search with AI. Lumjha instantly scans your entire website and documentation to deliver precise, summarized answers directly to your visitors with sources attached.",
-  },
-  {
-    id: "policy-vault",
-    label: "Policy Vault",
-    cardTitle: "Lumjha - Policy Vault",
-    heading: (
-      <>
-        Primary <Highlight>Source Quotes,</Highlight>
-        <br />
-        Delivered Exactly.
-      </>
-    ),
-    body: "Upgrade site search with AI. Lumjha instantly scans your entire website and documentation to deliver precise, summarized answers directly to your visitors with sources attached.",
-  },
-];
+    {
+      id: "chatbot",
+      label: "Chat Bot",
+      cardTitle: "Lumjha - Chat Bot",
+      heading: (
+        <>
+          Automate <Highlight>Customer Support</Highlight>
+          <br />
+          Across Every Channel.
+        </>
+      ),
+      body: "Deliver instant, accurate answers across your website, messaging apps, and social platforms. Lumjha engages visitors, captures lead data naturally during chat, and schedules meetings directly into your calendar.",
+    },
+    {
+      id: "site-search",
+      label: "Site Search",
+      cardTitle: "Lumjha - Site Search",
+      heading: (
+        <>
+          <Highlight>Search</Highlight>
+          <br />
+          That Actually Answers.
+        </>
+      ),
+      body: "Upgrade site search with AI. Lumjha instantly scans your entire website and documentation to deliver precise, summarized answers directly to your visitors with sources attached.",
+    },
+    {
+      id: "policy-vault",
+      label: "Policy Vault",
+      cardTitle: "Lumjha - Policy Vault",
+      heading: (
+        <>
+          Primary <Highlight>Source Quotes,</Highlight>
+          <br />
+          Delivered Exactly.
+        </>
+      ),
+      body: "Upgrade site search with AI. Lumjha instantly scans your entire website and documentation to deliver precise, summarized answers directly to your visitors with sources attached.",
+    },
+  ];
 
-/* How long each tab stays up before auto-advancing. */
+/* How long each tab stays up before auto-advancing, and how long a tab
+   the visitor picked themselves stays put before autoplay resumes. */
 const TAB_INTERVAL_MS = 4000;
+const TAB_MANUAL_HOLD_MS = 10000;
 
 function PlatformTabs() {
   const [active, setActive] = useState(0);
+  // `manual` holds the current tab for TAB_MANUAL_HOLD_MS; `cycle` restarts
+  // the ring even when the visitor re-selects the tab that's already active.
+  const [manual, setManual] = useState(false);
+  const [cycle, setCycle] = useState(0);
+
+  function select(i: number) {
+    setActive(i);
+    setManual(true);
+    setCycle((c) => c + 1);
+  }
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const count = PLATFORM_TABS.length;
 
@@ -228,7 +240,7 @@ function PlatformTabs() {
     else if (e.key === "End") next = count - 1;
     else return;
     e.preventDefault();
-    setActive(next);
+    select(next);
     tabRefs.current[next]?.focus();
   }
 
@@ -246,7 +258,7 @@ function PlatformTabs() {
     const dx = t.clientX - start.x;
     const dy = t.clientY - start.y;
     if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy)) return;
-    setActive((a) => (dx < 0 ? Math.min(a + 1, count - 1) : Math.max(a - 1, 0)));
+    select(dx < 0 ? Math.min(active + 1, count - 1) : Math.max(active - 1, 0));
   }
 
   return (
@@ -276,7 +288,7 @@ function PlatformTabs() {
                 height={pill.h}
               >
                 <rect
-                  key={active}
+                  key={`${active}-${cycle}`}
                   x={RING / 2}
                   y={RING / 2}
                   width={pill.w - RING}
@@ -289,8 +301,13 @@ function PlatformTabs() {
                   strokeLinecap="butt"
                   strokeDasharray="100 100"
                   className="tab-progress"
-                  style={{ animationDuration: `${TAB_INTERVAL_MS}ms` }}
-                  onAnimationEnd={() => setActive((a) => (a + 1) % count)}
+                  style={{
+                    animationDuration: `${manual ? TAB_MANUAL_HOLD_MS : TAB_INTERVAL_MS}ms`,
+                  }}
+                  onAnimationEnd={() => {
+                    setManual(false);
+                    setActive((a) => (a + 1) % count);
+                  }}
                 />
               </svg>
             )}
@@ -307,10 +324,9 @@ function PlatformTabs() {
               aria-selected={active === i}
               aria-controls={`panel-${tab.id}`}
               tabIndex={active === i ? 0 : -1}
-              onClick={() => setActive(i)}
-              className={`relative z-10 whitespace-nowrap rounded-full px-2 py-2.5 text-[13px] font-semibold transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#527DFF] sm:px-6 sm:py-2.5 sm:text-sm md:px-8 md:text-[15px] ${
-                active === i ? "text-white" : "text-gray-400 hover:text-white"
-              }`}
+              onClick={() => select(i)}
+              className={`relative z-10 whitespace-nowrap rounded-full px-2 py-2.5 text-[13px] font-semibold transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#527DFF] sm:px-6 sm:py-2.5 sm:text-sm md:px-8 md:text-[15px] ${active === i ? "text-white" : "text-gray-400 hover:text-white"
+                }`}
             >
               {tab.label}
             </button>
@@ -336,25 +352,22 @@ function PlatformTabs() {
               aria-labelledby={`tab-${tab.id}`}
               aria-hidden={!isActive}
               inert={!isActive}
-              className={`col-start-1 row-start-1 grid content-start items-center gap-8 md:content-center md:grid-cols-[minmax(0,400px)_1fr] md:gap-14 lg:grid-cols-[minmax(0,500px)_1fr] lg:gap-20 ${
-                isActive ? "pointer-events-auto" : "pointer-events-none"
-              }`}
+              className={`col-start-1 row-start-1 grid content-start items-center gap-8 md:content-center md:grid-cols-[minmax(0,400px)_1fr] md:gap-14 lg:grid-cols-[minmax(0,500px)_1fr] lg:gap-20 ${isActive ? "pointer-events-auto" : "pointer-events-none"
+                }`}
             >
               <div
-                className={`flex justify-center transition-all ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
-                  isActive
+                className={`flex justify-center transition-all ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${isActive
                     ? "translate-y-0 scale-100 opacity-100 delay-150 duration-700"
                     : "translate-y-4 scale-[0.97] opacity-0 duration-300"
-                }`}
+                  }`}
               >
                 <ChatCard title={tab.cardTitle} />
               </div>
               <div
-                className={`text-center transition-all ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none md:text-left ${
-                  isActive
+                className={`text-center transition-all ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none md:text-left ${isActive
                     ? "translate-y-0 opacity-100 delay-250 duration-700"
                     : "translate-y-4 opacity-0 duration-300"
-                }`}
+                  }`}
               >
                 <h3 className="text-[26px] font-extrabold leading-[1.25] tracking-tight sm:text-4xl lg:text-5xl">
                   {tab.heading}
@@ -378,13 +391,12 @@ function PlatformTabs() {
             key={tab.id}
             type="button"
             aria-label={`Show ${tab.label}`}
-            onClick={() => setActive(i)}
+            onClick={() => select(i)}
             className="group flex h-6 items-center px-1"
           >
             <span
-              className={`block h-1.5 rounded-full transition-all duration-500 ${
-                active === i ? "w-6 bg-[#527DFF]" : "w-1.5 bg-white/25 group-hover:bg-white/50"
-              }`}
+              className={`block h-1.5 rounded-full transition-all duration-500 ${active === i ? "w-6 bg-[#527DFF]" : "w-1.5 bg-white/25 group-hover:bg-white/50"
+                }`}
             />
           </button>
         ))}
@@ -400,14 +412,14 @@ const CHANNELS: {
   bg: string;
   Icon: ComponentType<SVGProps<SVGSVGElement>>;
 }[] = [
-  { name: "Website", bg: "#2E9BF0", Icon: WebsiteIcon },
-  { name: "WhatsApp", bg: "#25D366", Icon: WhatsAppIcon },
-  { name: "Instagram", bg: "#E1306C", Icon: InstagramIcon },
-  { name: "Facebook", bg: "#1877F2", Icon: FacebookIcon },
-  { name: "Telegram", bg: "#229ED9", Icon: TelegramIcon },
-  { name: "Google Calendar", bg: "#4285F4", Icon: GoogleCalendarIcon },
-  { name: "Shopify", bg: "#95BF47", Icon: ShopifyIcon },
-];
+    { name: "Website", bg: "#2E9BF0", Icon: WebsiteIcon },
+    { name: "WhatsApp", bg: "#25D366", Icon: WhatsAppIcon },
+    { name: "Instagram", bg: "#E1306C", Icon: InstagramIcon },
+    { name: "Facebook", bg: "#1877F2", Icon: FacebookIcon },
+    { name: "Telegram", bg: "#229ED9", Icon: TelegramIcon },
+    { name: "Google Calendar", bg: "#4285F4", Icon: GoogleCalendarIcon },
+    { name: "Shopify", bg: "#95BF47", Icon: ShopifyIcon },
+  ];
 
 function ChannelIcon({
   name,
@@ -575,11 +587,10 @@ export default function HomePage() {
             {PLANS.map((p) => (
               <div
                 key={p.name}
-                className={`relative flex flex-col overflow-hidden rounded-2xl bg-white text-[#0B1526] ${
-                  p.featured
+                className={`relative flex flex-col overflow-hidden rounded-2xl bg-white text-[#0B1526] ${p.featured
                     ? "border-[3px] border-[#F2B90D] shadow-[0_20px_60px_-15px_rgba(242,185,13,0.5)]"
                     : "border border-[#D7E3F5]"
-                }`}
+                  }`}
               >
                 {"badge" in p && p.badge && (
                   <span className="absolute left-1/2 top-0 -translate-x-1/2 rounded-b-lg bg-[#F2B90D] px-3 py-0.5 text-[10px] font-bold text-[#3A2A00]">
