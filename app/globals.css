@@ -291,6 +291,19 @@ body {
   }
 }
 
+/* Platform tabs autoplay countdown — duration is set inline */
+.tab-progress {
+  stroke-dashoffset: 100;
+  animation-name: tabProgress;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+@keyframes tabProgress {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
 /* Soft pulse used behind hero + section headers */
 .glow-pulse {
   animation: glowPulse 6s ease-in-out infinite;

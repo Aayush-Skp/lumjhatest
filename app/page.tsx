@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ComponentType, KeyboardEvent, ReactNode, SVGProps, TouchEvent } from "react";
 import Navbar from "@/components/site/Navbar";
 import Footer from "@/components/site/Footer";
@@ -182,10 +182,42 @@ const PLATFORM_TABS: {
   },
 ];
 
+/* How long each tab stays up before auto-advancing. */
+const TAB_INTERVAL_MS = 4000;
+
 function PlatformTabs() {
   const [active, setActive] = useState(0);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const count = PLATFORM_TABS.length;
+
+  // Autoplay: the progress ring's CSS animation is the timer — when it
+  // finishes, we advance — so the ring and the switch can never drift apart.
+  const [reducedMotion, setReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReducedMotion(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  // Measure the sliding pill so the ring traces its exact rounded outline.
+  const pillRef = useRef<HTMLSpanElement>(null);
+  const [pill, setPill] = useState({ w: 0, h: 0 });
+  useEffect(() => {
+    const el = pillRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect;
+      setPill({ w: width, h: height });
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  const autoplay = !reducedMotion;
+  const RING = 1.5; // stroke width, px
 
   // Arrow-key navigation per the WAI-ARIA tabs pattern
   function onKeyDown(e: KeyboardEvent<HTMLDivElement>) {
@@ -228,13 +260,41 @@ function PlatformTabs() {
         >
           {/* sliding active pill */}
           <span
+            ref={pillRef}
             aria-hidden
             className="absolute inset-y-1 left-1 rounded-full bg-[#527DFF] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
             style={{
               width: `calc((100% - 0.5rem) / ${count})`,
               transform: `translateX(${active * 100}%)`,
             }}
-          />
+          >
+            {/* countdown ring: a thin line that traces the pill's outline */}
+            {autoplay && pill.w > 0 && (
+              <svg
+                className="pointer-events-none absolute inset-0 overflow-visible"
+                width={pill.w}
+                height={pill.h}
+              >
+                <rect
+                  key={active}
+                  x={RING / 2}
+                  y={RING / 2}
+                  width={pill.w - RING}
+                  height={pill.h - RING}
+                  rx={(pill.h - RING) / 2}
+                  pathLength={100}
+                  fill="none"
+                  stroke="rgba(255,255,255,0.75)"
+                  strokeWidth={RING}
+                  strokeLinecap="butt"
+                  strokeDasharray="100 100"
+                  className="tab-progress"
+                  style={{ animationDuration: `${TAB_INTERVAL_MS}ms` }}
+                  onAnimationEnd={() => setActive((a) => (a + 1) % count)}
+                />
+              </svg>
+            )}
+          </span>
           {PLATFORM_TABS.map((tab, i) => (
             <button
               key={tab.id}
