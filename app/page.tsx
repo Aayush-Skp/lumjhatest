@@ -41,7 +41,7 @@ function BlueButton({
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-1.5 rounded-full bg-white px-5 py-2 text-[13px] font-semibold text-[#3E63F2] transition hover:brightness-95"
+        className={`inline-flex items-center rounded-full bg-white font-semibold text-[#3E63F2] transition hover:brightness-95 ${size}`}
       >
         {children}
       </a>
@@ -793,7 +793,7 @@ export default function HomePage() {
         </section>
 
         {/* CTA */}
-        <section className="relative isolate overflow-hidden bg-white px-4 py-13 sm:px-6 md:py-18">
+        <section className="relative isolate overflow-hidden bg-white px-4 py-16 sm:px-6 sm:py-20 md:py-28">
           {/* topographic pattern — the PNG carries its own transparency */}
           <Image
             src="/assets/cta-pattern.png"
@@ -803,21 +803,21 @@ export default function HomePage() {
             className="pointer-events-none -z-10 object-cover"
           />
           <div className="mx-auto max-w-[1440px]">
-            <div className="rounded-2xl bg-[#506DFF] px-6 py-10 text-center shadow-xl md:py-14">
-              <h2 className="mx-auto max-w-3xl text-xl font-extrabold text-white sm:text-2xl md:text-[28px]">
+            <div className="rounded-3xl bg-[#506DFF] px-6 py-14 text-center shadow-xl sm:px-10 md:py-20 lg:py-24">
+              <h2 className="mx-auto max-w-4xl text-[28px] font-extrabold leading-tight tracking-tight text-balance text-white sm:max-w-none sm:whitespace-nowrap sm:text-[clamp(1.5rem,calc((100vw_-_128px)/22),3rem)]">
                 Ready to Scale Your Customer Experience?
               </h2>
-              <p className="mx-auto mt-3 max-w-xl text-[12px] leading-relaxed text-white/85 sm:text-sm">
+              <p className="mx-auto mt-5 max-w-2xl text-[15px] leading-relaxed text-balance text-white/85 sm:text-base md:mt-6 md:text-lg">
                 Deliver instant, personalized answers across web, messaging, and social apps
                 without increasing your team&apos;s workload.
               </p>
-              <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
-                <BlueButton light>Start Free Trial</BlueButton>
+              <div className="mx-auto mt-8 flex w-full max-w-xs flex-col gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:items-center sm:justify-center sm:gap-4 md:mt-10">
+                <BlueButton light large>Start Free Trial</BlueButton>
                 <a
                   href="https://app.lumjha.ai/login"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 rounded-md border border-white/80 px-5 py-2 text-[13px] font-semibold text-white transition hover:bg-white/10"
+                  className="inline-flex items-center justify-center rounded-lg border border-white/80 px-7 py-3.5 text-[15px] font-semibold text-white transition hover:bg-white/10 md:px-8 md:text-base"
                 >
                   Book a Demo
                 </a>

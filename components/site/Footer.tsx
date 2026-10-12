@@ -23,8 +23,8 @@ const LEGAL = [
 
 export default function Footer() {
   return (
-    <footer className="bg-black px-4 pb-8 pt-12 text-gray-400 sm:px-6">
-      <div className="mx-auto grid max-w-[1440px] grid-cols-2 gap-8 md:grid-cols-[1.4fr_1fr_1fr_1fr_1.4fr]">
+    <footer className="bg-black px-4 pb-10 pt-16 text-gray-400 sm:px-6 md:pb-12 md:pt-24">
+      <div className="mx-auto grid max-w-[1440px] grid-cols-2 gap-x-8 gap-y-12 md:grid-cols-[1.4fr_1fr_1fr_1fr_1.4fr] md:gap-10">
         <div className="col-span-2 md:col-span-1">
           <div className="flex items-center gap-2">
             <Image
@@ -36,54 +36,56 @@ export default function Footer() {
             />
             <span className="text-sm font-bold text-white">Lumjha AI</span>
           </div>
-          <p className="mt-3 max-w-[220px] text-[12px] leading-relaxed">
+          <p className="mt-4 max-w-[240px] text-[13px] leading-relaxed md:text-sm">
             Lumjha is the no-code AI layer for modern customer engagement.
           </p>
-          <div className="mt-4 flex gap-3 text-sm">
+          <div className="mt-5 flex gap-4 text-sm">
             <a href="#" aria-label="Facebook" className="hover:text-white">f</a>
             <a href="#" aria-label="Instagram" className="hover:text-white">◉</a>
             <a href="#" aria-label="LinkedIn" className="hover:text-white">in</a>
           </div>
         </div>
         <div>
-          <p className="text-[12px] font-bold text-white">Quick Links</p>
-          <ul className="mt-3 space-y-2 text-[12px]">
+          <p className="text-[13px] font-bold text-white md:text-sm">Quick Links</p>
+          <ul className="mt-4 space-y-3 text-[13px] md:text-sm">
             {QUICK_LINKS.map((x) => (
               <li key={x.label}><a href={x.href} className="hover:text-white">{x.label}</a></li>
             ))}
           </ul>
         </div>
         <div>
-          <p className="text-[12px] font-bold text-white">Platforms</p>
-          <ul className="mt-3 space-y-2 text-[12px]">
+          <p className="text-[13px] font-bold text-white md:text-sm">Platforms</p>
+          <ul className="mt-4 space-y-3 text-[13px] md:text-sm">
             {PLATFORMS.map((x) => (
               <li key={x.label}><a href={x.href} className="hover:text-white">{x.label}</a></li>
             ))}
           </ul>
         </div>
         <div>
-          <p className="text-[12px] font-bold text-white">Legal</p>
-          <ul className="mt-3 space-y-2 text-[12px]">
+          <p className="text-[13px] font-bold text-white md:text-sm">Legal</p>
+          <ul className="mt-4 space-y-3 text-[13px] md:text-sm">
             {LEGAL.map((x) => (
               <li key={x.label}><a href={x.href} className="hover:text-white">{x.label}</a></li>
             ))}
           </ul>
         </div>
         <div className="col-span-2 md:col-span-1">
-          <p className="text-[12px] font-bold text-white">Newsletter</p>
+          <p className="text-[13px] font-bold text-white md:text-sm">Newsletter</p>
           <input
             type="email"
             placeholder="backend@brjnole.dev"
-            className="mt-3 w-full rounded-md border border-gray-700 bg-white px-3 py-2 text-[12px] text-black outline-none placeholder:text-gray-500"
+            className="mt-4 w-full rounded-md border border-gray-700 bg-white px-3 py-2.5 text-[13px] text-black outline-none placeholder:text-gray-500"
           />
-          <button className="mt-2 flex items-center gap-1.5 rounded-md bg-[#527DFF] px-4 py-2 text-[12px] font-semibold text-white hover:bg-[#3E63F2]">
+          <button className="mt-3 flex items-center gap-1.5 rounded-md bg-[#527DFF] px-4 py-2.5 text-[13px] font-semibold text-white hover:bg-[#3E63F2]">
             ✉ Subscribe
           </button>
         </div>
       </div>
-      <p className="mt-10 text-center text-[11px] text-gray-500">
-        © 2026 Lumjha. All rights reserved.
-      </p>
+      <div className="mx-auto mt-14 max-w-[1440px] border-t border-white/10 pt-8 md:mt-20">
+        <p className="text-center text-[12px] text-gray-500">
+          © 2026 Lumjha. All rights reserved.
+        </p>
+      </div>
     </footer>
   );
 }
