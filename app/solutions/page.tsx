@@ -2,6 +2,16 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import type { ComponentType, SVGProps } from "react";
+import {
+  WebsiteIcon,
+  WhatsAppIcon,
+  InstagramIcon,
+  FacebookIcon,
+  TelegramIcon,
+  GoogleCalendarIcon,
+  ShopifyIcon,
+} from "@/components/ui/ChannelIcons";
 
 /* ============================================================
    Lumjha — Figma-exact revamp (mobile-first responsive)
@@ -147,18 +157,40 @@ function ChatCard({
   );
 }
 
-/* ---------- channel icons ---------- */
+/* ---------- channel logos (same set as previous landing page) ---------- */
 
-function ChannelIcon({ label, bg, glyph }: { label: string; bg: string; glyph: string }) {
+const CHANNELS: {
+  name: string;
+  bg: string;
+  Icon: ComponentType<SVGProps<SVGSVGElement>>;
+}[] = [
+  { name: "Website", bg: "#2E9BF0", Icon: WebsiteIcon },
+  { name: "WhatsApp", bg: "#25D366", Icon: WhatsAppIcon },
+  { name: "Instagram", bg: "#E1306C", Icon: InstagramIcon },
+  { name: "Facebook", bg: "#1877F2", Icon: FacebookIcon },
+  { name: "Telegram", bg: "#229ED9", Icon: TelegramIcon },
+  { name: "Google Calendar", bg: "#4285F4", Icon: GoogleCalendarIcon },
+  { name: "Shopify", bg: "#95BF47", Icon: ShopifyIcon },
+];
+
+function ChannelIcon({
+  name,
+  bg,
+  Icon,
+}: {
+  name: string;
+  bg: string;
+  Icon: ComponentType<SVGProps<SVGSVGElement>>;
+}) {
   return (
-    <div className="flex flex-col items-center gap-2" title={label}>
+    <div className="flex flex-col items-center gap-2" title={name}>
       <div
-        className="flex h-12 w-12 items-center justify-center rounded-full text-[22px] shadow-lg md:h-14 md:w-14 md:text-[26px]"
+        className="flex h-12 w-12 items-center justify-center rounded-full text-white shadow-lg md:h-14 md:w-14"
         style={{ background: bg }}
       >
-        {glyph}
+        <Icon className="h-6 w-6 md:h-7 md:w-7" aria-hidden />
       </div>
-      <span className="sr-only">{label}</span>
+      <span className="sr-only">{name}</span>
     </div>
   );
 }
@@ -448,14 +480,9 @@ export default function SolutionsPage() {
             Connect your central knowledge base directly to every major customer touchpoint in minutes.
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-5 sm:gap-7 md:gap-10">
-            <ChannelIcon label="Google Calendar" bg="linear-gradient(135deg,#34A853,#FBBC05,#EA4335,#4285F4)" glyph="📅" />
-            <ChannelIcon label="Slack" bg="#FFFFFF" glyph="🎨" />
-            <ChannelIcon label="Discord" bg="#5865F2" glyph="🎮" />
-            <ChannelIcon label="Telegram" bg="#229ED9" glyph="✈" />
-            <ChannelIcon label="WhatsApp" bg="#25D366" glyph="✆" />
-            <ChannelIcon label="Messenger" bg="linear-gradient(135deg,#A334FA,#FF3D77,#FF7A3D)" glyph="⚡" />
-            <ChannelIcon label="Support agent" bg="#E8EEF7" glyph="👩‍💻" />
-            <ChannelIcon label="Website" bg="#2E9BF0" glyph="🌐" />
+            {CHANNELS.map((c) => (
+              <ChannelIcon key={c.name} name={c.name} bg={c.bg} Icon={c.Icon} />
+            ))}
           </div>
         </section>
 
@@ -527,15 +554,15 @@ export default function SolutionsPage() {
           </p>
           <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
             {[
-              { icon: "⌕", title: "Site Search", price: "+$25/month" },
-              { icon: "🛡", title: "Policy Vault", price: "+$25/month" },
-              { icon: "📦", title: "Bundle (Both)", price: "+$45/month" },
+              { src: "/assets/site-search.svg", alt: "Site Search icon", title: "Site Search", price: "+$25/month" },
+              { src: "/assets/policy-vault.svg", alt: "Policy Vault icon", title: "Policy Vault", price: "+$25/month" },
+              { src: "/assets/bundle.svg", alt: "Bundle icon", title: "Bundle (Both)", price: "+$45/month" },
             ].map((a) => (
               <div
                 key={a.title}
                 className="flex items-center gap-4 rounded-xl border border-[#B9CBF5] bg-white px-5 py-4 text-[#0B1526]"
               >
-                <span className="text-2xl">{a.icon}</span>
+                <Image src={a.src} alt={a.alt} width={32} height={32} className="h-8 w-8 shrink-0" />
                 <span>
                   <span className="block text-[15px] font-extrabold">{a.title}</span>
                   <span className="block text-[12px] text-gray-500">{a.price}</span>
