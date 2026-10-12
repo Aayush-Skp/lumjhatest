@@ -558,24 +558,48 @@ const CHANNELS: {
     { name: "Shopify", bg: "#95BF47", Icon: ShopifyIcon },
   ];
 
-function ChannelIcon({
-  name,
-  bg,
-  Icon,
-}: {
-  name: string;
-  bg: string;
-  Icon: ComponentType<SVGProps<SVGSVGElement>>;
-}) {
+type Channel = (typeof CHANNELS)[number];
+
+/* Vertical "slot machine" reels, as on the previous landing page — rebuilt
+   with plain CSS keyframes (no animation library). Each reel shows the
+   channels in a different order, speed and direction; edge reels are dimmed
+   so focus lands in the middle. */
+const REEL_DURATIONS = [16, 23, 14, 20, 26, 18];
+const REEL_OPACITY = [0.3, 0.6, 1, 1, 0.6, 0.3];
+
+function rotate<T>(arr: readonly T[], by: number): T[] {
+  const k = ((by % arr.length) + arr.length) % arr.length;
+  return [...arr.slice(k), ...arr.slice(0, k)];
+}
+
+function ChannelTile({ channel }: { channel: Channel }) {
+  const { Icon, bg } = channel;
   return (
-    <div className="flex flex-col items-center gap-2" title={name}>
-      <div
-        className="flex h-12 w-12 items-center justify-center rounded-full text-white shadow-lg md:h-14 md:w-14"
-        style={{ background: bg }}
-      >
-        <Icon className="h-6 w-6 md:h-7 md:w-7" aria-hidden />
+    <div className="flex h-20 items-center justify-center sm:h-24 md:h-32">
+      <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/[0.08] bg-[#0B1428] shadow-[0_12px_36px_rgba(0,0,0,0.45)] sm:h-16 sm:w-16 sm:rounded-2xl md:h-24 md:w-24">
+        <Icon style={{ color: bg }} className="h-5 w-5 sm:h-8 sm:w-8 md:h-12 md:w-12" aria-hidden />
       </div>
-      <span className="sr-only">{name}</span>
+    </div>
+  );
+}
+
+function ChannelReel({ index }: { index: number }) {
+  const order = rotate(CHANNELS, index * 2 + (index % 3));
+  // Two copies so shifting by -50% loops seamlessly.
+  const items = [...order, ...order];
+  return (
+    <div
+      style={{ opacity: REEL_OPACITY[index] }}
+      className="relative h-[320px] overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,#000_18%,#000_82%,transparent)] sm:h-[380px] md:h-[460px]"
+    >
+      <div
+        className={`flex flex-col will-change-transform ${index % 2 === 0 ? "reel-up" : "reel-down"}`}
+        style={{ animationDuration: `${REEL_DURATIONS[index]}s` }}
+      >
+        {items.map((c, i) => (
+          <ChannelTile key={`${c.name}-${i}`} channel={c} />
+        ))}
+      </div>
     </div>
   );
 }
@@ -695,18 +719,20 @@ export default function HomePage() {
 
         {/* CHANNELS */}
         <section id="channels" className="relative mx-auto max-w-[1440px] px-4 py-16 sm:px-6 md:py-20">
-          <svg className="pointer-events-none absolute left-0 right-0 top-8 h-24 w-full opacity-30" viewBox="0 0 1200 100" fill="none" preserveAspectRatio="none">
-            <path d="M0 50 C 200 10, 400 90, 600 50 S 1000 10, 1200 50" stroke="#2B3B66" strokeWidth="1.5" />
-          </svg>
           <h2 className="text-center text-xl font-extrabold text-[#5B8CFF] sm:text-2xl md:text-[28px]">
             Be Wherever Your Customers Are
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-center text-[12px] text-gray-300 sm:text-sm">
             Connect your central knowledge base directly to every major customer touchpoint in minutes.
           </p>
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-5 sm:gap-7 md:gap-10">
+          <ul className="sr-only">
             {CHANNELS.map((c) => (
-              <ChannelIcon key={c.name} name={c.name} bg={c.bg} Icon={c.Icon} />
+              <li key={c.name}>{c.name}</li>
+            ))}
+          </ul>
+          <div aria-hidden className="mx-auto mt-10 grid max-w-5xl grid-cols-6 gap-1.5 sm:gap-3 md:mt-14 md:gap-4">
+            {REEL_DURATIONS.map((_, i) => (
+              <ChannelReel key={i} index={i} />
             ))}
           </div>
         </section>
@@ -734,18 +760,18 @@ export default function HomePage() {
                     {p.badge}
                   </span>
                 )}
-                <div className={`px-5 pb-4 pt-5 text-center ${p.featured ? "pt-7" : ""}`}>
-                  <p className="text-lg font-extrabold">{p.name}</p>
-                  <p className="text-[11px] text-gray-500">{p.sub}</p>
-                  <p className="mt-2 text-2xl font-extrabold">
+                <div className={`px-5 pb-6 text-center ${p.featured ? "pt-10" : "pt-8"}`}>
+                  <p className="text-xl font-extrabold">{p.name}</p>
+                  <p className="mt-0.5 text-[12px] text-gray-500">{p.sub}</p>
+                  <p className="mt-4 text-3xl font-extrabold">
                     {p.price}
-                    {p.per && <span className="text-[11px] font-medium text-gray-500">{p.per}</span>}
+                    {p.per && <span className="text-[12px] font-medium text-gray-500">{p.per}</span>}
                   </p>
                 </div>
                 <div className="mx-4 border-t border-gray-200" />
-                <ul className="flex-1 space-y-2 px-5 py-4">
+                <ul className="flex-1 space-y-3 px-5 py-6">
                   {p.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-[12px] text-gray-700">
+                    <li key={f} className="flex items-start gap-2 text-[13px] text-gray-700">
                       <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-gray-400 text-[9px]">
                         ✓
                       </span>
@@ -753,12 +779,12 @@ export default function HomePage() {
                     </li>
                   ))}
                 </ul>
-                <div className="bg-[#DCE7FF] px-5 py-4">
+                <div className="bg-[#DCE7FF] px-5 py-5">
                   <a
                     href="https://app.lumjha.ai/login"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block rounded-md bg-[#527DFF] py-2 text-center text-[13px] font-bold text-white hover:bg-[#3E63F2]"
+                    className="block rounded-md bg-[#527DFF] py-2.5 text-center text-[14px] font-bold text-white hover:bg-[#3E63F2]"
                   >
                     {p.cta}
                   </a>

@@ -331,6 +331,30 @@ body {
   }
 }
 
+/* Channel slot reels — duration is set inline per reel */
+.reel-up {
+  animation: reelUp linear infinite;
+}
+.reel-down {
+  animation: reelDown linear infinite;
+}
+@keyframes reelUp {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -50%, 0);
+  }
+}
+@keyframes reelDown {
+  from {
+    transform: translate3d(0, -50%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 /* Soft pulse used behind hero + section headers */
 .glow-pulse {
   animation: glowPulse 6s ease-in-out infinite;

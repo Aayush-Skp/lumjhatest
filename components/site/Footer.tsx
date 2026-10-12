@@ -1,4 +1,5 @@
 import Image from "next/image";
+import FooterWordmark from "./FooterWordmark";
 
 const QUICK_LINKS = [
   { label: "Platform", href: "/#platform" },
@@ -23,7 +24,7 @@ const LEGAL = [
 
 export default function Footer() {
   return (
-    <footer className="bg-black px-4 pb-10 pt-16 text-gray-400 sm:px-6 md:pb-12 md:pt-24">
+    <footer className="bg-black px-4 pb-10 pt-16 text-gray-400 sm:px-6 md:pb-12 md:pt-28">
       <div className="mx-auto grid max-w-[1440px] grid-cols-2 gap-x-8 gap-y-12 md:grid-cols-[1.4fr_1fr_1fr_1fr_1.4fr] md:gap-10">
         <div className="col-span-2 md:col-span-1">
           <div className="flex items-center gap-2">
@@ -81,7 +82,10 @@ export default function Footer() {
           </button>
         </div>
       </div>
-      <div className="mx-auto mt-14 max-w-[1440px] border-t border-white/10 pt-8 md:mt-20">
+      <div className="mx-auto mt-16 max-w-[1440px] md:mt-24">
+        <FooterWordmark />
+      </div>
+      <div className="mx-auto mt-6 max-w-[1440px] border-t border-white/10 pt-8 md:mt-10">
         <p className="text-center text-[12px] text-gray-500">
           © 2026 Lumjha. All rights reserved.
         </p>

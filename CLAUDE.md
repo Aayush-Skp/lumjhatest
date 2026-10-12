@@ -23,6 +23,7 @@ lumjha-website/
 │   ├── site/
 │   │   ├── Navbar.tsx    ← shared navbar (prefix prop for legal pages)
 │   │   ├── Footer.tsx    ← shared footer (Privacy/Terms wired)
+│   │   ├── FooterWordmark.tsx ← outlined "Lumjha" + cursor torch (footer copy of the showcase piece)
 │   │   └── LegalPage.tsx ← Figma-styled shell for legal pages
 │   ├── showcase/
 │   │   └── LumjhaSpotlight.tsx ← preserved hover-torch wordmark (unused, for later)

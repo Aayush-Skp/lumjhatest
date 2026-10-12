@@ -9,7 +9,8 @@ import { useRef } from "react";
  * copy is revealed only inside a circular torch that follows the cursor
  * (rAF-throttled, CSS mask). Zero dependencies — pure React + CSS.
  *
- * NOT wired into any route. Drop it anywhere when a footer/hero wants it:
+ * Not wired into any route as-is; the footer uses an adapted copy
+ * (components/site/FooterWordmark.tsx). Drop it anywhere:
  *
  *   import LumjhaSpotlight from "@/components/showcase/LumjhaSpotlight";
  *   <LumjhaSpotlight />
