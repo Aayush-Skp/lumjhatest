@@ -400,7 +400,7 @@ function PlatformTabs() {
 
   return (
     <>
-      <div id="features" className="mt-5 flex justify-center md:mt-8">
+      <div className="mt-5 flex justify-center md:mt-8">
         <div
           role="tablist"
           aria-label="Lumjha products"
@@ -474,7 +474,6 @@ function PlatformTabs() {
       {/* All panels share one grid cell, so the section keeps the tallest
           panel's height and switching tabs never shifts the page. */}
       <div
-        id="how"
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
         className="grid touch-pan-y pb-8 pt-10 md:pb-10 md:pt-14"
@@ -800,7 +799,8 @@ export default function HomePage() {
         </section>
 
         {/* ADD-ONS */}
-        <section id="security" className="mx-auto max-w-[1440px] px-4 pb-16 sm:px-6 md:pb-24">
+        {/* no top padding (it continues Pricing), so scroll-mt gives anchor jumps the same breathing room as other sections */}
+        <section id="addons" className="mx-auto max-w-[1440px] scroll-mt-16 px-4 pb-16 sm:px-6 md:scroll-mt-24 md:pb-24">
           <h2 className="text-center text-xl font-extrabold text-[#5B8CFF] sm:text-2xl">
             Enhance Your Plan with Add-ons
           </h2>

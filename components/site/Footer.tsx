@@ -4,10 +4,9 @@ import FooterWordmark from "./FooterWordmark";
 
 const QUICK_LINKS = [
   { label: "Platform", href: "/#platform" },
-  { label: "Features", href: "/#features" },
-  { label: "How it works", href: "/#how" },
+  { label: "Integrations", href: "/#channels" },
   { label: "Pricing", href: "/#pricing" },
-  { label: "Security", href: "/#security" },
+  { label: "Add-ons", href: "/#addons" },
 ];
 
 const PLATFORMS = [

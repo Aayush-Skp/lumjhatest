@@ -3,12 +3,12 @@
 import { useState } from "react";
 import Image from "next/image";
 
+// One link per landing-page section, in page order.
 const NAV_LINKS = [
   { label: "Platform", href: "#platform" },
-  { label: "Features", href: "#features" },
-  { label: "How it works", href: "#how" },
+  { label: "Integrations", href: "#channels" },
   { label: "Pricing", href: "#pricing" },
-  { label: "Security", href: "#security" },
+  { label: "Add-ons", href: "#addons" },
 ];
 
 /** Site navbar. `prefix` lets legal pages link back home ("/#pricing"). */
