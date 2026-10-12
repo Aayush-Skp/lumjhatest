@@ -48,7 +48,7 @@ export default function Footer() {
         </div>
         <div>
           <p className="text-[13px] font-bold text-white md:text-sm">Quick Links</p>
-          <ul className="mt-4 space-y-3 text-[13px] md:text-sm">
+          <ul className="mt-4 space-y-3 text-[13px] font-medium md:text-sm">
             {QUICK_LINKS.map((x) => (
               <li key={x.label}><a href={x.href} className="hover:text-white">{x.label}</a></li>
             ))}
@@ -56,7 +56,7 @@ export default function Footer() {
         </div>
         <div>
           <p className="text-[13px] font-bold text-white md:text-sm">Platforms</p>
-          <ul className="mt-4 space-y-3 text-[13px] md:text-sm">
+          <ul className="mt-4 space-y-3 text-[13px] font-medium md:text-sm">
             {PLATFORMS.map((x) => (
               <li key={x.label}><a href={x.href} className="hover:text-white">{x.label}</a></li>
             ))}
@@ -64,7 +64,7 @@ export default function Footer() {
         </div>
         <div>
           <p className="text-[13px] font-bold text-white md:text-sm">Legal</p>
-          <ul className="mt-4 space-y-3 text-[13px] md:text-sm">
+          <ul className="mt-4 space-y-3 text-[13px] font-medium md:text-sm">
             {LEGAL.map((x) => (
               <li key={x.label}><a href={x.href} className="hover:text-white">{x.label}</a></li>
             ))}
