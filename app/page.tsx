@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import type { ComponentType, SVGProps } from "react";
+import { useRef, useState } from "react";
+import type { ComponentType, KeyboardEvent, ReactNode, SVGProps, TouchEvent } from "react";
 import Navbar from "@/components/site/Navbar";
 import Footer from "@/components/site/Footer";
 import {
@@ -18,29 +19,22 @@ import {
    Lumjha — main landing page (Figma design, mobile-first)
    ============================================================ */
 
-function PillTab({ label, active }: { label: string; active?: boolean }) {
-  return (
-    <span
-      className={`inline-flex items-center rounded-md px-2.5 py-1 text-[11px] font-semibold leading-none ${
-        active ? "bg-[#527DFF] text-white" : "text-gray-300"
-      }`}
-    >
-      {label}
-    </span>
-  );
-}
-
 function BlueButton({
   children,
   outline,
   light,
+  large,
   href = "https://app.lumjha.ai/login",
 }: {
   children: React.ReactNode;
   outline?: boolean;
   light?: boolean;
+  large?: boolean;
   href?: string;
 }) {
+  const size = large
+    ? "justify-center gap-2 px-7 py-3.5 text-[15px] md:px-8 md:text-base"
+    : "gap-1.5 px-5 py-2 text-[13px]";
   if (light) {
     return (
       <a
@@ -59,7 +53,7 @@ function BlueButton({
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-1.5 rounded-full border border-[#527DFF]/70 px-5 py-2 text-[13px] font-semibold text-white transition hover:bg-[#527DFF]/10"
+        className={`inline-flex items-center rounded-full border border-[#527DFF]/70 font-semibold ${size} text-white transition hover:bg-[#527DFF]/10`}
       >
         {children} <span aria-hidden>→</span>
       </a>
@@ -70,7 +64,7 @@ function BlueButton({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex items-center gap-1.5 rounded-full bg-[#527DFF] px-5 py-2 text-[13px] font-semibold text-white shadow-[0_8px_30px_-6px_rgba(82,125,255,0.7)] transition hover:bg-[#3E63F2]"
+      className={`inline-flex items-center rounded-full bg-[#527DFF] font-semibold text-white shadow-[0_8px_30px_-6px_rgba(82,125,255,0.7)] transition hover:bg-[#3E63F2] ${size}`}
     >
       {children} <span aria-hidden>→</span>
     </a>
@@ -89,11 +83,11 @@ function Highlight({ children }: { children: React.ReactNode }) {
 
 function Bubble({ w = "w-11/12", lines = 3 }: { w?: string; lines?: number }) {
   return (
-    <div className={`rounded-md border border-gray-200 bg-[#F4F6FA] p-2 ${w}`}>
+    <div className={`rounded-lg border border-gray-200 bg-[#F4F6FA] p-2.5 lg:p-3 ${w}`}>
       {Array.from({ length: lines }).map((_, i) => (
         <div
           key={i}
-          className="mb-1 h-1.5 rounded bg-gray-300/70"
+          className="mb-1.5 h-1.5 rounded bg-gray-300/70 last:mb-0 lg:h-2"
           style={{ width: `${92 - i * 14}%` }}
         />
       ))}
@@ -104,18 +98,18 @@ function Bubble({ w = "w-11/12", lines = 3 }: { w?: string; lines?: number }) {
 function ChatCard({ title, accent = "#527DFF" }: { title: string; accent?: string }) {
   return (
     <div
-      className="w-full max-w-[320px] rounded-2xl border-2 bg-white p-3 shadow-[0_20px_60px_-20px_rgba(82,125,255,0.45)] lg:max-w-[400px]"
+      className="w-full max-w-[340px] rounded-2xl border-2 bg-white p-3.5 shadow-[0_24px_70px_-20px_rgba(82,125,255,0.5)] sm:max-w-[360px] sm:p-4 lg:max-w-[480px] lg:p-5"
       style={{ borderColor: accent }}
     >
-      <div className="flex items-center gap-2 border-b border-gray-100 pb-2">
-        <span className="flex h-5 w-5 items-center justify-center rounded-full border border-gray-300 text-[10px] text-gray-500">
+      <div className="flex items-center gap-2.5 border-b border-gray-100 pb-3">
+        <span className="flex h-6 w-6 items-center justify-center rounded-full border border-gray-300 text-[11px] text-gray-500">
           ⌕
         </span>
-        <p className="text-[12px] font-bold" style={{ color: accent }}>
+        <p className="text-[13px] font-bold lg:text-sm" style={{ color: accent }}>
           {title}
         </p>
       </div>
-      <div className="flex flex-col gap-2 py-3">
+      <div className="flex flex-col gap-2.5 py-4">
         <div className="flex justify-end">
           <Bubble w="w-1/2" lines={2} />
         </div>
@@ -125,16 +119,217 @@ function ChatCard({ title, accent = "#527DFF" }: { title: string; accent?: strin
         </div>
         <Bubble w="w-10/12" lines={3} />
       </div>
-      <div className="flex items-center gap-2 rounded-full border border-gray-200 px-3 py-1.5">
-        <span className="flex-1 text-[10px] text-gray-400">Ask anything…</span>
+      <div className="flex items-center gap-2 rounded-full border border-gray-200 px-4 py-2">
+        <span className="flex-1 text-[11px] text-gray-400 lg:text-xs">Ask anything…</span>
         <span
-          className="flex h-5 w-5 items-center justify-center rounded-full text-[10px] text-white"
+          className="flex h-6 w-6 items-center justify-center rounded-full text-[11px] text-white"
           style={{ background: accent }}
         >
           ➤
         </span>
       </div>
     </div>
+  );
+}
+
+/* ---------- all-in-one platform tabs ---------- */
+
+const PLATFORM_TABS: {
+  id: string;
+  label: string;
+  cardTitle: string;
+  heading: ReactNode;
+  body: string;
+}[] = [
+  {
+    id: "chatbot",
+    label: "Chat Bot",
+    cardTitle: "Lumjha - Chat Bot",
+    heading: (
+      <>
+        Automate <Highlight>Customer Support</Highlight>
+        <br />
+        Across Every Channel.
+      </>
+    ),
+    body: "Deliver instant, accurate answers across your website, messaging apps, and social platforms. Lumjha engages visitors, captures lead data naturally during chat, and schedules meetings directly into your calendar.",
+  },
+  {
+    id: "site-search",
+    label: "Site Search",
+    cardTitle: "Lumjha - Site Search",
+    heading: (
+      <>
+        <Highlight>Search</Highlight>
+        <br />
+        That Actually Answers.
+      </>
+    ),
+    body: "Upgrade site search with AI. Lumjha instantly scans your entire website and documentation to deliver precise, summarized answers directly to your visitors with sources attached.",
+  },
+  {
+    id: "policy-vault",
+    label: "Policy Vault",
+    cardTitle: "Lumjha - Policy Vault",
+    heading: (
+      <>
+        Primary <Highlight>Source Quotes,</Highlight>
+        <br />
+        Delivered Exactly.
+      </>
+    ),
+    body: "Upgrade site search with AI. Lumjha instantly scans your entire website and documentation to deliver precise, summarized answers directly to your visitors with sources attached.",
+  },
+];
+
+function PlatformTabs() {
+  const [active, setActive] = useState(0);
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const count = PLATFORM_TABS.length;
+
+  // Arrow-key navigation per the WAI-ARIA tabs pattern
+  function onKeyDown(e: KeyboardEvent<HTMLDivElement>) {
+    let next = active;
+    if (e.key === "ArrowRight") next = (active + 1) % count;
+    else if (e.key === "ArrowLeft") next = (active - 1 + count) % count;
+    else if (e.key === "Home") next = 0;
+    else if (e.key === "End") next = count - 1;
+    else return;
+    e.preventDefault();
+    setActive(next);
+    tabRefs.current[next]?.focus();
+  }
+
+  // Horizontal swipe on the panels switches tabs on touch screens
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+  function onTouchStart(e: TouchEvent<HTMLDivElement>) {
+    const t = e.touches[0];
+    touchStart.current = { x: t.clientX, y: t.clientY };
+  }
+  function onTouchEnd(e: TouchEvent<HTMLDivElement>) {
+    const start = touchStart.current;
+    touchStart.current = null;
+    if (!start) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - start.x;
+    const dy = t.clientY - start.y;
+    if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy)) return;
+    setActive((a) => (dx < 0 ? Math.min(a + 1, count - 1) : Math.max(a - 1, 0)));
+  }
+
+  return (
+    <>
+      <div id="features" className="mt-5 flex justify-center md:mt-8">
+        <div
+          role="tablist"
+          aria-label="Lumjha products"
+          onKeyDown={onKeyDown}
+          className="relative grid w-full max-w-sm grid-cols-3 rounded-full border border-white/10 bg-white/[0.04] p-1 sm:w-auto sm:max-w-none"
+        >
+          {/* sliding active pill */}
+          <span
+            aria-hidden
+            className="absolute inset-y-1 left-1 rounded-full bg-[#527DFF] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
+            style={{
+              width: `calc((100% - 0.5rem) / ${count})`,
+              transform: `translateX(${active * 100}%)`,
+            }}
+          />
+          {PLATFORM_TABS.map((tab, i) => (
+            <button
+              key={tab.id}
+              ref={(el) => {
+                tabRefs.current[i] = el;
+              }}
+              type="button"
+              role="tab"
+              id={`tab-${tab.id}`}
+              aria-selected={active === i}
+              aria-controls={`panel-${tab.id}`}
+              tabIndex={active === i ? 0 : -1}
+              onClick={() => setActive(i)}
+              className={`relative z-10 whitespace-nowrap rounded-full px-2 py-2.5 text-[13px] font-semibold transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#527DFF] sm:px-6 sm:py-2.5 sm:text-sm md:px-8 md:text-[15px] ${
+                active === i ? "text-white" : "text-gray-400 hover:text-white"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* All panels share one grid cell, so the section keeps the tallest
+          panel's height and switching tabs never shifts the page. */}
+      <div
+        id="how"
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+        className="grid touch-pan-y py-10 md:py-20"
+      >
+        {PLATFORM_TABS.map((tab, i) => {
+          const isActive = active === i;
+          return (
+            <div
+              key={tab.id}
+              role="tabpanel"
+              id={`panel-${tab.id}`}
+              aria-labelledby={`tab-${tab.id}`}
+              aria-hidden={!isActive}
+              inert={!isActive}
+              className={`col-start-1 row-start-1 grid content-start items-center gap-8 md:content-center md:grid-cols-[minmax(0,400px)_1fr] md:gap-14 lg:grid-cols-[minmax(0,500px)_1fr] lg:gap-20 ${
+                isActive ? "pointer-events-auto" : "pointer-events-none"
+              }`}
+            >
+              <div
+                className={`flex justify-center transition-all ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
+                  isActive
+                    ? "translate-y-0 scale-100 opacity-100 delay-150 duration-700"
+                    : "translate-y-4 scale-[0.97] opacity-0 duration-300"
+                }`}
+              >
+                <ChatCard title={tab.cardTitle} />
+              </div>
+              <div
+                className={`text-center transition-all ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none md:text-left ${
+                  isActive
+                    ? "translate-y-0 opacity-100 delay-250 duration-700"
+                    : "translate-y-4 opacity-0 duration-300"
+                }`}
+              >
+                <h3 className="text-[26px] font-extrabold leading-[1.25] tracking-tight sm:text-4xl lg:text-5xl">
+                  {tab.heading}
+                </h3>
+                <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-gray-300 sm:mt-5 md:mx-0 md:text-base lg:mt-6 lg:text-lg">
+                  {tab.body}
+                </p>
+                <div className="mt-6 flex justify-center md:justify-start lg:mt-8">
+                  <BlueButton large>Get Started Free</BlueButton>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* progress dots, also clickable (padded for a 24px touch target) */}
+      <div className="-mt-4 flex justify-center pb-6 md:-mt-10">
+        {PLATFORM_TABS.map((tab, i) => (
+          <button
+            key={tab.id}
+            type="button"
+            aria-label={`Show ${tab.label}`}
+            onClick={() => setActive(i)}
+            className="group flex h-6 items-center px-1"
+          >
+            <span
+              className={`block h-1.5 rounded-full transition-all duration-500 ${
+                active === i ? "w-6 bg-[#527DFF]" : "w-1.5 bg-white/25 group-hover:bg-white/50"
+              }`}
+            />
+          </button>
+        ))}
+      </div>
+    </>
   );
 }
 
@@ -263,105 +458,30 @@ export default function HomePage() {
         <div className="pointer-events-none absolute -right-40 top-[900px] h-[500px] w-[300px] rounded-full bg-[#1B3AA0]/25 blur-[120px]" />
         <div className="pointer-events-none absolute -left-40 top-[1900px] h-[500px] w-[300px] rounded-full bg-[#1B3AA0]/20 blur-[120px]" />
 
-        {/* HERO */}
-        <section className="relative mx-auto max-w-[1440px] px-4 pb-12 pt-12 text-center sm:px-6 md:pt-20">
-          <h1 className="text-[32px] font-extrabold leading-[1.1] tracking-tight sm:text-5xl md:text-[56px]">
+        {/* HERO — owns the first viewport: 100svh minus the 3.5rem navbar */}
+        <section className="relative mx-auto flex min-h-[calc(100svh-3.5rem)] w-full max-w-[1440px] flex-col items-center justify-center px-4 py-12 text-center sm:px-6 md:py-20">
+          <h1 className="max-w-5xl text-[clamp(2.25rem,6vw+1rem,5.25rem)] font-extrabold leading-[1.05] tracking-[-0.03em]">
             Never Miss a Customer.
             <br />
             <span className="text-[#6E97FF]">Grow While You Sleep.</span>
           </h1>
-          <p className="mx-auto mt-5 max-w-2xl text-[13px] leading-relaxed text-gray-300 sm:text-sm md:text-[15px]">
+          <p className="mx-auto mt-6 max-w-[42rem] text-base leading-relaxed text-balance text-gray-300 sm:text-lg md:mt-8 md:text-xl">
             Lumjha answers your customers&apos; questions, captures sales leads, and books
             appointments around the clock, on platform(s) they already use, so you can
             focus on running your business.
           </p>
-          <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
-            <BlueButton>Get Started Free</BlueButton>
-            <BlueButton outline>Book a Demo</BlueButton>
+          <div className="mt-8 flex w-full max-w-xs flex-col gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:items-center sm:justify-center sm:gap-4 md:mt-10">
+            <BlueButton large>Get Started Free</BlueButton>
+            <BlueButton large outline>Book a Demo</BlueButton>
           </div>
         </section>
 
         {/* ALL-IN-ONE PLATFORM */}
-        <section id="platform" className="relative mx-auto max-w-[1440px] px-4 sm:px-6">
-          <h2 className="pt-8 text-center text-lg font-extrabold tracking-wide sm:text-xl md:text-2xl">
+        <section id="platform" className="relative mx-auto max-w-[1440px] px-4 pt-10 sm:px-6 md:pt-20">
+          <h2 className="text-center text-xl font-extrabold tracking-wide text-balance sm:text-3xl md:text-4xl">
             ALL-IN-ONE KNOWLEDGE PLATFORM
           </h2>
-          <div className="mt-3 flex items-center justify-center gap-2">
-            <PillTab label="Chat Bot" active />
-            <PillTab label="Site Search" />
-            <PillTab label="Policy Vault" />
-          </div>
-
-          <div id="features" className="grid items-center gap-8 py-12 md:grid-cols-[360px_1fr] md:gap-14 lg:grid-cols-[440px_1fr]">
-            <div className="flex flex-col items-center">
-              <ChatCard title="Lumjha - Chat Bot" />
-              <span className="mt-3 text-[10px] tracking-[0.3em] text-gray-500">•••</span>
-            </div>
-            <div className="text-center md:text-left">
-              <h3 className="text-2xl font-extrabold leading-snug md:text-[32px]">
-                Automate <Highlight>Customer Support</Highlight>
-                <br />
-                Across Every Channel.
-              </h3>
-              <p className="mx-auto mt-4 max-w-xl text-[13px] leading-relaxed text-gray-300 md:mx-0 md:text-sm">
-                Deliver instant, accurate answers across your website, messaging apps, and
-                social platforms. Lumjha engages visitors, captures lead data naturally
-                during chat, and schedules meetings directly into your calendar.
-              </p>
-              <div className="mt-5 flex justify-center md:justify-start">
-                <BlueButton>Get Started Free</BlueButton>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid items-center gap-8 py-12 md:grid-cols-[360px_1fr] md:gap-14 lg:grid-cols-[440px_1fr]">
-            <div className="flex flex-col items-center">
-              <ChatCard title="Lumjha - Site Search" />
-              <span className="mt-3 text-[10px] tracking-[0.3em] text-gray-500">•••</span>
-            </div>
-            <div className="text-center md:text-left">
-              <h3 className="text-2xl font-extrabold leading-snug md:text-[32px]">
-                <Highlight>Search</Highlight>
-                <br />
-                That Actually Answers.
-              </h3>
-              <p className="mx-auto mt-4 max-w-xl text-[13px] leading-relaxed text-gray-300 md:mx-0 md:text-sm">
-                Upgrade site search with AI. Lumjha instantly scans your entire website and
-                documentation to deliver precise, summarized answers directly to your
-                visitors with sources attached.
-              </p>
-              <div className="mt-5 flex justify-center md:justify-start">
-                <BlueButton>Get Started Free</BlueButton>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-center gap-2">
-            <PillTab label="Chat Bot" />
-            <PillTab label="Site Search" />
-            <PillTab label="Policy Vault" active />
-          </div>
-
-          <div id="how" className="grid items-center gap-8 py-12 md:grid-cols-[360px_1fr] md:gap-14 lg:grid-cols-[440px_1fr]">
-            <div className="flex flex-col items-center">
-              <ChatCard title="Lumjha Agent - Chat Bot" />
-            </div>
-            <div className="text-center md:text-left">
-              <h3 className="text-2xl font-extrabold leading-snug md:text-[32px]">
-                Primary <Highlight>Source Quotes,</Highlight>
-                <br />
-                Delivered Exactly.
-              </h3>
-              <p className="mx-auto mt-4 max-w-xl text-[13px] leading-relaxed text-gray-300 md:mx-0 md:text-sm">
-                Upgrade site search with AI. Lumjha instantly scans your entire website and
-                documentation to deliver precise, summarized answers directly to your
-                visitors with sources attached.
-              </p>
-              <div className="mt-5 flex justify-center md:justify-start">
-                <BlueButton>Get Started Free</BlueButton>
-              </div>
-            </div>
-          </div>
+          <PlatformTabs />
         </section>
 
         {/* CHANNELS */}
