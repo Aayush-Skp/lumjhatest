@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import FooterWordmark from "./FooterWordmark";
 
 const QUICK_LINKS = [
@@ -27,17 +28,16 @@ export default function Footer() {
     <footer className="bg-black px-4 pb-10 pt-16 text-gray-400 sm:px-6 md:pb-12 md:pt-28">
       <div className="mx-auto grid max-w-[1440px] grid-cols-2 gap-x-8 gap-y-12 md:grid-cols-[1.4fr_1fr_1fr_1fr_1.4fr] md:gap-10">
         <div className="col-span-2 md:col-span-1">
-          <div className="flex items-center gap-2">
+          <Link href="/" aria-label="Lumjha AI home" className="inline-block">
             <Image
-              src="/logo.png"
-              alt="Lumjha AI logo"
-              width={23}
-              height={32}
-              className="h-8 w-auto shrink-0 object-contain"
+              src="/assets/logo-wordmark.png"
+              alt="Lumjha AI"
+              width={664}
+              height={174}
+              className="h-9 w-auto md:h-10"
             />
-            <span className="text-sm font-bold text-white">Lumjha AI</span>
-          </div>
-          <p className="mt-4 max-w-[240px] text-[13px] leading-relaxed md:text-sm">
+          </Link>
+          <p className="mt-5 max-w-[260px] text-[13px] leading-relaxed md:text-sm">
             Lumjha is the no-code AI layer for modern customer engagement.
           </p>
           <div className="mt-5 flex gap-4 text-sm">

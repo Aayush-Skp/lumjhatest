@@ -477,7 +477,7 @@ function PlatformTabs() {
         id="how"
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
-        className="grid touch-pan-y py-10 md:py-20"
+        className="grid touch-pan-y pb-8 pt-10 md:pb-10 md:pt-14"
       >
         {PLATFORM_TABS.map((tab, i) => {
           const isActive = active === i;
@@ -522,7 +522,7 @@ function PlatformTabs() {
       </div>
 
       {/* progress dots, also clickable (padded for a 24px touch target) */}
-      <div className="-mt-4 flex justify-center pb-6 md:-mt-10">
+      <div className="flex justify-center">
         {PLATFORM_TABS.map((tab, i) => (
           <button
             key={tab.id}
@@ -682,6 +682,11 @@ const ADDONS = [
 
 /* ---------- page ---------- */
 
+/* Vertical rhythm shared by every content section, so the gaps between
+   sections (and between a section's header and its content) always match. */
+const SECTION_Y = "py-16 md:py-24";
+const SECTION_HEAD_GAP = "mt-10 md:mt-14";
+
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-[#030816] font-sans text-white antialiased">
@@ -710,7 +715,7 @@ export default function HomePage() {
         </section>
 
         {/* ALL-IN-ONE PLATFORM */}
-        <section id="platform" className="relative mx-auto max-w-[1440px] px-4 pt-10 sm:px-6 md:pt-20">
+        <section id="platform" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
           <h2 className="text-center text-xl font-extrabold tracking-wide text-balance sm:text-3xl md:text-4xl">
             ALL-IN-ONE KNOWLEDGE PLATFORM
           </h2>
@@ -718,7 +723,7 @@ export default function HomePage() {
         </section>
 
         {/* CHANNELS */}
-        <section id="channels" className="relative mx-auto max-w-[1440px] px-4 py-16 sm:px-6 md:py-20">
+        <section id="channels" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
           <h2 className="text-center text-xl font-extrabold text-[#5B8CFF] sm:text-2xl md:text-[28px]">
             Be Wherever Your Customers Are
           </h2>
@@ -730,7 +735,7 @@ export default function HomePage() {
               <li key={c.name}>{c.name}</li>
             ))}
           </ul>
-          <div aria-hidden className="mx-auto mt-10 grid max-w-5xl grid-cols-6 gap-1.5 sm:gap-3 md:mt-14 md:gap-4">
+          <div aria-hidden className={`mx-auto grid max-w-5xl grid-cols-6 gap-1.5 sm:gap-3 md:gap-4 ${SECTION_HEAD_GAP}`}>
             {REEL_DURATIONS.map((_, i) => (
               <ChannelReel key={i} index={i} />
             ))}
@@ -738,15 +743,15 @@ export default function HomePage() {
         </section>
 
         {/* PRICING */}
-        <section id="pricing" className="relative mx-auto max-w-[1440px] px-4 py-14 sm:px-6">
+        <section id="pricing" className="relative mx-auto max-w-[1440px] px-4 pb-12 pt-16 sm:px-6 md:pb-16 md:pt-24">
           <h2 className="text-center text-xl font-extrabold text-[#5B8CFF] sm:text-2xl md:text-[28px]">
             Plans for Every Stage of Growth.
           </h2>
-          <p className="mt-2 text-center text-[12px] text-gray-300 sm:text-sm">
+          <p className="mt-3 text-center text-[12px] text-gray-300 sm:text-sm">
             Start free to explore, or pick a plan tailored to your team&apos;s support volume.
           </p>
 
-          <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
+          <div className={`grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4 ${SECTION_HEAD_GAP}`}>
             {PLANS.map((p) => (
               <div
                 key={p.name}
@@ -795,14 +800,14 @@ export default function HomePage() {
         </section>
 
         {/* ADD-ONS */}
-        <section id="security" className="mx-auto max-w-[1440px] px-4 pb-16 sm:px-6">
+        <section id="security" className="mx-auto max-w-[1440px] px-4 pb-16 sm:px-6 md:pb-24">
           <h2 className="text-center text-xl font-extrabold text-[#5B8CFF] sm:text-2xl">
             Enhance Your Plan with Add-ons
           </h2>
-          <p className="mt-2 text-center text-[12px] text-gray-300 sm:text-sm">
+          <p className="mt-3 text-center text-[12px] text-gray-300 sm:text-sm">
             Optional modules to give you more control, security, and flexibility.
           </p>
-          <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
+          <div className="mt-8 grid grid-cols-1 gap-4 md:mt-10 md:grid-cols-3">
             {ADDONS.map((a) => (
               <div
                 key={a.title}
@@ -819,7 +824,7 @@ export default function HomePage() {
         </section>
 
         {/* CTA */}
-        <section className="relative isolate overflow-hidden bg-white px-4 py-16 sm:px-6 sm:py-20 md:py-28">
+        <section className="relative isolate overflow-hidden bg-white px-4 py-16 sm:px-6 md:py-28">
           {/* topographic pattern — the PNG carries its own transparency */}
           <Image
             src="/assets/cta-pattern.png"
