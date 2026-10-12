@@ -81,54 +81,191 @@ function Highlight({ children }: { children: React.ReactNode }) {
 
 /* ---------- chat mockup cards ---------- */
 
-function Bubble({ w = "w-11/12", lines = 3 }: { w?: string; lines?: number }) {
-  return (
-    <div className={`rounded-lg border border-gray-200 bg-[#F4F6FA] p-2.5 lg:p-3 ${w}`}>
-      {Array.from({ length: lines }).map((_, i) => (
-        <div
-          key={i}
-          className="mb-1.5 h-1.5 rounded bg-gray-300/70 last:mb-0 lg:h-2"
-          style={{ width: `${92 - i * 14}%` }}
-        />
-      ))}
-    </div>
-  );
-}
-
-function ChatCard({ title, accent = "#527DFF" }: { title: string; accent?: string }) {
+/* Shared white frame + title bar for the product mockups */
+function MockCard({
+  title,
+  header,
+  accent = "#527DFF",
+  children,
+}: {
+  title?: string;
+  header?: ReactNode;
+  accent?: string;
+  children: ReactNode;
+}) {
   return (
     <div
       className="w-full max-w-[340px] rounded-2xl border-2 bg-white p-3.5 shadow-[0_24px_70px_-20px_rgba(82,125,255,0.5)] sm:max-w-[360px] sm:p-4 lg:max-w-[480px] lg:p-5"
       style={{ borderColor: accent }}
     >
-      <div className="flex items-center gap-2.5 border-b border-gray-100 pb-3">
-        <span className="flex h-6 w-6 items-center justify-center rounded-full border border-gray-300 text-[11px] text-gray-500">
-          ⌕
-        </span>
-        <p className="text-[13px] font-bold lg:text-sm" style={{ color: accent }}>
-          {title}
-        </p>
-      </div>
-      <div className="flex flex-col gap-2.5 py-4">
-        <div className="flex justify-end">
-          <Bubble w="w-1/2" lines={2} />
+      {header ?? (
+        <div className="flex items-center gap-2.5 border-b border-gray-100 pb-3">
+          <span className="flex h-6 w-6 items-center justify-center rounded-full border border-gray-300 text-[11px] text-gray-500">
+            ⌕
+          </span>
+          <p className="text-[13px] font-bold lg:text-sm" style={{ color: accent }}>
+            {title}
+          </p>
         </div>
-        <Bubble w="w-11/12" lines={4} />
-        <div className="flex justify-end">
-          <Bubble w="w-2/3" lines={2} />
-        </div>
-        <Bubble w="w-10/12" lines={3} />
-      </div>
-      <div className="flex items-center gap-2 rounded-full border border-gray-200 px-4 py-2">
-        <span className="flex-1 text-[11px] text-gray-400 lg:text-xs">Ask anything…</span>
-        <span
-          className="flex h-6 w-6 items-center justify-center rounded-full text-[11px] text-white"
-          style={{ background: accent }}
-        >
-          ➤
-        </span>
-      </div>
+      )}
+      {children}
     </div>
+  );
+}
+
+function AgentAvatar({ size }: { size: "sm" | "lg" }) {
+  const box = size === "lg" ? "h-9 w-9 lg:h-10 lg:w-10" : "h-6 w-6 lg:h-7 lg:w-7";
+  const img = size === "lg" ? "h-5 w-auto lg:h-6" : "h-3.5 w-auto lg:h-4";
+  return (
+    <span className={`flex shrink-0 items-center justify-center rounded-full border border-gray-200 bg-[#EEF3FF] ${box}`}>
+      <Image src="/logo.png" alt="" width={405} height={564} className={img} />
+    </span>
+  );
+}
+
+/* Chat Bot mockup: a live-looking chat widget mid-conversation */
+function ChatCard({
+  question,
+  status,
+  accent = "#527DFF",
+}: {
+  question: string;
+  status: string;
+  accent?: string;
+}) {
+  return (
+    <MockCard
+      accent={accent}
+      header={
+        <div className="flex items-center gap-3 border-b border-gray-100 pb-3">
+          <AgentAvatar size="lg" />
+          <div className="leading-tight">
+            <p className="text-[13px] font-bold lg:text-[15px]" style={{ color: accent }}>
+              Lumjha.AI
+            </p>
+            <p className="mt-0.5 flex items-center gap-1.5 text-[11px] text-gray-500 lg:text-xs">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+              AI Chat Agent
+            </p>
+          </div>
+        </div>
+      }
+    >
+      <div className="flex min-h-[248px] flex-col justify-end gap-3 py-4 text-[12px] leading-relaxed lg:min-h-[296px] lg:text-[13px]">
+        {/* welcome */}
+        <div className="flex items-end gap-2">
+          <AgentAvatar size="sm" />
+          <p className="max-w-[80%] rounded-2xl rounded-bl-md border border-gray-200 bg-[#F4F6FA] px-3 py-2 text-gray-700">
+            Welcome! You&apos;re connected with Lumjha support. How can we help today?
+            Chat with us or book a free demo!
+          </p>
+        </div>
+        {/* visitor */}
+        <div className="flex justify-end">
+          <p className="max-w-[80%] rounded-2xl rounded-br-md px-3 py-2 text-white" style={{ background: accent }}>
+            {question}
+          </p>
+        </div>
+        {/* agent typing */}
+        <div className="flex items-end gap-2">
+          <AgentAvatar size="sm" />
+          <div className="flex items-center gap-2 rounded-2xl rounded-bl-md border border-gray-200 bg-[#F4F6FA] px-3 py-2">
+            <span className="flex gap-0.5" aria-hidden>
+              {[0, 1, 2].map((i) => (
+                <span
+                  key={i}
+                  className="typing-dot h-1 w-1 rounded-full bg-gray-400"
+                  style={{ animationDelay: `${i * 160}ms` }}
+                />
+              ))}
+            </span>
+            <span className="text-[11px] text-gray-400 lg:text-xs">{status}</span>
+          </div>
+        </div>
+      </div>
+
+      {/* composer */}
+      <div className="flex items-center gap-2.5 rounded-xl border-2 py-2 pl-3.5 pr-2" style={{ borderColor: accent }}>
+        <span className="caret-blink -mr-1.5 h-4 w-px shrink-0" style={{ background: accent }} aria-hidden />
+        <span className="flex-1 truncate text-[12px] text-gray-400 lg:text-[13px]">Type a message…</span>
+        <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0 text-gray-400" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" aria-hidden>
+          <path d="M4 10v4M8 7v10M12 4v16M16 7v10M20 10v4" />
+        </svg>
+        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#EEF3FF]" style={{ color: accent }}>
+          <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <path d="M12 19V5M5 12l7-7 7 7" />
+          </svg>
+        </span>
+      </div>
+      <p className="mt-2 text-center text-[9px] text-gray-400 lg:text-[10px]">
+        Powered by <span className="font-semibold text-gray-500">Lumjha.ai</span>
+      </p>
+    </MockCard>
+  );
+}
+
+function SkeletonLine({ width }: { width: string }) {
+  return <div className="h-1.5 rounded bg-gray-300/70 lg:h-2" style={{ width }} />;
+}
+
+const SEARCH_RESULTS = [
+  { page: "Contact Us", path: "/contact", lines: ["94%", "78%"] },
+  { page: "Help Center", path: "/support", lines: ["88%", "64%"] },
+];
+
+/* Site Search mockup: a search box with its results dropdown */
+function SearchCard({ title, accent = "#527DFF" }: { title: string; accent?: string }) {
+  return (
+    <MockCard title={title} accent={accent}>
+      {/* search box */}
+      <div className="mt-4 flex items-center gap-2.5 rounded-xl border-2 px-3.5 py-2.5" style={{ borderColor: accent }}>
+        <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0 text-gray-400" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden>
+          <circle cx="11" cy="11" r="7" />
+          <path d="m20 20-3.5-3.5" strokeLinecap="round" />
+        </svg>
+        <span className="truncate text-[12px] font-medium text-gray-800 lg:text-[13px]">
+          How do I contact support?
+        </span>
+        <span className="caret-blink -ml-1.5 h-4 w-px shrink-0" style={{ background: accent }} aria-hidden />
+      </div>
+
+      {/* results dropdown */}
+      <div className="mt-2.5 rounded-xl border border-gray-200 bg-[#F8FAFC] p-2.5 lg:p-3">
+        <div className="flex items-center justify-between px-0.5 pb-2">
+          <span className="text-[10px] font-semibold tracking-[0.12em] text-gray-400">2 RESULTS</span>
+          <span className="text-[13px] leading-none text-gray-400" aria-hidden>×</span>
+        </div>
+        <div className="flex flex-col gap-2">
+          {SEARCH_RESULTS.map((r) => (
+            <div key={r.path} className="rounded-lg border border-gray-200 bg-white p-2.5 lg:p-3">
+              <div className="flex items-center justify-between gap-2">
+                <span className="flex items-center gap-1.5 text-[11px] font-semibold lg:text-xs" style={{ color: accent }}>
+                  {r.page}
+                  <span className="font-normal text-gray-400">{r.path}</span>
+                </span>
+                <svg viewBox="0 0 24 24" className="h-3 w-3 shrink-0 text-gray-400" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden>
+                  <path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+              <div className="mt-2 flex flex-col gap-1.5">
+                {r.lines.map((w, i) => (
+                  <SkeletonLine key={i} width={w} />
+                ))}
+              </div>
+              <div className="mt-2.5 flex justify-end border-t border-gray-100 pt-2">
+                <span className="text-[10px] font-semibold lg:text-[11px]" style={{ color: accent }}>
+                  Continue in chat →
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="mt-2 rounded-lg border border-gray-200 bg-white py-1.5 text-center text-[10px] font-semibold text-gray-500 lg:text-[11px]">
+          Load more
+        </div>
+      </div>
+      <p className="mt-2 text-right text-[9px] text-gray-400 lg:text-[10px]">Powered by lumjha.ai</p>
+    </MockCard>
   );
 }
 
@@ -137,14 +274,14 @@ function ChatCard({ title, accent = "#527DFF" }: { title: string; accent?: strin
 const PLATFORM_TABS: {
   id: string;
   label: string;
-  cardTitle: string;
+  card: ReactNode;
   heading: ReactNode;
   body: string;
 }[] = [
     {
       id: "chatbot",
       label: "Chat Bot",
-      cardTitle: "Lumjha - Chat Bot",
+    card: <ChatCard question="What services do you offer?" status="Gathering information" />,
       heading: (
         <>
           Automate <Highlight>Customer Support</Highlight>
@@ -157,7 +294,7 @@ const PLATFORM_TABS: {
     {
       id: "site-search",
       label: "Site Search",
-      cardTitle: "Lumjha - Site Search",
+    card: <SearchCard title="Lumjha - Site Search" />,
       heading: (
         <>
           <Highlight>Search</Highlight>
@@ -170,7 +307,7 @@ const PLATFORM_TABS: {
     {
       id: "policy-vault",
       label: "Policy Vault",
-      cardTitle: "Lumjha - Policy Vault",
+    card: <ChatCard question="What is your refund policy?" status="Checking policies" />,
       heading: (
         <>
           Primary <Highlight>Source Quotes,</Highlight>
@@ -361,7 +498,7 @@ function PlatformTabs() {
                     : "translate-y-4 scale-[0.97] opacity-0 duration-300"
                   }`}
               >
-                <ChatCard title={tab.cardTitle} />
+                {tab.card}
               </div>
               <div
                 className={`text-center transition-all ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none md:text-left ${isActive

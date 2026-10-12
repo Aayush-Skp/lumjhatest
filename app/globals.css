@@ -304,6 +304,33 @@ body {
   }
 }
 
+/* Blinking text caret (Site Search mockup) */
+.caret-blink {
+  animation: caretBlink 1.1s steps(1) infinite;
+}
+@keyframes caretBlink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* "Agent is typing" dots (Chat Bot mockup) */
+.typing-dot {
+  animation: typingDot 1.2s ease-in-out infinite;
+}
+@keyframes typingDot {
+  0%,
+  60%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+
 /* Soft pulse used behind hero + section headers */
 .glow-pulse {
   animation: glowPulse 6s ease-in-out infinite;
