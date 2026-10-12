@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 /* ============================================================
    Lumjha — Figma-exact revamp (mobile-first responsive)
@@ -243,9 +244,14 @@ export default function SolutionsPage() {
       <header className="sticky top-0 z-50 border-b border-white/5 bg-[#030816]/90 backdrop-blur-md">
         <div className="mx-auto flex h-14 max-w-[1440px] items-center justify-between px-4 sm:px-6">
           <a href="#top" className="flex items-center gap-2">
-            <span className="flex h-7 w-7 items-center justify-center rounded-md bg-[#527DFF] text-lg font-extrabold text-white">
-              L
-            </span>
+            <Image
+              src="/logo.png"
+              alt="Lumjha logo"
+              width={23}
+              height={32}
+              className="h-8 w-auto shrink-0 object-contain"
+              priority
+            />
             <span className="hidden flex-col leading-tight min-[420px]:flex">
               <span className="text-[11px] font-bold text-white">Knowledgebase,</span>
               <span className="text-[10px] text-gray-400">Activated Everywhere</span>
@@ -570,9 +576,13 @@ export default function SolutionsPage() {
           <div className="mx-auto grid max-w-[1440px] grid-cols-2 gap-8 md:grid-cols-[1.4fr_1fr_1fr_1fr_1.4fr]">
             <div className="col-span-2 md:col-span-1">
               <div className="flex items-center gap-2">
-                <span className="flex h-7 w-7 items-center justify-center rounded-md bg-[#527DFF] text-lg font-extrabold text-white">
-                  L
-                </span>
+                <Image
+                  src="/logo.png"
+                  alt="Lumjha AI logo"
+                  width={23}
+                  height={32}
+                  className="h-8 w-auto shrink-0 object-contain"
+                />
                 <span className="text-sm font-bold text-white">Lumjha AI</span>
               </div>
               <p className="mt-3 max-w-[220px] text-[12px] leading-relaxed">
