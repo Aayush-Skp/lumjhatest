@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import type { ComponentType, KeyboardEvent, ReactNode, SVGProps, TouchEvent } from "react";
 import Navbar from "@/components/site/Navbar";
 import Footer from "@/components/site/Footer";
+import ContactDisclosure from "@/components/site/ContactDisclosure";
 import {
   WebsiteIcon,
   WhatsAppIcon,
@@ -707,10 +708,13 @@ export default function HomePage() {
             appointments around the clock, on platform(s) they already use, so you can
             focus on running your business.
           </p>
-          <div className="mt-8 flex w-full max-w-xs flex-col gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:items-center sm:justify-center sm:gap-4 md:mt-10">
+          <ContactDisclosure
+            variant="dark"
+            rowClassName="mt-8 flex w-full max-w-xs flex-col gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:items-center sm:justify-center sm:gap-4 md:mt-10"
+            buttonClassName="inline-flex items-center justify-center rounded-full border border-[#527DFF]/70 px-7 py-3.5 text-[15px] font-semibold text-white transition hover:bg-[#527DFF]/10 md:px-8 md:text-base"
+          >
             <BlueButton large>Get Started Free</BlueButton>
-            <BlueButton large outline>Book a Demo</BlueButton>
-          </div>
+          </ContactDisclosure>
         </section>
 
         {/* ALL-IN-ONE PLATFORM */}
@@ -842,17 +846,13 @@ export default function HomePage() {
                 Deliver instant, personalized answers across web, messaging, and social apps
                 without increasing your team&apos;s workload.
               </p>
-              <div className="mx-auto mt-8 flex w-full max-w-xs flex-col gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:items-center sm:justify-center sm:gap-4 md:mt-10">
+              <ContactDisclosure
+                variant="light"
+                rowClassName="mx-auto mt-8 flex w-full max-w-xs flex-col gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:items-center sm:justify-center sm:gap-4 md:mt-10"
+                buttonClassName="inline-flex items-center justify-center rounded-lg border border-white/80 px-7 py-3.5 text-[15px] font-semibold text-white transition hover:bg-white/10 md:px-8 md:text-base"
+              >
                 <BlueButton light large>Start Free Trial</BlueButton>
-                <a
-                  href="https://app.lumjha.ai/login"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-lg border border-white/80 px-7 py-3.5 text-[15px] font-semibold text-white transition hover:bg-white/10 md:px-8 md:text-base"
-                >
-                  Book a Demo
-                </a>
-              </div>
+              </ContactDisclosure>
             </div>
           </div>
         </section>
