@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import LegalShell from "@/components/legal/LegalShell";
+import LegalPage from "@/components/site/LegalPage";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
@@ -10,11 +10,7 @@ export const metadata: Metadata = {
 
 export default function TermsOfServicePage() {
   return (
-    <LegalShell
-      title="Terms of Service"
-      lastUpdated="June 23, 2026"
-      current="terms"
-    >
+    <LegalPage title="Terms of Service" lastUpdated="June 23, 2026">
       <section>
         <h3>1. Introduction</h3>
         <p>
@@ -640,6 +636,6 @@ export default function TermsOfServicePage() {
           <a href="mailto:info@lumjha.ai">info@lumjha.ai</a>.
         </p>
       </section>
-    </LegalShell>
+    </LegalPage>
   );
 }

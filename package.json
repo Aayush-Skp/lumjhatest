@@ -9,18 +9,9 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@radix-ui/react-accordion": "^1.2.12",
-    "@radix-ui/react-dialog": "^1.1.15",
-    "clsx": "^2.1.1",
-    "framer-motion": "^12.40.0",
-    "install": "^0.13.0",
-    "lucide-react": "^1.8.0",
     "next": "16.2.4",
-    "npm": "^11.17.0",
     "react": "19.2.4",
-    "react-dom": "19.2.4",
-    "tailwind-merge": "^3.5.0",
-    "zustand": "^5.0.12"
+    "react-dom": "19.2.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

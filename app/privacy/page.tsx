@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import LegalShell from "@/components/legal/LegalShell";
+import LegalPage from "@/components/site/LegalPage";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -9,11 +9,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPolicyPage() {
   return (
-    <LegalShell
-      title="Privacy Policy"
-      lastUpdated="June 23, 2026"
-      current="privacy"
-    >
+    <LegalPage title="Privacy Policy" lastUpdated="June 23, 2026">
       <section>
         <h3>1. Introduction</h3>
         <p>
@@ -487,6 +483,6 @@ export default function PrivacyPolicyPage() {
           right to lodge a complaint with your local data protection authority.
         </p>
       </section>
-    </LegalShell>
+    </LegalPage>
   );
 }
