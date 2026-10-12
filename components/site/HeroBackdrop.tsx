@@ -47,13 +47,13 @@ export default function HeroBackdrop() {
 
         {/* blue band under the main wave */}
         <linearGradient id="hb-band" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0" stopColor="#2F55FF" stopOpacity="0.16" />
-          <stop offset="0.55" stopColor="#1F3BC4" stopOpacity="0.24" />
-          <stop offset="1" stopColor="#14248A" stopOpacity="0.32" />
+          <stop offset="0" stopColor="#2F55FF" stopOpacity="0.08" />
+          <stop offset="0.55" stopColor="#1F3BC4" stopOpacity="0.12" />
+          <stop offset="1" stopColor="#14248A" stopOpacity="0.16" />
         </linearGradient>
         {/* brighter pools of light at the two raised edges */}
         <radialGradient id="hb-pool" cx="0.5" cy="0.5" r="0.5">
-          <stop offset="0" stopColor="#3D63FF" stopOpacity="0.22" />
+          <stop offset="0" stopColor="#3D63FF" stopOpacity="0.1" />
           <stop offset="1" stopColor="#3D63FF" stopOpacity="0" />
         </radialGradient>
         <radialGradient id="hb-spark" cx="0.5" cy="0.5" r="0.5">
@@ -77,8 +77,8 @@ export default function HeroBackdrop() {
 
       {SPARKS.map(([x, y, r], i) => (
         <g key={i}>
-          <circle cx={x} cy={y} r={r * 4} fill="url(#hb-spark)" opacity={0.3} />
-          <circle cx={x} cy={y} r={r} fill="#C9D8FF" opacity={0.8} />
+          <circle cx={x} cy={y} r={r * 4} fill="url(#hb-spark)" opacity={0.15} />
+          <circle cx={x} cy={y} r={r} fill="#C9D8FF" opacity={0.55} />
         </g>
       ))}
     </svg>
