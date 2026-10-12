@@ -27,7 +27,7 @@ export default function SolutionsLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <div
-      className={`${syne.variable} ${dmSans.variable} lumjha-rebuild relative min-h-screen w-full overflow-x-clip`}
+      className={`${syne.variable} ${dmSans.variable} relative min-h-screen w-full overflow-x-clip bg-[#030816]`}
     >
       <SmoothScroll />
       {children}
