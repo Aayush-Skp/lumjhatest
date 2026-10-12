@@ -793,7 +793,15 @@ export default function HomePage() {
         </section>
 
         {/* CTA */}
-        <section className="bg-[#EDF1F6] px-4 py-10 sm:px-6 md:py-14">
+        <section className="relative isolate overflow-hidden bg-white px-4 py-13 sm:px-6 md:py-18">
+          {/* topographic pattern — the PNG carries its own transparency */}
+          <Image
+            src="/assets/cta-pattern.png"
+            alt=""
+            fill
+            sizes="100vw"
+            className="pointer-events-none -z-10 object-cover"
+          />
           <div className="mx-auto max-w-[1440px]">
             <div className="rounded-2xl bg-[#506DFF] px-6 py-10 text-center shadow-xl md:py-14">
               <h2 className="mx-auto max-w-3xl text-xl font-extrabold text-white sm:text-2xl md:text-[28px]">
