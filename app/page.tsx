@@ -6,6 +6,7 @@ import type { ComponentType, KeyboardEvent, ReactNode, SVGProps, TouchEvent } fr
 import Navbar from "@/components/site/Navbar";
 import Footer from "@/components/site/Footer";
 import ContactDisclosure from "@/components/site/ContactDisclosure";
+import HeroBackdrop from "@/components/site/HeroBackdrop";
 import {
   WebsiteIcon,
   WhatsAppIcon,
@@ -697,7 +698,11 @@ export default function HomePage() {
         <div className="pointer-events-none absolute -left-40 top-[1900px] h-[500px] w-[300px] rounded-full bg-[#1B3AA0]/20 blur-[120px]" />
 
         {/* HERO — owns the first viewport: 100svh minus the 3.5rem navbar */}
-        <section className="relative mx-auto flex min-h-[calc(100svh-3.5rem)] w-full max-w-[1440px] flex-col items-center justify-center px-4 py-12 text-center sm:px-6 md:py-20">
+        <section className="relative isolate mx-auto flex min-h-[calc(100svh-3.5rem)] w-full max-w-[1440px] flex-col items-center justify-center px-4 py-12 text-center sm:px-6 md:py-20">
+          {/* code-drawn backdrop — full-bleed past the 1440px container, waves anchored to the bottom and faded out into the next section */}
+          <div aria-hidden className="pointer-events-none absolute inset-y-0 left-1/2 -z-10 w-screen -translate-x-1/2 [mask-image:linear-gradient(to_bottom,#000_88%,transparent)] md:[mask-image:linear-gradient(to_bottom,#000_70%,transparent)]">
+            <HeroBackdrop />
+          </div>
           <h1 className="max-w-5xl text-[clamp(2.25rem,6vw+1rem,5.25rem)] font-extrabold leading-[1.05] tracking-[-0.03em]">
             Never Miss a Customer.
             <br />
