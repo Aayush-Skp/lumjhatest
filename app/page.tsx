@@ -681,6 +681,23 @@ const ADDONS = [
   { src: "/assets/bundle.svg", alt: "Bundle icon", title: "Bundle (Both)", price: "+$45/month" },
 ];
 
+/* ---------- section header ---------- */
+
+/* Shared title + subtitle for content sections: white Poppins headline,
+   soft-white supporting line. */
+function SectionHeader({ title, subtitle }: { title: string; subtitle: string }) {
+  return (
+    <div className="text-center">
+      <h2 className="font-heading text-[28px] font-bold leading-tight tracking-tight text-balance text-white sm:text-4xl md:text-[44px]">
+        {title}
+      </h2>
+      <p className="mx-auto mt-4 max-w-4xl text-[15px] leading-relaxed text-balance text-white/85 sm:text-lg md:mt-5 md:text-xl">
+        {subtitle}
+      </p>
+    </div>
+  );
+}
+
 /* ---------- page ---------- */
 
 /* Vertical rhythm shared by every content section, so the gaps between
@@ -732,12 +749,10 @@ export default function HomePage() {
 
         {/* CHANNELS */}
         <section id="channels" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
-          <h2 className="text-center text-xl font-extrabold text-[#5B8CFF] sm:text-2xl md:text-[28px]">
-            Be Wherever Your Customers Are
-          </h2>
-          <p className="mx-auto mt-3 max-w-2xl text-center text-[12px] text-gray-300 sm:text-sm">
-            Connect your central knowledge base directly to every major customer touchpoint in minutes.
-          </p>
+          <SectionHeader
+            title="Be Wherever Your Customers Are"
+            subtitle="Connect your central knowledge base directly to every major customer touchpoint in minutes."
+          />
           <ul className="sr-only">
             {CHANNELS.map((c) => (
               <li key={c.name}>{c.name}</li>
@@ -752,12 +767,10 @@ export default function HomePage() {
 
         {/* PRICING */}
         <section id="pricing" className="relative mx-auto max-w-[1440px] px-4 pb-12 pt-16 sm:px-6 md:pb-16 md:pt-24">
-          <h2 className="text-center text-xl font-extrabold text-[#5B8CFF] sm:text-2xl md:text-[28px]">
-            Plans for Every Stage of Growth.
-          </h2>
-          <p className="mt-3 text-center text-[12px] text-gray-300 sm:text-sm">
-            Start free to explore, or pick a plan tailored to your team&apos;s support volume.
-          </p>
+          <SectionHeader
+            title="Plans for Every Stage of Growth."
+            subtitle="Start free to explore, or pick a plan tailored to your team's support volume."
+          />
 
           <div className={`grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4 ${SECTION_HEAD_GAP}`}>
             {PLANS.map((p) => (
@@ -810,12 +823,10 @@ export default function HomePage() {
         {/* ADD-ONS */}
         {/* no top padding (it continues Pricing), so scroll-mt gives anchor jumps the same breathing room as other sections */}
         <section id="addons" className="mx-auto max-w-[1440px] scroll-mt-16 px-4 pb-16 sm:px-6 md:scroll-mt-24 md:pb-24">
-          <h2 className="text-center text-xl font-extrabold text-[#5B8CFF] sm:text-2xl">
-            Enhance Your Plan with Add-ons
-          </h2>
-          <p className="mt-3 text-center text-[12px] text-gray-300 sm:text-sm">
-            Optional modules to give you more control, security, and flexibility.
-          </p>
+          <SectionHeader
+            title="Enhance Your Plan with Add-ons"
+            subtitle="Optional modules to give you more control, security, and flexibility."
+          />
           <div className="mt-8 grid grid-cols-1 gap-4 md:mt-10 md:grid-cols-3">
             {ADDONS.map((a) => (
               <div

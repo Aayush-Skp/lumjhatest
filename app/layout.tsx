@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Inter_Tight, JetBrains_Mono } from "next/font/google";
+import { Inter, Inter_Tight, JetBrains_Mono, Poppins } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -13,6 +13,14 @@ const interTight = Inter_Tight({
   subsets: ["latin"],
   display: "swap",
   weight: ["500", "600", "700", "800"],
+});
+
+// Section headings (Pricing, Add-ons, Channels)
+const poppins = Poppins({
+  variable: "--font-poppins",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["600", "700"],
 });
 
 const jetbrains = JetBrains_Mono({
@@ -61,7 +69,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${inter.variable} ${interTight.variable} ${jetbrains.variable} h-full antialiased`}
+      className={`${inter.variable} ${interTight.variable} ${poppins.variable} ${jetbrains.variable} h-full antialiased`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />

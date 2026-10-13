@@ -152,6 +152,7 @@
 
   --font-sans: var(--font-inter);
   --font-display: var(--font-inter-tight);
+  --font-heading: var(--font-poppins);
   --font-mono: var(--font-jetbrains);
 
   --radius-xl: 0.9rem;
