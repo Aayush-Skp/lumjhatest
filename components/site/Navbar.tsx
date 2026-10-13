@@ -8,7 +8,7 @@ const NAV_LINKS = [
   { label: "Platform", href: "#platform" },
   { label: "Integrations", href: "#channels" },
   { label: "Pricing", href: "#pricing" },
-  { label: "Add-ons", href: "#addons" },
+  { label: "Our Commitments", href: "#commitments" },
 ];
 
 /** Site navbar. `prefix` lets legal pages link back home ("/#pricing"). */

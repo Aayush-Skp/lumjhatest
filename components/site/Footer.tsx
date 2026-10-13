@@ -7,6 +7,7 @@ const QUICK_LINKS = [
   { label: "Integrations", href: "/#channels" },
   { label: "Pricing", href: "/#pricing" },
   { label: "Add-ons", href: "/#addons" },
+  { label: "Our Commitments", href: "/#commitments" },
 ];
 
 const PLATFORMS = [

@@ -406,7 +406,7 @@ function PlatformTabs() {
 
   return (
     <>
-      <div className="mt-5 flex justify-center md:mt-8">
+      <div className={`flex justify-center ${SECTION_HEAD_GAP}`}>
         <div
           role="tablist"
           aria-label="Lumjha products"
@@ -511,7 +511,7 @@ function PlatformTabs() {
                     : "translate-y-4 opacity-0 duration-300"
                   }`}
               >
-                <h3 className="text-[26px] font-extrabold leading-[1.25] tracking-tight sm:text-4xl lg:text-5xl">
+                <h3 className="text-[24px] font-extrabold leading-[1.25] tracking-tight sm:text-3xl lg:text-[40px]">
                   {tab.heading}
                 </h3>
                 <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-gray-300 sm:mt-5 md:mx-0 md:text-base lg:mt-6 lg:text-lg">
@@ -802,9 +802,10 @@ export default function HomePage() {
 
         {/* ALL-IN-ONE PLATFORM */}
         <section id="platform" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
-          <h2 className="text-center text-xl font-extrabold tracking-wide text-balance sm:text-3xl md:text-4xl">
-            ALL-IN-ONE KNOWLEDGE PLATFORM
-          </h2>
+          <SectionHeader
+            title="All-in-One Knowledge Platform"
+            subtitle="One knowledge base powering your chatbot, site search, and policy answers."
+          />
           <PlatformTabs />
         </section>
 
@@ -901,16 +902,18 @@ export default function HomePage() {
             title="Enhance Your Plan with Add-ons"
             subtitle="Optional modules to give you more control, security, and flexibility."
           />
-          <div className="mt-8 grid grid-cols-1 gap-4 md:mt-10 md:grid-cols-3">
+          <div className={`grid grid-cols-1 gap-5 md:grid-cols-3 ${SECTION_HEAD_GAP}`}>
             {ADDONS.map((a) => (
               <div
                 key={a.title}
-                className="flex items-center gap-4 rounded-xl border border-[#B9CBF5] bg-white px-5 py-4 text-[#0B1526]"
+                className="flex items-center gap-4 rounded-2xl border border-[#D7E3F5] bg-white px-6 py-5 text-[#0B1526]"
               >
-                <Image src={a.src} alt={a.alt} width={32} height={32} className="h-8 w-8 shrink-0" />
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#EEF3FF]">
+                  <Image src={a.src} alt={a.alt} width={32} height={32} className="h-7 w-7" />
+                </span>
                 <span>
-                  <span className="block text-[15px] font-extrabold">{a.title}</span>
-                  <span className="block text-[12px] text-gray-500">{a.price}</span>
+                  <span className="block text-lg font-extrabold">{a.title}</span>
+                  <span className="block text-[13px] text-gray-500">{a.price}</span>
                 </span>
               </div>
             ))}
@@ -948,7 +951,7 @@ export default function HomePage() {
             {/* gentle tilt for the large panel; pauses while the contact form has focus */}
             <Tilt className="rounded-3xl" max={3} scale={1.01}>
             <div className="rounded-3xl bg-[#506DFF] px-6 py-14 text-center shadow-xl sm:px-10 md:py-20 lg:py-24">
-              <h2 className="mx-auto max-w-4xl text-[28px] font-extrabold leading-tight tracking-tight text-balance text-white sm:max-w-none sm:whitespace-nowrap sm:text-[clamp(1.5rem,calc((100vw_-_128px)/22),3rem)]">
+              <h2 className="mx-auto max-w-4xl font-heading text-[28px] font-bold leading-tight tracking-tight text-balance text-white sm:max-w-none sm:whitespace-nowrap sm:text-[clamp(1.5rem,calc((100vw_-_128px)/22),3rem)]">
                 Ready to Scale Your Customer Experience?
               </h2>
               <p className="mx-auto mt-5 max-w-2xl text-[15px] leading-relaxed text-balance text-white/85 sm:text-base md:mt-6 md:text-lg">
