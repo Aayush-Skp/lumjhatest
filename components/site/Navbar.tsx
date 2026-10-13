@@ -38,7 +38,7 @@ export default function Navbar({ prefix = "" }: { prefix?: string }) {
             <a
               key={l.label}
               href={`${prefix}${l.href}`}
-              className="text-[12px] font-medium text-gray-300 transition hover:text-white"
+              className="text-[12px] font-medium text-gray-300 transition-colors duration-300 ease-out hover:text-white"
             >
               {l.label}
             </a>
@@ -46,7 +46,7 @@ export default function Navbar({ prefix = "" }: { prefix?: string }) {
         </nav>
 
         <div className="hidden items-center gap-4 lg:flex">
-          <a href="https://app.lumjha.ai/login" className="text-[12px] font-medium text-gray-200 hover:text-white">
+          <a href="https://app.lumjha.ai/login" className="text-[12px] font-medium text-gray-200 transition-colors duration-300 ease-out hover:text-white">
             Log In
           </a>
           <a
@@ -60,30 +60,53 @@ export default function Navbar({ prefix = "" }: { prefix?: string }) {
         </div>
 
         <button
-          className="flex h-9 w-9 flex-col items-center justify-center gap-1 lg:hidden"
+          className="relative flex h-9 w-9 items-center justify-center lg:hidden"
           onClick={() => setOpen((v) => !v)}
           aria-label="Toggle menu"
+          aria-expanded={open}
+          aria-controls="mobile-menu"
         >
-          <span className="h-0.5 w-5 bg-white" />
-          <span className="h-0.5 w-5 bg-white" />
-          <span className="h-0.5 w-5 bg-white" />
+          {/* three bars that morph into an × */}
+          <span className={`absolute h-0.5 w-5 bg-white transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${open ? "rotate-45" : "-translate-y-1.5"}`} />
+          <span className={`absolute h-0.5 w-5 bg-white transition-opacity duration-300 ${open ? "opacity-0" : "opacity-100"}`} />
+          <span className={`absolute h-0.5 w-5 bg-white transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${open ? "-rotate-45" : "translate-y-1.5"}`} />
         </button>
       </div>
 
-      {open && (
-        <div className="border-t border-white/10 bg-[#030816] px-4 py-4 lg:hidden">
-          <nav className="flex flex-col gap-3">
-            {NAV_LINKS.map((l) => (
+      {/* mobile menu — overlays the page (absolute) so opening/closing never
+          shifts layout or anchor jumps; slides open, links fade in one by one */}
+      <div
+        id="mobile-menu"
+        inert={!open}
+        className={`absolute inset-x-0 top-full grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none lg:hidden ${
+          open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+        }`}
+      >
+        <div className="overflow-hidden">
+          <nav
+            className={`flex flex-col gap-3 border-y bg-[#030816] px-4 py-4 shadow-[0_24px_40px_-12px_rgba(0,0,0,0.6)] transition-colors duration-500 ${
+              open ? "border-white/10" : "border-transparent"
+            }`}
+          >
+            {NAV_LINKS.map((l, i) => (
               <a
                 key={l.label}
                 href={`${prefix}${l.href}`}
                 onClick={() => setOpen(false)}
-                className="text-sm font-medium text-gray-200"
+                style={{ transitionDelay: open ? `${100 + i * 60}ms` : "0ms" }}
+                className={`text-sm font-medium text-gray-200 transition-all duration-500 ease-out motion-reduce:transition-none ${
+                  open ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-0"
+                }`}
               >
                 {l.label}
               </a>
             ))}
-            <div className="mt-2 flex gap-3">
+            <div
+              style={{ transitionDelay: open ? `${100 + NAV_LINKS.length * 60}ms` : "0ms" }}
+              className={`mt-2 flex gap-3 transition-all duration-500 ease-out motion-reduce:transition-none ${
+                open ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-0"
+              }`}
+            >
               <a href="https://app.lumjha.ai/login" className="text-sm text-gray-200">
                 Log In
               </a>
@@ -96,7 +119,7 @@ export default function Navbar({ prefix = "" }: { prefix?: string }) {
             </div>
           </nav>
         </div>
-      )}
+      </div>
     </header>
   );
 }

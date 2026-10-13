@@ -681,6 +681,61 @@ const ADDONS = [
   { src: "/assets/bundle.svg", alt: "Bundle icon", title: "Bundle (Both)", price: "+$45/month" },
 ];
 
+/* ---------- lead capture (conversion section) ---------- */
+
+const LEAD_ICONS = {
+  user: "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 8a7 7 0 0 1 14 0",
+  mail: "M4 6h16v12H4zM4 7l8 6 8-6",
+  tag: "M3 12V4h8l9 9-8 8-9-9Zm4.5-3.5h.01",
+  source: "M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9L12 3Z",
+  hash: "M5 9h14M5 15h14M10 4 8 20M16 4l-2 16",
+} as const;
+
+const LEADS: { name: string; email: string; interest: string; source: string; session: string }[] = [
+  { name: "Jordan Lee", email: "jordan@acme.co", interest: "Gold plan", source: "WhatsApp", session: "sess_8f2a47b1c3e5a" },
+  { name: "Sarah Chen", email: "sarah@venture.co", interest: "Platinum plan", source: "Website chat", session: "sess_a1b2c3d4e5f6g" },
+];
+
+function LeadCard({ lead }: { lead: (typeof LEADS)[number] }) {
+  const rows: [keyof typeof LEAD_ICONS, string, string][] = [
+    ["user", "Name", lead.name],
+    ["mail", "Email", lead.email],
+    ["tag", "Interest", lead.interest],
+    ["source", "Source", lead.source],
+    ["hash", "Session ID", lead.session],
+  ];
+  return (
+    <div className="w-full max-w-sm rounded-2xl bg-[#506DFF] p-5 text-white shadow-[0_24px_60px_-20px_rgba(82,125,255,0.6)] sm:p-6">
+      <div className="flex items-center justify-between border-b border-white/25 pb-3">
+        <p className="text-[15px] font-bold">Lead Profile</p>
+        <span className="rounded-full border border-white/80 px-2.5 py-0.5 text-[11px] font-semibold">Qualified</span>
+      </div>
+      <ul className="mt-4 space-y-3.5 text-[14px]">
+        {rows.map(([icon, label, value]) => (
+          <li key={label} className="flex items-center gap-3">
+            <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0 text-white/90" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d={LEAD_ICONS[icon]} />
+            </svg>
+            <span className="truncate">
+              <span className="text-white/75">{label}:</span> {value}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+/* ---------- commitments ---------- */
+
+const COMMITMENTS = [
+  "We never look at your private business content without permission.",
+  "We never share your data with other businesses.",
+  "We never train AI on your content without your consent.",
+  "We never expose your customers' conversations.",
+  "Your content is never deleted. If you pause, your data is safely preserved.",
+];
+
 /* ---------- section header ---------- */
 
 /* Shared title + subtitle for content sections: white Poppins headline,
@@ -765,6 +820,19 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* CONVERSION */}
+        <section id="leads" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
+          <SectionHeader
+            title="Where conversations meet conversion."
+            subtitle="Lumjha captures lead details effortlessly within normal conversations, identifying intent without intrusive forms."
+          />
+          <div className={`flex flex-col items-center justify-center gap-6 md:flex-row md:gap-10 ${SECTION_HEAD_GAP}`}>
+            {LEADS.map((lead) => (
+              <LeadCard key={lead.session} lead={lead} />
+            ))}
+          </div>
+        </section>
+
         {/* PRICING */}
         <section id="pricing" className="relative mx-auto max-w-[1440px] px-4 pb-12 pt-16 sm:px-6 md:pb-16 md:pt-24">
           <SectionHeader
@@ -841,6 +909,23 @@ export default function HomePage() {
               </div>
             ))}
           </div>
+        </section>
+
+        {/* COMMITMENTS */}
+        <section id="commitments" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
+          <SectionHeader title="Our Commitments" subtitle="Total transparency, absolute data security." />
+          <ol className={`mx-auto max-w-3xl space-y-3 ${SECTION_HEAD_GAP}`}>
+            {COMMITMENTS.map((c, i) => (
+              <li key={c} className="flex items-stretch gap-3">
+                <span className="flex w-11 shrink-0 items-center justify-center rounded-lg bg-white text-[15px] font-bold text-[#3E63F2]">
+                  {i + 1}.
+                </span>
+                <span className="flex-1 rounded-lg bg-white px-4 py-3 text-[14px] font-medium text-[#3E63F2] md:text-[15px]">
+                  {c}
+                </span>
+              </li>
+            ))}
+          </ol>
         </section>
 
         {/* CTA */}

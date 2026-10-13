@@ -1,14 +1,15 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import type { PointerEvent } from "react";
 
 /**
  * Giant outlined "Lumjha" for the bottom of the footer.
  *
- * A faint outline is always visible; on desktop a soft torch follows the
- * cursor and reveals a brighter copy with "jha" in the brand blue. Adapted
- * from components/showcase/LumjhaSpotlight.tsx (kept intact for reuse).
+ * A faint outline is always visible. Each time the wordmark scrolls into
+ * view, a torch sweeps once from left to right revealing a brighter copy
+ * (with "jha" in the brand blue); after that the torch follows the mouse.
+ * Adapted from components/showcase/LumjhaSpotlight.tsx (kept intact for reuse).
  */
 
 const WORDMARK =
@@ -17,17 +18,75 @@ const WORDMARK =
 const TORCH =
   "radial-gradient(circle 180px at var(--mx) var(--my), #000 0%, #000 35%, transparent 75%)";
 
+const SWEEP_MS = 1800;
+
 export default function FooterWordmark() {
   const rootRef = useRef<HTMLDivElement>(null);
   const spotRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef(0);
+  const sweepRef = useRef(0); // rAF id of a running sweep, 0 when idle
+  const hoverRef = useRef(false);
 
-  // Mouse only — on touch screens the outline simply stays static.
+  const place = (x: number, y: number) => {
+    const spot = spotRef.current;
+    if (!spot) return;
+    spot.style.setProperty("--mx", `${x}px`);
+    spot.style.setProperty("--my", `${y}px`);
+  };
+
+  const stopSweep = () => {
+    cancelAnimationFrame(sweepRef.current);
+    sweepRef.current = 0;
+  };
+
+  // Auto sweep on entering the viewport.
+  useEffect(() => {
+    const root = rootRef.current;
+    const spot = spotRef.current;
+    if (!root || !spot) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const sweep = () => {
+      if (hoverRef.current || sweepRef.current) return;
+      const { width, height } = root.getBoundingClientRect();
+      const start = performance.now();
+      spot.style.opacity = "1";
+      const step = (now: number) => {
+        const t = Math.min(1, (now - start) / SWEEP_MS);
+        const eased = t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2; // easeInOutQuad
+        // travel from just off the left edge to just off the right edge
+        place(-0.1 * width + eased * 1.2 * width, height * 0.5);
+        if (t < 1) {
+          sweepRef.current = requestAnimationFrame(step);
+        } else {
+          sweepRef.current = 0;
+          if (!hoverRef.current) spot.style.opacity = "0";
+        }
+      };
+      sweepRef.current = requestAnimationFrame(step);
+    };
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) sweep();
+      },
+      { threshold: 0.6 },
+    );
+    io.observe(root);
+    return () => {
+      io.disconnect();
+      stopSweep();
+    };
+  }, []);
+
+  // Mouse only — touch screens just get the sweep.
   const onMove = (e: PointerEvent<HTMLDivElement>) => {
     if (e.pointerType !== "mouse") return;
     const root = rootRef.current;
     const spot = spotRef.current;
     if (!root || !spot) return;
+    hoverRef.current = true;
+    stopSweep(); // the visitor takes over mid-sweep
     const r = root.getBoundingClientRect();
     const x = e.clientX - r.left;
     const y = e.clientY - r.top;
@@ -35,13 +94,13 @@ export default function FooterWordmark() {
     if (frameRef.current) return;
     frameRef.current = requestAnimationFrame(() => {
       frameRef.current = 0;
-      spot.style.setProperty("--mx", `${x}px`);
-      spot.style.setProperty("--my", `${y}px`);
+      place(x, y);
     });
   };
 
   const onLeave = () => {
-    if (spotRef.current) spotRef.current.style.opacity = "0";
+    hoverRef.current = false;
+    if (spotRef.current && !sweepRef.current) spotRef.current.style.opacity = "0";
   };
 
   return (
@@ -57,7 +116,7 @@ export default function FooterWordmark() {
         Lumjha
       </span>
 
-      {/* brighter copy revealed inside the cursor torch */}
+      {/* brighter copy revealed inside the torch */}
       <div
         ref={spotRef}
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300"
