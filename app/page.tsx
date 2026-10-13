@@ -7,6 +7,7 @@ import Navbar from "@/components/site/Navbar";
 import Footer from "@/components/site/Footer";
 import ContactDisclosure from "@/components/site/ContactDisclosure";
 import HeroBackdrop from "@/components/site/HeroBackdrop";
+import Tilt from "@/components/ui/Tilt";
 import {
   WebsiteIcon,
   WhatsAppIcon,
@@ -96,8 +97,10 @@ function MockCard({
   children: ReactNode;
 }) {
   return (
+    // white glare would be invisible on a white card, so tilt only
+    <Tilt className="w-full max-w-[340px] rounded-2xl sm:max-w-[360px] lg:max-w-[480px]" max={8} glare={false}>
     <div
-      className="w-full max-w-[340px] rounded-2xl border-2 bg-white p-3.5 shadow-[0_24px_70px_-20px_rgba(82,125,255,0.5)] sm:max-w-[360px] sm:p-4 lg:max-w-[480px] lg:p-5"
+      className="w-full rounded-2xl border-2 bg-white p-3.5 shadow-[0_24px_70px_-20px_rgba(82,125,255,0.5)] sm:p-4 lg:p-5"
       style={{ borderColor: accent }}
     >
       {header ?? (
@@ -112,6 +115,7 @@ function MockCard({
       )}
       {children}
     </div>
+    </Tilt>
   );
 }
 
@@ -705,7 +709,8 @@ function LeadCard({ lead }: { lead: (typeof LEADS)[number] }) {
     ["hash", "Session ID", lead.session],
   ];
   return (
-    <div className="w-full max-w-sm rounded-2xl bg-[#506DFF] p-5 text-white shadow-[0_24px_60px_-20px_rgba(82,125,255,0.6)] sm:p-6">
+    <Tilt className="w-full max-w-sm rounded-2xl" max={10}>
+    <div className="rounded-2xl bg-[#506DFF] p-5 text-white shadow-[0_24px_60px_-20px_rgba(82,125,255,0.6)] sm:p-6">
       <div className="flex items-center justify-between border-b border-white/25 pb-3">
         <p className="text-[15px] font-bold">Lead Profile</p>
         <span className="rounded-full border border-white/80 px-2.5 py-0.5 text-[11px] font-semibold">Qualified</span>
@@ -723,6 +728,7 @@ function LeadCard({ lead }: { lead: (typeof LEADS)[number] }) {
         ))}
       </ul>
     </div>
+    </Tilt>
   );
 }
 
@@ -939,6 +945,8 @@ export default function HomePage() {
             className="pointer-events-none -z-10 object-cover"
           />
           <div className="mx-auto max-w-[1440px]">
+            {/* gentle tilt for the large panel; pauses while the contact form has focus */}
+            <Tilt className="rounded-3xl" max={3} scale={1.01}>
             <div className="rounded-3xl bg-[#506DFF] px-6 py-14 text-center shadow-xl sm:px-10 md:py-20 lg:py-24">
               <h2 className="mx-auto max-w-4xl text-[28px] font-extrabold leading-tight tracking-tight text-balance text-white sm:max-w-none sm:whitespace-nowrap sm:text-[clamp(1.5rem,calc((100vw_-_128px)/22),3rem)]">
                 Ready to Scale Your Customer Experience?
@@ -955,6 +963,7 @@ export default function HomePage() {
                 <BlueButton light large>Start Free Trial</BlueButton>
               </ContactDisclosure>
             </div>
+            </Tilt>
           </div>
         </section>
 
