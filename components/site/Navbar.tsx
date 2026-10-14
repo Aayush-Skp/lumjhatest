@@ -18,7 +18,7 @@ export default function Navbar({ prefix = "" }: { prefix?: string }) {
   return (
     <header className="sticky top-0 z-50 border-b border-white/5 bg-[#030816]/90 backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-[1440px] items-center justify-between px-4 sm:px-6">
-        <a href={`${prefix}#top`} className="flex items-center gap-2">
+        <a href={`${prefix}#top`} className="flex items-center gap-3">
           <Image
             src="/logo.png"
             alt="Lumjha logo"
@@ -27,9 +27,11 @@ export default function Navbar({ prefix = "" }: { prefix?: string }) {
             className="h-8 w-auto shrink-0 object-contain"
             priority
           />
-          <span className="hidden flex-col leading-tight min-[420px]:flex">
-            <span className="text-[11px] font-bold text-white">Knowledgebase,</span>
-            <span className="text-[10px] text-gray-400">Activated Everywhere</span>
+          {/* thin divider + two even lines, as in the brand lockup */}
+          <span aria-hidden className="hidden h-8 w-px shrink-0 bg-white/30 min-[420px]:block" />
+          <span className="hidden flex-col text-[12px] font-medium leading-[1.3] text-[#B4BCCB] min-[420px]:flex">
+            <span>Knowledgebase,</span>
+            <span>Activated Everywhere</span>
           </span>
         </a>
 

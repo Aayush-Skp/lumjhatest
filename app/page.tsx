@@ -849,9 +849,10 @@ export default function HomePage() {
 
           <div className={`grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4 ${SECTION_HEAD_GAP}`}>
             {PLANS.map((p) => (
+              // white cards: tilt without the (invisible) white glare
+              <Tilt key={p.name} className="flex rounded-2xl" max={6} glare={false}>
               <div
-                key={p.name}
-                className={`relative flex flex-col overflow-hidden rounded-2xl bg-white text-[#0B1526] ${p.featured
+                className={`relative flex w-full flex-col overflow-hidden rounded-2xl bg-white text-[#0B1526] ${p.featured
                     ? "border-[3px] border-[#F2B90D] shadow-[0_20px_60px_-15px_rgba(242,185,13,0.5)]"
                     : "border border-[#D7E3F5]"
                   }`}
@@ -891,6 +892,7 @@ export default function HomePage() {
                   </a>
                 </div>
               </div>
+              </Tilt>
             ))}
           </div>
         </section>
@@ -904,9 +906,9 @@ export default function HomePage() {
           />
           <div className={`grid grid-cols-1 gap-5 md:grid-cols-3 ${SECTION_HEAD_GAP}`}>
             {ADDONS.map((a) => (
+              <Tilt key={a.title} className="rounded-2xl" max={8} glare={false}>
               <div
-                key={a.title}
-                className="flex items-center gap-4 rounded-2xl border border-[#D7E3F5] bg-white px-6 py-5 text-[#0B1526]"
+                className="flex h-full items-center gap-4 rounded-2xl border border-[#D7E3F5] bg-white px-6 py-5 text-[#0B1526]"
               >
                 <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#EEF3FF]">
                   <Image src={a.src} alt={a.alt} width={32} height={32} className="h-7 w-7" />
@@ -916,6 +918,7 @@ export default function HomePage() {
                   <span className="block text-[13px] text-gray-500">{a.price}</span>
                 </span>
               </div>
+              </Tilt>
             ))}
           </div>
         </section>
@@ -925,13 +928,16 @@ export default function HomePage() {
           <SectionHeader title="Our Commitments" subtitle="Total transparency, absolute data security." />
           <ol className={`mx-auto max-w-3xl space-y-3 ${SECTION_HEAD_GAP}`}>
             {COMMITMENTS.map((c, i) => (
-              <li key={c} className="flex items-stretch gap-3">
+              <li key={c}>
+                {/* wide, short rows → gentle angle so the far edge doesn't swing */}
+                <Tilt className="flex items-stretch gap-3 rounded-lg" max={3} scale={1.01} glare={false}>
                 <span className="flex w-11 shrink-0 items-center justify-center rounded-lg bg-white text-[15px] font-bold text-[#3E63F2]">
                   {i + 1}.
                 </span>
                 <span className="flex-1 rounded-lg bg-white px-4 py-3 text-[14px] font-medium text-[#3E63F2] md:text-[15px]">
                   {c}
                 </span>
+                </Tilt>
               </li>
             ))}
           </ol>
