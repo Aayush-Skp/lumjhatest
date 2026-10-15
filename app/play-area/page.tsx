@@ -87,12 +87,12 @@ const BENEFITS: { icon: keyof typeof ICONS; title: string; body: string }[] = [
 
 export default function PlayAreaPage() {
   return (
-    <div className="min-h-screen bg-[#030816] font-sans text-white antialiased">
+    <div className="min-h-screen bg-[#030816] font-sans text-white antialiased light:bg-[#F5F7FC] light:text-[#0B1526]">
       <Navbar prefix="/" />
       <main id="top" className="relative overflow-x-clip">
-        <div className="pointer-events-none absolute -left-40 top-56 h-[500px] w-[300px] rounded-full bg-[#1B3AA0]/30 blur-[120px]" />
-        <div className="pointer-events-none absolute -right-40 top-[420px] h-[500px] w-[300px] rounded-full bg-[#1B3AA0]/25 blur-[120px]" />
-        <div className="pointer-events-none absolute -left-40 top-[1100px] h-[500px] w-[300px] rounded-full bg-[#1B3AA0]/20 blur-[120px]" />
+        <div className="pointer-events-none absolute -left-40 top-56 h-[500px] w-[300px] rounded-full bg-[#1B3AA0]/30 blur-[120px] light:bg-[#527DFF]/10" />
+        <div className="pointer-events-none absolute -right-40 top-[420px] h-[500px] w-[300px] rounded-full bg-[#1B3AA0]/25 blur-[120px] light:bg-[#527DFF]/10" />
+        <div className="pointer-events-none absolute -left-40 top-[1100px] h-[500px] w-[300px] rounded-full bg-[#1B3AA0]/20 blur-[120px] light:bg-[#527DFF]/10" />
 
         {/* HERO — live demo window */}
         <section className="relative mx-auto max-w-[1440px] px-4 pb-16 pt-12 sm:px-6 md:pb-24 md:pt-20">
@@ -125,7 +125,7 @@ export default function PlayAreaPage() {
             {STEPS.map((s) => (
               <li key={s.title} className="flex">
                 <Tilt className="flex w-full rounded-2xl" max={8}>
-                  <div className="flex w-full flex-col items-center rounded-2xl bg-[#527DFF] px-6 py-8 text-center shadow-[0_24px_60px_-20px_rgba(82,125,255,0.6)] md:py-10">
+                  <div className="flex w-full flex-col items-center rounded-2xl bg-[#527DFF] px-6 py-8 text-center text-white shadow-[0_24px_60px_-20px_rgba(82,125,255,0.6)] md:py-10">
                     <Icon name={s.icon} className="h-12 w-12 text-white md:h-14 md:w-14" />
                     <h3 className="mt-4 text-lg font-bold md:mt-5 md:text-xl">{s.title}</h3>
                     <p className="mt-2 max-w-[260px] text-[13px] leading-relaxed text-white/90 md:text-sm">{s.body}</p>
@@ -150,8 +150,8 @@ export default function PlayAreaPage() {
                   <div
                     className={`flex items-center gap-4 rounded-lg px-5 py-4 md:px-6 md:py-5 ${
                       i % 2 === 0
-                        ? "bg-white"
-                        : "bg-[linear-gradient(90deg,#FFFFFF_0%,#D9E6FF_65%,#E8EBF2_100%)]"
+                        ? "bg-white light:ring-1 light:ring-[#D7E3F5]"
+                        : "bg-[linear-gradient(90deg,#FFFFFF_0%,#D9E6FF_65%,#E8EBF2_100%)] light:ring-1 light:ring-[#D7E3F5]"
                     }`}
                   >
                     <Icon name={b.icon} className="h-6 w-6 shrink-0 text-[#527DFF] md:h-7 md:w-7" />

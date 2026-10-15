@@ -24,6 +24,8 @@ lumjha-website/
 │   ├── site/
 │   │   ├── Navbar.tsx    ← shared navbar (prefix prop for non-home pages; "/route" links used as-is)
 │   │   ├── BlueButton.tsx / SectionHeader.tsx / CtaSection.tsx ← shared page building blocks
+│   │   ├── ThemeToggle.tsx ← light/dark switch in the navbar (sets <html data-theme>, saved as "lumjha-theme")
+│   │   ├── WaveLines.tsx ← simple code-drawn line backdrop (Play Area band)
 │   │   ├── Footer.tsx    ← shared footer (Privacy/Terms wired)
 │   │   ├── FooterWordmark.tsx ← outlined "Lumjha" + cursor torch (footer copy of the showcase piece)
 │   │   └── LegalPage.tsx ← Figma-styled shell for legal pages
@@ -44,6 +46,10 @@ lumjha-website/
   keep it dependency-free so it can be dropped in later.
 - Legal page bodies are verbatim copies; style them only via
   `components/site/LegalPage.tsx` + `.legal-prose` in `globals.css`.
+- Themes: dark is the Figma default; light mode is opt-in via the navbar
+  toggle. Pages are authored dark-first with `light:` overrides (custom
+  variant in `globals.css`) — any new hard-coded dark colour needs a
+  `light:` partner. Blue panels and the black footer stay the same in both.
 - Keep dependencies minimal (next + react only). Do not re-add animation,
   icon, or state libraries unless the design truly needs them.
 ```

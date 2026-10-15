@@ -18,10 +18,10 @@ export default function SectionHeader({
 }) {
   return (
     <div className="text-center">
-      <Heading className="font-heading text-[28px] font-bold leading-tight tracking-tight text-balance text-white sm:text-4xl md:text-[44px]">
+      <Heading className="font-heading text-[28px] font-bold leading-tight tracking-tight text-balance text-white light:text-[#0B1526] sm:text-4xl md:text-[44px]">
         {title}
       </Heading>
-      <p className="mx-auto mt-4 max-w-4xl text-[15px] leading-relaxed text-balance text-white/85 sm:text-lg md:mt-5 md:text-xl">
+      <p className="mx-auto mt-4 max-w-4xl text-[15px] leading-relaxed text-balance text-white/85 light:text-slate-600 sm:text-lg md:mt-5 md:text-xl">
         {subtitle}
       </p>
     </div>

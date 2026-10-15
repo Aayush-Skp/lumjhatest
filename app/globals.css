@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* `light:` utilities — the Figma pages are authored dark-first and add
+   `light:` overrides, keyed off <html data-theme="light"> (see ThemeToggle). */
+@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
+
 /* =========================================================
    Lumjha AI — design tokens
    Every color, radius, shadow lives here. Edit one place.
@@ -462,9 +466,30 @@ body {
 }
 
 html {
+  color-scheme: dark;
   scroll-behavior: smooth;
   /* anchor jumps land just below the sticky 3.5rem navbar */
   scroll-padding-top: 3.5rem;
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
+}
+
+/* Brief colour cross-fade while the theme switches (class added by
+   ThemeToggle for ~300ms), so the flip doesn't flash. */
+@media (prefers-reduced-motion: no-preference) {
+  html.theme-transition,
+  html.theme-transition *,
+  html.theme-transition *::before,
+  html.theme-transition *::after {
+    transition:
+      background-color 300ms ease,
+      border-color 300ms ease,
+      color 300ms ease,
+      fill 300ms ease,
+      stroke 300ms ease !important;
+  }
 }
 
 /* =========================================================
@@ -525,4 +550,23 @@ html {
 .legal-prose p:last-child,
 .legal-prose li:last-child {
   margin-bottom: 0;
+}
+
+[data-theme="light"] .legal-prose h3,
+[data-theme="light"] .legal-prose h4,
+[data-theme="light"] .legal-prose strong {
+  color: #0b1526;
+}
+[data-theme="light"] .legal-prose p,
+[data-theme="light"] .legal-prose li {
+  color: #475569;
+}
+[data-theme="light"] .legal-prose em {
+  color: #334155;
+}
+[data-theme="light"] .legal-prose a {
+  color: #3e63f2;
+}
+[data-theme="light"] .legal-prose a:hover {
+  color: #0b1526;
 }
