@@ -2,18 +2,22 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
-// One link per landing-page section, in page order.
+// Page routes ("/play-area") first, then one link per landing-page section, in page order.
 const NAV_LINKS = [
-  { label: "Platform", href: "#platform" },
+  { label: "Play Area", href: "/play-area" },
   { label: "Integrations", href: "#channels" },
   { label: "Pricing", href: "#pricing" },
   { label: "Our Commitments", href: "#commitments" },
 ];
 
-/** Site navbar. `prefix` lets legal pages link back home ("/#pricing"). */
+/** Site navbar. `prefix` lets other pages link back to home sections ("/#pricing"). */
 export default function Navbar({ prefix = "" }: { prefix?: string }) {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  // section anchors get the prefix; full routes are used as-is
+  const hrefOf = (href: string) => (href.startsWith("/") ? href : `${prefix}${href}`);
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/5 bg-[#030816]/90 backdrop-blur-md">
@@ -39,8 +43,9 @@ export default function Navbar({ prefix = "" }: { prefix?: string }) {
           {NAV_LINKS.map((l) => (
             <a
               key={l.label}
-              href={`${prefix}${l.href}`}
-              className="text-[12px] font-medium text-gray-300 transition-colors duration-300 ease-out hover:text-white"
+              href={hrefOf(l.href)}
+              aria-current={pathname === l.href ? "page" : undefined}
+              className="text-[12px] font-medium text-gray-300 transition-colors duration-300 ease-out hover:text-white aria-[current=page]:text-white"
             >
               {l.label}
             </a>
@@ -93,7 +98,8 @@ export default function Navbar({ prefix = "" }: { prefix?: string }) {
             {NAV_LINKS.map((l, i) => (
               <a
                 key={l.label}
-                href={`${prefix}${l.href}`}
+                href={hrefOf(l.href)}
+                aria-current={pathname === l.href ? "page" : undefined}
                 onClick={() => setOpen(false)}
                 style={{ transitionDelay: open ? `${100 + i * 60}ms` : "0ms" }}
                 className={`text-sm font-medium text-gray-200 transition-all duration-500 ease-out motion-reduce:transition-none ${

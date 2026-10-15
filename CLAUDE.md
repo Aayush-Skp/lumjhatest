@@ -16,12 +16,14 @@ lumjha-website/
 ├── app/
 │   ├── layout.tsx      ← root layout (Inter fonts, dark theme default)
 │   ├── page.tsx        ← main landing page (Figma design)
+│   ├── play-area/page.tsx ← Play Area (test-drive page; demo panel is a blank placeholder for now)
 │   ├── privacy/page.tsx← Privacy Policy (content copied from original)
 │   ├── terms/page.tsx  ← Terms of Service (content copied from original)
 │   └── globals.css     ← design tokens + base utilities + .legal-prose
 ├── components/
 │   ├── site/
-│   │   ├── Navbar.tsx    ← shared navbar (prefix prop for legal pages)
+│   │   ├── Navbar.tsx    ← shared navbar (prefix prop for non-home pages; "/route" links used as-is)
+│   │   ├── BlueButton.tsx / SectionHeader.tsx / CtaSection.tsx ← shared page building blocks
 │   │   ├── Footer.tsx    ← shared footer (Privacy/Terms wired)
 │   │   ├── FooterWordmark.tsx ← outlined "Lumjha" + cursor torch (footer copy of the showcase piece)
 │   │   └── LegalPage.tsx ← Figma-styled shell for legal pages

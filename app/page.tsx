@@ -6,6 +6,9 @@ import type { ComponentType, KeyboardEvent, ReactNode, SVGProps, TouchEvent } fr
 import Navbar from "@/components/site/Navbar";
 import Footer from "@/components/site/Footer";
 import ContactDisclosure from "@/components/site/ContactDisclosure";
+import BlueButton from "@/components/site/BlueButton";
+import CtaSection from "@/components/site/CtaSection";
+import SectionHeader, { SECTION_HEAD_GAP, SECTION_Y } from "@/components/site/SectionHeader";
 import HeroBackdrop from "@/components/site/HeroBackdrop";
 import Tilt from "@/components/ui/Tilt";
 import {
@@ -21,58 +24,6 @@ import {
 /* ============================================================
    Lumjha — main landing page (Figma design, mobile-first)
    ============================================================ */
-
-function BlueButton({
-  children,
-  outline,
-  light,
-  large,
-  href = "https://app.lumjha.ai/login",
-}: {
-  children: React.ReactNode;
-  outline?: boolean;
-  light?: boolean;
-  large?: boolean;
-  href?: string;
-}) {
-  const size = large
-    ? "justify-center gap-2 px-7 py-3.5 text-[15px] md:px-8 md:text-base"
-    : "gap-1.5 px-5 py-2 text-[13px]";
-  if (light) {
-    return (
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`inline-flex items-center rounded-full bg-white font-semibold text-[#3E63F2] transition hover:brightness-95 ${size}`}
-      >
-        {children}
-      </a>
-    );
-  }
-  if (outline) {
-    return (
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`inline-flex items-center rounded-full border border-[#527DFF]/70 font-semibold ${size} text-white transition hover:bg-[#527DFF]/10`}
-      >
-        {children} <span aria-hidden>→</span>
-      </a>
-    );
-  }
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={`inline-flex items-center rounded-full bg-[#527DFF] font-semibold text-white shadow-[0_8px_30px_-6px_rgba(82,125,255,0.7)] transition hover:bg-[#3E63F2] ${size}`}
-    >
-      {children} <span aria-hidden>→</span>
-    </a>
-  );
-}
 
 function Highlight({ children }: { children: React.ReactNode }) {
   return (
@@ -742,29 +693,7 @@ const COMMITMENTS = [
   "Your content is never deleted. If you pause, your data is safely preserved.",
 ];
 
-/* ---------- section header ---------- */
-
-/* Shared title + subtitle for content sections: white Poppins headline,
-   soft-white supporting line. */
-function SectionHeader({ title, subtitle }: { title: string; subtitle: string }) {
-  return (
-    <div className="text-center">
-      <h2 className="font-heading text-[28px] font-bold leading-tight tracking-tight text-balance text-white sm:text-4xl md:text-[44px]">
-        {title}
-      </h2>
-      <p className="mx-auto mt-4 max-w-4xl text-[15px] leading-relaxed text-balance text-white/85 sm:text-lg md:mt-5 md:text-xl">
-        {subtitle}
-      </p>
-    </div>
-  );
-}
-
 /* ---------- page ---------- */
-
-/* Vertical rhythm shared by every content section, so the gaps between
-   sections (and between a section's header and its content) always match. */
-const SECTION_Y = "py-16 md:py-24";
-const SECTION_HEAD_GAP = "mt-10 md:mt-14";
 
 export default function HomePage() {
   return (
@@ -943,38 +872,7 @@ export default function HomePage() {
           </ol>
         </section>
 
-        {/* CTA */}
-        <section className="relative isolate overflow-hidden bg-white px-4 py-16 sm:px-6 md:py-28">
-          {/* topographic pattern — the PNG carries its own transparency */}
-          <Image
-            src="/assets/cta-pattern.png"
-            alt=""
-            fill
-            sizes="100vw"
-            className="pointer-events-none -z-10 object-cover"
-          />
-          <div className="mx-auto max-w-[1440px]">
-            {/* gentle tilt for the large panel; pauses while the contact form has focus */}
-            <Tilt className="rounded-3xl" max={3} scale={1.01}>
-            <div className="rounded-3xl bg-[#506DFF] px-6 py-14 text-center shadow-xl sm:px-10 md:py-20 lg:py-24">
-              <h2 className="mx-auto max-w-4xl font-heading text-[28px] font-bold leading-tight tracking-tight text-balance text-white sm:max-w-none sm:whitespace-nowrap sm:text-[clamp(1.5rem,calc((100vw_-_128px)/22),3rem)]">
-                Ready to Scale Your Customer Experience?
-              </h2>
-              <p className="mx-auto mt-5 max-w-2xl text-[15px] leading-relaxed text-balance text-white/85 sm:text-base md:mt-6 md:text-lg">
-                Deliver instant, personalized answers across web, messaging, and social apps
-                without increasing your team&apos;s workload.
-              </p>
-              <ContactDisclosure
-                variant="light"
-                rowClassName="mx-auto mt-8 flex w-full max-w-xs flex-col gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:items-center sm:justify-center sm:gap-4 md:mt-10"
-                buttonClassName="inline-flex items-center justify-center rounded-lg border border-white/80 px-7 py-3.5 text-[15px] font-semibold text-white transition hover:bg-white/10 md:px-8 md:text-base"
-              >
-                <BlueButton light large>Start Free Trial</BlueButton>
-              </ContactDisclosure>
-            </div>
-            </Tilt>
-          </div>
-        </section>
+        <CtaSection />
 
         <Footer />
       </main>

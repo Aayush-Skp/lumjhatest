@@ -3,7 +3,7 @@ import Link from "next/link";
 import FooterWordmark from "./FooterWordmark";
 
 const QUICK_LINKS = [
-  { label: "Platform", href: "/#platform" },
+  { label: "Play Area", href: "/play-area" },
   { label: "Integrations", href: "/#channels" },
   { label: "Pricing", href: "/#pricing" },
   { label: "Add-ons", href: "/#addons" },
