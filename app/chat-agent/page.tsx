@@ -112,7 +112,7 @@ export default function ChatAgentPage() {
             width={1598}
             height={984}
             sizes="(min-width: 1024px) 655px, 100vw"
-            className="h-auto w-full max-w-[655px]"
+            className="h-auto w-full max-w-[655px] rounded-2xl"
           />
         }
       />

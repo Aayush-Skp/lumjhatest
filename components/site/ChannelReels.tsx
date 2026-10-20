@@ -45,7 +45,7 @@ function ChannelTile({ channel }: { channel: Channel }) {
   const { Icon, bg } = channel;
   return (
     <div className="flex h-20 items-center justify-center sm:h-24 md:h-32">
-      <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/[0.08] bg-[#0B1428] shadow-[0_12px_36px_rgba(0,0,0,0.45)] sm:h-16 sm:w-16 sm:rounded-2xl md:h-24 md:w-24">
+      <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-line bg-surface shadow-[0_12px_36px_rgba(0,0,0,0.2)] sm:h-16 sm:w-16 sm:rounded-2xl md:h-24 md:w-24">
         <Icon style={{ color: bg }} className="h-5 w-5 sm:h-8 sm:w-8 md:h-12 md:w-12" aria-hidden />
       </div>
     </div>

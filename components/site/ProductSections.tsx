@@ -27,7 +27,7 @@ const CONTENT = "mx-auto w-full max-w-[1160px]";
 /** Page frame: navbar, the near-black Figma background, CTA panel and footer. */
 export function ProductPage({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen bg-[#090a0f] font-sans text-white antialiased">
+    <div className="min-h-screen bg-page-deep font-sans text-ink antialiased">
       <Navbar />
       <main id="top" className="relative overflow-x-clip">
         {children}
@@ -42,17 +42,17 @@ export function ProductPage({ children }: { children: ReactNode }) {
 export function ProductHero({ title, accent, body }: { title: string; accent: string; body: string }) {
   return (
     <section className={`${CONTAINER} flex flex-col items-center pb-8 pt-14 text-center md:pt-24`}>
-      <h1 className="max-w-[980px] font-heading text-[clamp(2.25rem,4.5vw+1rem,4.6875rem)] font-semibold leading-[1.13] tracking-tight text-[#EAEAEE]">
+      <h1 className="max-w-[980px] font-heading text-[clamp(2.25rem,4.5vw+1rem,4.6875rem)] font-semibold leading-[1.13] tracking-tight text-headline">
         {title} <span className="text-[#5675FF]">{accent}</span>
       </h1>
-      <p className="mx-auto mt-6 max-w-[1005px] text-lg leading-relaxed text-balance text-white sm:text-xl md:mt-9 md:text-[28px] md:leading-9">
+      <p className="mx-auto mt-6 max-w-[1005px] text-lg leading-relaxed text-balance text-ink sm:text-xl md:mt-9 md:text-[28px] md:leading-9">
         {body}
       </p>
       <ContactDisclosure
         variant="dark"
         label="Book a Demo"
         rowClassName="mt-8 flex w-full max-w-xs flex-col gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:items-center sm:justify-center sm:gap-10 md:mt-11"
-        buttonClassName="inline-flex items-center justify-center rounded-full border-2 border-[#5675FF] px-7 py-3.5 text-[15px] font-semibold text-white transition hover:bg-[#5675FF]/10"
+        buttonClassName="inline-flex items-center justify-center rounded-full border-2 border-[#5675FF] px-7 py-3.5 text-[15px] font-semibold text-ink transition hover:bg-[#5675FF]/10"
       >
         <BlueButton large>Get Started</BlueButton>
       </ContactDisclosure>
@@ -75,10 +75,10 @@ export function IntroSplit({
       className={`mx-auto grid w-full max-w-[1440px] items-center gap-10 px-4 sm:px-6 lg:grid-cols-[minmax(0,560px)_minmax(0,1fr)] lg:gap-14 lg:pl-[max(1.5rem,calc(50%-578px))] lg:pr-0 ${SECTION_Y}`}
     >
       <div className="text-center lg:text-left">
-        <h2 className="font-heading text-[28px] font-bold leading-[1.4] tracking-tight text-white sm:text-4xl md:text-[40px] md:leading-[72px]">
+        <h2 className="font-heading text-[28px] font-bold leading-[1.4] tracking-tight text-ink sm:text-4xl md:text-[40px] md:leading-[72px]">
           {heading}
         </h2>
-        <p className="mx-auto mt-5 max-w-[581px] text-base leading-relaxed text-white sm:text-lg md:mt-8 md:text-xl md:leading-9 lg:mx-0">
+        <p className="mx-auto mt-5 max-w-[581px] text-base leading-relaxed text-ink sm:text-lg md:mt-8 md:text-xl md:leading-9 lg:mx-0">
           {body}
         </p>
       </div>
@@ -133,7 +133,7 @@ export function BenefitGrid({
             {/* white cards: tilt without the (invisible) white glare */}
             <Tilt className="h-full rounded-[10px]" max={4} scale={1.01} glare={false}>
             <div
-              className={`flex h-full items-start gap-4 rounded-[10px] bg-white px-6 py-3.5 text-[#5675FF] md:gap-[25px] ${
+              className={`flex h-full items-start gap-4 rounded-[10px] bg-white px-6 ring-1 ring-card-ring py-3.5 text-[#5675FF] md:gap-[25px] ${
                 compact ? "min-h-[96px]" : "min-h-[114px]"
               }`}
             >
@@ -159,10 +159,10 @@ export function Faq({ product, items }: { product: string; items: { q: string; a
   return (
     <section className={`${CONTAINER} ${SECTION_Y}`}>
       <div className="text-center">
-        <h2 className="font-heading text-[28px] font-bold leading-tight tracking-tight text-white sm:text-4xl md:text-[40px]">
+        <h2 className="font-heading text-[28px] font-bold leading-tight tracking-tight text-ink sm:text-4xl md:text-[40px]">
           Frequently asked questions
         </h2>
-        <p className="mt-3 text-lg font-semibold text-white md:mt-4 md:text-2xl">{product}</p>
+        <p className="mt-3 text-lg font-semibold text-ink md:mt-4 md:text-2xl">{product}</p>
       </div>
       <ul className={`${CONTENT} border-b border-[#DBE3ED] ${SECTION_HEAD_GAP}`}>
         {items.map((item, i) => {
@@ -180,7 +180,7 @@ export function Faq({ product, items }: { product: string; items: { q: string; a
                 <span className="flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-lg bg-[#5675FF] text-[15px] font-bold text-white">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <span className="flex-1 text-lg font-semibold text-white md:text-2xl">{item.q}</span>
+                <span className="flex-1 text-lg font-semibold text-ink md:text-2xl">{item.q}</span>
                 {/* minus; a second, rotated bar turns it into a plus when closed */}
                 <span className="relative mr-1 flex h-5 w-5 shrink-0 items-center justify-center md:mr-10" aria-hidden>
                   <Image src="/assets/shared/faq-minus.svg" alt="" width={20} height={5} className="absolute" />
@@ -200,7 +200,7 @@ export function Faq({ product, items }: { product: string; items: { q: string; a
                 }`}
               >
                 <div className="overflow-hidden">
-                  <p className="pl-[58px] pt-2 text-base leading-relaxed text-white md:pl-[65px] md:text-xl md:leading-9">
+                  <p className="pl-[58px] pt-2 text-base leading-relaxed text-ink md:pl-[65px] md:text-xl md:leading-9">
                     {item.a}
                   </p>
                 </div>

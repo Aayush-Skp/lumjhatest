@@ -8,8 +8,11 @@ import { useEffect, useRef } from "react";
  * evaluate it once per size instead of shipping a WebGPU runtime — same
  * pixels, works in every browser.
  *
- * Like the shader, the canvas is opaque black with the wave added on top,
- * and it renders at CSS-pixel resolution to match the 1× Figma frame.
+ * The shader outputs `rgb × a × brightness` over opaque black; we paint
+ * `rgb` with alpha `a × brightness` on a transparent canvas instead, which
+ * is pixel-identical over the black band in dark mode and still reads as a
+ * soft glow over the light band. Rendered at CSS-pixel resolution to match
+ * the 1× Figma frame.
  */
 
 type Rgba = { r: number; g: number; b: number; a: number };
@@ -57,9 +60,10 @@ function paint(canvas: HTMLCanvasElement, p: WaveParams) {
   const cx = (width * p.x) / 100;
   const cy = (width * p.y) / 100;
   const glowSpread = 40 + glowIntensity * 60;
-  const r = color.r * color.a * 255;
-  const g = color.g * color.a * 255;
-  const b = color.b * color.a * 255;
+  const r = color.r * 255;
+  const g = color.g * 255;
+  const b = color.b * 255;
+  const a = color.a * 255;
 
   const img = ctx.createImageData(width, height);
   const data = img.data;
@@ -76,10 +80,10 @@ function paint(canvas: HTMLCanvasElement, p: WaveParams) {
       const glow = 1 - Math.pow(Math.min(1, Math.max(0, dist / glowSpread)), 0.4);
       const brightness = Math.min(1, Math.max(0, core + glow * glowIntensity));
       const i = (py * width + px) * 4;
-      data[i] = r * brightness;
-      data[i + 1] = g * brightness;
-      data[i + 2] = b * brightness;
-      data[i + 3] = 255;
+      data[i] = r;
+      data[i + 1] = g;
+      data[i + 2] = b;
+      data[i + 3] = a * brightness;
     }
   }
   ctx.putImageData(img, 0, 0);

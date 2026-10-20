@@ -40,6 +40,7 @@ lumjha-website/
 │   │   └── LumjhaSpotlight.tsx ← preserved hover-torch wordmark (unused, for later)
 │   └── ui/
 │       ├── BlueButton.tsx      ← pill CTA (solid / outline / white)
+│       ├── ThemeToggle.tsx     ← dark/light switch (navbar), persists to localStorage
 │       └── ChannelIcons.tsx    ← brand SVG channel logos
 └── public/
     ├── logo.png
@@ -55,6 +56,11 @@ lumjha-website/
   keep it dependency-free so it can be dropped in later.
 - Legal page bodies are verbatim copies; style them only via
   `components/site/LegalPage.tsx` + `.legal-prose` in `globals.css`.
+- Dark is the Figma default; light theme is driven by `[data-theme="light"]`.
+  Use the site tokens (`bg-page`, `bg-page-deep`, `text-ink`, `text-muted`,
+  `text-subtle`, `border-line`, `bg-surface`, `bg-band`, …) from `globals.css`
+  instead of hardcoded dark hexes, so new sections theme automatically.
+  Text on blue cards/buttons stays `text-white`. Light-only tweaks: `light:`.
 - Keep dependencies minimal (next + react only). Do not re-add animation,
   icon, or state libraries unless the design truly needs them.
 ```

@@ -104,7 +104,7 @@ export default function PolicyVaultPage() {
             width={1833}
             height={858}
             sizes="(min-width: 1024px) 805px, 100vw"
-            className="h-auto w-full max-w-[805px]"
+            className="h-auto w-full max-w-[805px] rounded-2xl"
           />
         }
       />

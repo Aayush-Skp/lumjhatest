@@ -29,12 +29,12 @@ const THEME: Record<
 > = {
   // hero: glassy card on the navy background
   dark: {
-    card: "border border-white/10 bg-[#0B1428]/90 shadow-[0_24px_70px_-20px_rgba(82,125,255,0.35)] backdrop-blur",
-    label: "text-gray-300",
+    card: "border border-line bg-surface/90 text-ink shadow-[0_24px_70px_-20px_rgba(82,125,255,0.35)] backdrop-blur",
+    label: "text-muted",
     input:
-      "border-white/10 bg-white/[0.04] text-white placeholder:text-gray-500 focus:border-[#527DFF] focus:ring-[#527DFF]/30",
-    muted: "text-gray-400",
-    close: "text-gray-400 hover:bg-white/10 hover:text-white",
+      "border-line bg-ink/[0.04] text-ink placeholder:text-subtle focus:border-[#527DFF] focus:ring-[#527DFF]/30",
+    muted: "text-subtle",
+    close: "text-subtle hover:bg-ink/10 hover:text-ink",
     submit: "bg-[#527DFF] text-white hover:bg-[#3E63F2]",
   },
   // CTA: white card on the blue panel, like the pricing cards

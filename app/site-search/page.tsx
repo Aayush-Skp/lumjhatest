@@ -102,7 +102,7 @@ export default function SiteSearchPage() {
             width={1536}
             height={1024}
             sizes="(min-width: 1024px) 616px, 100vw"
-            className="h-auto w-full max-w-[616px]"
+            className="h-auto w-full max-w-[616px] rounded-2xl"
           />
         }
       />

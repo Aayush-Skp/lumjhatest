@@ -119,7 +119,7 @@ export default function IntegrationsPage() {
           {INTEGRATIONS.map((it) => (
             <li key={it.name}>
               <Tilt className="rounded-[10px]" max={2} scale={1.01} glare={false}>
-              <div className="flex min-h-[114px] items-center gap-5 rounded-[10px] bg-white px-4 py-3 text-[#5675FF] md:gap-0 md:px-[21px]">
+              <div className="flex min-h-[114px] items-center gap-5 rounded-[10px] bg-white px-4 py-3 text-[#5675FF] ring-1 ring-card-ring md:gap-0 md:px-[21px]">
                 <span className="flex w-16 shrink-0 items-center justify-center md:w-[127px] md:justify-start">
                   <span className="relative block max-h-16 max-w-16 md:max-h-none md:max-w-none" style={{ width: it.w, height: it.h }}>
                     <Image src={`${A}/${it.logo}`} alt={`${it.name} logo`} fill sizes="90px" className="object-cover" />

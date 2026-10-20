@@ -354,7 +354,7 @@ function PlatformTabs() {
           role="tablist"
           aria-label="Lumjha products"
           onKeyDown={onKeyDown}
-          className="relative grid w-full max-w-sm grid-cols-3 rounded-full border border-white/10 bg-white/[0.04] p-1 sm:w-auto sm:max-w-none"
+          className="relative grid w-full max-w-sm grid-cols-3 rounded-full border border-line bg-ink/[0.04] p-1 sm:w-auto sm:max-w-none"
         >
           {/* sliding active pill */}
           <span
@@ -411,7 +411,7 @@ function PlatformTabs() {
               aria-controls={`panel-${tab.id}`}
               tabIndex={active === i ? 0 : -1}
               onClick={() => select(i)}
-              className={`relative z-10 whitespace-nowrap rounded-full px-2 py-2.5 text-[13px] font-semibold transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#527DFF] sm:px-6 sm:py-2.5 sm:text-sm md:px-8 md:text-[15px] ${active === i ? "text-white" : "text-gray-400 hover:text-white"
+              className={`relative z-10 whitespace-nowrap rounded-full px-2 py-2.5 text-[13px] font-semibold transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#527DFF] sm:px-6 sm:py-2.5 sm:text-sm md:px-8 md:text-[15px] ${active === i ? "text-white" : "text-subtle hover:text-ink"
                 }`}
             >
               {tab.label}
@@ -457,7 +457,7 @@ function PlatformTabs() {
                 <h3 className="text-[24px] font-extrabold leading-[1.25] tracking-tight sm:text-3xl lg:text-[40px]">
                   {tab.heading}
                 </h3>
-                <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-gray-300 sm:mt-5 md:mx-0 md:text-base lg:mt-6 lg:text-lg">
+                <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-muted sm:mt-5 md:mx-0 md:text-base lg:mt-6 lg:text-lg">
                   {tab.body}
                 </p>
                 <div className="mt-6 flex justify-center md:justify-start lg:mt-8">
@@ -480,7 +480,7 @@ function PlatformTabs() {
             className="group flex h-6 items-center px-1"
           >
             <span
-              className={`block h-1.5 rounded-full transition-all duration-500 ${active === i ? "w-6 bg-[#527DFF]" : "w-1.5 bg-white/25 group-hover:bg-white/50"
+              className={`block h-1.5 rounded-full transition-all duration-500 ${active === i ? "w-6 bg-[#527DFF]" : "w-1.5 bg-ink/25 group-hover:bg-ink/50"
                 }`}
             />
           </button>
@@ -627,12 +627,12 @@ const COMMITMENTS = [
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-[#030816] font-sans text-white antialiased">
+    <div className="min-h-screen bg-page font-sans text-ink antialiased">
       <Navbar />
       <main id="top" className="relative overflow-x-clip">
-        <div className="pointer-events-none absolute -left-40 top-24 h-[500px] w-[300px] rounded-full bg-[#1B3AA0]/30 blur-[120px]" />
-        <div className="pointer-events-none absolute -right-40 top-[900px] h-[500px] w-[300px] rounded-full bg-[#1B3AA0]/25 blur-[120px]" />
-        <div className="pointer-events-none absolute -left-40 top-[1900px] h-[500px] w-[300px] rounded-full bg-[#1B3AA0]/20 blur-[120px]" />
+        <div className="pointer-events-none absolute -left-40 top-24 h-[500px] w-[300px] rounded-full bg-glow/30 blur-[120px]" />
+        <div className="pointer-events-none absolute -right-40 top-[900px] h-[500px] w-[300px] rounded-full bg-glow/25 blur-[120px]" />
+        <div className="pointer-events-none absolute -left-40 top-[1900px] h-[500px] w-[300px] rounded-full bg-glow/20 blur-[120px]" />
 
         {/* HERO — owns the first viewport: 100svh minus the navbar (56px, 66px on desktop) */}
         <section className="relative isolate mx-auto flex min-h-[calc(100svh-3.5rem)] w-full lg:min-h-[calc(100svh-66px)] max-w-[1440px] flex-col items-center justify-center px-4 py-12 text-center sm:px-6 md:py-20">
@@ -643,9 +643,9 @@ export default function HomePage() {
           <h1 className="max-w-5xl text-[clamp(2.25rem,6vw+1rem,5.25rem)] font-extrabold leading-[1.05] tracking-[-0.03em]">
             Never Miss a Customer.
             <br />
-            <span className="text-[#6E97FF]">Grow While You Sleep.</span>
+            <span className="text-highlight">Grow While You Sleep.</span>
           </h1>
-          <p className="mx-auto mt-6 max-w-[42rem] text-base leading-relaxed text-balance text-gray-300 sm:text-lg md:mt-8 md:text-xl">
+          <p className="mx-auto mt-6 max-w-[42rem] text-base leading-relaxed text-balance text-muted sm:text-lg md:mt-8 md:text-xl">
             Lumjha answers your customers&apos; questions, captures sales leads, and books
             appointments around the clock, on platform(s) they already use, so you can
             focus on running your business.
@@ -653,7 +653,7 @@ export default function HomePage() {
           <ContactDisclosure
             variant="dark"
             rowClassName="mt-8 flex w-full max-w-xs flex-col gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:items-center sm:justify-center sm:gap-4 md:mt-10"
-            buttonClassName="inline-flex items-center justify-center rounded-full border border-[#527DFF]/70 px-7 py-3.5 text-[15px] font-semibold text-white transition hover:bg-[#527DFF]/10 md:px-8 md:text-base"
+            buttonClassName="inline-flex items-center justify-center rounded-full border border-[#527DFF]/70 px-7 py-3.5 text-[15px] font-semibold text-ink transition hover:bg-[#527DFF]/10 md:px-8 md:text-base"
           >
             <BlueButton large>Get Started Free</BlueButton>
           </ContactDisclosure>
@@ -786,10 +786,10 @@ export default function HomePage() {
               <li key={c}>
                 {/* wide, short rows → gentle angle so the far edge doesn't swing */}
                 <Tilt className="flex items-stretch gap-3 rounded-lg" max={3} scale={1.01} glare={false}>
-                <span className="flex w-11 shrink-0 items-center justify-center rounded-lg bg-white text-[15px] font-bold text-[#3E63F2]">
+                <span className="flex w-11 shrink-0 items-center justify-center rounded-lg bg-white text-[15px] font-bold text-[#3E63F2] ring-1 ring-card-ring">
                   {i + 1}.
                 </span>
-                <span className="flex-1 rounded-lg bg-white px-4 py-3 text-[14px] font-medium text-[#3E63F2] md:text-[15px]">
+                <span className="flex-1 rounded-lg bg-white px-4 py-3 ring-1 ring-card-ring text-[14px] font-medium text-[#3E63F2] md:text-[15px]">
                   {c}
                 </span>
                 </Tilt>

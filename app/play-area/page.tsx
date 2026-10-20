@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 /** Live sandbox agent embedded in the demo window (the app allows framing). */
-const SANDBOX_CHAT_URL = "https://app.lumjha.ai/chat/mohit?sandbox";
+const SANDBOX_CHAT_URL = "https://stg.app.lumjha.ai/chat/revketer-assistant?sandbox";
 
 const A = "/assets/play-area";
 
@@ -50,12 +50,12 @@ const WHY = [
 /** Soft blue radial pool from the Figma "Ambient glow" ellipses. */
 function Glow({ className }: { className: string }) {
   // eslint-disable-next-line @next/next/no-img-element -- decorative SVG stretched to its box
-  return <img src="/assets/shared/ambient-glow.svg" alt="" aria-hidden className={`pointer-events-none absolute -z-10 max-w-none ${className}`} />;
+  return <img src="/assets/shared/ambient-glow.svg" alt="" aria-hidden className={`pointer-events-none absolute -z-10 max-w-none light:opacity-50 ${className}`} />;
 }
 
 export default function PlayAreaPage() {
   return (
-    <div className="min-h-screen bg-[#090a0f] font-sans text-white antialiased">
+    <div className="min-h-screen bg-page-deep font-sans text-ink antialiased">
       <Navbar />
       <main id="top" className="relative isolate overflow-x-clip">
         {/* HERO + live demo */}
@@ -64,16 +64,16 @@ export default function PlayAreaPage() {
           <Glow className="-right-[13%] top-[16%] h-[622px] w-[651px]" />
           <Glow className="left-[2%] top-[9%] h-[423px] w-[89%]" />
 
-          <h1 className="font-heading text-[28px] font-bold leading-tight tracking-tight text-white sm:text-4xl md:text-[40px] md:leading-[72px]">
+          <h1 className="font-heading text-[28px] font-bold leading-tight tracking-tight text-ink sm:text-4xl md:text-[40px] md:leading-[72px]">
             Test-drive Lumjha in real time.
           </h1>
-          <p className="mx-auto mt-3 max-w-[1024px] text-lg leading-relaxed text-balance text-white sm:text-xl md:mt-3.5 md:text-[28px] md:leading-9">
+          <p className="mx-auto mt-3 max-w-[1024px] text-lg leading-relaxed text-balance text-ink sm:text-xl md:mt-3.5 md:text-[28px] md:leading-9">
             Try our AI-powered customer agent. Ask a question, explore your knowledge, and see how
             Lumjha delivers instant, accurate and helpful answers.
           </p>
 
           {/* TODO(backend): email capture for the demo isn't wired to anything yet */}
-          <label className="mx-auto mt-10 flex h-8 w-full max-w-[317px] items-center gap-2 rounded-full bg-white px-3 md:mt-12">
+          <label className="mx-auto mt-10 flex h-8 w-full max-w-[317px] items-center gap-2 rounded-full bg-white px-3 ring-1 ring-card-ring md:mt-12">
             <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0 text-[#49454F]" fill="none" stroke="currentColor" strokeWidth={2.2} aria-hidden>
               <circle cx="11" cy="11" r="7" />
               <path d="m20 20-3.5-3.5" strokeLinecap="round" />
@@ -88,7 +88,7 @@ export default function PlayAreaPage() {
             />
           </label>
 
-          <div className="mx-auto mt-10 w-full max-w-[1058px] overflow-hidden rounded-2xl border border-white/10 bg-[#0B0D14] shadow-[0_30px_90px_-30px_rgba(0,121,242,0.55)] md:mt-14">
+          <div className="mx-auto mt-10 w-full max-w-[1058px] overflow-hidden rounded-2xl border border-line bg-menu shadow-[0_30px_90px_-30px_rgba(0,121,242,0.55)] md:mt-14">
             <iframe
               src={SANDBOX_CHAT_URL}
               title="Lumjha AI Chat Agent — live demo"
@@ -129,14 +129,14 @@ export default function PlayAreaPage() {
         </div>
 
         {/* BE WHEREVER — black band lit by the Figma wave shader */}
-        <section className="relative isolate overflow-hidden bg-black px-4 py-16 text-center sm:px-6 md:min-h-[373px] md:py-10">
+        <section className="relative isolate overflow-hidden bg-band px-4 py-16 text-center sm:px-6 md:min-h-[373px] md:py-10">
           <div aria-hidden className="absolute inset-0 -z-10">
             <WaveGlow x={61.99686050415039} y={50} radius={65.49695587158203} angle={26.073211669921875} />
           </div>
-          <h2 className="font-heading text-[28px] font-bold leading-tight tracking-tight text-white sm:text-4xl md:text-[40px] md:leading-[72px]">
+          <h2 className="font-heading text-[28px] font-bold leading-tight tracking-tight text-ink sm:text-4xl md:text-[40px] md:leading-[72px]">
             Be Wherever Your Customers Are
           </h2>
-          <p className="mx-auto mt-3 max-w-[1022px] text-base leading-relaxed text-balance text-white sm:text-lg md:mt-0 md:text-xl md:leading-9">
+          <p className="mx-auto mt-3 max-w-[1022px] text-base leading-relaxed text-balance text-ink sm:text-lg md:mt-0 md:text-xl md:leading-9">
             Ask questions, test instant responses, and see how our AI processes information right here
             in your browser. Want to upload your own business data? Sign in for full access free for 14
             days, no credit card required.
