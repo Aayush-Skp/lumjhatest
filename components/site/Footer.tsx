@@ -11,10 +11,11 @@ const QUICK_LINKS = [
 ];
 
 const PLATFORMS = [
-  { label: "Chatbot", href: "/#platform" },
-  { label: "Site Search", href: "/#platform" },
-  { label: "Policy Vault", href: "/#platform" },
-  { label: "Integrations", href: "/#channels" },
+  { label: "Chatbot", href: "/chat-agent" },
+  { label: "Site Search", href: "/site-search" },
+  { label: "Policy Vault", href: "/policy-vault" },
+  { label: "Integrations", href: "/integrations" },
+  { label: "Play Area", href: "/play-area" },
 ];
 
 const LEGAL = [

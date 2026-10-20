@@ -16,22 +16,35 @@ lumjha-website/
 ├── app/
 │   ├── layout.tsx      ← root layout (Inter fonts, dark theme default)
 │   ├── page.tsx        ← main landing page (Figma design)
+│   ├── play-area/      ← live sandbox demo (iframes app.lumjha.ai/chat/…?sandbox)
+│   ├── chat-agent/     ← Solutions → AI Chat Agent
+│   ├── site-search/    ← Solutions → Site Search
+│   ├── policy-vault/   ← Solutions → Policy Vault
+│   ├── integrations/   ← Integration page
+│   ├── blogs/          ← placeholder until the blog is designed
 │   ├── privacy/page.tsx← Privacy Policy (content copied from original)
 │   ├── terms/page.tsx  ← Terms of Service (content copied from original)
 │   └── globals.css     ← design tokens + base utilities + .legal-prose
 ├── components/
 │   ├── site/
-│   │   ├── Navbar.tsx    ← shared navbar (prefix prop for legal pages)
+│   │   ├── Navbar.tsx    ← Play Area · Solutions ▾ · Integration · Blogs
 │   │   ├── Footer.tsx    ← shared footer (Privacy/Terms wired)
 │   │   ├── FooterWordmark.tsx ← outlined "Lumjha" + cursor torch (footer copy of the showcase piece)
+│   │   ├── ProductSections.tsx ← product-page template: hero, intro split, steps, benefits, FAQ
+│   │   ├── SectionHeader.tsx   ← shared section title + SECTION_Y / SECTION_HEAD_GAP rhythm
+│   │   ├── CtaPanel.tsx        ← "Ready to Scale" blue panel (every page)
+│   │   ├── ChannelReels.tsx    ← animated channel-logo slot reels
+│   │   ├── WaveGlow.tsx        ← canvas port of Figma's "Glowing wave" shader
 │   │   └── LegalPage.tsx ← Figma-styled shell for legal pages
 │   ├── showcase/
 │   │   └── LumjhaSpotlight.tsx ← preserved hover-torch wordmark (unused, for later)
 │   └── ui/
+│       ├── BlueButton.tsx      ← pill CTA (solid / outline / white)
 │       └── ChannelIcons.tsx    ← brand SVG channel logos
 └── public/
     ├── logo.png
-    └── assets/ ← site-search.svg, policy-vault.svg, bundle.svg
+    └── assets/ ← per-page Figma exports (play-area/, chat-agent/, site-search/,
+                  policy-vault/, integration/, shared/) + add-on icons, cta-pattern.png
 ```
 
 ## 3. Rules

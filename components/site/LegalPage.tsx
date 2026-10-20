@@ -15,7 +15,7 @@ export default function LegalPage({
 }) {
   return (
     <div className="min-h-screen bg-[#030816] font-sans text-white antialiased">
-      <Navbar prefix="/" />
+      <Navbar />
       <main id="top" className="relative overflow-x-clip">
         <div className="pointer-events-none absolute -left-40 top-24 h-[400px] w-[300px] rounded-full bg-[#1B3AA0]/30 blur-[120px]" />
         <div className="mx-auto max-w-[900px] px-4 pb-20 pt-12 sm:px-6 md:pt-16">
