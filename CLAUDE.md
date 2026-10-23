@@ -16,7 +16,7 @@ lumjha-website/
 ├── app/
 │   ├── layout.tsx      ← root layout (Inter fonts, dark theme default)
 │   ├── page.tsx        ← main landing page (Figma design)
-│   ├── play-area/      ← live sandbox demo (iframes app.lumjha.ai/chat/…?sandbox)
+│   ├── play-area/      ← demo page (blank white placeholder where the widget will go)
 │   ├── chat-agent/     ← Solutions → AI Chat Agent
 │   ├── site-search/    ← Solutions → Site Search
 │   ├── policy-vault/   ← Solutions → Policy Vault

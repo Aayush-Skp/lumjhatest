@@ -12,8 +12,8 @@ export const metadata: Metadata = {
     "Test-drive Lumjha in real time. Ask a question and see how Lumjha delivers instant, accurate and helpful answers.",
 };
 
-/** Live sandbox agent embedded in the demo window (the app allows framing). */
-const SANDBOX_CHAT_URL = "https://stg.app.lumjha.ai/chat/revketer-assistant?sandbox";
+/** Email capture above the demo — hidden until it's wired to a backend. */
+const SHOW_EMAIL_CAPTURE = false;
 
 const A = "/assets/play-area";
 
@@ -73,6 +73,7 @@ export default function PlayAreaPage() {
           </p>
 
           {/* TODO(backend): email capture for the demo isn't wired to anything yet */}
+          {SHOW_EMAIL_CAPTURE && (
           <label className="mx-auto mt-10 flex h-8 w-full max-w-[317px] items-center gap-2 rounded-full bg-white px-3 ring-1 ring-card-ring md:mt-12">
             <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0 text-[#49454F]" fill="none" stroke="currentColor" strokeWidth={2.2} aria-hidden>
               <circle cx="11" cy="11" r="7" />
@@ -87,16 +88,13 @@ export default function PlayAreaPage() {
               className="w-full bg-transparent text-[15px] text-[#1D1B20] outline-none placeholder:text-[#ABABAB]"
             />
           </label>
+          )}
 
-          <div className="mx-auto mt-10 w-full max-w-[1058px] overflow-hidden rounded-2xl border border-line bg-menu shadow-[0_30px_90px_-30px_rgba(0,121,242,0.55)] md:mt-14">
-            <iframe
-              src={SANDBOX_CHAT_URL}
-              title="Lumjha AI Chat Agent — live demo"
-              loading="lazy"
-              allow="microphone; clipboard-write"
-              className="block h-[480px] w-full md:h-[556px]"
-            />
-          </div>
+          {/* TODO: live demo goes here — blank placeholder until the widget is ready */}
+          <div
+            aria-hidden
+            className="mx-auto mt-10 h-[480px] w-full max-w-[1058px] rounded-2xl border border-line bg-white shadow-[0_30px_90px_-30px_rgba(0,121,242,0.55)] md:mt-14 md:h-[556px]"
+          />
         </section>
 
         {/* HOW IT WORKS */}
