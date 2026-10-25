@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Tilt from "@/components/ui/Tilt";
 
 /* ============================================================
    Pricing plans — billing switch + four plan cards (Figma "Pricing")
@@ -124,11 +123,11 @@ const PLANS: Plan[] = [
 
 /* Figma check-circle (public/assets/included.svg), used as a mask so it
    takes the text colour in both themes. */
-function Included() {
+export function Included({ className = "mt-[3px] text-[#E3EEFB] light:text-[#527DFF]" }: { className?: string }) {
   return (
     <span
       aria-hidden
-      className="mt-[3px] size-[14px] shrink-0 bg-current text-[#E3EEFB] [mask:url(/assets/included.svg)_center/contain_no-repeat] light:text-[#527DFF]"
+      className={`size-[14px] shrink-0 bg-current [mask:url(/assets/included.svg)_center/contain_no-repeat] ${className}`}
     />
   );
 }
@@ -236,12 +235,10 @@ export default function PricingPlans({ className = "" }: { className?: string })
     <div className={className}>
       <BillingSwitch value={billing} onChange={setBilling} />
       <ul className="mx-auto mt-9 grid max-w-[1160px] grid-cols-1 gap-x-[18px] gap-y-8 sm:grid-cols-2 xl:grid-cols-4">
+        {/* no Tilt here — the cards are too tall for the effect to read well */}
         {PLANS.map((p) => (
           <li key={p.name} className="flex">
-            {/* tall cards → gentle angle, no glare (as on the other plain cards) */}
-            <Tilt className="flex w-full rounded-[18px]" max={3} scale={1.01} glare={false}>
-              <PlanCard plan={p} billing={billing} />
-            </Tilt>
+            <PlanCard plan={p} billing={billing} />
           </li>
         ))}
       </ul>

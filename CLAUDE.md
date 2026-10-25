@@ -17,7 +17,7 @@ lumjha-website/
 │   ├── layout.tsx      ← root layout (Inter fonts, dark theme default)
 │   ├── page.tsx        ← main landing page (Figma design)
 │   ├── play-area/page.tsx ← Play Area (test-drive page; demo panel is a blank placeholder for now)
-│   ├── pricing/page.tsx ← Pricing page (plans live here, not on the landing page)
+│   ├── pricing/page.tsx ← Pricing page: plans, AI engine flow, conversation rules, usage alerts, API, comparison matrix, FAQ
 │   ├── privacy/page.tsx← Privacy Policy (content copied from original)
 │   ├── terms/page.tsx  ← Terms of Service (content copied from original)
 │   └── globals.css     ← design tokens + base utilities + .legal-prose
@@ -34,7 +34,7 @@ lumjha-website/
 │   ├── showcase/
 │   │   └── LumjhaSpotlight.tsx ← preserved hover-torch wordmark (unused, for later)
 │   └── ui/
-│       └── ChannelIcons.tsx    ← brand SVG channel logos
+│       └── ChannelIcons.tsx    ← brand SVG channel logos (incl. Messenger, Viber)
 └── public/
     ├── logo.png
     └── assets/ ← site-search.svg, policy-vault.svg, bundle.svg, included.svg (plan check icon)

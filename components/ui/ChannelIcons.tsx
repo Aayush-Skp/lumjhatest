@@ -71,6 +71,24 @@ export function ShopifyIcon(props: IconProps) {
   );
 }
 
+export function MessengerIcon(props: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden {...props}>
+      <path d="M12 2C6.36 2 2 6.13 2 11.7c0 2.91 1.19 5.43 3.14 7.17.16.15.26.35.27.57l.05 1.78a.8.8 0 0 0 1.12.71l1.98-.87a.8.8 0 0 1 .53-.04c.91.25 1.88.38 2.91.38 5.64 0 10-4.13 10-9.7S17.64 2 12 2Zm6 7.46-2.94 4.66a1.5 1.5 0 0 1-2.17.4l-2.34-1.75a.6.6 0 0 0-.72 0l-3.16 2.4c-.42.32-.97-.18-.69-.63l2.94-4.66a1.5 1.5 0 0 1 2.17-.4l2.34 1.75a.6.6 0 0 0 .72 0l3.16-2.4c.42-.32.97.18.69.63Z" />
+    </svg>
+  );
+}
+
+export function ViberIcon(props: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden {...props}>
+      <path d="M11.5 2.5c4.8 0 8.5 1.4 9 6.2.3 2.6.2 4.6-.4 6.6-1 3.3-4.3 4.2-7.6 4.2l-3 2.5v-2.8C5.6 18.4 3.5 16.5 3 13.2c-.3-2-.3-3.6 0-5.4.7-4.1 3.9-5.3 8.5-5.3Z" />
+      <path d="M9 7.5c.5-.3 1-.2 1.2.3l.6 1.3c.2.4 0 .8-.3 1.1l-.3.3c.4 1 1.2 1.9 2.3 2.4l.3-.3c.3-.3.8-.4 1.1-.2l1.3.7c.4.2.6.8.3 1.2-.5.8-1.3 1.1-2.2.8-2.2-.8-3.9-2.5-4.7-4.7-.3-.9 0-1.6.4-1.9Z" fill="currentColor" stroke="none" />
+      <path d="M12.5 6.2a4 4 0 0 1 3.6 3.6M12.5 4.4a5.8 5.8 0 0 1 5.4 5.4" />
+    </svg>
+  );
+}
+
 export const CHANNEL_ICON_MAP = {
   web: WebsiteIcon,
   whatsapp: WhatsAppIcon,
