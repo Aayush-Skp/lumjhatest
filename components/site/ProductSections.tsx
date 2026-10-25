@@ -71,9 +71,11 @@ export function IntroSplit({
   media: ReactNode;
 }) {
   return (
-    <section
-      className={`mx-auto grid w-full max-w-[1440px] items-center gap-10 px-4 sm:px-6 lg:grid-cols-[minmax(0,560px)_minmax(0,1fr)] lg:gap-14 lg:pl-[max(1.5rem,calc(50%-578px))] lg:pr-0 ${SECTION_Y}`}
-    >
+    <section className={`${CONTAINER} ${SECTION_Y}`}>
+      {/* copy starts on the 1160px content column's left edge (like every other
+          section); the artwork runs on to the section's right edge.
+          `100%` here is the section's content width, so the offset is exact. */}
+      <div className="mx-auto grid max-w-[1160px] items-center gap-10 lg:ml-[max(0px,calc((100%-1160px)/2))] lg:mr-0 lg:max-w-none lg:grid-cols-[minmax(0,560px)_minmax(0,1fr)] lg:gap-14">
       <div className="text-center lg:text-left">
         <h2 className="font-heading text-[28px] font-bold leading-[1.4] tracking-tight text-ink sm:text-4xl md:text-[40px] md:leading-[72px]">
           {heading}
@@ -83,6 +85,7 @@ export function IntroSplit({
         </p>
       </div>
       <div className="flex justify-center lg:justify-end">{media}</div>
+      </div>
     </section>
   );
 }
