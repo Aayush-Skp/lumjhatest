@@ -6,6 +6,7 @@ import Footer from "@/components/site/Footer";
 import CtaPanel from "@/components/site/CtaPanel";
 import WaveLines from "@/components/site/WaveLines";
 import PricingPlans, { Included } from "@/components/site/PricingPlans";
+import PlanMatrix, { OnlyOnLumjha } from "@/components/site/PlanMatrix";
 import SectionHeader, { SECTION_HEAD_GAP, SECTION_Y } from "@/components/site/SectionHeader";
 import Tilt from "@/components/ui/Tilt";
 import {
@@ -59,13 +60,23 @@ function FlowArrow() {
   );
 }
 
+/* ---------- shared card look ----------
+   Dark: navy panels with a hairline edge (Figma). Light: white cards. */
+
+const CARD =
+  "rounded-2xl border border-[#1F3156] bg-[#0D1934] light:border-[#D7E3F5] light:bg-white light:shadow-[0_18px_40px_-28px_rgba(15,23,42,0.25)]";
+/* recessed panel inside a card (mock UIs) */
+const INSET = "rounded-xl border border-[#2A3F6B] bg-[#081229] light:border-[#D7E3F5] light:bg-[#F5F8FE]";
+const EYEBROW = "font-mono text-[11px] font-medium uppercase tracking-[0.04em] text-[#6E8BFF] light:text-[#3E63F2]";
+const MOCK_LABEL = "font-mono text-[9.5px] uppercase tracking-[0.06em] text-subtle";
+
 /* ---------- what counts as a conversation ---------- */
 
 const RULES = [
-  { title: "One thread with at least one AI reply = 1 conversation", body: "On any channel: website, WhatsApp, Instagram and the rest." },
-  { title: "It stays one conversation until 24 hours of silence.", body: "The same as WhatsApp's 24-hour customer service window." },
-  { title: "Fair use", body: "Very long threads (50+ AI replies) count as a second conversation." },
-  { title: "Human-only threads are free.", body: "If your team answers without the AI, it doesn't count." },
+  { title: "One thread with at least one AI reply = 1 conversation.", body: "On any channel: website, WhatsApp, Instagram and the rest." },
+  { title: "It stays one conversation until 24 hours of silence.", body: "The same as WhatsApp’s 24-hour customer-service window." },
+  { title: "Fair use:", body: "more than 30 AI replies in one thread counts as a second conversation." },
+  { title: "Human-only threads are free.", body: "If your team answers without the AI, it doesn’t count." },
 ];
 
 type ChatLine = { from: "visitor" | "ai"; text: string } | { from: "gap"; text: string };
@@ -73,45 +84,124 @@ type ChatLine = { from: "visitor" | "ai"; text: string } | { from: "gap"; text: 
 const EXAMPLE_CHAT: ChatLine[] = [
   { from: "visitor", text: "Do you do teeth whitening on Saturdays?" },
   { from: "ai", text: "Yes, Saturdays 9am–1pm. Want me to book a slot?" },
-  { from: "visitor", text: "Yes please, next Saturday morning." },
-  { from: "ai", text: "Done ✓ Saturday 10:30 is booked. What's the best email for the confirmation?" },
-  { from: "gap", text: "· 4 hours later · same thread ·" },
+  { from: "visitor", text: "Yes please, this Saturday. I’m Maya." },
+  { from: "ai", text: "Done ✓ Saturday 10:00 booked. What’s the best email for the confirmation?" },
+  { from: "gap", text: "··· 3 hours later, same thread ···" },
   { from: "visitor", text: "Can I bring my daughter too?" },
-  { from: "ai", text: "Of course. I've added a second slot at 10:30." },
+  { from: "ai", text: "Of course. I’ve added a second slot at 10:30." },
 ];
 
-/* white cards fading into a soft blue sheen, as in the Figma */
-const SHEEN_CARD =
-  "rounded-2xl bg-[linear-gradient(135deg,#FFFFFF_45%,#DDE7FF_100%)] text-[#0B1526] shadow-[0_24px_60px_-28px_rgba(82,125,255,0.6)] light:ring-1 light:ring-[#D7E3F5]";
+/* ---------- every channel is just the start ---------- */
 
-/* ---------- never miss a lead ---------- */
+const TODAYS_LEADS = [
+  { who: "Sam R. · booked Sat 10:00", channel: "WhatsApp" },
+  { who: "Leo K. · asked for a quote", channel: "Instagram" },
+  { who: "Ana P. · callback request", channel: "Website" },
+];
+
+const WEEKLY_GAPS = [
+  { q: "“Do you ship to Canada?”", where: "chat · 14" },
+  { q: "“gift card balance”", where: "search · 9" },
+  { q: "“pet policy deposit”", where: "vault · 6" },
+];
+
+/* ---------- the essentials ---------- */
+
+/* Line icons in the 24×24 Lucide style; each entry is one stroked path. */
+const ESSENTIAL_ICONS = {
+  sun: ["M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0", "M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"],
+  shield: [
+    "M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z",
+    "m9 12 2 2 4-4",
+  ],
+  list: ["M6 3h12a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z", "M9 8h6M9 12h6M9 16h4"],
+  chat: ["M7.9 20A9 9 0 1 0 4 16.1L2 22Z"],
+  code: ["m16 18 6-6-6-6", "m8 6-6 6 6 6", "M14.5 4l-5 16"],
+  share: [
+    "M21 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M9 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0M21 19a3 3 0 1 1-6 0 3 3 0 0 1 6 0",
+    "m8.6 13.5 6.8 4M15.4 6.5l-6.8 4",
+  ],
+} as const;
+
+const ESSENTIALS: { icon: keyof typeof ESSENTIAL_ICONS; title: string; body: string }[] = [
+  {
+    icon: "sun",
+    title: "Live in minutes",
+    body: "Paste your URL: Lumjha auto-crawls your site and builds the knowledge base. Add PDFs, DOCX, CSV, Google Drive or Shopify as Knowledge Documents.",
+  },
+  { icon: "shield", title: "Your brand, safely", body: "Your logo, colors, voice, tone and messaging, with chat safety moderation and controls always on." },
+  { icon: "list", title: "Leads & bookings", body: "Form-less lead capture plus multiple forms, full chat history and Google Calendar booking." },
+  { icon: "chat", title: "Human takeover, any channel", body: "Step into any conversation on the website, WhatsApp, Instagram, Messenger, Telegram or Viber from one inbox." },
+  { icon: "code", title: "API", body: "Ingest sources and export leads, conversations and analytics programmatically." },
+  { icon: "share", title: "MCP connector", body: "Connect ChatGPT, Claude and your own agents to Lumjha with scoped, read-only-by-default access." },
+];
+
+function EssentialIcon({ name }: { name: keyof typeof ESSENTIAL_ICONS }) {
+  return (
+    <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      {ESSENTIAL_ICONS[name].map((d) => (
+        <path key={d} d={d} />
+      ))}
+    </svg>
+  );
+}
+
+/* ---------- grow without jumping tiers ---------- */
+
+const TOP_UPS = [
+  { plan: "Starter", price: "$25", amount: "250 conversations" },
+  { plan: "Growth", price: "$25", amount: "500 conversations" },
+  { plan: "Pro", price: "$45", amount: "1,000 conversations" },
+];
+
+const ADD_ONS = [
+  { price: "+$49", title: "Policy Vault (PIN-protected)", body: "Starter & Growth. Included on Pro." },
+  { price: "+$25", title: "Site Search", body: "Starter only. Included on Growth and above." },
+  { price: "$99", title: "Agency Kit (on Pro)", body: "Full white-label (widget, dashboard, custom domain), client sub-accounts, per-client usage reports, multi-client API/MCP keys." },
+  { price: "$19", title: "Remove badge", body: "Remove “Powered by Lumjha” on Starter." },
+  { price: "$15", title: "Extra agent", body: "Another AI agent for a new brand, site or location." },
+  { price: "$10", title: "Extra seat", body: "Another teammate in your workspace." },
+  { price: "$15", title: "Extra WhatsApp number / IG account", body: "Connect another number or account to your agent." },
+  { price: "$19", title: "+5,000 web pages", body: "More crawl room for large sites, on any paid plan." },
+];
+
+/* ---------- never goes silent ---------- */
 
 const USAGE_ALERTS: { mark: string; text: string; cap?: boolean }[] = [
   { mark: "75%", text: "Email + in-app heads-up with a usage forecast." },
+  { mark: "90%", text: "Second alert, plus a one-click upgrade suggestion if it’s cheaper than top-ups." },
   { mark: "100%", text: "An automatic top-up pack is added, up to your spending cap. Upgrade in the same cycle and the top-ups are forgiven." },
-  { mark: "90%", text: "Second alert, plus a one-click upgrade suggestion if it's cheaper than top-ups." },
   { mark: "Cap", text: "The agent switches to “leave your details” mode, so leads are still captured, never lost.", cap: true },
 ];
 
-/* ---------- developers ---------- */
+/* ---------- API + MCP ---------- */
 
-const CODE_SAMPLE: { comment: string; lines: { text: string; tone: "cmd" | "str" }[] }[] = [
-  {
-    comment: "# Ask your AI assistant about today's leads (Claude, ChatGPT, Cursor)",
-    lines: [{ text: "> list_leads({ since: \"today\" })", tone: "cmd" }],
-  },
-  {
-    comment: "# Teach your agent a new document via MCP (Growth and up)",
-    lines: [
-      { text: "> add_document_from_url({", tone: "cmd" },
-      { text: "    url: \"https://yoursite.com/menu.pdf\" })", tone: "str" },
-    ],
-  },
-  {
-    comment: "# Export leads to any CRM",
-    lines: [{ text: "> list_leads({ format: \"csv\" })  →  leads.csv", tone: "cmd" }],
-  },
+const DEV_CHIPS = ["REST API", "MCP connector", "Webhooks", "OAuth scopes", "Vault over MCP (Pro)"];
+
+/** Public developer docs — the button stays hidden until this is set. */
+const DEVELOPER_DOCS_URL: string | null = null;
+
+/* Each line is a list of [tone, text] segments. */
+type Tone = "comment" | "cmd" | "str" | "plain";
+const CODE: [Tone, string][][] = [
+  [["comment", "# Ask your AI assistant about today’s leads (illustrative)"]],
+  [["cmd", "mcp add lumjha "], ["str", "https://<your-lumjha-mcp-endpoint>"]],
+  [],
+  [["comment", "# Ingest a new source via API (illustrative)"]],
+  [["cmd", "POST /v1/agents/{agent_id}/sources"]],
+  [["plain", "{ "], ["str", "\"type\""], ["plain", ": "], ["str", "\"url\""], ["plain", ", "], ["str", "\"url\""], ["plain", ": "], ["str", "\"https://example.com/policies\""], ["plain", ","]],
+  [["plain", "  "], ["str", "\"recrawl\""], ["plain", ": "], ["str", "\"weekly\""], ["plain", " }"]],
+  [],
+  [["comment", "# Export leads with chat history"]],
+  [["cmd", "GET /v1/leads?include=conversations&since=2026-10-01"]],
 ];
+
+const CODE_TONE: Record<Tone, string> = {
+  comment: "text-[#6B7A99]",
+  cmd: "text-[#7FA3FF]",
+  str: "text-[#F2C94C]",
+  plain: "text-[#C9D3E6]",
+};
 
 /* ---------- feature & pricing matrix ---------- */
 
@@ -207,7 +297,7 @@ const FAQS = [
 
 export default function PricingPage() {
   return (
-    <div className="min-h-screen bg-[#030816] font-sans text-white antialiased light:bg-[#F5F7FC] light:text-[#0B1526]">
+    <div className="min-h-screen bg-page-deep font-sans text-ink antialiased">
       <Navbar />
       <main id="top" className="relative overflow-x-clip">
         <div className="pointer-events-none absolute -left-40 top-56 h-[500px] w-[300px] rounded-full bg-[#1B3AA0]/30 blur-[120px] light:bg-[#527DFF]/10" />
@@ -291,109 +381,337 @@ export default function PricingPage() {
 
         {/* WHAT COUNTS AS A CONVERSATION — rules + worked example, thin lines drifting behind */}
         <section id="conversations" className={`relative isolate mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
-          <div aria-hidden className="pointer-events-none absolute inset-x-0 top-1/4 -z-10 h-1/2 [mask-image:linear-gradient(to_bottom,transparent,#000_25%,#000_75%,transparent)]">
+          <div aria-hidden className="pointer-events-none absolute inset-x-0 top-[10%] -z-10 h-1/2 [mask-image:linear-gradient(to_bottom,transparent,#000_25%,#000_75%,transparent)]">
             <WaveLines />
           </div>
-          <SectionHeader title="What counts as a conversation?" subtitle="Pay for conversations, not per message." />
-          <div className={`mx-auto grid max-w-[1160px] grid-cols-1 items-start gap-6 lg:grid-cols-[589fr_534fr] lg:gap-10 ${SECTION_HEAD_GAP}`}>
-            <Tilt className="rounded-2xl" max={4} scale={1.01} glare={false}>
-              <div className={`${SHEEN_CARD} p-6 md:p-7`}>
-                <h3 className="text-lg font-bold text-[#3E63F2] md:text-xl">Four simple rules</h3>
-                <ol className="mt-5 space-y-4">
-                  {RULES.map((r, i) => (
-                    <li key={r.title} className="flex gap-3.5">
-                      <span className="flex h-[29px] w-[29px] shrink-0 items-center justify-center rounded-md bg-[#3E63F2] text-[13px] font-bold text-white">
-                        {i + 1}
-                      </span>
-                      <span>
-                        <span className="block text-[14px] font-semibold text-[#3E63F2]">{r.title}</span>
-                        <span className="mt-0.5 block text-[13px] text-[#527DFF]">{r.body}</span>
+          <SectionHeader
+            title="What counts as a conversation?"
+            subtitle={
+              <>
+                You pay for conversations your AI actually has, not for every message, and never for seats.{" "}
+                Long, helpful chats that turn into leads don’t cost you extra.
+              </>
+            }
+          />
+          <div className={`mx-auto grid max-w-[1048px] grid-cols-1 gap-6 lg:grid-cols-2 ${SECTION_HEAD_GAP}`}>
+            <div className={`${CARD} p-5 sm:p-6`}>
+              <h3 className="text-lg font-bold text-ink">Four simple rules</h3>
+              <ol className="mt-5 space-y-5">
+                {RULES.map((r, i) => (
+                  <li key={r.title} className="flex gap-3.5">
+                    <span className="flex h-[26px] w-[26px] shrink-0 items-center justify-center rounded-md border border-[#3A5795] bg-[#132550] text-[12px] font-semibold text-white light:border-transparent light:bg-[#3E63F2]">
+                      {i + 1}
+                    </span>
+                    <p className="text-[13.5px] leading-relaxed text-muted">
+                      <strong className="font-semibold text-ink">{r.title}</strong> {r.body}
+                    </p>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            <div className={`${CARD} p-5 sm:p-6`}>
+              <h3 className="text-lg font-bold text-ink">Example</h3>
+              <ul className="mt-4 space-y-3 text-[13px] leading-snug">
+                {EXAMPLE_CHAT.map((line) =>
+                  line.from === "gap" ? (
+                    <li key={line.text} className="text-center font-mono text-[10.5px] text-subtle">
+                      {line.text}
+                    </li>
+                  ) : (
+                    <li key={line.text} className={`flex ${line.from === "visitor" ? "justify-end" : "justify-start"}`}>
+                      <span
+                        className={`max-w-[85%] rounded-lg px-3.5 py-2.5 ${
+                          line.from === "visitor"
+                            ? "bg-[#1E3160] text-white light:bg-[#527DFF]"
+                            : "border border-[#2A3F6B] bg-[#0A1530] text-ink light:border-[#D7E3F5] light:bg-[#F5F8FE]"
+                        }`}
+                      >
+                        {line.text}
                       </span>
                     </li>
-                  ))}
-                </ol>
-              </div>
-            </Tilt>
-
-            <Tilt className="rounded-2xl" max={4} scale={1.01} glare={false}>
-              <div className={`${SHEEN_CARD} p-6 md:p-7`}>
-                <h3 className="text-lg font-bold text-[#3E63F2] md:text-xl">Example</h3>
-                <ul className="mt-3 space-y-3 text-[13px] leading-snug">
-                  {EXAMPLE_CHAT.map((line) =>
-                    line.from === "gap" ? (
-                      <li key={line.text} className="text-center font-mono text-[11px] text-slate-500">
-                        {line.text}
-                      </li>
-                    ) : (
-                      <li key={line.text} className={`flex ${line.from === "visitor" ? "justify-end" : "justify-start"}`}>
-                        <span
-                          className={`max-w-[85%] rounded-lg px-3.5 py-2.5 text-white ${
-                            line.from === "visitor" ? "bg-[#2BB3F0]" : "bg-[#4D6280]"
-                          }`}
-                        >
-                          {line.text}
-                        </span>
-                      </li>
-                    ),
-                  )}
-                </ul>
-                <p className="mt-3 rounded-lg bg-[#1ED7A0] px-3.5 py-3 text-[13px] text-[#06281D]">
-                  <strong>= 1 AI conversation</strong> · 1 lead captured · 2 bookings, regardless of length.
-                </p>
-              </div>
-            </Tilt>
+                  ),
+                )}
+              </ul>
+              <p className="mt-4 rounded-lg border border-[#2BD4A4] bg-[#0E2A33] px-3.5 py-3 text-[13px] text-ink/90 light:border-[#1ED7A0] light:bg-[#E7FBF4] light:text-[#06281D]">
+                <strong className="font-semibold">= 1 AI conversation</strong> · 1 lead captured · 2 bookings. Illustrative example.
+              </p>
+            </div>
           </div>
         </section>
 
-        {/* NEVER MISS A LEAD — usage alerts */}
-        <section id="usage" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
-          <SectionHeader title="Never Miss A Lead" subtitle="Smart cap protection keeps capturing details." />
-          <ul className={`mx-auto grid max-w-[1160px] grid-cols-1 gap-4 md:grid-cols-2 md:gap-x-9 md:gap-y-8 ${SECTION_HEAD_GAP}`}>
-            {USAGE_ALERTS.map((u) => (
-              <li key={u.mark}>
-                {/* wide, short rows → gentle angle, as on the commitments list */}
-                <Tilt className="rounded-lg" max={3} scale={1.01} glare={false}>
-                  <div className="flex items-center gap-4 rounded-lg bg-[linear-gradient(90deg,#FFFFFF_35%,#DDE7FF_100%)] px-4 py-4 light:ring-1 light:ring-[#D7E3F5]">
-                    <span
-                      className={`flex h-[38px] w-16 shrink-0 items-center justify-center rounded-md text-[15px] font-bold ${
-                        u.cap ? "bg-[#0E6B2C] text-[#7CF0A4]" : "bg-[#527DFF] text-white"
-                      }`}
-                    >
-                      {u.mark}
+        {/* EVERY CHANNEL IS JUST THE START — what only Lumjha does */}
+        <section id="features" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
+          <SectionHeader
+            title="Every channel is just the start."
+            subtitle="Other tools put a chatbot on more apps. Lumjha puts the same brain everywhere: search, exact policy answers and lead capture included."
+          />
+          <div className={`mx-auto grid max-w-[1048px] grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 ${SECTION_HEAD_GAP}`}>
+            {/* 01 · site search */}
+            <article className={`${CARD} flex flex-col p-5 sm:p-6`}>
+              <p className={EYEBROW}>01 · Site search</p>
+              <h3 className="mt-3 text-[19px] font-bold leading-snug text-ink">
+                Site search that actually answers. <OnlyOnLumjha />
+              </h3>
+              <p className="mt-3 text-[13.5px] leading-relaxed text-muted">
+                Turn your search box into instant, sourced answers, from the same knowledge base as your chat
+                agent on every channel. No second tool, no second setup.
+              </p>
+              <div aria-hidden className={`${INSET} mt-5 space-y-2.5 p-3 text-[11.5px]`}>
+                <div className="flex items-center gap-2 rounded-lg border border-[#3A5795] bg-[#0D1934] px-3 py-2 text-ink light:border-[#C9D8FF] light:bg-white">
+                  <svg viewBox="0 0 24 24" className="h-3 w-3 shrink-0 text-subtle" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round">
+                    <circle cx="11" cy="11" r="7" />
+                    <path d="m20 20-3.5-3.5" />
+                  </svg>
+                  how do I reschedule
+                </div>
+                <div className="rounded-lg bg-[#16264D] px-3 py-2.5 leading-snug text-muted light:bg-[#EEF3FF]">
+                  <strong className="font-semibold text-ink">Reschedule from your confirmation email</strong> or reply “reschedule” in chat.
+                  <span className="mt-0.5 block text-[#6E97FF] light:text-[#3E63F2]">/help/bookings</span>
+                </div>
+                <div className="rounded-lg bg-[#111F40] px-3 py-2 text-muted light:bg-white light:ring-1 light:ring-[#D7E3F5]">
+                  Continue on WhatsApp or chat →
+                </div>
+              </div>
+              <div className="mt-auto pt-5">
+                <p className="border-t border-[#1F3156] pt-4 text-[12px] leading-relaxed text-muted light:border-[#D7E3F5]">
+                  Included on Growth, Pro &amp; Enterprise · +$25/mo on Starter
+                </p>
+              </div>
+            </article>
+
+            {/* 02 · policy vault */}
+            <article className={`${CARD} flex flex-col p-5 sm:p-6`}>
+              <p className={EYEBROW}>02 · Lumjha Vault</p>
+              <h3 className="mt-3 text-[19px] font-bold leading-snug text-ink">
+                Exact policy quotes, on every channel. <OnlyOnLumjha />
+              </h3>
+              <p className="mt-3 text-[13.5px] leading-relaxed text-muted">
+                Refunds, warranties, coverage, HR: Lumjha answers with the exact clause and its source, never a
+                paraphrase, on your site or in a DM. Lock it with a PIN for staff or partners.
+              </p>
+              <div aria-hidden className={`${INSET} mt-5 p-3 text-[11.5px]`}>
+                <p className={MOCK_LABEL}>Staff vault · PIN required · illustrative</p>
+                <div className="mt-2.5 flex gap-1.5">
+                  {[0, 1, 2, 3].map((d) => (
+                    <span key={d} className="flex h-6 w-6 items-center justify-center rounded-md border border-[#3A5795] bg-[#0D1934] light:border-[#C9D8FF] light:bg-white">
+                      <span className="h-1 w-1 rounded-full bg-ink" />
                     </span>
-                    <span className={`text-[13px] leading-snug md:text-[14px] ${u.cap ? "text-[#11692E]" : "text-[#3E63F2]"}`}>{u.text}</span>
-                  </div>
-                </Tilt>
+                  ))}
+                </div>
+                <p className="mt-3 text-ink">“What’s the return window for opened items?”</p>
+                <blockquote className="mt-2.5 border-l-2 border-[#F2C94C] bg-[#2A2A1F] px-2.5 py-2 italic text-[#F2D27A] light:bg-[#FFF8E1] light:text-[#7A5B00]">
+                  “Opened items may be returned within 14 days of delivery for store credit.”
+                </blockquote>
+                <p className="mt-2.5 font-mono text-[9.5px] uppercase text-[#6E97FF] light:text-[#3E63F2]">
+                  Source: Returns-Policy-2026.pdf · §3.2
+                </p>
+              </div>
+              <div className="mt-auto pt-5">
+                <p className="border-t border-[#1F3156] pt-4 text-[12px] leading-relaxed text-muted light:border-[#D7E3F5]">
+                  Included on Pro · +$49/mo on Starter &amp; Growth · SSO-gated on Enterprise
+                </p>
+              </div>
+            </article>
+
+            {/* 03 · leads everywhere */}
+            <article className={`${CARD} flex flex-col p-5 sm:p-6 md:col-span-2 lg:col-span-1`}>
+              <p className={EYEBROW}>03 · Leads everywhere</p>
+              <h3 className="mt-3 text-[19px] font-bold leading-snug text-ink">Leads captured on every channel.</h3>
+              <p className="mt-3 text-[13.5px] leading-relaxed text-muted">
+                Conversations on WhatsApp, Instagram or your website become leads and bookings in one list, with
+                the full chat history attached. No forms needed in DMs.
+              </p>
+              <div aria-hidden className={`${INSET} mt-5 p-3 text-[11.5px]`}>
+                <p className={MOCK_LABEL}>Today’s leads · illustrative</p>
+                <ul className="mt-1.5 divide-y divide-[#22365C] light:divide-[#E1E8F5]">
+                  {TODAYS_LEADS.map((l) => (
+                    <li key={l.who} className="flex items-center justify-between gap-3 py-2 text-ink">
+                      <span className="min-w-0">{l.who}</span>
+                      <span className="shrink-0 rounded bg-[#16264D] px-1.5 py-0.5 font-mono text-[9px] text-[#7FA3FF] light:bg-[#EEF3FF] light:text-[#3E63F2]">
+                        {l.channel}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="mt-auto pt-5">
+                <p className="border-t border-[#1F3156] pt-4 text-[12px] leading-relaxed text-muted light:border-[#D7E3F5]">
+                  1 form on Free · 3 forms + export on Starter · unlimited + CRM on Growth
+                </p>
+              </div>
+            </article>
+
+            {/* plus · gap insights (full width) */}
+            <article className={`${CARD} grid grid-cols-1 items-center gap-5 p-5 sm:p-6 md:col-span-2 lg:col-span-3 lg:grid-cols-[1fr_456px] lg:gap-10`}>
+              <div>
+                <p className={EYEBROW}>Plus · Gap insights</p>
+                <h3 className="mt-3 text-[19px] font-bold leading-snug text-ink">Know what customers couldn’t find, on any channel.</h3>
+                <p className="mt-2 text-[13.5px] leading-relaxed text-muted">
+                  Lumjha flags unanswered questions across chat, site search and policy lookups, and suggests the
+                  answer to add. One click to fix. Top questions on Starter · full suggestions on Growth ·
+                  cross-surface on Pro.
+                </p>
+              </div>
+              <div aria-hidden className={`${INSET} p-3 text-[11.5px]`}>
+                <p className={MOCK_LABEL}>This week’s gaps · illustrative</p>
+                <ul className="mt-1.5">
+                  {WEEKLY_GAPS.map((g) => (
+                    <li key={g.q} className="grid grid-cols-[1fr_auto_auto] items-center gap-3 py-1.5">
+                      <span className="min-w-0 text-ink">{g.q}</span>
+                      <span className="font-mono text-[10px] text-[#F2C94C] light:text-[#B7791F]">{g.where}</span>
+                      <span className="rounded-full bg-[#527DFF] px-2.5 py-1 text-[10px] font-semibold text-white">Add answer</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        {/* THE ESSENTIALS */}
+        <section id="essentials" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
+          <h2 className="text-center font-heading text-[28px] font-bold leading-tight tracking-tight text-balance text-ink sm:text-4xl md:text-[44px]">
+            The essentials, done properly
+          </h2>
+          <ul className={`mx-auto grid max-w-[1048px] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5 ${SECTION_HEAD_GAP}`}>
+            {ESSENTIALS.map((e) => (
+              <li key={e.title} className={`${CARD} flex gap-4 p-5`}>
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#3A5795] bg-[#132550] text-[#9DB6FF] light:border-[#C9D8FF] light:bg-[#EEF3FF] light:text-[#3E63F2]">
+                  <EssentialIcon name={e.icon} />
+                </span>
+                <div className="min-w-0">
+                  <h3 className="text-[15px] font-semibold text-ink">{e.title}</h3>
+                  <p className="mt-1.5 text-[13px] leading-relaxed text-muted">{e.body}</p>
+                </div>
               </li>
             ))}
           </ul>
         </section>
 
-        {/* FOR DEVELOPERS & AGENCIES — API + MCP */}
-        <section id="developers" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
-          <div className="mx-auto grid max-w-[1160px] grid-cols-1 items-start gap-8 lg:grid-cols-[1fr_422px] lg:gap-16">
+        {/* EVERY FEATURE, EVERY PLAN */}
+        <section id="plan-matrix" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
+          <h2 className="text-center font-heading text-[28px] font-bold leading-tight tracking-tight text-balance text-ink sm:text-4xl md:text-[44px]">
+            Every feature, every plan
+          </h2>
+          <PlanMatrix className={SECTION_HEAD_GAP} />
+        </section>
+
+        {/* GROW WITHOUT JUMPING TIERS — top-ups + add-ons */}
+        <section id="add-ons" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
+          <SectionHeader
+            title="Grow without jumping tiers"
+            subtitle="Add exactly what you need. Add-ons renew with your plan and can be removed any time."
+          />
+          <div className={`mx-auto max-w-[1040px] space-y-4 ${SECTION_HEAD_GAP}`}>
+            <div className={`${CARD} grid grid-cols-1 items-center gap-5 p-5 sm:p-6 lg:grid-cols-[minmax(0,320px)_1fr] lg:gap-8`}>
+              <div>
+                <h3 className="text-[19px] font-bold text-ink">Top-up packs</h3>
+                <p className="mt-1 text-[13.5px] font-semibold text-ink">Extra AI conversations</p>
+                <p className="mt-1 text-[13px] leading-relaxed text-muted">
+                  Added automatically at your limit, up to the cap you set. If you upgrade in the same cycle,
+                  top-ups are forgiven.
+                </p>
+              </div>
+              <ul className="grid grid-cols-1 gap-3 min-[420px]:grid-cols-3">
+                {TOP_UPS.map((t) => (
+                  <li key={t.plan} className={`${INSET} px-3 py-4 text-center`}>
+                    <p className="text-[11.5px] text-muted">{t.plan}</p>
+                    <p className="mt-0.5 text-[20px] font-bold text-ink">{t.price}</p>
+                    <p className="mt-0.5 text-[10.5px] text-muted">{t.amount}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {ADD_ONS.map((a) => (
+                <li key={a.title} className={`${CARD} p-5`}>
+                  <p className="font-bold text-ink">
+                    <span className="text-[22px]">{a.price}</span>
+                    <span className="text-[11px] font-normal text-muted">/mo</span>
+                  </p>
+                  <h3 className="mt-2 text-[13.5px] font-semibold text-ink">{a.title}</h3>
+                  <p className="mt-1 text-[12.5px] leading-relaxed text-muted">{a.body}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* NEVER GOES SILENT — usage alerts */}
+        <section id="usage" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
+          <div className="mx-auto grid max-w-[1040px] grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-8">
             <div className="text-center lg:text-left">
-              <h2 className="font-heading text-[28px] font-bold uppercase leading-tight tracking-tight text-white light:text-[#0B1526] sm:text-4xl md:text-[44px]">
-                For Developers &amp; Agencies
+              <h2 className="text-[28px] font-extrabold leading-[1.15] tracking-tight text-balance text-ink sm:text-4xl">
+                Your agent never goes silent at month-end.
               </h2>
-              <p className="mt-4 text-[15px] leading-relaxed text-white/85 light:text-slate-600 sm:text-lg md:mt-5 md:text-xl">
-                Open by design: API + MCP
+              <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-muted md:text-base lg:mx-0">
+                Other tools stop answering when you hit a limit. Lumjha warns you early, tops up within the cap
+                you set, and if you reach the cap, it still collects visitors’ details so you never lose a lead.
               </p>
             </div>
-            <Tilt className="rounded-xl lg:mt-14" max={4} scale={1.01} glare={false}>
-              <pre className="whitespace-pre-wrap break-words rounded-xl bg-white p-5 font-mono text-[12px] leading-[1.7] shadow-[0_24px_60px_-28px_rgba(82,125,255,0.6)] light:ring-1 light:ring-[#D7E3F5]">
-                {CODE_SAMPLE.map((block, i) => (
-                  <code key={block.comment} className={`block ${i > 0 ? "mt-3" : ""}`}>
-                    <span className="block text-[#5B6FD8]">{block.comment}</span>
-                    {block.lines.map((l) => (
-                      <span key={l.text} className={`block ${l.tone === "cmd" ? "text-[#0EA5A4]" : "text-[#C99A06]"}`}>
-                        {l.text}
-                      </span>
-                    ))}
-                  </code>
+            <ol className="space-y-3">
+              {USAGE_ALERTS.map((u) => (
+                <li key={u.mark} className={`${CARD} flex items-center gap-4 rounded-xl px-4 py-3.5`}>
+                  <span
+                    className={`flex h-9 w-14 shrink-0 items-center justify-center rounded-md text-[14px] font-bold ${
+                      u.cap
+                        ? "bg-[#0F3B33] text-[#2EE6A6] light:bg-[#E7FBF4] light:text-[#0E8A5F]"
+                        : "bg-[#1A2A52] text-white light:bg-[#EEF3FF] light:text-[#3E63F2]"
+                    }`}
+                  >
+                    {u.mark}
+                  </span>
+                  <span className="text-[13px] leading-snug text-ink/90">{u.text}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        {/* OPEN BY DESIGN — API + MCP */}
+        <section id="developers" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
+          <div className="mx-auto grid max-w-[1040px] grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-10">
+            <div className="text-center lg:text-left">
+              <h2 className="text-[28px] font-bold leading-[1.15] tracking-tight text-[#DDE6FF] light:text-[#0B1526] sm:text-4xl">
+                Open by design: API + MCP
+              </h2>
+              <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-muted md:text-base lg:mx-0">
+                Push sources in and pull leads, conversations and analytics out with the API. Connect ChatGPT,
+                Claude, Cursor or your own agents through the Lumjha MCP connector, with OAuth scopes and
+                read-only access by default.
+              </p>
+              <ul className="mt-5 flex flex-wrap justify-center gap-2 lg:justify-start">
+                {DEV_CHIPS.map((c) => (
+                  <li key={c} className="rounded-md border border-[#2A3F6B] bg-[#0D1934] px-2 py-1 font-mono text-[10.5px] text-ink light:border-[#C9D8FF] light:bg-white">
+                    {c}
+                  </li>
                 ))}
-              </pre>
-            </Tilt>
+              </ul>
+              <p className="mt-4 text-[12.5px] leading-relaxed text-muted">
+                Read-only MCP on Starter · Full API + MCP on Growth · Multi-agent scopes on Pro · Custom limits on Enterprise
+              </p>
+              {DEVELOPER_DOCS_URL && (
+                <a
+                  href={DEVELOPER_DOCS_URL}
+                  className="mt-6 inline-flex items-center gap-2 rounded-full border border-[#2A3F6B] bg-[#0D1934] px-6 py-3 text-[13.5px] font-semibold text-ink transition hover:border-[#527DFF] light:border-[#C9D8FF] light:bg-white"
+                >
+                  Read the developer docs <span aria-hidden>→</span>
+                </a>
+              )}
+            </div>
+            {/* code stays dark in both themes */}
+            <pre className="overflow-x-auto rounded-2xl border border-[#22365C] bg-[#050D20] p-5 font-mono text-[11.5px] leading-[1.7] shadow-[0_24px_60px_-30px_rgba(82,125,255,0.5)] light:border-transparent sm:p-6 lg:min-h-[260px]">
+              <code>
+                {CODE.map((line, i) => (
+                  <span key={i} className="block min-h-[1.7em]">
+                    {line.map(([tone, text], j) => (
+                      <span key={j} className={CODE_TONE[tone]}>{text}</span>
+                    ))}
+                  </span>
+                ))}
+              </code>
+            </pre>
           </div>
         </section>
 
@@ -434,6 +752,8 @@ export default function PricingPage() {
             </table>
           </div>
         </section>
+
+        {/* TODO: social proof (customer logos, an approved testimonial, real compliance status) goes here once approved — never invented. */}
 
         {/* FAQ */}
         <section id="faq" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>

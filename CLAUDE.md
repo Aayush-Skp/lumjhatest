@@ -22,7 +22,7 @@ lumjha-website/
 │   ├── site-search/    ← Solutions → Site Search
 │   ├── policy-vault/   ← Solutions → Policy Vault
 │   ├── integrations/   ← Integration page
-│   ├── blogs/          ← placeholder until the blog is designed
+│   ├── blogs/          ← blog: posts.ts (static posts) → listing + [slug] article pages
 │   ├── privacy/page.tsx← Privacy Policy (content copied from original)
 │   ├── terms/page.tsx  ← Terms of Service (content copied from original)
 │   └── globals.css     ← design tokens + base utilities + .legal-prose

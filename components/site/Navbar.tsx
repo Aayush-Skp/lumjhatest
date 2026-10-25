@@ -110,7 +110,8 @@ function SolutionsMenu({ active }: { active: boolean }) {
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const isActive = (href: string) => pathname === href;
+  // section roots stay active on their sub-pages (/blogs → /blogs/what-is-rag)
+  const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
   const solutionsActive = SOLUTIONS.some((s) => isActive(s.href));
 
   // mobile menu: staggered fade-in, one step per row
