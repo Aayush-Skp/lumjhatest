@@ -129,6 +129,47 @@
   --fg-high: 236 248 255;
 }
 
+/* =========================================================
+   Site theme — the Figma marketing pages.
+   Dark (Figma) by default; [data-theme="light"] swaps the page-level
+   colours. Brand blue, blue cards and white-on-blue text never change.
+   Used as Tailwind colours: bg-page, text-ink, border-line, …
+   ========================================================= */
+:root {
+  color-scheme: dark;
+  --site-page: #030816;       /* home + legal background */
+  --site-page-deep: #090a0f;  /* product pages background */
+  --site-ink: #ffffff;        /* headings + body copy */
+  --site-headline: #eaeaee;   /* product hero headline */
+  --site-muted: #d1d5db;      /* secondary copy */
+  --site-subtle: #9ca3af;     /* tertiary copy, footer text */
+  --site-nav-link: #b4bccb;
+  --site-surface: #0b1428;    /* dark tiles, glass cards */
+  --site-menu: #0b0d14;       /* dropdowns, embedded demo frame */
+  --site-band: #000000;       /* footer + wave band */
+  --site-line: rgb(255 255 255 / 0.1);
+  --site-glow: #1b3aa0;       /* ambient blurred pools */
+  --site-highlight: #6e97ff; /* light-blue headline accent */
+  --site-card-ring: transparent; /* white cards need an edge on light pages */
+}
+[data-theme="light"] {
+  color-scheme: light;
+  --site-page: #f4f7fd;
+  --site-page-deep: #f4f7fd;
+  --site-ink: #0b1526;
+  --site-headline: #0b1526;
+  --site-muted: #475569;
+  --site-subtle: #64748b;
+  --site-nav-link: #475569;
+  --site-surface: #ffffff;
+  --site-menu: #ffffff;
+  --site-band: #e9eef8;
+  --site-line: rgb(11 21 38 / 0.1);
+  --site-glow: #8fb0ff;
+  --site-highlight: #3e63f2;
+  --site-card-ring: #d7e3f5;
+}
+
 @theme inline {
   --color-bg-0: rgb(var(--bg-0) / <alpha-value>);
   --color-bg-1: rgb(var(--bg-1) / <alpha-value>);
@@ -153,6 +194,21 @@
   --color-success: rgb(var(--success) / <alpha-value>);
   --color-warn: rgb(var(--warn) / <alpha-value>);
   --color-danger: rgb(var(--danger) / <alpha-value>);
+
+  --color-page: var(--site-page);
+  --color-page-deep: var(--site-page-deep);
+  --color-ink: var(--site-ink);
+  --color-headline: var(--site-headline);
+  --color-muted: var(--site-muted);
+  --color-subtle: var(--site-subtle);
+  --color-nav-link: var(--site-nav-link);
+  --color-surface: var(--site-surface);
+  --color-menu: var(--site-menu);
+  --color-band: var(--site-band);
+  --color-line: var(--site-line);
+  --color-glow: var(--site-glow);
+  --color-highlight: var(--site-highlight);
+  --color-card-ring: var(--site-card-ring);
 
   --font-sans: var(--font-inter);
   --font-display: var(--font-inter-tight);
@@ -466,14 +522,9 @@ body {
 }
 
 html {
-  color-scheme: dark;
   scroll-behavior: smooth;
   /* anchor jumps land just below the sticky 3.5rem navbar */
   scroll-padding-top: 3.5rem;
-}
-
-html[data-theme="light"] {
-  color-scheme: light;
 }
 
 /* Brief colour cross-fade while the theme switches (class added by
@@ -493,7 +544,7 @@ html[data-theme="light"] {
 }
 
 /* =========================================================
-   Legal prose (Privacy / Terms) — Figma-matched dark styling.
+   Legal prose (Privacy / Terms) — Figma-matched styling, theme-aware.
    Styles raw semantic markup so the page files stay readable.
    ========================================================= */
 
@@ -505,20 +556,20 @@ html[data-theme="light"] {
   letter-spacing: -0.01em;
   font-size: 1.25rem;
   line-height: 1.3;
-  color: #fff;
+  color: var(--site-ink);
   margin-bottom: 1rem;
 }
 .legal-prose h4 {
   font-weight: 600;
   font-size: 1rem;
-  color: #fff;
+  color: var(--site-ink);
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
 }
 .legal-prose p {
   font-size: 0.9375rem;
   line-height: 1.75;
-  color: #cbd5e1;
+  color: var(--site-muted);
   margin-bottom: 0.85rem;
 }
 .legal-prose ul {
@@ -529,44 +580,25 @@ html[data-theme="light"] {
 .legal-prose li {
   font-size: 0.9375rem;
   line-height: 1.7;
-  color: #cbd5e1;
+  color: var(--site-muted);
   margin-bottom: 0.5rem;
 }
 .legal-prose strong {
-  color: #fff;
+  color: var(--site-ink);
   font-weight: 600;
 }
 .legal-prose em {
-  color: #e2e8f0;
+  color: var(--site-ink);
 }
 .legal-prose a {
-  color: #6e97ff;
+  color: var(--site-highlight);
   text-decoration: none;
 }
 .legal-prose a:hover {
   text-decoration: underline;
-  color: #fff;
+  color: var(--site-ink);
 }
 .legal-prose p:last-child,
 .legal-prose li:last-child {
   margin-bottom: 0;
-}
-
-[data-theme="light"] .legal-prose h3,
-[data-theme="light"] .legal-prose h4,
-[data-theme="light"] .legal-prose strong {
-  color: #0b1526;
-}
-[data-theme="light"] .legal-prose p,
-[data-theme="light"] .legal-prose li {
-  color: #475569;
-}
-[data-theme="light"] .legal-prose em {
-  color: #334155;
-}
-[data-theme="light"] .legal-prose a {
-  color: #3e63f2;
-}
-[data-theme="light"] .legal-prose a:hover {
-  color: #0b1526;
 }

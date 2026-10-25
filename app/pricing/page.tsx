@@ -3,7 +3,7 @@ import type { ComponentType, SVGProps } from "react";
 import Image from "next/image";
 import Navbar from "@/components/site/Navbar";
 import Footer from "@/components/site/Footer";
-import CtaSection from "@/components/site/CtaSection";
+import CtaPanel from "@/components/site/CtaPanel";
 import WaveLines from "@/components/site/WaveLines";
 import PricingPlans, { Included } from "@/components/site/PricingPlans";
 import SectionHeader, { SECTION_HEAD_GAP, SECTION_Y } from "@/components/site/SectionHeader";
@@ -208,7 +208,7 @@ const FAQS = [
 export default function PricingPage() {
   return (
     <div className="min-h-screen bg-[#030816] font-sans text-white antialiased light:bg-[#F5F7FC] light:text-[#0B1526]">
-      <Navbar prefix="/" />
+      <Navbar />
       <main id="top" className="relative overflow-x-clip">
         <div className="pointer-events-none absolute -left-40 top-56 h-[500px] w-[300px] rounded-full bg-[#1B3AA0]/30 blur-[120px] light:bg-[#527DFF]/10" />
         <div className="pointer-events-none absolute -right-40 top-[700px] h-[500px] w-[300px] rounded-full bg-[#1B3AA0]/25 blur-[120px] light:bg-[#527DFF]/10" />
@@ -453,7 +453,7 @@ export default function PricingPage() {
           </ol>
         </section>
 
-        <CtaSection />
+        <CtaPanel />
 
         <Footer />
       </main>

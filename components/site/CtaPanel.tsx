@@ -1,10 +1,12 @@
-import Image from "next/image";
-import Tilt from "@/components/ui/Tilt";
-import BlueButton from "./BlueButton";
-import ContactDisclosure from "./ContactDisclosure";
+"use client";
 
-/** "Ready to Scale" blue panel on the topographic white band — sits just above the footer. */
-export default function CtaSection() {
+import Image from "next/image";
+import ContactDisclosure from "./ContactDisclosure";
+import BlueButton from "@/components/ui/BlueButton";
+import Tilt from "@/components/ui/Tilt";
+
+/** "Ready to Scale" blue panel on the topographic white band — closes every page. */
+export default function CtaPanel({ contactLabel = "Contact Us" }: { contactLabel?: string }) {
   return (
     <section className="relative isolate overflow-hidden bg-white px-4 py-16 sm:px-6 md:py-28">
       {/* topographic pattern — the PNG carries its own transparency */}
@@ -28,6 +30,7 @@ export default function CtaSection() {
           </p>
           <ContactDisclosure
             variant="light"
+            label={contactLabel}
             rowClassName="mx-auto mt-8 flex w-full max-w-xs flex-col gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:items-center sm:justify-center sm:gap-4 md:mt-10"
             buttonClassName="inline-flex items-center justify-center rounded-lg border border-white/80 px-7 py-3.5 text-[15px] font-semibold text-white transition hover:bg-white/10 md:px-8 md:text-base"
           >

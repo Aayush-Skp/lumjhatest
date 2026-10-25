@@ -16,28 +16,40 @@ lumjha-website/
 ├── app/
 │   ├── layout.tsx      ← root layout (Inter fonts, dark theme default)
 │   ├── page.tsx        ← main landing page (Figma design)
-│   ├── play-area/page.tsx ← Play Area (test-drive page; demo panel is a blank placeholder for now)
-│   ├── pricing/page.tsx ← Pricing page: plans, AI engine flow, conversation rules, usage alerts, API, comparison matrix, FAQ
+│   ├── play-area/      ← demo page (blank white placeholder where the widget will go)
+│   ├── pricing/        ← Pricing page: plans, AI engine flow, conversation rules, usage alerts, API, comparison matrix, FAQ
+│   ├── chat-agent/     ← Solutions → AI Chat Agent
+│   ├── site-search/    ← Solutions → Site Search
+│   ├── policy-vault/   ← Solutions → Policy Vault
+│   ├── integrations/   ← Integration page
+│   ├── blogs/          ← placeholder until the blog is designed
 │   ├── privacy/page.tsx← Privacy Policy (content copied from original)
 │   ├── terms/page.tsx  ← Terms of Service (content copied from original)
 │   └── globals.css     ← design tokens + base utilities + .legal-prose
 ├── components/
 │   ├── site/
-│   │   ├── Navbar.tsx    ← shared navbar (prefix prop for non-home pages; "/route" links used as-is)
-│   │   ├── BlueButton.tsx / SectionHeader.tsx / CtaSection.tsx ← shared page building blocks
+│   │   ├── Navbar.tsx    ← Play Area · Solutions ▾ · Pricing · Integration · Blogs
 │   │   ├── PricingPlans.tsx ← Monthly/Annual switch + the four plan cards (plan data lives here)
-│   │   ├── ThemeToggle.tsx ← light/dark switch in the navbar (sets <html data-theme>, saved as "lumjha-theme")
-│   │   ├── WaveLines.tsx ← simple code-drawn line backdrop (Play Area band)
+│   │   ├── WaveLines.tsx ← simple code-drawn line backdrop (Pricing page band)
 │   │   ├── Footer.tsx    ← shared footer (Privacy/Terms wired)
 │   │   ├── FooterWordmark.tsx ← outlined "Lumjha" + cursor torch (footer copy of the showcase piece)
+│   │   ├── ProductSections.tsx ← product-page template: hero, intro split, steps, benefits, FAQ
+│   │   ├── SectionHeader.tsx   ← shared section title + SECTION_Y / SECTION_HEAD_GAP rhythm
+│   │   ├── CtaPanel.tsx        ← "Ready to Scale" blue panel (every page)
+│   │   ├── ChannelReels.tsx    ← animated channel-logo slot reels
+│   │   ├── WaveGlow.tsx        ← canvas port of Figma's "Glowing wave" shader
 │   │   └── LegalPage.tsx ← Figma-styled shell for legal pages
 │   ├── showcase/
 │   │   └── LumjhaSpotlight.tsx ← preserved hover-torch wordmark (unused, for later)
 │   └── ui/
+│       ├── BlueButton.tsx      ← pill CTA (solid / outline / white)
+│       ├── ThemeToggle.tsx     ← dark/light switch (navbar), persists to localStorage
 │       └── ChannelIcons.tsx    ← brand SVG channel logos (incl. Messenger, Viber)
 └── public/
     ├── logo.png
-    └── assets/ ← site-search.svg, policy-vault.svg, bundle.svg, included.svg (plan check icon)
+    └── assets/ ← per-page Figma exports (play-area/, chat-agent/, site-search/,
+                  policy-vault/, integration/, shared/) + add-on icons,
+                  included.svg (plan check icon), cta-pattern.png
 ```
 
 ## 3. Rules
@@ -48,10 +60,12 @@ lumjha-website/
   keep it dependency-free so it can be dropped in later.
 - Legal page bodies are verbatim copies; style them only via
   `components/site/LegalPage.tsx` + `.legal-prose` in `globals.css`.
-- Themes: dark is the Figma default; light mode is opt-in via the navbar
-  toggle. Pages are authored dark-first with `light:` overrides (custom
-  variant in `globals.css`) — any new hard-coded dark colour needs a
-  `light:` partner. Blue panels and the black footer stay the same in both.
+- Dark is the Figma default; light theme is driven by `[data-theme="light"]`.
+  Use the site tokens (`bg-page`, `bg-page-deep`, `text-ink`, `text-muted`,
+  `text-subtle`, `border-line`, `bg-surface`, `bg-band`, …) from `globals.css`
+  instead of hardcoded dark hexes, so new sections theme automatically.
+  Text on blue cards/buttons stays `text-white`. Light-only tweaks: `light:`.
+  (The Pricing page still uses hard-coded colours + `light:` partners.)
 - Keep dependencies minimal (next + react only). Do not re-add animation,
   icon, or state libraries unless the design truly needs them.
 ```

@@ -2,24 +2,16 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import type { ComponentType, KeyboardEvent, ReactNode, SVGProps, TouchEvent } from "react";
+import type { KeyboardEvent, ReactNode, TouchEvent } from "react";
 import Navbar from "@/components/site/Navbar";
 import Footer from "@/components/site/Footer";
 import ContactDisclosure from "@/components/site/ContactDisclosure";
-import BlueButton from "@/components/site/BlueButton";
-import CtaSection from "@/components/site/CtaSection";
-import SectionHeader, { SECTION_HEAD_GAP, SECTION_Y } from "@/components/site/SectionHeader";
+import CtaPanel from "@/components/site/CtaPanel";
+import ChannelReels, { CHANNELS } from "@/components/site/ChannelReels";
 import HeroBackdrop from "@/components/site/HeroBackdrop";
+import SectionHeader, { SECTION_HEAD_GAP, SECTION_Y } from "@/components/site/SectionHeader";
+import BlueButton from "@/components/ui/BlueButton";
 import Tilt from "@/components/ui/Tilt";
-import {
-  WebsiteIcon,
-  WhatsAppIcon,
-  InstagramIcon,
-  FacebookIcon,
-  TelegramIcon,
-  GoogleCalendarIcon,
-  ShopifyIcon,
-} from "@/components/ui/ChannelIcons";
 
 /* ============================================================
    Lumjha — main landing page (Figma design, mobile-first)
@@ -362,7 +354,7 @@ function PlatformTabs() {
           role="tablist"
           aria-label="Lumjha products"
           onKeyDown={onKeyDown}
-          className="relative grid w-full max-w-sm grid-cols-3 rounded-full border border-white/10 bg-white/[0.04] p-1 sm:w-auto sm:max-w-none light:border-[#D7E3F5] light:bg-white"
+          className="relative grid w-full max-w-sm grid-cols-3 rounded-full border border-line bg-ink/[0.04] p-1 sm:w-auto sm:max-w-none"
         >
           {/* sliding active pill */}
           <span
@@ -419,7 +411,7 @@ function PlatformTabs() {
               aria-controls={`panel-${tab.id}`}
               tabIndex={active === i ? 0 : -1}
               onClick={() => select(i)}
-              className={`relative z-10 whitespace-nowrap rounded-full px-2 py-2.5 text-[13px] font-semibold transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#527DFF] sm:px-6 sm:py-2.5 sm:text-sm md:px-8 md:text-[15px] ${active === i ? "text-white" : "text-gray-400 hover:text-white light:text-slate-500 light:hover:text-[#0B1526]"
+              className={`relative z-10 whitespace-nowrap rounded-full px-2 py-2.5 text-[13px] font-semibold transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#527DFF] sm:px-6 sm:py-2.5 sm:text-sm md:px-8 md:text-[15px] ${active === i ? "text-white" : "text-subtle hover:text-ink"
                 }`}
             >
               {tab.label}
@@ -465,7 +457,7 @@ function PlatformTabs() {
                 <h3 className="text-[24px] font-extrabold leading-[1.25] tracking-tight sm:text-3xl lg:text-[40px]">
                   {tab.heading}
                 </h3>
-                <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-gray-300 light:text-slate-600 sm:mt-5 md:mx-0 md:text-base lg:mt-6 lg:text-lg">
+                <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-muted sm:mt-5 md:mx-0 md:text-base lg:mt-6 lg:text-lg">
                   {tab.body}
                 </p>
                 <div className="mt-6 flex justify-center md:justify-start lg:mt-8">
@@ -488,75 +480,13 @@ function PlatformTabs() {
             className="group flex h-6 items-center px-1"
           >
             <span
-              className={`block h-1.5 rounded-full transition-all duration-500 ${active === i ? "w-6 bg-[#527DFF]" : "w-1.5 bg-white/25 group-hover:bg-white/50 light:bg-[#0B1526]/20 light:group-hover:bg-[#0B1526]/40"
+              className={`block h-1.5 rounded-full transition-all duration-500 ${active === i ? "w-6 bg-[#527DFF]" : "w-1.5 bg-ink/25 group-hover:bg-ink/50"
                 }`}
             />
           </button>
         ))}
       </div>
     </>
-  );
-}
-
-/* ---------- channel logos (same set as previous landing page) ---------- */
-
-const CHANNELS: {
-  name: string;
-  bg: string;
-  Icon: ComponentType<SVGProps<SVGSVGElement>>;
-}[] = [
-    { name: "Website", bg: "#2E9BF0", Icon: WebsiteIcon },
-    { name: "WhatsApp", bg: "#25D366", Icon: WhatsAppIcon },
-    { name: "Instagram", bg: "#E1306C", Icon: InstagramIcon },
-    { name: "Facebook", bg: "#1877F2", Icon: FacebookIcon },
-    { name: "Telegram", bg: "#229ED9", Icon: TelegramIcon },
-    { name: "Google Calendar", bg: "#4285F4", Icon: GoogleCalendarIcon },
-    { name: "Shopify", bg: "#95BF47", Icon: ShopifyIcon },
-  ];
-
-type Channel = (typeof CHANNELS)[number];
-
-/* Vertical "slot machine" reels, as on the previous landing page — rebuilt
-   with plain CSS keyframes (no animation library). Each reel shows the
-   channels in a different order, speed and direction; edge reels are dimmed
-   so focus lands in the middle. */
-const REEL_DURATIONS = [16, 23, 14, 20, 26, 18];
-const REEL_OPACITY = [0.3, 0.6, 1, 1, 0.6, 0.3];
-
-function rotate<T>(arr: readonly T[], by: number): T[] {
-  const k = ((by % arr.length) + arr.length) % arr.length;
-  return [...arr.slice(k), ...arr.slice(0, k)];
-}
-
-function ChannelTile({ channel }: { channel: Channel }) {
-  const { Icon, bg } = channel;
-  return (
-    <div className="flex h-20 items-center justify-center sm:h-24 md:h-32">
-      <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/[0.08] bg-[#0B1428] shadow-[0_12px_36px_rgba(0,0,0,0.45)] light:border-[#D7E3F5] light:bg-white light:shadow-[0_12px_30px_-12px_rgba(15,23,42,0.18)] sm:h-16 sm:w-16 sm:rounded-2xl md:h-24 md:w-24">
-        <Icon style={{ color: bg }} className="h-5 w-5 sm:h-8 sm:w-8 md:h-12 md:w-12" aria-hidden />
-      </div>
-    </div>
-  );
-}
-
-function ChannelReel({ index }: { index: number }) {
-  const order = rotate(CHANNELS, index * 2 + (index % 3));
-  // Two copies so shifting by -50% loops seamlessly.
-  const items = [...order, ...order];
-  return (
-    <div
-      style={{ opacity: REEL_OPACITY[index] }}
-      className="relative h-[320px] overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,#000_18%,#000_82%,transparent)] sm:h-[380px] md:h-[460px]"
-    >
-      <div
-        className={`flex flex-col will-change-transform ${index % 2 === 0 ? "reel-up" : "reel-down"}`}
-        style={{ animationDuration: `${REEL_DURATIONS[index]}s` }}
-      >
-        {items.map((c, i) => (
-          <ChannelTile key={`${c.name}-${i}`} channel={c} />
-        ))}
-      </div>
-    </div>
   );
 }
 
@@ -621,15 +551,15 @@ const COMMITMENTS = [
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-[#030816] font-sans text-white antialiased light:bg-[#F5F7FC] light:text-[#0B1526]">
+    <div className="min-h-screen bg-page font-sans text-ink antialiased">
       <Navbar />
       <main id="top" className="relative overflow-x-clip">
-        <div className="pointer-events-none absolute -left-40 top-24 h-[500px] w-[300px] rounded-full bg-[#1B3AA0]/30 blur-[120px] light:bg-[#527DFF]/10" />
-        <div className="pointer-events-none absolute -right-40 top-[900px] h-[500px] w-[300px] rounded-full bg-[#1B3AA0]/25 blur-[120px] light:bg-[#527DFF]/10" />
-        <div className="pointer-events-none absolute -left-40 top-[1900px] h-[500px] w-[300px] rounded-full bg-[#1B3AA0]/20 blur-[120px] light:bg-[#527DFF]/10" />
+        <div className="pointer-events-none absolute -left-40 top-24 h-[500px] w-[300px] rounded-full bg-glow/30 blur-[120px]" />
+        <div className="pointer-events-none absolute -right-40 top-[900px] h-[500px] w-[300px] rounded-full bg-glow/25 blur-[120px]" />
+        <div className="pointer-events-none absolute -left-40 top-[1900px] h-[500px] w-[300px] rounded-full bg-glow/20 blur-[120px]" />
 
-        {/* HERO — owns the first viewport: 100svh minus the 3.5rem navbar */}
-        <section className="relative isolate mx-auto flex min-h-[calc(100svh-3.5rem)] w-full max-w-[1440px] flex-col items-center justify-center px-4 py-12 text-center sm:px-6 md:py-20">
+        {/* HERO — owns the first viewport: 100svh minus the navbar (56px, 66px on desktop) */}
+        <section className="relative isolate mx-auto flex min-h-[calc(100svh-3.5rem)] w-full lg:min-h-[calc(100svh-66px)] max-w-[1440px] flex-col items-center justify-center px-4 py-12 text-center sm:px-6 md:py-20">
           {/* code-drawn backdrop — full-bleed past the 1440px container, waves anchored to the bottom and faded out into the next section */}
           <div aria-hidden className="pointer-events-none absolute inset-y-0 left-1/2 -z-10 w-screen -translate-x-1/2 [mask-image:linear-gradient(to_bottom,#000_88%,transparent)] md:[mask-image:linear-gradient(to_bottom,#000_70%,transparent)]">
             <HeroBackdrop />
@@ -637,9 +567,9 @@ export default function HomePage() {
           <h1 className="max-w-5xl text-[clamp(2.25rem,6vw+1rem,5.25rem)] font-extrabold leading-[1.05] tracking-[-0.03em]">
             Never Miss a Customer.
             <br />
-            <span className="text-[#6E97FF] light:text-[#3E63F2]">Grow While You Sleep.</span>
+            <span className="text-highlight">Grow While You Sleep.</span>
           </h1>
-          <p className="mx-auto mt-6 max-w-[42rem] text-base leading-relaxed text-balance text-gray-300 light:text-slate-600 sm:text-lg md:mt-8 md:text-xl">
+          <p className="mx-auto mt-6 max-w-[42rem] text-base leading-relaxed text-balance text-muted sm:text-lg md:mt-8 md:text-xl">
             Lumjha answers your customers&apos; questions, captures sales leads, and books
             appointments around the clock, on platform(s) they already use, so you can
             focus on running your business.
@@ -647,7 +577,7 @@ export default function HomePage() {
           <ContactDisclosure
             variant="dark"
             rowClassName="mt-8 flex w-full max-w-xs flex-col gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:items-center sm:justify-center sm:gap-4 md:mt-10"
-            buttonClassName="inline-flex items-center justify-center rounded-full border border-[#527DFF]/70 px-7 py-3.5 text-[15px] font-semibold text-white transition hover:bg-[#527DFF]/10 light:border-[#527DFF] light:text-[#3E63F2] md:px-8 md:text-base"
+            buttonClassName="inline-flex items-center justify-center rounded-full border border-[#527DFF]/70 px-7 py-3.5 text-[15px] font-semibold text-ink transition hover:bg-[#527DFF]/10 md:px-8 md:text-base"
           >
             <BlueButton large>Get Started Free</BlueButton>
           </ContactDisclosure>
@@ -673,11 +603,7 @@ export default function HomePage() {
               <li key={c.name}>{c.name}</li>
             ))}
           </ul>
-          <div aria-hidden className={`mx-auto grid max-w-5xl grid-cols-6 gap-1.5 sm:gap-3 md:gap-4 ${SECTION_HEAD_GAP}`}>
-            {REEL_DURATIONS.map((_, i) => (
-              <ChannelReel key={i} index={i} />
-            ))}
-          </div>
+          <ChannelReels className={`mx-auto max-w-5xl ${SECTION_HEAD_GAP}`} />
         </section>
 
         {/* CONVERSION */}
@@ -701,10 +627,10 @@ export default function HomePage() {
               <li key={c}>
                 {/* wide, short rows → gentle angle so the far edge doesn't swing */}
                 <Tilt className="flex items-stretch gap-3 rounded-lg" max={3} scale={1.01} glare={false}>
-                <span className="flex w-11 shrink-0 items-center justify-center rounded-lg bg-white text-[15px] font-bold text-[#3E63F2] light:ring-1 light:ring-[#D7E3F5]">
+                <span className="flex w-11 shrink-0 items-center justify-center rounded-lg bg-white text-[15px] font-bold text-[#3E63F2] ring-1 ring-card-ring">
                   {i + 1}.
                 </span>
-                <span className="flex-1 rounded-lg bg-white px-4 py-3 text-[14px] font-medium text-[#3E63F2] light:ring-1 light:ring-[#D7E3F5] md:text-[15px]">
+                <span className="flex-1 rounded-lg bg-white px-4 py-3 ring-1 ring-card-ring text-[14px] font-medium text-[#3E63F2] md:text-[15px]">
                   {c}
                 </span>
                 </Tilt>
@@ -713,7 +639,7 @@ export default function HomePage() {
           </ol>
         </section>
 
-        <CtaSection />
+        <CtaPanel />
 
         <Footer />
       </main>

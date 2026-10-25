@@ -29,12 +29,12 @@ const THEME: Record<
 > = {
   // hero: glassy card on the navy background
   dark: {
-    card: "border border-white/10 bg-[#0B1428]/90 shadow-[0_24px_70px_-20px_rgba(82,125,255,0.35)] backdrop-blur light:border-[#D7E3F5] light:bg-white light:shadow-[0_24px_60px_-24px_rgba(15,23,42,0.25)]",
-    label: "text-gray-300 light:text-slate-700",
+    card: "border border-line bg-surface/90 text-ink shadow-[0_24px_70px_-20px_rgba(82,125,255,0.35)] backdrop-blur",
+    label: "text-muted",
     input:
-      "border-white/10 bg-white/[0.04] text-white placeholder:text-gray-500 focus:border-[#527DFF] focus:ring-[#527DFF]/30 light:border-slate-300 light:bg-white light:text-[#0B1526] light:placeholder:text-slate-400",
-    muted: "text-gray-400 light:text-slate-500",
-    close: "text-gray-400 hover:bg-white/10 hover:text-white light:hover:bg-slate-100 light:hover:text-slate-700",
+      "border-line bg-ink/[0.04] text-ink placeholder:text-subtle focus:border-[#527DFF] focus:ring-[#527DFF]/30",
+    muted: "text-subtle",
+    close: "text-subtle hover:bg-ink/10 hover:text-ink",
     submit: "bg-[#527DFF] text-white hover:bg-[#3E63F2]",
   },
   // CTA: white card on the blue panel, like the pricing cards
@@ -70,6 +70,7 @@ export default function ContactDisclosure({
   variant,
   buttonClassName,
   rowClassName,
+  label = "Contact Us",
   children,
 }: {
   variant: Variant;
@@ -77,7 +78,9 @@ export default function ContactDisclosure({
   buttonClassName: string;
   /** Classes for the row holding the other buttons + the toggle. */
   rowClassName: string;
-  /** The buttons that sit before "Contact Us" in the row. */
+  /** Toggle text, e.g. "Book a Demo" on the solution pages. */
+  label?: string;
+  /** The buttons that sit before the toggle in the row. */
   children: ReactNode;
 }) {
   const t = THEME[variant];
@@ -130,7 +133,7 @@ export default function ContactDisclosure({
           onClick={() => setOpen((v) => !v)}
           className={`gap-2 ${buttonClassName}`}
         >
-          Contact Us
+          {label}
           <Chevron open={open} />
         </button>
       </div>

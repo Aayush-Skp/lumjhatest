@@ -112,7 +112,7 @@ export default function FooterWordmark() {
       className="relative overflow-hidden"
     >
       {/* faint outline, always visible */}
-      <span className={WORDMARK} style={{ WebkitTextStrokeColor: "rgba(232,244,255,0.2)" }}>
+      <span className={WORDMARK} style={{ WebkitTextStrokeColor: "color-mix(in srgb, var(--site-ink) 20%, transparent)" }}>
         Lumjha
       </span>
 
@@ -130,7 +130,7 @@ export default function FooterWordmark() {
         <span
           className={WORDMARK}
           style={{
-            WebkitTextStrokeColor: "rgba(232,244,255,0.85)",
+            WebkitTextStrokeColor: "color-mix(in srgb, var(--site-ink) 85%, transparent)",
             filter: "drop-shadow(0 0 10px rgba(82,125,255,0.35))",
           }}
         >

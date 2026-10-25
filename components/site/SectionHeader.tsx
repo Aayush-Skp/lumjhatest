@@ -5,23 +5,15 @@ import type { ReactNode } from "react";
 export const SECTION_Y = "py-16 md:py-24";
 export const SECTION_HEAD_GAP = "mt-10 md:mt-14";
 
-/* Shared title + subtitle for content sections: white Poppins headline,
-   soft-white supporting line. `as="h1"` for a page's opening header. */
-export default function SectionHeader({
-  title,
-  subtitle,
-  as: Heading = "h2",
-}: {
-  title: ReactNode;
-  subtitle: ReactNode;
-  as?: "h1" | "h2";
-}) {
+/* Shared title + subtitle for content sections: Poppins headline in the
+   theme ink colour, softer supporting line. */
+export default function SectionHeader({ title, subtitle }: { title: ReactNode; subtitle: ReactNode }) {
   return (
     <div className="text-center">
-      <Heading className="font-heading text-[28px] font-bold leading-tight tracking-tight text-balance text-white light:text-[#0B1526] sm:text-4xl md:text-[44px]">
+      <h2 className="font-heading text-[28px] font-bold leading-tight tracking-tight text-balance text-ink sm:text-4xl md:text-[44px]">
         {title}
-      </Heading>
-      <p className="mx-auto mt-4 max-w-4xl text-[15px] leading-relaxed text-balance text-white/85 light:text-slate-600 sm:text-lg md:mt-5 md:text-xl">
+      </h2>
+      <p className="mx-auto mt-4 max-w-4xl text-[15px] leading-relaxed text-balance text-ink/85 sm:text-lg md:mt-5 md:text-xl">
         {subtitle}
       </p>
     </div>
