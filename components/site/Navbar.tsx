@@ -5,15 +5,15 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import ThemeToggle from "./ThemeToggle";
 
-// Page routes ("/play-area") first, then one link per landing-page section, in page order.
+// Page routes ("/play-area", "/pricing") first, then one link per landing-page section, in page order.
 const NAV_LINKS = [
   { label: "Play Area", href: "/play-area" },
+  { label: "Pricing", href: "/pricing" },
   { label: "Integrations", href: "#channels" },
-  { label: "Pricing", href: "#pricing" },
   { label: "Our Commitments", href: "#commitments" },
 ];
 
-/** Site navbar. `prefix` lets other pages link back to home sections ("/#pricing"). */
+/** Site navbar. `prefix` lets other pages link back to home sections ("/#channels"). */
 export default function Navbar({ prefix = "" }: { prefix?: string }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();

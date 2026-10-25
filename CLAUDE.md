@@ -17,6 +17,7 @@ lumjha-website/
 │   ├── layout.tsx      ← root layout (Inter fonts, dark theme default)
 │   ├── page.tsx        ← main landing page (Figma design)
 │   ├── play-area/page.tsx ← Play Area (test-drive page; demo panel is a blank placeholder for now)
+│   ├── pricing/page.tsx ← Pricing page (plans live here, not on the landing page)
 │   ├── privacy/page.tsx← Privacy Policy (content copied from original)
 │   ├── terms/page.tsx  ← Terms of Service (content copied from original)
 │   └── globals.css     ← design tokens + base utilities + .legal-prose
@@ -24,6 +25,7 @@ lumjha-website/
 │   ├── site/
 │   │   ├── Navbar.tsx    ← shared navbar (prefix prop for non-home pages; "/route" links used as-is)
 │   │   ├── BlueButton.tsx / SectionHeader.tsx / CtaSection.tsx ← shared page building blocks
+│   │   ├── PricingPlans.tsx ← Monthly/Annual switch + the four plan cards (plan data lives here)
 │   │   ├── ThemeToggle.tsx ← light/dark switch in the navbar (sets <html data-theme>, saved as "lumjha-theme")
 │   │   ├── WaveLines.tsx ← simple code-drawn line backdrop (Play Area band)
 │   │   ├── Footer.tsx    ← shared footer (Privacy/Terms wired)
@@ -35,7 +37,7 @@ lumjha-website/
 │       └── ChannelIcons.tsx    ← brand SVG channel logos
 └── public/
     ├── logo.png
-    └── assets/ ← site-search.svg, policy-vault.svg, bundle.svg
+    └── assets/ ← site-search.svg, policy-vault.svg, bundle.svg, included.svg (plan check icon)
 ```
 
 ## 3. Rules

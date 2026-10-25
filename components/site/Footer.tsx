@@ -4,9 +4,8 @@ import FooterWordmark from "./FooterWordmark";
 
 const QUICK_LINKS = [
   { label: "Play Area", href: "/play-area" },
+  { label: "Pricing", href: "/pricing" },
   { label: "Integrations", href: "/#channels" },
-  { label: "Pricing", href: "/#pricing" },
-  { label: "Add-ons", href: "/#addons" },
   { label: "Our Commitments", href: "/#commitments" },
 ];
 
