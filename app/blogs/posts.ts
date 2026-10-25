@@ -24,6 +24,8 @@ export type Post = {
   readMinutes: number;
   author: string;
   featured?: boolean;
+  /** Cover photo in public/assets/blog/ — free Unsplash License photos. Without one, a code-drawn cover is used. */
+  image?: { src: string; credit: string; creditUrl: string };
   body: Block[];
 };
 
@@ -37,6 +39,7 @@ export const POSTS: Post[] = [
     date: "2026-10-21",
     readMinutes: 7,
     author: "Lumjha Engineering",
+    image: { src: "/assets/blog/what-is-rag.jpg", credit: "Annie Spratt", creditUrl: "https://unsplash.com/photos/t61ffOYIn-Q" },
     featured: true,
     body: [
       {
@@ -86,6 +89,7 @@ export const POSTS: Post[] = [
     date: "2026-10-14",
     readMinutes: 6,
     author: "Lumjha Engineering",
+    image: { src: "/assets/blog/chunking-strategies-for-business-documents.jpg", credit: "Tanja Tepavac", creditUrl: "https://unsplash.com/photos/81ikZZG7_AA" },
     body: [
       {
         type: "p",
@@ -135,6 +139,7 @@ export const POSTS: Post[] = [
     date: "2026-09-30",
     readMinutes: 5,
     author: "Lumjha Engineering",
+    image: { src: "/assets/blog/why-chatbots-hallucinate.jpg", credit: "Alex Knight", creditUrl: "https://unsplash.com/photos/2EJCSULRwC8" },
     body: [
       {
         type: "p",
@@ -174,6 +179,7 @@ export const POSTS: Post[] = [
     date: "2026-09-16",
     readMinutes: 6,
     author: "Lumjha Engineering",
+    image: { src: "/assets/blog/hybrid-search-keywords-and-embeddings.jpg", credit: "Sasun Bughdaryan", creditUrl: "https://unsplash.com/photos/pCwb5OuObls" },
     body: [
       {
         type: "p",
@@ -217,6 +223,7 @@ export const POSTS: Post[] = [
     date: "2026-08-26",
     readMinutes: 4,
     author: "Lumjha Product",
+    image: { src: "/assets/blog/exact-quotes-for-policy-answers.jpg", credit: "Planet Volumes", creditUrl: "https://unsplash.com/photos/wgbZ4ZeJCV0" },
     body: [
       {
         type: "p",
@@ -251,6 +258,7 @@ export const POSTS: Post[] = [
     date: "2026-10-09",
     readMinutes: 5,
     author: "Lumjha Team",
+    image: { src: "/assets/blog/mcp-usb-c-for-ai-agents.jpg", credit: "Mika Baumeister", creditUrl: "https://unsplash.com/photos/RWxeE7wu1T8" },
     body: [
       {
         type: "p",
@@ -290,6 +298,7 @@ export const POSTS: Post[] = [
     date: "2026-09-23",
     readMinutes: 5,
     author: "Lumjha Engineering",
+    image: { src: "/assets/blog/long-context-windows-and-rag.jpg", credit: "imgix", creditUrl: "https://unsplash.com/photos/klWUhr-wPJ8" },
     body: [
       {
         type: "p",
@@ -329,6 +338,7 @@ export const POSTS: Post[] = [
     date: "2026-10-17",
     readMinutes: 3,
     author: "Lumjha Product",
+    image: { src: "/assets/blog/lumjha-mcp-connector.jpg", credit: "Michael Baccin", creditUrl: "https://unsplash.com/photos/XopauR-Nagk" },
     body: [
       {
         type: "p",
@@ -365,6 +375,7 @@ mcp add lumjha https://<your-lumjha-mcp-endpoint>`,
     date: "2026-09-09",
     readMinutes: 3,
     author: "Lumjha Product",
+    image: { src: "/assets/blog/gap-insights.jpg", credit: "Luke Chesser", creditUrl: "https://unsplash.com/photos/JKUTrJ4vK00" },
     body: [
       {
         type: "p",
@@ -399,6 +410,7 @@ mcp add lumjha https://<your-lumjha-mcp-endpoint>`,
     date: "2026-08-12",
     readMinutes: 6,
     author: "Lumjha Engineering",
+    image: { src: "/assets/blog/measuring-rag-quality.jpg", credit: "Bozhin Karaivanov", creditUrl: "https://unsplash.com/photos/AgxK4Ohn1Cw" },
     body: [
       {
         type: "p",

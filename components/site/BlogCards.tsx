@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { formatDate, type Category, type Post } from "@/app/blogs/posts";
 
@@ -30,7 +31,39 @@ const COVER: Record<Category, { bg: string; icon: string[] }> = {
   },
 };
 
-export function BlogCover({ category, large = false, className = "" }: { category: Category; large?: boolean; className?: string }) {
+/** Post cover: the post's photo when it has one, otherwise a code-drawn cover for its topic. */
+export function BlogCover({
+  post,
+  large = false,
+  priority = false,
+  sizes = "(min-width: 1024px) 370px, (min-width: 640px) 50vw, 100vw",
+  className = "",
+}: {
+  post: Post;
+  large?: boolean;
+  /** above-the-fold covers load first */
+  priority?: boolean;
+  sizes?: string;
+  className?: string;
+}) {
+  if (post.image) {
+    return (
+      <div aria-hidden className={`relative isolate overflow-hidden bg-[#0D1934] ${className}`}>
+        <Image
+          src={post.image.src}
+          alt=""
+          fill
+          sizes={sizes}
+          priority={priority}
+          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+        />
+      </div>
+    );
+  }
+  return <DrawnCover category={post.category} large={large} className={className} />;
+}
+
+function DrawnCover({ category, large, className }: { category: Category; large: boolean; className: string }) {
   const c = COVER[category];
   return (
     <div aria-hidden className={`relative isolate overflow-hidden ${c.bg} ${className}`}>
@@ -81,7 +114,7 @@ export function BlogCard({ post }: { post: Post }) {
       href={`/blogs/${post.slug}`}
       className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface transition duration-300 hover:-translate-y-1 hover:border-[#527DFF]/60 hover:shadow-[0_24px_60px_-30px_rgba(82,125,255,0.6)] light:border-card-ring"
     >
-      <BlogCover category={post.category} className="aspect-[16/9] w-full" />
+      <BlogCover post={post} className="aspect-[16/9] w-full" />
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-center justify-between gap-3">
           <CategoryPill category={post.category} />

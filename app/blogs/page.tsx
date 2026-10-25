@@ -44,7 +44,13 @@ export default function BlogsPage() {
             href={`/blogs/${featured.slug}`}
             className="group mx-auto grid max-w-[1160px] grid-cols-1 overflow-hidden rounded-3xl border border-line bg-surface transition duration-300 hover:border-[#527DFF]/60 hover:shadow-[0_30px_80px_-40px_rgba(82,125,255,0.7)] light:border-card-ring lg:grid-cols-[1.1fr_1fr]"
           >
-            <BlogCover category={featured.category} large className="aspect-[16/9] w-full lg:aspect-auto lg:min-h-[380px]" />
+            <BlogCover
+              post={featured}
+              large
+              priority
+              sizes="(min-width: 1160px) 610px, (min-width: 1024px) 53vw, 100vw"
+              className="aspect-[16/9] w-full lg:aspect-auto lg:min-h-[380px]"
+            />
             <div className="flex flex-col justify-center p-6 sm:p-8 lg:p-10">
               <div className="flex flex-wrap items-center gap-3">
                 <span className="rounded-full bg-[#FFD21B] px-2.5 py-1 text-[11px] font-bold text-[#182031]">Featured</span>

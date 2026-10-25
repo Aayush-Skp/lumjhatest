@@ -100,7 +100,22 @@ export default async function BlogPostPage({ params }: Props) {
           </header>
 
           <div className="mx-auto mt-10 max-w-[1160px] px-4 sm:px-6 md:mt-12">
-            <BlogCover category={post.category} large className="aspect-[16/9] w-full rounded-2xl md:aspect-[21/8] md:rounded-3xl" />
+            <BlogCover
+              post={post}
+              large
+              priority
+              sizes="(min-width: 1160px) 1112px, 100vw"
+              className="aspect-[16/9] w-full rounded-2xl md:aspect-[21/8] md:rounded-3xl"
+            />
+            {post.image && (
+              <p className="mt-2.5 text-right text-[11.5px] text-subtle">
+                Photo by{" "}
+                <a href={post.image.creditUrl} target="_blank" rel="noopener noreferrer" className="underline-offset-2 hover:text-ink hover:underline">
+                  {post.image.credit}
+                </a>{" "}
+                on Unsplash
+              </p>
+            )}
           </div>
 
           {/* BODY + table of contents */}
