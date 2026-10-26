@@ -3,7 +3,7 @@ import Link from "next/link";
 import FooterWordmark from "./FooterWordmark";
 
 const QUICK_LINKS = [
-  { label: "Play Area", href: "/play-area" },
+  { label: "Lumjha Play", href: "/play-area" },
   { label: "Pricing", href: "/pricing" },
   { label: "Integrations", href: "/#channels" },
   { label: "Our Commitments", href: "/#commitments" },
@@ -14,7 +14,7 @@ const PLATFORMS = [
   { label: "Site Search", href: "/site-search" },
   { label: "Policy Vault", href: "/policy-vault" },
   { label: "Integrations", href: "/integrations" },
-  { label: "Play Area", href: "/play-area" },
+  { label: "Lumjha Play", href: "/play-area" },
 ];
 
 const LEGAL = [
@@ -87,7 +87,7 @@ export default function Footer() {
       </div>
       <div className="mx-auto mt-6 max-w-[1440px] border-t border-line pt-8 md:mt-10">
         <p className="text-center text-[12px] text-subtle">
-          © 2026 Lumjha. All rights reserved.
+          © 2026 Lumjha AI. All rights reserved.
         </p>
       </div>
     </footer>

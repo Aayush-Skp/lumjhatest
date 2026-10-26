@@ -6,7 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 
-// Figma nav: Play Area · Solutions ▾ · Pricing · Integration · Blogs
+// Figma nav: Lumjha Play · Solutions ▾ · Pricing · Integration · Blogs
 const SOLUTIONS = [
   { label: "AI Chat Agent", href: "/chat-agent", blurb: "Answer every customer question, 24/7" },
   { label: "Site Search", href: "/site-search", blurb: "Help visitors find what they need, faster" },
@@ -14,7 +14,7 @@ const SOLUTIONS = [
 ];
 
 const NAV_LINKS = [
-  { label: "Play Area", href: "/play-area" },
+  { label: "Lumjha Play", href: "/play-area" },
   { label: "Solutions", children: SOLUTIONS },
   { label: "Pricing", href: "/pricing" },
   { label: "Integration", href: "/integrations" },

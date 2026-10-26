@@ -26,7 +26,7 @@ const GROUPS: { title: string; rows: Row[] }[] = [
     title: "Usage",
     rows: [
       { feature: "AI conversations / month", cells: ["50", "500", "2,000", "6,000", "Custom (committed)"] },
-      { feature: "AI agents / seats", cells: ["1 / 1", "1 / 2", "3 / 5", "10 / 15", "Custom / SSO"] },
+      { feature: "AI agents", cells: ["1", "1", "3", "10", "Custom"] },
       { feature: "Top-up packs (auto, capped)", cells: ["Upgrade prompt", "250 / $25", "500 / $25", "1,000 / $45", "Committed rate"] },
     ],
   },

@@ -26,7 +26,7 @@ type Plan = {
   note: string;
 };
 
-// Annual = 10 × the monthly price ("2 months free").
+// Annual = 10 × the monthly price ("2 months free"), except Growth ($99 vs $119).
 const PLANS: Plan[] = [
   {
     name: "Free",
@@ -36,7 +36,7 @@ const PLANS: Plan[] = [
     allowance: "50",
     cta: "Start free",
     features: [
-      { text: "1 AI agent · 1 seat" },
+      { text: "1 AI agent" },
       { text: "Website widget + 1 messaging channel" },
       { text: "Auto-crawl up to 50 pages" },
       { text: "2 Knowledge Documents (up to 3MB each)" },
@@ -56,7 +56,7 @@ const PLANS: Plan[] = [
     cta: "Start 14-day trial",
     includes: "Everything in Free, plus",
     features: [
-      { text: "1 AI agent · 2 seats" },
+      { text: "1 AI agent" },
       { text: "All messaging channels: WhatsApp, Instagram, Messenger, Telegram, Viber* (1 account each)" },
       { text: "2,000 pages · monthly auto re-crawl" },
       { text: "15 Knowledge Documents (up to 5MB each)" },
@@ -72,15 +72,15 @@ const PLANS: Plan[] = [
   {
     name: "Growth",
     audience: "Growing SMBs, e-commerce, clinics",
-    price: { monthly: "$99", annual: "$83" },
-    detail: { monthly: "Billed monthly", annual: "$990 billed yearly · save $198" },
+    price: { monthly: "$119", annual: "$99" },
+    detail: { monthly: "Billed monthly", annual: "$1,188 billed yearly · save $240" },
     allowance: "2,000",
     allowanceNote: "~$0.05 each",
     cta: "Start 14-day trial",
     featured: true,
     includes: "Everything in Starter, plus",
     features: [
-      { text: "3 AI agents · 5 seats" },
+      { text: "3 AI agents" },
       { text: "Up to 3 numbers/accounts per channel" },
       { text: "Up to 5,000 web pages · Bi-weekly auto re-crawl" },
       { text: "35 Knowledge Documents (up to 5MB each)" },
@@ -104,7 +104,7 @@ const PLANS: Plan[] = [
     cta: "Start 14-day trial",
     includes: "Everything in Growth, plus",
     features: [
-      { text: "10 AI agents · 15 seats" },
+      { text: "10 AI agents" },
       { text: "Up to 10 numbers/accounts per channel" },
       { text: "Up to 10,000 web pages · weekly auto re-crawl" },
       { text: "100 Knowledge Documents (up to 6MB each)" },

@@ -7,10 +7,13 @@ import { BenefitGrid, StepCards } from "@/components/site/ProductSections";
 import BlueButton from "@/components/ui/BlueButton";
 
 export const metadata: Metadata = {
-  title: "Play Area",
+  title: "Lumjha Play",
   description:
     "Test-drive Lumjha in real time. Ask a question and see how Lumjha delivers instant, accurate and helpful answers.",
 };
+
+/** Live agent embedded in the demo window (the app allows framing). */
+const SANDBOX_CHAT_URL = "https://stg.app.lumjha.ai/chat/bedrocktest";
 
 /** Email capture above the demo — hidden until it's wired to a backend. */
 const SHOW_EMAIL_CAPTURE = false;
@@ -90,11 +93,15 @@ export default function PlayAreaPage() {
           </label>
           )}
 
-          {/* TODO: live demo goes here — blank placeholder until the widget is ready */}
-          <div
-            aria-hidden
-            className="mx-auto mt-10 h-[480px] w-full max-w-[1058px] rounded-2xl border border-line bg-white shadow-[0_30px_90px_-30px_rgba(0,121,242,0.55)] md:mt-14 md:h-[556px]"
-          />
+          <div className="mx-auto mt-10 w-full max-w-[1058px] overflow-hidden rounded-2xl border border-line bg-white shadow-[0_30px_90px_-30px_rgba(0,121,242,0.55)] md:mt-14">
+            <iframe
+              src={SANDBOX_CHAT_URL}
+              title="Lumjha AI Chat Agent — live demo"
+              loading="lazy"
+              allow="microphone; clipboard-write"
+              className="block h-[480px] w-full md:h-[556px]"
+            />
+          </div>
         </section>
 
         {/* HOW IT WORKS */}
