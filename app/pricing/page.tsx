@@ -8,6 +8,7 @@ import WaveLines from "@/components/site/WaveLines";
 import PricingPlans, { Included } from "@/components/site/PricingPlans";
 import PlanMatrix, { OnlyOnLumjha } from "@/components/site/PlanMatrix";
 import SectionHeader, { SECTION_HEAD_GAP, SECTION_Y } from "@/components/site/SectionHeader";
+import { Faq } from "@/components/site/ProductSections";
 import Tilt from "@/components/ui/Tilt";
 import {
   WebsiteIcon,
@@ -756,22 +757,7 @@ export default function PricingPage() {
         {/* TODO: social proof (customer logos, an approved testimonial, real compliance status) goes here once approved — never invented. */}
 
         {/* FAQ */}
-        <section id="faq" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
-          <SectionHeader title="Frequently Asked Questions" subtitle="Everything you need to know about pricing." />
-          <ol className={`mx-auto max-w-[1160px] border-t border-[#345071] light:border-[#D7E3F5] ${SECTION_HEAD_GAP}`}>
-            {FAQS.map((f, i) => (
-              <li key={f.q} className="flex gap-4 border-b border-[#345071] py-6 light:border-[#D7E3F5] md:gap-5 md:py-7">
-                <span className="flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-md bg-[#527DFF] text-[11px] font-bold text-white">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <div className="min-w-0">
-                  <h3 className="text-[16px] font-semibold leading-snug text-white light:text-[#0B1526] md:text-[19px]">{f.q}</h3>
-                  <p className="mt-2.5 text-[14px] leading-relaxed text-white/75 light:text-slate-600 md:text-[15px]">{f.a}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </section>
+        <Faq product="Lumjha Pricing" items={FAQS} />
 
         <CtaPanel />
 
