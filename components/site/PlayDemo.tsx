@@ -1,10 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type DragEvent, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type DragEvent, type FormEvent, type ReactNode } from "react";
 import {
   PLAYGROUND_ACCEPT,
   PLAYGROUND_MAX_BYTES,
   PREVIEW_PATH,
+  normalizeSiteUrl,
   subdomainFromChatUrl,
   type PlaygroundSession,
 } from "@/lib/playground";
@@ -12,7 +13,8 @@ import {
 /**
  * Lumjha Play demo: compact steps on top; below them a sample website
  * with the real chat widget installed, shown in a browser frame, with an
- * upload button in its toolbar. Before an upload the widget is the shared demo
+ * upload button in its toolbar and a working address bar (a visitor can
+ * preview the widget on their own site, when that site allows framing). Before an upload the widget is the shared demo
  * agent; while a document is read an overlay covers the preview, and once it
  * is ready the sample site reloads with a sandbox agent that answers only from
  * that document, chat open.
@@ -86,13 +88,32 @@ function statusUrl(id: string) {
   return `/api/playground/sessions/${encodeURIComponent(id)}`;
 }
 
+/** Why a picked file can't be sent, or null when it can. */
+function fileProblem(file: File, turnstileToken: string | null): string | null {
+  const ext = file.name.slice(file.name.lastIndexOf(".")).toLowerCase();
+  if (!ALLOWED.includes(ext)) return "Please choose a PDF, DOCX, TXT or Markdown file.";
+  if (file.size === 0) return "That file is empty.";
+  if (file.size > PLAYGROUND_MAX_BYTES) return "That file is over 1MB.";
+  if (TURNSTILE_SITE_KEY && !turnstileToken) return "Please complete the verification first.";
+  return null;
+}
+
 export default function PlayDemo() {
   const [view, setView] = useState<View>({ kind: "idle" });
   const [error, setError] = useState<string | null>(null);
   const [consent, setConsent] = useState(false);
   const [token, setToken] = useState<string | null>(null);
   const [pickerOpen, setPickerOpen] = useState(false);
+  // The picker either starts a new chat or adds a file to the current one.
+  const [pickerMode, setPickerMode] = useState<"new" | "add">("new");
+  // A file being sent to the current chat (before the API has it).
+  const [adding, setAdding] = useState<string | null>(null);
   const [loadedSrc, setLoadedSrc] = useState<string | null>(null);
+  // A visitor's own website shown in the preview instead of the sample site.
+  const [site, setSite] = useState<string | null>(null);
+  const [address, setAddress] = useState("");
+  const [checkingSite, setCheckingSite] = useState(false);
+  const [siteError, setSiteError] = useState<{ host: string; reason: string } | null>(null);
   const closePicker = useCallback(() => setPickerOpen(false), []);
 
   const session = view.kind === "session" ? view.session : null;
@@ -100,9 +121,33 @@ export default function PlayDemo() {
   const processing = session?.state === "processing";
   const docAgent = session?.state === "ready" ? subdomainFromChatUrl(session.chatUrl) : null;
   // One page load per agent: the widget loader cannot be swapped in place.
-  const previewSrc = docAgent ? `${PREVIEW_PATH}?agent=${encodeURIComponent(docAgent)}&open=1` : PREVIEW_PATH;
+  const previewQuery = new URLSearchParams({
+    ...(docAgent ? { agent: docAgent, open: "1" } : {}),
+    ...(site ? { site } : {}),
+  }).toString();
+  const previewSrc = previewQuery ? `${PREVIEW_PATH}?${previewQuery}` : PREVIEW_PATH;
+  const siteHost = site ? new URL(site).hostname : null;
   const busy = view.kind === "uploading" || processing;
   const failed = session != null && !processing && !docAgent;
+  // A further document being read while the chat keeps answering from the first.
+  const addingDoc = docAgent ? session?.documents?.find((d) => d.state === "processing") : undefined;
+  const polling = processing || !!addingDoc;
+  const readyNames = session?.documents
+    ? session.documents.filter((d) => d.state === "ready").map((d) => d.fileName)
+    : session
+      ? [session.document.fileName]
+      : [];
+  // Toolbar progress: the first upload, or a document being added to the chat.
+  const toolbarProgress =
+    view.kind === "uploading"
+      ? { name: view.fileName, percent: 5, adding: false }
+      : processing && session
+        ? { name: session.document.fileName, percent: Math.max(10, session.progress ?? 0), adding: false }
+        : adding
+          ? { name: adding, percent: 5, adding: true }
+          : addingDoc
+            ? { name: addingDoc.fileName, percent: Math.max(10, addingDoc.progress ?? 0), adding: true }
+            : null;
 
   // Back to the same chat after a reload, while it is still usable.
   useEffect(() => {
@@ -122,9 +167,9 @@ export default function PlayDemo() {
     };
   }, []);
 
-  // Poll while the document is being read: briskly at first, then gently.
+  // Poll while a document is being read: briskly at first, then gently.
   useEffect(() => {
-    if (!sessionId || !processing) return;
+    if (!sessionId || !polling) return;
     let cancelled = false;
     let timer: ReturnType<typeof setTimeout> | undefined;
     const started = Date.now();
@@ -133,13 +178,25 @@ export default function PlayDemo() {
       if (cancelled) return;
       if (result.success && result.data) {
         setView({ kind: "session", session: result.data });
-        if (result.data.state !== "processing") return;
+        const working =
+          result.data.state === "processing" || !!result.data.documents?.some((d) => d.state === "processing");
+        if (!working) return;
       }
       const elapsed = Date.now() - started;
       if (elapsed > POLL_GIVE_UP_MS) {
-        setView((current) =>
-          current.kind === "session" ? { kind: "session", session: { ...current.session, state: "failed" } } : current,
-        );
+        // Give up on the files still being read; a chat already answering stays ready.
+        setView((current) => {
+          if (current.kind !== "session") return current;
+          const s = current.session;
+          return {
+            kind: "session",
+            session: {
+              ...s,
+              state: s.state === "processing" ? "failed" : s.state,
+              documents: s.documents?.map((d) => (d.state === "processing" ? { ...d, state: "failed" } : d)),
+            },
+          };
+        });
         return;
       }
       timer = setTimeout(poll, elapsed < 60_000 ? 2000 : 5000);
@@ -149,26 +206,14 @@ export default function PlayDemo() {
       cancelled = true;
       if (timer) clearTimeout(timer);
     };
-  }, [sessionId, processing]);
+  }, [sessionId, polling]);
 
   const upload = useCallback(
     async (file: File) => {
       setError(null);
-      const ext = file.name.slice(file.name.lastIndexOf(".")).toLowerCase();
-      if (!ALLOWED.includes(ext)) {
-        setError("Please choose a PDF, DOCX, TXT or Markdown file.");
-        return;
-      }
-      if (file.size === 0) {
-        setError("That file is empty.");
-        return;
-      }
-      if (file.size > PLAYGROUND_MAX_BYTES) {
-        setError("That file is over 1MB.");
-        return;
-      }
-      if (TURNSTILE_SITE_KEY && !token) {
-        setError("Please complete the verification first.");
+      const problem = fileProblem(file, token);
+      if (problem) {
+        setError(problem);
         return;
       }
       setPickerOpen(false);
@@ -192,18 +237,101 @@ export default function PlayDemo() {
     [consent, token],
   );
 
+  // Add a file to the current chat: same agent, so the chat keeps going and
+  // answers from both once the new file is read.
+  const addDocument = useCallback(
+    async (file: File) => {
+      if (!sessionId) return;
+      setError(null);
+      const problem = fileProblem(file, token);
+      if (problem) {
+        setError(problem);
+        return;
+      }
+      setPickerOpen(false);
+      setAdding(file.name);
+      const form = new FormData();
+      form.append("file", file);
+      form.append("consent", String(consent));
+      if (token) form.append("turnstileToken", token);
+      const result = await call(`${statusUrl(sessionId)}/documents`, { method: "POST", body: form });
+      setToken(null);
+      setAdding(null);
+      if (result.success && result.data) {
+        setView({ kind: "session", session: result.data });
+      } else {
+        setError(result.error || "Upload failed. Please try again.");
+        setPickerMode("add");
+        setPickerOpen(true);
+      }
+    },
+    [sessionId, consent, token],
+  );
+
   const reset = useCallback((openPicker = false) => {
     store(null);
     setError(null);
     setView({ kind: "idle" });
+    setPickerMode("new");
     setPickerOpen(openPicker);
   }, []);
+
+  /** Open the picker in a mode; the same button closes it again. */
+  const togglePicker = (mode: "new" | "add") => {
+    setError(null);
+    setPickerOpen((open) => !(open && pickerMode === mode));
+    setPickerMode(mode);
+  };
+
+  const clearSite = useCallback(() => {
+    setSite(null);
+    setAddress("");
+    setSiteError(null);
+  }, []);
+
+  // Address bar: check the site allows framing before swapping it in.
+  async function showSite(e: FormEvent) {
+    e.preventDefault();
+    const raw = address.trim();
+    if (!raw) return clearSite();
+    const url = normalizeSiteUrl(raw);
+    if (!url) {
+      setSiteError({ host: raw, reason: "That doesn’t look like a website address." });
+      return;
+    }
+    const host = new URL(url).hostname;
+    setSiteError(null);
+    setCheckingSite(true);
+    let result: { success: boolean; data?: { url: string }; error?: string } | null = null;
+    try {
+      const res = await fetch(`/api/playground/frame-check?url=${encodeURIComponent(url)}`, { cache: "no-store" });
+      result = await res.json();
+    } catch {
+      // handled below
+    }
+    setCheckingSite(false);
+    if (result?.success && result.data) {
+      setSite(result.data.url);
+      setAddress(host);
+    } else {
+      setSiteError({ host, reason: result?.error || "We couldn’t reach that site. Check the address and try again." });
+    }
+  }
 
   // Which of the three steps the visitor is on.
   const step = docAgent ? 1 : 0;
 
   let overlay: ReactNode = null;
-  if (view.kind === "uploading") {
+  if (siteError) {
+    overlay = (
+      <Notice
+        title="We can’t show this site here"
+        text={`${siteError.host}: ${siteError.reason}`}
+        action={site ? "Back to the preview" : "Show the sample site"}
+        onAction={() => setSiteError(null)}
+      />
+    );
+  } else if (view.kind === "uploading") {
     overlay = <Progress title="Uploading your document…" fileName={view.fileName} percent={5} />;
   } else if (session && processing) {
     overlay = (
@@ -229,6 +357,8 @@ export default function PlayDemo() {
     );
   } else if (docAgent && loadedSrc !== previewSrc) {
     overlay = <Progress title="Starting your document agent…" fileName={session?.document.fileName ?? ""} percent={100} />;
+  } else if (siteHost && loadedSrc !== previewSrc) {
+    overlay = <Progress title={`Loading ${siteHost}…`} fileName="" percent={100} hint="Your site appears here with the Lumjha chat in the corner." />;
   }
 
   return (
@@ -239,21 +369,38 @@ export default function PlayDemo() {
       <div className="rounded-2xl border border-line bg-white shadow-[0_10px_30px_-12px_rgba(0,121,242,0.18)]">
         {/* toolbar: upload on the left, which agent is answering on the right */}
         <div className="relative flex min-h-[60px] flex-wrap items-center gap-x-4 gap-y-2 border-b border-slate-200 px-3 py-2.5 sm:px-4">
-          {busy ? (
+          {toolbarProgress ? (
             <div className="flex min-w-0 flex-1 items-center gap-3">
               <span className="h-4 w-4 shrink-0 animate-spin rounded-full border-2 border-[#5675FF]/25 border-t-[#5675FF]" aria-hidden />
               <span className="min-w-0 truncate text-sm font-medium text-[#0B1526]">
-                {view.kind === "uploading" ? view.fileName : session?.document.fileName}
+                {toolbarProgress.adding ? `Adding ${toolbarProgress.name}` : toolbarProgress.name}
               </span>
-              <ProgressBar percent={view.kind === "uploading" ? 5 : Math.max(10, session?.progress ?? 0)} className="w-24 shrink-0 sm:w-36" />
+              <ProgressBar percent={toolbarProgress.percent} className="w-24 shrink-0 sm:w-36" />
             </div>
           ) : (
             <>
+              {/* a second document for the chat the visitor is already in */}
+              {docAgent && session?.canAddDocument && (
+                <button
+                  type="button"
+                  aria-expanded={pickerOpen && pickerMode === "add"}
+                  aria-controls="play-upload"
+                  onClick={() => togglePicker("add")}
+                  title="The chat will answer from both documents"
+                  className="inline-flex h-10 shrink-0 items-center gap-2 rounded-lg bg-[#5675FF] px-4 text-sm font-semibold text-white shadow-[0_6px_18px_-8px_rgba(86,117,255,0.8)] transition hover:bg-[#4562f0]"
+                >
+                  <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" aria-hidden>
+                    <path d="M12 5v14M5 12h14" />
+                  </svg>
+                  Add another document
+                </button>
+              )}
               <button
                 type="button"
-                aria-expanded={pickerOpen}
+                aria-expanded={pickerOpen && pickerMode === "new"}
                 aria-controls="play-upload"
-                onClick={() => (failed ? reset(true) : setPickerOpen((o) => !o))}
+                onClick={() => (failed ? reset(true) : togglePicker("new"))}
+                title={docAgent ? "Start a new chat with a different document" : undefined}
                 className={`inline-flex h-10 shrink-0 items-center gap-2 rounded-lg px-4 text-sm font-semibold transition ${
                   docAgent
                     ? "border border-[#5675FF]/40 text-[#3E63F2] hover:border-[#5675FF] hover:bg-[#F4F6FF]"
@@ -264,16 +411,23 @@ export default function PlayDemo() {
                   <path d="M12 16V4m0 0-4 4m4-4 4 4" />
                   <path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
                 </svg>
-                {docAgent ? "Upload another" : "Upload your document"}
+                {docAgent ? "New chat" : "Upload your document"}
               </button>
               {pickerOpen && (
                 <UploadPicker
                   consent={consent}
                   onConsent={setConsent}
-                  onFile={upload}
+                  onFile={pickerMode === "add" ? addDocument : upload}
                   onToken={setToken}
                   error={error}
                   onClose={closePicker}
+                  hint={
+                    pickerMode === "add"
+                      ? "Adds to this chat — it will answer from both documents."
+                      : docAgent
+                        ? "Starts a new chat that answers only from this file."
+                        : undefined
+                  }
                 />
               )}
             </>
@@ -282,9 +436,8 @@ export default function PlayDemo() {
           <div className="ml-auto flex min-w-0 items-center gap-3 text-xs">
             {docAgent && session ? (
               <>
-                <span className="flex min-w-0 items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 font-medium text-emerald-700">
-                  <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500" aria-hidden />
-                  <span className="truncate">Answering from {session.document.fileName}</span>
+                <span className="flex min-w-0 items-center rounded-full bg-emerald-50 px-2.5 py-1 font-medium text-emerald-700">
+                  <span className="truncate">Answering from {readyNames.join(" and ")}</span>
                 </span>
                 <button type="button" onClick={() => reset()} className="shrink-0 font-semibold text-[#5675FF] hover:underline">
                   Back to demo
@@ -300,30 +453,69 @@ export default function PlayDemo() {
 
         {/* browser chrome + sample site */}
         <div className="overflow-hidden rounded-b-2xl">
-          <div className="flex h-10 items-center gap-3 border-b border-slate-200 bg-slate-100 px-4">
+          <div className="flex h-11 items-center gap-3 border-b border-slate-200 bg-slate-100 px-4">
             <span className="flex gap-1.5" aria-hidden>
               <span className="h-3 w-3 rounded-full bg-[#FF5F57]" />
               <span className="h-3 w-3 rounded-full bg-[#FEBC2E]" />
               <span className="h-3 w-3 rounded-full bg-[#28C840]" />
             </span>
-            <span className="flex h-6 min-w-0 flex-1 items-center gap-1.5 rounded-md bg-white px-3 text-xs text-slate-500 ring-1 ring-slate-200">
-              <svg viewBox="0 0 24 24" className="h-3 w-3 shrink-0" fill="none" stroke="currentColor" strokeWidth={2.2} aria-hidden>
-                <rect x="5" y="11" width="14" height="10" rx="2" />
-                <path d="M8 11V8a4 4 0 0 1 8 0v3" />
-              </svg>
-              <span className="truncate">northwindhomes.com</span>
-            </span>
+            {/* a real address bar: type a website to preview the widget on it */}
+            <form
+              onSubmit={showSite}
+              className="flex h-7 min-w-0 flex-1 items-center gap-1.5 rounded-md bg-white pl-3 pr-1 text-slate-500 ring-1 ring-slate-200 focus-within:ring-2 focus-within:ring-[#5675FF]/50"
+            >
+              {checkingSite ? (
+                <span className="h-3 w-3 shrink-0 animate-spin rounded-full border-[1.5px] border-[#5675FF]/25 border-t-[#5675FF]" aria-hidden />
+              ) : (
+                <svg viewBox="0 0 24 24" className="h-3 w-3 shrink-0" fill="none" stroke="currentColor" strokeWidth={2.2} aria-hidden>
+                  <rect x="5" y="11" width="14" height="10" rx="2" />
+                  <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+                </svg>
+              )}
+              <input
+                type="text"
+                inputMode="url"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder="Type your website to preview it, e.g. yourbusiness.com"
+                aria-label="Website address"
+                autoComplete="url"
+                autoCapitalize="off"
+                spellCheck={false}
+                className="min-w-0 flex-1 bg-transparent text-[16px] text-slate-700 outline-none placeholder:text-slate-400 sm:text-[13px]"
+              />
+              {site && (
+                <button
+                  type="button"
+                  onClick={clearSite}
+                  title="Back to the sample site"
+                  aria-label="Back to the sample site"
+                  className="flex h-5 w-5 shrink-0 items-center justify-center rounded text-slate-400 hover:bg-slate-100 hover:text-slate-600"
+                >
+                  <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" aria-hidden>
+                    <path d="M6 6l12 12M18 6 6 18" />
+                  </svg>
+                </button>
+              )}
+              <button
+                type="submit"
+                disabled={checkingSite}
+                className="shrink-0 rounded px-2 py-0.5 text-xs font-semibold text-[#5675FF] hover:bg-[#F4F6FF] disabled:opacity-50"
+              >
+                Go
+              </button>
+            </form>
           </div>
           <div className="relative">
             <iframe
               key={previewSrc}
               src={previewSrc}
-              title={docAgent ? "Sample website with a chat agent for your document" : "Sample website with the Lumjha chat widget"}
+              title={siteHost ? `${siteHost} with the Lumjha chat widget` : docAgent ? "Sample website with a chat agent for your document" : "Sample website with the Lumjha chat widget"}
               loading="lazy"
               allow="microphone; clipboard-write"
               onLoad={() => setLoadedSrc(previewSrc)}
               scrolling="no"
-              className="block h-[560px] w-full md:h-[640px]"
+              className="block h-[620px] w-full md:h-[760px]"
             />
             {/* covers the demo agent while a document is on its way, so it's clear which agent is answering */}
             {overlay && (
@@ -397,6 +589,7 @@ function UploadPicker({
   onToken,
   error,
   onClose,
+  hint,
 }: {
   consent: boolean;
   onConsent: (value: boolean) => void;
@@ -404,6 +597,8 @@ function UploadPicker({
   onToken: (token: string | null) => void;
   error: string | null;
   onClose: () => void;
+  /** What this upload will do (add to the chat, or start a new one). */
+  hint?: string;
 }) {
   const [dragging, setDragging] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -439,6 +634,7 @@ function UploadPicker({
       id="play-upload"
       className="absolute left-3 top-[calc(100%+8px)] z-20 w-[min(360px,calc(100%-24px))] rounded-2xl border border-slate-200 bg-white p-4 text-center shadow-[0_24px_60px_-20px_rgba(11,21,38,0.35)] sm:left-4"
     >
+      {hint && <p className="mb-3 text-left text-xs font-medium text-[#3E63F2]">{hint}</p>}
       <label
         onDragOver={(e) => {
           e.preventDefault();
@@ -523,14 +719,24 @@ function ProgressBar({ percent, className = "" }: { percent: number; className?:
   );
 }
 
-function Progress({ title, fileName, percent }: { title: string; fileName: string; percent: number }) {
+function Progress({
+  title,
+  fileName,
+  percent,
+  hint = "The chat switches to your document as soon as it’s ready.",
+}: {
+  title: string;
+  fileName: string;
+  percent: number;
+  hint?: string;
+}) {
   return (
     <div className="flex flex-col items-center gap-3 px-5 py-7 text-center" aria-live="polite">
       <span className="h-10 w-10 animate-spin rounded-full border-[3px] border-[#5675FF]/25 border-t-[#5675FF]" aria-hidden />
       <p className="text-lg font-bold text-[#0B1526]">{title}</p>
       {fileName && <p className="max-w-full truncate text-sm text-slate-600">{fileName}</p>}
       <ProgressBar percent={percent} className="w-full max-w-[220px]" />
-      <p className="text-xs leading-relaxed text-slate-500">The chat switches to your document as soon as it’s ready.</p>
+      <p className="text-xs leading-relaxed text-slate-500">{hint}</p>
     </div>
   );
 }

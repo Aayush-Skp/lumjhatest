@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import WidgetLoader from "@/components/site/WidgetLoader";
-import { AGENT_SUBDOMAIN } from "@/lib/playground";
+import { AGENT_SUBDOMAIN, normalizeSiteUrl } from "@/lib/playground";
 
 /**
  * A sample business website with the real Lumjha chat widget installed — the
  * page Lumjha Play frames so visitors see the widget as it sits on a site.
  *
  * `?agent=` picks the agent (a visitor's document agent); without it, the
- * shared demo agent. `?open=1` starts with the chat open. Hosts come from the
+ * shared demo agent. `?open=1` starts with the chat open. `?site=` shows a
+ * visitor's own website (checked frameable by /api/playground/frame-check)
+ * full-size instead of the sample, with the widget on top. Hosts come from the
  * server environment only, so the page can never be made to load a script
  * from anywhere else.
  */
@@ -40,6 +42,25 @@ export default async function WebsitePreviewPage({ searchParams }: { searchParam
   const requested = typeof params.agent === "string" ? params.agent : "";
   const subdomain = AGENT_SUBDOMAIN.test(requested) ? requested : DEMO_AGENT;
   const open = params.open === "1";
+  const site = normalizeSiteUrl(typeof params.site === "string" ? params.site : null);
+  const widget = <WidgetLoader subdomain={subdomain} appHost={APP_HOST} apiHost={API_HOST} chatApiHost={CHAT_API_HOST} open={open} />;
+
+  if (site) {
+    return (
+      <div className="h-screen bg-white">
+        <style>{"html,body{overflow:hidden}"}</style>
+        {/* their site scrolls inside its own frame; no top navigation, so it can't take over the page */}
+        <iframe
+          src={site}
+          title="Your website"
+          sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+          referrerPolicy="no-referrer"
+          className="block h-full w-full border-0"
+        />
+        {widget}
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white font-sans text-slate-700 antialiased">
@@ -73,7 +94,7 @@ export default async function WebsitePreviewPage({ searchParams }: { searchParam
             </h1>
             <p className="mt-4 max-w-lg text-[15px] leading-relaxed text-slate-600">
               Kitchens, bathrooms and extensions across the city. Questions about pricing, timelines or
-              permits? Ask our assistant any time — it’s in the corner of this page.
+              permits? Ask our assistant any time - it’s in the corner of this page.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <span className="rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white">Book a consultation</span>
@@ -113,7 +134,7 @@ export default async function WebsitePreviewPage({ searchParams }: { searchParam
         </div>
       </footer>
 
-      <WidgetLoader subdomain={subdomain} appHost={APP_HOST} apiHost={API_HOST} chatApiHost={CHAT_API_HOST} open={open} />
+      {widget}
     </div>
   );
 }

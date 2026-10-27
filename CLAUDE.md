@@ -83,6 +83,8 @@ The Play upload talks to the Lumjha API through `app/api/playground/*` (server-s
 - `LUMJHA_PLAY_DEMO_AGENT` — subdomain of the demo agent shown before an upload (default `bedrocktest`)
 - For staging, point all four at staging (e.g. `LUMJHA_APP_HOST=https://stg.app.lumjha.ai`).
 - `app/play-area/preview` is the sample website Play frames; the real widget runs inside it.
+  With `?site=` it frames a visitor's own site instead. `api/playground/frame-check`
+  decides whether that site allows framing; it only fetches public addresses on ports 80/443.
 - `NEXT_PUBLIC_TURNSTILE_SITE_KEY` + `TURNSTILE_SECRET_KEY` — optional Cloudflare Turnstile
 - Bump `PLAYGROUND_CONSENT_VERSION` in `lib/playground.ts` whenever the upload notice text changes.
 
