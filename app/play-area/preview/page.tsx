@@ -43,6 +43,9 @@ export default async function WebsitePreviewPage({ searchParams }: { searchParam
 
   return (
     <div className="min-h-screen bg-white font-sans text-slate-700 antialiased">
+      {/* framed at a fixed height: the sample site never scrolls itself, so the
+          wheel scrolls the Lumjha Play page around it (the chat panel still scrolls) */}
+      <style>{"html,body{overflow:hidden}"}</style>
       <header className="sticky top-0 z-10 border-b border-slate-200 bg-white/95 backdrop-blur">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-3.5">
           <span className="flex items-center gap-2 text-[15px] font-bold tracking-tight text-slate-900">

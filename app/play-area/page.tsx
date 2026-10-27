@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Navbar from "@/components/site/Navbar";
 import Footer from "@/components/site/Footer";
 import CtaPanel from "@/components/site/CtaPanel";
@@ -18,24 +17,6 @@ export const metadata: Metadata = {
 const SHOW_EMAIL_CAPTURE = false;
 
 const A = "/assets/play-area";
-
-const STEPS = [
-  {
-    icon: { src: `${A}/upload-cloud.svg`, width: 97.6635, height: 98 },
-    title: "Upload your content",
-    body: "Add your website, documents or knowledge base. Lumjha learns your information.",
-  },
-  {
-    icon: { src: `${A}/ask-question.svg`, width: 100.653, height: 101 },
-    title: "Ask a question",
-    body: "Type your question or upload a file. Get clear, accurate answers instantly.",
-  },
-  {
-    icon: { src: `${A}/check-circle.svg`, width: 82.715, height: 83 },
-    title: "See the result",
-    body: "Receive helpful, precise answers — with sources when applicable.",
-  },
-];
 
 const ICON = { width: 40, height: 40 };
 
@@ -60,20 +41,15 @@ export default function PlayAreaPage() {
     <div className="min-h-screen bg-page-deep font-sans text-ink antialiased">
       <Navbar />
       <main id="top" className="relative isolate overflow-x-clip">
-        {/* HERO + live demo + steps */}
-        <section className="relative isolate mx-auto w-full max-w-[1440px] px-4 pt-10 text-center sm:px-6 md:pt-12">
+        {/* HERO + live demo */}
+        <section className="relative isolate mx-auto w-full max-w-[1440px] px-4 pt-6 text-center sm:px-6 md:pt-8">
           <Glow className="-left-[21%] top-[8%] h-[622px] w-[651px]" />
           <Glow className="-right-[13%] top-[16%] h-[622px] w-[651px]" />
           <Glow className="left-[2%] top-[9%] h-[423px] w-[89%]" />
 
-          <h1 className="font-heading text-[28px] font-bold leading-tight tracking-tight text-ink sm:text-4xl md:text-[40px] md:leading-[72px]">
+          <h1 className="font-heading text-[28px] font-bold leading-tight tracking-tight text-ink sm:text-4xl md:text-[40px]">
             Test-drive Lumjha in real time.
           </h1>
-          {/* two lines on desktop */}
-          <p className="mx-auto mt-3 max-w-[960px] text-lg leading-relaxed text-balance text-ink sm:text-xl md:mt-3.5 md:leading-9">
-            Try our AI-powered customer agent. Ask a question, explore your knowledge, and see how
-            Lumjha delivers instant, accurate and helpful answers.
-          </p>
 
           {/* TODO(backend): email capture for the demo isn't wired to anything yet */}
           {SHOW_EMAIL_CAPTURE && (
@@ -93,25 +69,10 @@ export default function PlayAreaPage() {
           </label>
           )}
 
-          {/* chat demo + document upload side by side (stacked on mobile);
+          {/* steps on top, sample site + upload below;
               an uploaded document swaps the chat to an agent that answers from it */}
           <PlayDemo />
 
-          {/* how it works — compact step cards right under the demo */}
-          <ol className="mx-auto mt-5 grid w-full max-w-[1058px] gap-4 text-left md:mt-6 md:grid-cols-3 md:gap-5">
-            {STEPS.map((s, i) => (
-              <li key={s.title} className="flex items-start gap-4 rounded-2xl bg-[#5675FF] p-4 md:p-5">
-                <Image src={s.icon.src} alt="" width={s.icon.width} height={s.icon.height} className="h-10 w-10 shrink-0 object-contain" />
-                <div>
-                  <h2 className="text-base font-bold leading-snug text-white md:text-lg">
-                    <span className="sr-only">Step {i + 1}: </span>
-                    {s.title}
-                  </h2>
-                  <p className="mt-1 text-sm leading-relaxed text-white/90">{s.body}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
         </section>
 
         {/* WHY TRY IT */}

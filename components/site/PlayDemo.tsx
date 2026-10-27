@@ -10,10 +10,12 @@ import {
 } from "@/lib/playground";
 
 /**
- * Lumjha Play demo: a sample website with the real chat widget installed,
- * shown in a browser frame, beside an upload box. Before an upload the widget
- * is the shared demo agent; once a visitor's document is read, the sample site
- * reloads with a sandbox agent that answers only from that document, chat open.
+ * Lumjha Play demo: compact steps on top; below them a sample website
+ * with the real chat widget installed, shown in a browser frame, with an
+ * upload button in its toolbar. Before an upload the widget is the shared demo
+ * agent; while a document is read an overlay covers the preview, and once it
+ * is ready the sample site reloads with a sandbox agent that answers only from
+ * that document, chat open.
  *
  * Talks only to this site's /api/playground routes, which hold the API key.
  * The session id is kept in sessionStorage so a reload returns to the chat.
@@ -89,6 +91,9 @@ export default function PlayDemo() {
   const [error, setError] = useState<string | null>(null);
   const [consent, setConsent] = useState(false);
   const [token, setToken] = useState<string | null>(null);
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const [loadedSrc, setLoadedSrc] = useState<string | null>(null);
+  const closePicker = useCallback(() => setPickerOpen(false), []);
 
   const session = view.kind === "session" ? view.session : null;
   const sessionId = session?.sessionId;
@@ -96,6 +101,8 @@ export default function PlayDemo() {
   const docAgent = session?.state === "ready" ? subdomainFromChatUrl(session.chatUrl) : null;
   // One page load per agent: the widget loader cannot be swapped in place.
   const previewSrc = docAgent ? `${PREVIEW_PATH}?agent=${encodeURIComponent(docAgent)}&open=1` : PREVIEW_PATH;
+  const busy = view.kind === "uploading" || processing;
+  const failed = session != null && !processing && !docAgent;
 
   // Back to the same chat after a reload, while it is still usable.
   useEffect(() => {
@@ -164,13 +171,14 @@ export default function PlayDemo() {
         setError("Please complete the verification first.");
         return;
       }
+      setPickerOpen(false);
       setView({ kind: "uploading", fileName: file.name });
       const form = new FormData();
       form.append("file", file);
       form.append("consent", String(consent));
       if (token) form.append("turnstileToken", token);
       const result = await call("/api/playground/sessions", { method: "POST", body: form });
-      // A Turnstile token is single-use; the idle view renders a fresh widget.
+      // A Turnstile token is single-use; the picker renders a fresh widget.
       setToken(null);
       if (result.success && result.data) {
         store(result.data.sessionId);
@@ -178,45 +186,37 @@ export default function PlayDemo() {
       } else {
         setView({ kind: "idle" });
         setError(result.error || "Upload failed. Please try again.");
+        setPickerOpen(true);
       }
     },
     [consent, token],
   );
 
-  const reset = useCallback(() => {
+  const reset = useCallback((openPicker = false) => {
     store(null);
     setError(null);
     setView({ kind: "idle" });
+    setPickerOpen(openPicker);
   }, []);
 
-  let panel: ReactNode;
-  if (view.kind === "idle") {
-    panel = <UploadPanel consent={consent} onConsent={setConsent} onFile={upload} onToken={setToken} error={error} />;
-  } else if (view.kind === "uploading") {
-    panel = <Progress title="Uploading…" fileName={view.fileName} percent={5} />;
-  } else if (view.session.state === "processing") {
-    panel = (
+  // Which of the three steps the visitor is on.
+  const step = docAgent ? 1 : 0;
+
+  let overlay: ReactNode = null;
+  if (view.kind === "uploading") {
+    overlay = <Progress title="Uploading your document…" fileName={view.fileName} percent={5} />;
+  } else if (session && processing) {
+    overlay = (
       <Progress
-        title="Reading your document…"
-        fileName={view.session.document.fileName}
-        percent={Math.max(10, view.session.progress ?? 0)}
+        title="Processing your document…"
+        fileName={session.document.fileName}
+        percent={Math.max(10, session.progress ?? 0)}
       />
     );
-  } else if (docAgent) {
-    panel = (
+  } else if (session && failed) {
+    const expired = session.state === "expired";
+    overlay = (
       <Notice
-        tone="ok"
-        title="Ready — ask away"
-        text={`The chat on the sample site now answers from ${view.session.document.fileName}. It stays available for 24 hours.`}
-        action="Upload another document"
-        onAction={reset}
-      />
-    );
-  } else {
-    const expired = view.session.state === "expired";
-    panel = (
-      <Notice
-        tone="warn"
         title={expired ? "This chat has ended" : "We couldn’t read that document"}
         text={
           expired
@@ -224,72 +224,206 @@ export default function PlayDemo() {
             : "It may be scanned, password-protected or empty. Try another file."
         }
         action="Try another document"
-        onAction={reset}
+        onAction={() => reset(true)}
       />
     );
+  } else if (docAgent && loadedSrc !== previewSrc) {
+    overlay = <Progress title="Starting your document agent…" fileName={session?.document.fileName ?? ""} percent={100} />;
   }
 
   return (
-    <div className="mx-auto mt-10 grid w-full max-w-[1058px] gap-5 md:mt-14 lg:grid-cols-[minmax(0,1fr)_300px]">
-      {/* browser window around the sample site, so the widget reads as installed on a real page */}
-      <div className="flex flex-col overflow-hidden rounded-2xl border border-line bg-white text-left shadow-[0_10px_30px_-12px_rgba(0,121,242,0.18)]">
-        <div className="flex h-11 shrink-0 items-center gap-3 border-b border-slate-200 bg-slate-100 px-4">
-          <span className="flex gap-1.5" aria-hidden>
-            <span className="h-3 w-3 rounded-full bg-[#FF5F57]" />
-            <span className="h-3 w-3 rounded-full bg-[#FEBC2E]" />
-            <span className="h-3 w-3 rounded-full bg-[#28C840]" />
-          </span>
-          <span className="flex h-7 min-w-0 flex-1 items-center gap-1.5 rounded-md bg-white px-3 text-xs text-slate-500 ring-1 ring-slate-200">
-            <svg viewBox="0 0 24 24" className="h-3 w-3 shrink-0" fill="none" stroke="currentColor" strokeWidth={2.2} aria-hidden>
-              <rect x="5" y="11" width="14" height="10" rx="2" />
-              <path d="M8 11V8a4 4 0 0 1 8 0v3" />
-            </svg>
-            <span className="truncate">northwindhomes.com</span>
-          </span>
-          {docAgent && session ? (
-            <button
-              type="button"
-              onClick={reset}
-              title={`Answering from ${session.document.fileName}`}
-              className="shrink-0 text-xs font-semibold text-[#5675FF] hover:underline"
-            >
-              Back to demo agent
-            </button>
-          ) : (
-            <span className="hidden shrink-0 text-xs font-medium text-slate-500 sm:inline">Live preview</span>
-          )}
-        </div>
-        <iframe
-          key={previewSrc}
-          src={previewSrc}
-          title={docAgent ? "Sample website with a chat agent for your document" : "Sample website with the Lumjha chat widget"}
-          loading="lazy"
-          allow="microphone; clipboard-write"
-          className="block h-[560px] w-full md:h-[680px]"
-        />
-      </div>
+    <div className="mx-auto mt-5 flex w-full max-w-[1160px] flex-col gap-4 text-left md:mt-6">
+      <PlaySteps current={step} busy={busy} />
 
-      <div className="flex min-h-[220px] flex-col rounded-2xl border-2 border-dashed border-[#5675FF]/60 bg-white shadow-[0_10px_30px_-12px_rgba(0,121,242,0.18)] lg:min-h-0">
-        {panel}
+      {/* the sample site with the real widget, framed as a browser window */}
+      <div className="rounded-2xl border border-line bg-white shadow-[0_10px_30px_-12px_rgba(0,121,242,0.18)]">
+        {/* toolbar: upload on the left, which agent is answering on the right */}
+        <div className="relative flex min-h-[60px] flex-wrap items-center gap-x-4 gap-y-2 border-b border-slate-200 px-3 py-2.5 sm:px-4">
+          {busy ? (
+            <div className="flex min-w-0 flex-1 items-center gap-3">
+              <span className="h-4 w-4 shrink-0 animate-spin rounded-full border-2 border-[#5675FF]/25 border-t-[#5675FF]" aria-hidden />
+              <span className="min-w-0 truncate text-sm font-medium text-[#0B1526]">
+                {view.kind === "uploading" ? view.fileName : session?.document.fileName}
+              </span>
+              <ProgressBar percent={view.kind === "uploading" ? 5 : Math.max(10, session?.progress ?? 0)} className="w-24 shrink-0 sm:w-36" />
+            </div>
+          ) : (
+            <>
+              <button
+                type="button"
+                aria-expanded={pickerOpen}
+                aria-controls="play-upload"
+                onClick={() => (failed ? reset(true) : setPickerOpen((o) => !o))}
+                className={`inline-flex h-10 shrink-0 items-center gap-2 rounded-lg px-4 text-sm font-semibold transition ${
+                  docAgent
+                    ? "border border-[#5675FF]/40 text-[#3E63F2] hover:border-[#5675FF] hover:bg-[#F4F6FF]"
+                    : "bg-[#5675FF] text-white shadow-[0_6px_18px_-8px_rgba(86,117,255,0.8)] hover:bg-[#4562f0]"
+                }`}
+              >
+                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                  <path d="M12 16V4m0 0-4 4m4-4 4 4" />
+                  <path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
+                </svg>
+                {docAgent ? "Upload another" : "Upload your document"}
+              </button>
+              {pickerOpen && (
+                <UploadPicker
+                  consent={consent}
+                  onConsent={setConsent}
+                  onFile={upload}
+                  onToken={setToken}
+                  error={error}
+                  onClose={closePicker}
+                />
+              )}
+            </>
+          )}
+
+          <div className="ml-auto flex min-w-0 items-center gap-3 text-xs">
+            {docAgent && session ? (
+              <>
+                <span className="flex min-w-0 items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 font-medium text-emerald-700">
+                  <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500" aria-hidden />
+                  <span className="truncate">Answering from {session.document.fileName}</span>
+                </span>
+                <button type="button" onClick={() => reset()} className="shrink-0 font-semibold text-[#5675FF] hover:underline">
+                  Back to demo
+                </button>
+              </>
+            ) : busy ? (
+              <span className="font-medium text-slate-500">This takes about a minute</span>
+            ) : (
+              <span className="hidden font-medium text-slate-500 sm:inline">Chatting with the demo agent</span>
+            )}
+          </div>
+        </div>
+
+        {/* browser chrome + sample site */}
+        <div className="overflow-hidden rounded-b-2xl">
+          <div className="flex h-10 items-center gap-3 border-b border-slate-200 bg-slate-100 px-4">
+            <span className="flex gap-1.5" aria-hidden>
+              <span className="h-3 w-3 rounded-full bg-[#FF5F57]" />
+              <span className="h-3 w-3 rounded-full bg-[#FEBC2E]" />
+              <span className="h-3 w-3 rounded-full bg-[#28C840]" />
+            </span>
+            <span className="flex h-6 min-w-0 flex-1 items-center gap-1.5 rounded-md bg-white px-3 text-xs text-slate-500 ring-1 ring-slate-200">
+              <svg viewBox="0 0 24 24" className="h-3 w-3 shrink-0" fill="none" stroke="currentColor" strokeWidth={2.2} aria-hidden>
+                <rect x="5" y="11" width="14" height="10" rx="2" />
+                <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+              </svg>
+              <span className="truncate">northwindhomes.com</span>
+            </span>
+          </div>
+          <div className="relative">
+            <iframe
+              key={previewSrc}
+              src={previewSrc}
+              title={docAgent ? "Sample website with a chat agent for your document" : "Sample website with the Lumjha chat widget"}
+              loading="lazy"
+              allow="microphone; clipboard-write"
+              onLoad={() => setLoadedSrc(previewSrc)}
+              scrolling="no"
+              className="block h-[560px] w-full md:h-[640px]"
+            />
+            {/* covers the demo agent while a document is on its way, so it's clear which agent is answering */}
+            {overlay && (
+              <div className="absolute inset-0 flex items-center justify-center bg-white/85 p-6 backdrop-blur-sm">
+                <div className="w-full max-w-[340px] rounded-2xl border border-slate-200 bg-white shadow-[0_10px_30px_-12px_rgba(0,121,242,0.18)]">
+                  {overlay}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
 }
 
-function UploadPanel({
+const STEPS = [
+  { title: "Upload your document", body: "PDF, DOCX, TXT or MD, up to 1MB." },
+  { title: "Ask a question", body: "Use the chat on the sample site." },
+  { title: "See the result", body: "Answers come straight from your file." },
+];
+
+/** Compact horizontal steps above the preview (stacked on mobile); follows the demo's progress. */
+function PlaySteps({ current, busy }: { current: number; busy: boolean }) {
+  return (
+    <ol className="flex flex-col gap-4 rounded-2xl border border-line bg-surface/60 px-5 py-4 backdrop-blur md:flex-row md:items-center md:gap-0">
+      {STEPS.map((s, i) => {
+        const done = i < current;
+        const active = i === current;
+        const last = i === STEPS.length - 1;
+        return (
+          <li key={s.title} className={`flex items-center gap-3 ${last ? "" : "md:flex-1"}`}>
+            <span
+              className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[13px] font-bold transition ${
+                done || active ? "bg-[#5675FF] text-white" : "border border-line text-subtle"
+              } ${active ? "ring-4 ring-[#5675FF]/20" : ""}`}
+            >
+              {done ? (
+                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2.6} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                  <path d="m5 12 5 5 9-10" />
+                </svg>
+              ) : (
+                i + 1
+              )}
+            </span>
+            <div className="min-w-0 md:max-w-[230px]">
+              <p className={`text-[15px] font-semibold leading-snug ${done || active ? "text-ink" : "text-muted"}`}>
+                <span className="sr-only">{done ? "Done: " : active ? "Current step: " : ""}</span>
+                {s.title}
+              </p>
+              <p className="text-[13px] leading-relaxed text-subtle">
+                {active && busy && i === 0 ? "Processing your document…" : s.body}
+              </p>
+            </div>
+            {/* connector to the next step */}
+            {!last && (
+              <span aria-hidden className={`mx-4 hidden h-px min-w-6 flex-1 md:block ${done ? "bg-[#5675FF]" : "bg-line"}`} />
+            )}
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
+
+/** Drop zone + consent, opened from the toolbar's upload button. */
+function UploadPicker({
   consent,
   onConsent,
   onFile,
   onToken,
   error,
+  onClose,
 }: {
   consent: boolean;
   onConsent: (value: boolean) => void;
   onFile: (file: File) => void;
   onToken: (token: string | null) => void;
   error: string | null;
+  onClose: () => void;
 }) {
   const [dragging, setDragging] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  // Close on Escape or a click outside (the toolbar button toggles it itself).
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    const onDown = (e: MouseEvent) => {
+      const target = e.target as Node;
+      if (ref.current?.contains(target)) return;
+      if ((target as Element).closest?.('[aria-controls="play-upload"]')) return;
+      onClose();
+    };
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("mousedown", onDown);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("mousedown", onDown);
+    };
+  }, [onClose]);
 
   function onDrop(e: DragEvent<HTMLLabelElement>) {
     e.preventDefault();
@@ -300,7 +434,11 @@ function UploadPanel({
   }
 
   return (
-    <div className="flex flex-1 flex-col px-5 py-6 text-center">
+    <div
+      ref={ref}
+      id="play-upload"
+      className="absolute left-3 top-[calc(100%+8px)] z-20 w-[min(360px,calc(100%-24px))] rounded-2xl border border-slate-200 bg-white p-4 text-center shadow-[0_24px_60px_-20px_rgba(11,21,38,0.35)] sm:left-4"
+    >
       <label
         onDragOver={(e) => {
           e.preventDefault();
@@ -312,22 +450,22 @@ function UploadPanel({
         }}
         onDrop={onDrop}
         aria-disabled={!consent}
-        className={`group flex flex-1 flex-col items-center justify-center rounded-xl px-2 py-2 transition ${
-          !consent ? "cursor-not-allowed opacity-60" : dragging ? "cursor-pointer bg-[#EEF2FF]" : "cursor-pointer hover:bg-[#F4F6FF]"
+        className={`group flex flex-col items-center justify-center rounded-xl border-2 border-dashed px-4 py-6 transition ${
+          !consent
+            ? "cursor-not-allowed border-slate-200 opacity-60"
+            : dragging
+              ? "cursor-pointer border-[#5675FF] bg-[#EEF2FF]"
+              : "cursor-pointer border-[#5675FF]/50 hover:border-[#5675FF] hover:bg-[#F4F6FF]"
         }`}
       >
-        <span className="flex h-14 w-14 items-center justify-center rounded-full bg-[#5675FF]/10 text-[#5675FF] transition group-hover:bg-[#5675FF]/15">
-          <svg viewBox="0 0 24 24" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+        <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#5675FF]/10 text-[#5675FF]">
+          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
             <path d="M12 16V4m0 0-4 4m4-4 4 4" />
             <path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
           </svg>
         </span>
-        <span className="mt-4 text-lg font-bold text-[#0B1526]">{dragging ? "Drop it here" : "Upload a document"}</span>
-        <span className="mt-1.5 text-sm leading-relaxed text-slate-600">
-          Drag a file here, then ask the agent questions about it.
-        </span>
-        <span className="mt-5 rounded-full bg-[#5675FF] px-5 py-2 text-sm font-semibold text-white">Choose file</span>
-        <span className="mt-3 text-xs text-slate-500">PDF, DOCX, TXT or MD · up to 1MB</span>
+        <span className="mt-3 text-[15px] font-bold text-[#0B1526]">{dragging ? "Drop it here" : "Drag a file here or browse"}</span>
+        <span className="mt-1 text-xs text-slate-500">PDF, DOCX, TXT or MD · up to 1MB</span>
         <input
           type="file"
           name="document"
@@ -342,7 +480,7 @@ function UploadPanel({
         />
       </label>
 
-      <label className="mt-4 flex items-start gap-2 text-left text-xs leading-relaxed text-slate-600">
+      <label className="mt-3 flex items-start gap-2 text-left text-xs leading-relaxed text-slate-600">
         <input
           type="checkbox"
           checked={consent}
@@ -364,56 +502,45 @@ function UploadPanel({
         </div>
       )}
 
-      <span aria-live="polite" className="mt-2 min-h-4 text-xs">
+      <span aria-live="polite" className="mt-2 block min-h-4 text-left text-xs">
         {error && <span className="text-red-600">{error}</span>}
       </span>
     </div>
   );
 }
 
-function Progress({ title, fileName, percent }: { title: string; fileName: string; percent: number }) {
+function ProgressBar({ percent, className = "" }: { percent: number; className?: string }) {
   return (
-    <div className="flex flex-1 flex-col items-center justify-center gap-3 px-5 py-8 text-center" aria-live="polite">
-      <span className="h-10 w-10 animate-spin rounded-full border-[3px] border-[#5675FF]/25 border-t-[#5675FF]" aria-hidden />
-      <p className="text-lg font-bold text-[#0B1526]">{title}</p>
-      <p className="max-w-full truncate text-sm text-slate-600">{fileName}</p>
-      <div
-        className="h-1.5 w-full max-w-[220px] overflow-hidden rounded-full bg-slate-200"
-        role="progressbar"
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(percent)}
-      >
-        <div className="h-full rounded-full bg-[#5675FF] transition-[width] duration-500" style={{ width: `${percent}%` }} />
-      </div>
-      <p className="text-xs text-slate-500">The chat switches to your document as soon as it’s ready.</p>
+    <div
+      className={`h-1.5 overflow-hidden rounded-full bg-slate-200 ${className}`}
+      role="progressbar"
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={Math.round(percent)}
+    >
+      <div className="h-full rounded-full bg-[#5675FF] transition-[width] duration-500" style={{ width: `${percent}%` }} />
     </div>
   );
 }
 
-function Notice({
-  tone,
-  title,
-  text,
-  action,
-  onAction,
-}: {
-  tone: "ok" | "warn";
-  title: string;
-  text: string;
-  action: string;
-  onAction: () => void;
-}) {
+function Progress({ title, fileName, percent }: { title: string; fileName: string; percent: number }) {
   return (
-    <div className="flex flex-1 flex-col items-center justify-center gap-3 px-5 py-8 text-center" role="status">
-      <span
-        className={`flex h-12 w-12 items-center justify-center rounded-full ${
-          tone === "ok" ? "bg-emerald-50 text-emerald-600" : "bg-amber-50 text-amber-600"
-        }`}
-        aria-hidden
-      >
+    <div className="flex flex-col items-center gap-3 px-5 py-7 text-center" aria-live="polite">
+      <span className="h-10 w-10 animate-spin rounded-full border-[3px] border-[#5675FF]/25 border-t-[#5675FF]" aria-hidden />
+      <p className="text-lg font-bold text-[#0B1526]">{title}</p>
+      {fileName && <p className="max-w-full truncate text-sm text-slate-600">{fileName}</p>}
+      <ProgressBar percent={percent} className="w-full max-w-[220px]" />
+      <p className="text-xs leading-relaxed text-slate-500">The chat switches to your document as soon as it’s ready.</p>
+    </div>
+  );
+}
+
+function Notice({ title, text, action, onAction }: { title: string; text: string; action: string; onAction: () => void }) {
+  return (
+    <div className="flex flex-col items-center gap-3 px-5 py-7 text-center" role="status">
+      <span className="flex h-12 w-12 items-center justify-center rounded-full bg-amber-50 text-amber-600" aria-hidden>
         <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-          {tone === "ok" ? <path d="m5 12 5 5 9-10" /> : <path d="M12 8v5m0 3.5v.5M12 3l9.5 17h-19z" />}
+          <path d="M12 8v5m0 3.5v.5M12 3l9.5 17h-19z" />
         </svg>
       </span>
       <p className="text-lg font-bold text-[#0B1526]">{title}</p>
@@ -421,7 +548,7 @@ function Notice({
       <button
         type="button"
         onClick={onAction}
-        className="mt-2 rounded-full bg-[#5675FF] px-5 py-2 text-sm font-semibold text-white transition hover:bg-[#4562f0]"
+        className="mt-2 rounded-lg bg-[#5675FF] px-5 py-2 text-sm font-semibold text-white transition hover:bg-[#4562f0]"
       >
         {action}
       </button>
