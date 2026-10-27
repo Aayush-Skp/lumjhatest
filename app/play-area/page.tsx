@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Navbar from "@/components/site/Navbar";
 import Footer from "@/components/site/Footer";
 import CtaPanel from "@/components/site/CtaPanel";
+import PlayDemo from "@/components/site/PlayDemo";
 import WaveGlow from "@/components/site/WaveGlow";
-import { BenefitGrid, StepCards } from "@/components/site/ProductSections";
+import { BenefitGrid } from "@/components/site/ProductSections";
 import BlueButton from "@/components/ui/BlueButton";
 
 export const metadata: Metadata = {
@@ -11,9 +13,6 @@ export const metadata: Metadata = {
   description:
     "Test-drive Lumjha in real time. Ask a question and see how Lumjha delivers instant, accurate and helpful answers.",
 };
-
-/** Live agent embedded in the demo window (the app allows framing). */
-const SANDBOX_CHAT_URL = "https://stg.app.lumjha.ai/chat/bedrocktest";
 
 /** Email capture above the demo — hidden until it's wired to a backend. */
 const SHOW_EMAIL_CAPTURE = false;
@@ -61,8 +60,8 @@ export default function PlayAreaPage() {
     <div className="min-h-screen bg-page-deep font-sans text-ink antialiased">
       <Navbar />
       <main id="top" className="relative isolate overflow-x-clip">
-        {/* HERO + live demo */}
-        <section className="relative isolate mx-auto w-full max-w-[1440px] px-4 pb-16 pt-10 text-center sm:px-6 md:pb-24 md:pt-12">
+        {/* HERO + live demo + steps */}
+        <section className="relative isolate mx-auto w-full max-w-[1440px] px-4 pt-10 text-center sm:px-6 md:pt-12">
           <Glow className="-left-[21%] top-[8%] h-[622px] w-[651px]" />
           <Glow className="-right-[13%] top-[16%] h-[622px] w-[651px]" />
           <Glow className="left-[2%] top-[9%] h-[423px] w-[89%]" />
@@ -70,7 +69,8 @@ export default function PlayAreaPage() {
           <h1 className="font-heading text-[28px] font-bold leading-tight tracking-tight text-ink sm:text-4xl md:text-[40px] md:leading-[72px]">
             Test-drive Lumjha in real time.
           </h1>
-          <p className="mx-auto mt-3 max-w-[1024px] text-lg leading-relaxed text-balance text-ink sm:text-xl md:mt-3.5 md:text-[28px] md:leading-9">
+          {/* two lines on desktop */}
+          <p className="mx-auto mt-3 max-w-[960px] text-lg leading-relaxed text-balance text-ink sm:text-xl md:mt-3.5 md:leading-9">
             Try our AI-powered customer agent. Ask a question, explore your knowledge, and see how
             Lumjha delivers instant, accurate and helpful answers.
           </p>
@@ -93,33 +93,26 @@ export default function PlayAreaPage() {
           </label>
           )}
 
-          <div className="mx-auto mt-10 w-full max-w-[1058px] overflow-hidden rounded-2xl border border-line bg-white shadow-[0_30px_90px_-30px_rgba(0,121,242,0.55)] md:mt-14">
-            <iframe
-              src={SANDBOX_CHAT_URL}
-              title="Lumjha AI Chat Agent — live demo"
-              loading="lazy"
-              allow="microphone; clipboard-write"
-              className="block h-[480px] w-full md:h-[556px]"
-            />
-          </div>
-        </section>
+          {/* chat demo + document upload side by side (stacked on mobile);
+              an uploaded document swaps the chat to an agent that answers from it */}
+          <PlayDemo />
 
-        {/* HOW IT WORKS */}
-        <div className="relative isolate">
-          <Glow className="-left-[18%] top-0 h-[747px] w-[802px]" />
-          <Glow className="-right-[14%] -top-[6%] h-[761px] w-[934px]" />
-          <StepCards
-            title="HOW IT WORKS"
-            subtitle={
-              <>
-                Get answers in 3 simple steps
-                <br />
-                No setup. No technical skills. Just upload, ask and get instant answers.
-              </>
-            }
-            steps={STEPS}
-          />
-        </div>
+          {/* how it works — compact step cards right under the demo */}
+          <ol className="mx-auto mt-5 grid w-full max-w-[1058px] gap-4 text-left md:mt-6 md:grid-cols-3 md:gap-5">
+            {STEPS.map((s, i) => (
+              <li key={s.title} className="flex items-start gap-4 rounded-2xl bg-[#5675FF] p-4 md:p-5">
+                <Image src={s.icon.src} alt="" width={s.icon.width} height={s.icon.height} className="h-10 w-10 shrink-0 object-contain" />
+                <div>
+                  <h2 className="text-base font-bold leading-snug text-white md:text-lg">
+                    <span className="sr-only">Step {i + 1}: </span>
+                    {s.title}
+                  </h2>
+                  <p className="mt-1 text-sm leading-relaxed text-white/90">{s.body}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
 
         {/* WHY TRY IT */}
         <div className="relative isolate">

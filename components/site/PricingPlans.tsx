@@ -13,12 +13,14 @@ type Feature = { text: string; strong?: boolean; exclusive?: boolean };
 type Plan = {
   name: string;
   audience: string;
-  /** Per-month price for each billing cycle (Free is $0 on both). */
+  /** Per-month price for each billing cycle. */
   price: Record<Billing, string>;
   detail: Record<Billing, string>;
   allowance: string;
   allowanceNote?: string;
   cta: string;
+  /** CTA link; defaults to the app sign-in. */
+  href?: string;
   featured?: boolean;
   /** "Everything in X, plus" line above the feature list. */
   includes?: string;
@@ -26,27 +28,9 @@ type Plan = {
   note: string;
 };
 
-// Annual = 10 × the monthly price ("2 months free"), except Growth ($99 vs $119).
+// Annual = 10 × the monthly price ("2 months free"), except Growth ($99 vs $119)
+// and Enterprise (annual contract only).
 const PLANS: Plan[] = [
-  {
-    name: "Free",
-    audience: "Trying Lumjha on your own site",
-    price: { monthly: "$0", annual: "$0" },
-    detail: { monthly: "Free forever", annual: "Free forever" },
-    allowance: "50",
-    cta: "Start free",
-    features: [
-      { text: "1 AI agent" },
-      { text: "Website widget + 1 messaging channel" },
-      { text: "Auto-crawl up to 50 pages" },
-      { text: "2 Knowledge Documents (up to 3MB each)" },
-      { text: "Logo + colors · baseline safety moderation" },
-      { text: "1 lead form · view last 25 leads" },
-      { text: "Basic Reporting" },
-      { text: "“Powered by Lumjha” badge" },
-    ],
-    note: "At your limit: upgrade prompt. Your data is kept.",
-  },
   {
     name: "Starter",
     audience: "Solo businesses & consultants",
@@ -54,9 +38,9 @@ const PLANS: Plan[] = [
     detail: { monthly: "Billed monthly", annual: "$490 billed yearly · save $98" },
     allowance: "500",
     cta: "Start 14-day trial",
-    includes: "Everything in Free, plus",
     features: [
       { text: "1 AI agent" },
+      { text: "Website widget" },
       { text: "All messaging channels: WhatsApp, Instagram, Messenger, Telegram, Viber* (1 account each)" },
       { text: "2,000 pages · monthly auto re-crawl" },
       { text: "15 Knowledge Documents (up to 5MB each)" },
@@ -118,6 +102,28 @@ const PLANS: Plan[] = [
       { text: "Early access to new features & capabilities", strong: true },
     ],
     note: "Top-up: 1,000 conversations / $45 · Agency Kit +$99",
+  },
+  {
+    name: "Enterprise",
+    audience: "Regulated & large organizations",
+    price: { monthly: "$1,000", annual: "$1,000" },
+    detail: { monthly: "Starting price · annual contract", annual: "Starting price · annual contract" },
+    allowance: "Custom",
+    allowanceNote: "committed volume",
+    cta: "Talk to sales",
+    href: "mailto:info@lumjha.ai?subject=Lumjha%20Enterprise",
+    includes: "Everything in Pro, plus",
+    features: [
+      { text: "Committed conversation volume" },
+      { text: "SSO-gated Policy Vault with audit log" },
+      { text: "Full white-label" },
+      { text: "Custom moderation policies" },
+      { text: "Custom API/MCP limits with OAuth/SSO scopes" },
+      { text: "BYO LLM key" },
+      { text: "DPA" },
+      { text: "Dedicated CSM and SLA", strong: true },
+    ],
+    note: "Start with a paid 30-day pilot, credited to your contract.",
   },
 ];
 
@@ -187,9 +193,8 @@ function PlanCard({ plan, billing }: { plan: Plan; billing: Billing }) {
       </div>
 
       <a
-        href="https://app.lumjha.ai/login"
-        target="_blank"
-        rel="noopener noreferrer"
+        href={plan.href ?? "https://app.lumjha.ai/login"}
+        {...(plan.href ? {} : { target: "_blank", rel: "noopener noreferrer" })}
         className={`mt-[17px] flex h-[49px] items-center justify-center rounded-full border text-[14px] font-semibold transition ${
           plan.featured
             ? "border-[#5078FF] bg-[#5078FF] text-white shadow-[0_6px_26px_0_rgba(70,110,255,0.27)] hover:bg-[#3E63F2]"

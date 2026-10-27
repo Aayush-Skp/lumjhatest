@@ -16,7 +16,8 @@ lumjha-website/
 ├── app/
 │   ├── layout.tsx      ← root layout (Inter fonts, dark theme default)
 │   ├── page.tsx        ← main landing page (Figma design)
-│   ├── play-area/      ← demo page (blank white placeholder where the widget will go)
+│   ├── play-area/      ← Lumjha Play: demo chat + document upload (components/site/PlayDemo.tsx)
+│   ├── api/playground/ ← server routes forwarding Play uploads/status to the Lumjha API (key stays server-side)
 │   ├── pricing/        ← Pricing page: plans, AI engine flow, conversation rules, usage alerts, API, comparison matrix, FAQ
 │   ├── chat-agent/     ← Solutions → AI Chat Agent
 │   ├── site-search/    ← Solutions → Site Search
@@ -70,7 +71,22 @@ lumjha-website/
   icon, or state libraries unless the design truly needs them.
 ```
 
-## 4. Commands
+## 4. Lumjha Play environment
+
+The Play upload talks to the Lumjha API through `app/api/playground/*` (server-side):
+
+- `LUMJHA_PLAYGROUND_KEY` — the API's `PLAYGROUND_API_SECRET` (required; never `NEXT_PUBLIC_`)
+- `LUMJHA_API_URL` — defaults to `https://api.lumjha.ai`; also the widget's `data-api-host` on the sample site
+- `LUMJHA_APP_HOST` — where `agent-widget.js` and the chat page live; defaults to `https://app.lumjha.ai`
+  (must match the API's `WIDGET_APP_HOST`)
+- `LUMJHA_CHAT_API_URL` — defaults to `https://chat-api.lumjha.ai`
+- `LUMJHA_PLAY_DEMO_AGENT` — subdomain of the demo agent shown before an upload (default `bedrocktest`)
+- For staging, point all four at staging (e.g. `LUMJHA_APP_HOST=https://stg.app.lumjha.ai`).
+- `app/play-area/preview` is the sample website Play frames; the real widget runs inside it.
+- `NEXT_PUBLIC_TURNSTILE_SITE_KEY` + `TURNSTILE_SECRET_KEY` — optional Cloudflare Turnstile
+- Bump `PLAYGROUND_CONSENT_VERSION` in `lib/playground.ts` whenever the upload notice text changes.
+
+## 5. Commands
 
 - `npm run dev` — local dev
 - `npm run build` — production build (must pass)
