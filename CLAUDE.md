@@ -24,13 +24,14 @@ lumjha-website/
 │   ├── policy-vault/   ← Solutions → Policy Vault
 │   ├── integrations/   ← Integration page
 │   ├── blogs/          ← blog: posts.ts (static posts) → listing + [slug] article pages
+│   ├── admin/          ← /admin panel (login, pricing + blog editors); actions.ts = server actions
 │   ├── privacy/page.tsx← Privacy Policy (content copied from original)
 │   ├── terms/page.tsx  ← Terms of Service (content copied from original)
 │   └── globals.css     ← design tokens + base utilities + .legal-prose
 ├── components/
 │   ├── site/
 │   │   ├── Navbar.tsx    ← Play Area · Solutions ▾ · Pricing · Integration · Blogs
-│   │   ├── PricingPlans.tsx ← Monthly/Annual switch + the four plan cards (plan data lives here)
+│   │   ├── PricingPlans.tsx ← Monthly/Annual switch + the four plan cards (data: lib/content/pricing.ts)
 │   │   ├── WaveLines.tsx ← simple code-drawn line backdrop (Pricing page band)
 │   │   ├── Footer.tsx    ← shared footer (Privacy/Terms wired)
 │   │   ├── FooterWordmark.tsx ← outlined "Lumjha" + cursor torch (footer copy of the showcase piece)
@@ -88,7 +89,19 @@ The Play upload talks to the Lumjha API through `app/api/playground/*` (server-s
 - `NEXT_PUBLIC_TURNSTILE_SITE_KEY` + `TURNSTILE_SECRET_KEY` — optional Cloudflare Turnstile
 - Bump `PLAYGROUND_CONSENT_VERSION` in `lib/playground.ts` whenever the upload notice text changes.
 
-## 5. Commands
+## 5. Admin panel (/admin)
+
+- Sign-in: `ADMIN_USERNAME`, `ADMIN_PASSWORD`, `ADMIN_SESSION_SECRET` (signs the session cookie).
+  Logic in `lib/admin/session.ts`; every admin page and server action calls `requireAdmin()`.
+- Data: Supabase over its REST API (`lib/admin/supabase.ts`, no SDK) with `SUPABASE_URL` +
+  `SUPABASE_SERVICE_ROLE_KEY` (server-only). Tables: `supabase/schema.sql`.
+- `lib/admin/content.ts` reads Supabase, falling back to the built-in data
+  (`lib/content/pricing.ts`, `app/blogs/posts.ts`). The first save into an empty table copies the
+  built-in data in first, so no plan/post goes missing. Public pages still read the built-in data.
+- `/admin` redirects to `/admin/pricing` (no overview page, no Supabase status UI by design).
+- Blog bodies are edited as text (`lib/content/blog-format.ts`: `## `, `- `, `> `, ``` fences).
+
+## 6. Commands
 
 - `npm run dev` — local dev
 - `npm run build` — production build (must pass)
