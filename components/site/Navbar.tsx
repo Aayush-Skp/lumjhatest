@@ -127,13 +127,13 @@ export default function Navbar() {
           <Image
             src="/logo.png"
             alt="Lumjha logo"
-            width={25}
-            height={35}
-            className="h-[35px] w-auto shrink-0 object-contain"
+            width={32}
+            height={44}
+            className="h-11 w-auto shrink-0 object-contain"
             priority
           />
           {/* thin divider + two even lines, as in the brand lockup */}
-          <span aria-hidden className="ml-1.5 hidden h-8 w-px shrink-0 bg-ink/30 min-[420px]:block" />
+          <span aria-hidden className="ml-1.5 hidden h-10 w-px shrink-0 bg-ink/30 min-[420px]:block" />
           <span className="hidden flex-col pl-1 text-[12px] font-medium leading-[1.3] text-nav-link min-[420px]:flex">
             <span>Knowledgebase,</span>
             <span>Activated Everywhere</span>
