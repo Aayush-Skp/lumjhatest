@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import FooterWordmark from "./FooterWordmark";
+import NewsletterForm from "./NewsletterForm";
 
 const QUICK_LINKS = [
   { label: "Lumjha Play", href: "/play-area" },
@@ -72,14 +73,7 @@ export default function Footer() {
         </div>
         <div className="col-span-2 md:col-span-1">
           <p className="text-[13px] font-bold text-ink md:text-sm">Newsletter</p>
-          <input
-            type="email"
-            placeholder="backend@brjnole.dev"
-            className="mt-4 w-full rounded-md border border-line bg-white px-3 py-2.5 text-[13px] text-black outline-none placeholder:text-subtle"
-          />
-          <button className="mt-3 flex items-center gap-1.5 rounded-md bg-[#527DFF] px-4 py-2.5 text-[13px] font-semibold text-white hover:bg-[#3E63F2]">
-            ✉ Subscribe
-          </button>
+          <NewsletterForm />
         </div>
       </div>
       <div className="mx-auto mt-16 max-w-[1440px] md:mt-24">

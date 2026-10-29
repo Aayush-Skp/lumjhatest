@@ -13,6 +13,7 @@ import {
   slugify,
   type PlanRecord,
 } from "@/lib/admin/content";
+import { deleteMessage, deleteSubscriber, setMessageRead } from "@/lib/admin/inbox";
 import { adminConfigured, createSession, credentialsMatch, destroySession, requireAdmin } from "@/lib/admin/session";
 import { TAGS } from "@/lib/admin/supabase";
 import { textToBlocks } from "@/lib/content/blog-format";
@@ -162,4 +163,39 @@ export async function deletePostAction(_: ActionState, form: FormData): Promise<
   revalidatePath("/admin", "layout");
   revalidatePath("/blogs", "layout");
   redirect("/admin/blogs");
+}
+
+/* ---------- contact messages + newsletter ---------- */
+
+export async function setMessageReadAction(_: ActionState, form: FormData): Promise<ActionState> {
+  await requireAdmin();
+  try {
+    await setMessageRead(text(form, "id"), form.get("read") === "true");
+  } catch (e) {
+    return { ok: false, message: errorText(e) };
+  }
+  revalidatePath("/admin/messages");
+  return null;
+}
+
+export async function deleteMessageAction(_: ActionState, form: FormData): Promise<ActionState> {
+  await requireAdmin();
+  try {
+    await deleteMessage(text(form, "id"));
+  } catch (e) {
+    return { ok: false, message: errorText(e) };
+  }
+  revalidatePath("/admin/messages");
+  return null;
+}
+
+export async function deleteSubscriberAction(_: ActionState, form: FormData): Promise<ActionState> {
+  await requireAdmin();
+  try {
+    await deleteSubscriber(text(form, "email"));
+  } catch (e) {
+    return { ok: false, message: errorText(e) };
+  }
+  revalidatePath("/admin/newsletter");
+  return null;
 }

@@ -39,3 +39,26 @@ create table if not exists public.blog_posts (
 
 alter table public.pricing_plans enable row level security;
 alter table public.blog_posts enable row level security;
+
+-- Contact Us / Book a Demo form submissions (written by the public site).
+create table if not exists public.contact_messages (
+  id          uuid primary key default gen_random_uuid(),
+  name        text not null,
+  email       text not null,
+  message     text not null,
+  page        text not null default '',        -- path the form was sent from, e.g. "/pricing"
+  read        boolean not null default false,  -- toggled in /admin/messages
+  created_at  timestamptz not null default now()
+);
+
+-- Footer newsletter sign-ups (written by the public site).
+create table if not exists public.newsletter_subscribers (
+  email       text primary key,                -- stored lower-case
+  page        text not null default '',
+  created_at  timestamptz not null default now()
+);
+
+create index if not exists contact_messages_created_at_idx on public.contact_messages (created_at desc);
+
+alter table public.contact_messages enable row level security;
+alter table public.newsletter_subscribers enable row level security;

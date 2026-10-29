@@ -24,7 +24,8 @@ lumjha-website/
 │   ├── policy-vault/   ← Solutions → Policy Vault
 │   ├── integrations/   ← Integration page
 │   ├── blogs/          ← blog: posts.ts (static posts) → listing + [slug] article pages
-│   ├── admin/          ← /admin panel (login, pricing + blog editors); actions.ts = server actions
+│   ├── admin/          ← /admin panel (login, pricing + blog editors, messages, newsletter); actions.ts = server actions
+│   ├── actions.ts      ← public server actions: Contact Us form + footer newsletter → Supabase
 │   ├── privacy/page.tsx← Privacy Policy (content copied from original)
 │   ├── terms/page.tsx  ← Terms of Service (content copied from original)
 │   └── globals.css     ← design tokens + base utilities + .legal-prose
@@ -100,6 +101,10 @@ The Play upload talks to the Lumjha API through `app/api/playground/*` (server-s
   built-in data in first, so no plan/post goes missing. Public pages read the same data:
   `/pricing` via `listPlans()`, `/blogs` + `/blogs/[slug]` via `listPosts()`; admin saves refresh them.
 - `/admin` redirects to `/admin/pricing` (no overview page, no Supabase status UI by design).
+- Contact Us / Book a Demo (`ContactDisclosure`) and the footer newsletter (`NewsletterForm`) save through
+  `app/actions.ts` → `lib/admin/inbox.ts` into `contact_messages` / `newsletter_subscribers`; read in
+  `/admin/messages` and `/admin/newsletter` (CSV at `/admin/newsletter/export`). Both forms carry a
+  hidden `website` honeypot field.
 - Blog bodies are edited as text (`lib/content/blog-format.ts`: `## `, `- `, `> `, ``` fences).
 
 ## 6. Commands

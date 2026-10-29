@@ -2,24 +2,13 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import type { FormEvent, ReactNode } from "react";
+import { sendContactMessage } from "@/app/actions";
 
 /* ============================================================
    "Contact Us" button that slides a contact form open beneath it.
    Used in the hero (dark) and inside the blue CTA panel (light).
+   Submissions are stored in Supabase and listed in /admin/messages.
    ============================================================ */
-
-export type ContactPayload = { name: string; email: string; message: string };
-
-/**
- * TODO(backend): replace this stub with the real request, e.g.
- *   await fetch("/api/contact", { method: "POST", body: JSON.stringify(data) })
- * and throw on a non-OK response so the form shows its error state.
- * Until then nothing is stored — submissions only reach the console.
- */
-async function submitContact(data: ContactPayload): Promise<void> {
-  console.info("[contact] form not wired to a backend yet", data);
-  await new Promise((r) => setTimeout(r, 600));
-}
 
 type Variant = "dark" | "light";
 
@@ -88,6 +77,7 @@ export default function ContactDisclosure({
   const panelId = `${id}-contact`;
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [error, setError] = useState("");
   const firstFieldRef = useRef<HTMLInputElement>(null);
 
   // Move focus into the form once it has slid open; Escape closes it.
@@ -106,16 +96,19 @@ export default function ContactDisclosure({
     e.preventDefault();
     const form = e.currentTarget;
     const fd = new FormData(form);
+    fd.set("page", window.location.pathname);
     setStatus("sending");
     try {
-      await submitContact({
-        name: String(fd.get("name") ?? "").trim(),
-        email: String(fd.get("email") ?? "").trim(),
-        message: String(fd.get("message") ?? "").trim(),
-      });
+      const result = await sendContactMessage(fd);
+      if (!result.ok) {
+        setError(result.message);
+        setStatus("error");
+        return;
+      }
       form.reset();
       setStatus("sent");
     } catch {
+      setError("Something went wrong. Please try again.");
       setStatus("error");
     }
   }
@@ -224,10 +217,12 @@ export default function ContactDisclosure({
                       className={`${field} resize-none`}
                     />
                   </label>
+                  {/* honeypot: hidden from people, filled in by bots */}
+                  <input name="website" type="text" tabIndex={-1} autoComplete="off" aria-hidden className="hidden" />
 
                   {status === "error" && (
                     <p className="mt-3 text-[13px] font-medium text-red-500" role="alert">
-                      Something went wrong. Please try again.
+                      {error}
                     </p>
                   )}
 
