@@ -97,7 +97,8 @@ The Play upload talks to the Lumjha API through `app/api/playground/*` (server-s
   `SUPABASE_SERVICE_ROLE_KEY` (server-only). Tables: `supabase/schema.sql`.
 - `lib/admin/content.ts` reads Supabase, falling back to the built-in data
   (`lib/content/pricing.ts`, `app/blogs/posts.ts`). The first save into an empty table copies the
-  built-in data in first, so no plan/post goes missing. Public pages still read the built-in data.
+  built-in data in first, so no plan/post goes missing. Public pages read the same data:
+  `/pricing` via `listPlans()`, `/blogs` + `/blogs/[slug]` via `listPosts()`; admin saves refresh them.
 - `/admin` redirects to `/admin/pricing` (no overview page, no Supabase status UI by design).
 - Blog bodies are edited as text (`lib/content/blog-format.ts`: `## `, `- `, `> `, ``` fences).
 

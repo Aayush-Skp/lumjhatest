@@ -10,6 +10,7 @@ import PlanMatrix, { OnlyOnLumjha } from "@/components/site/PlanMatrix";
 import SectionHeader, { SECTION_HEAD_GAP, SECTION_Y } from "@/components/site/SectionHeader";
 import { Faq } from "@/components/site/ProductSections";
 import Tilt from "@/components/ui/Tilt";
+import { listPlans } from "@/lib/admin/content";
 import {
   WebsiteIcon,
   WhatsAppIcon,
@@ -296,7 +297,9 @@ const FAQS = [
 
 /* ---------- page ---------- */
 
-export default function PricingPage() {
+export default async function PricingPage() {
+  // the admin panel's plans (Supabase), or the built-in ones when it has none
+  const { plans } = await listPlans();
   return (
     <div className="min-h-screen bg-page-deep font-sans text-ink antialiased">
       <Navbar />
@@ -320,7 +323,7 @@ export default function PricingPage() {
               choose a plan that fits your conversation volume, and scale as your business grows.
             </p>
           </div>
-          <PricingPlans className={SECTION_HEAD_GAP} />
+          <PricingPlans plans={plans} className={SECTION_HEAD_GAP} />
         </section>
 
         {/* DEPLOY ONE AI ENGINE — sources → one knowledge base → every channel */}

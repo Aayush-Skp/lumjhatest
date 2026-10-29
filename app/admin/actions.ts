@@ -55,6 +55,8 @@ export async function importSiteData(_: ActionState, form: FormData): Promise<Ac
     if (kind !== "blogs") updateTag(TAGS.pricing);
     if (kind !== "pricing") updateTag(TAGS.blogs);
     revalidatePath("/admin", "layout");
+    if (kind !== "blogs") revalidatePath("/pricing");
+    if (kind !== "pricing") revalidatePath("/blogs", "layout");
     return { ok: true, message: `Copied ${parts.join(" and ")} from the site into Supabase.` };
   } catch (e) {
     return { ok: false, message: errorText(e) };
@@ -103,6 +105,7 @@ export async function savePlanAction(_: ActionState, form: FormData): Promise<Ac
   }
   updateTag(TAGS.pricing);
   revalidatePath("/admin", "layout");
+  revalidatePath("/pricing");
   return { ok: true, message: `Saved ${plan.name}.` };
 }
 
@@ -142,6 +145,7 @@ export async function savePostAction(_: ActionState, form: FormData): Promise<Ac
   }
   updateTag(TAGS.blogs);
   revalidatePath("/admin", "layout");
+  revalidatePath("/blogs", "layout");
   // a new post, or a renamed slug, lives at a new URL
   if (previousSlug !== slug) redirect(`/admin/blogs/${slug}?saved=1`);
   return { ok: true, message: "Post saved." };
@@ -156,5 +160,6 @@ export async function deletePostAction(_: ActionState, form: FormData): Promise<
   }
   updateTag(TAGS.blogs);
   revalidatePath("/admin", "layout");
+  revalidatePath("/blogs", "layout");
   redirect("/admin/blogs");
 }

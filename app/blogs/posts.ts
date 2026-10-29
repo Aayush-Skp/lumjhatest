@@ -1,7 +1,7 @@
 /* ============================================================
-   Blog posts — static data until the blog has a CMS.
-   Add a post by appending to POSTS; /blogs/[slug] is generated
-   from this list at build time.
+   Blog posts — the built-in set. The blog shows the admin panel's
+   posts (Supabase) when it has any, and these otherwise; the first
+   admin save copies these into Supabase.
    ============================================================ */
 
 export const CATEGORIES = ["RAG", "Tech news", "Product", "Guides"] as const;
@@ -443,8 +443,6 @@ mcp add lumjha https://<your-lumjha-mcp-endpoint>`,
     ],
   },
 ];
-
-export const getPost = (slug: string) => POSTS.find((p) => p.slug === slug);
 
 /** Newest first. */
 export const sortedPosts = () => [...POSTS].sort((a, b) => b.date.localeCompare(a.date));

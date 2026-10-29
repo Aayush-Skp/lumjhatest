@@ -5,19 +5,25 @@ import Navbar from "@/components/site/Navbar";
 import Footer from "@/components/site/Footer";
 import CtaPanel from "@/components/site/CtaPanel";
 import { BlogCard, BlogCover, PostMeta } from "@/components/site/BlogCards";
-import { POSTS, getPost, headingId, sortedPosts, type Block, type Post } from "../posts";
+import { listPosts } from "@/lib/admin/content";
+import { headingId, type Block, type Post } from "../posts";
 
 type Props = { params: Promise<{ slug: string }> };
 
-// only the posts in posts.ts exist; anything else 404s
-export const dynamicParams = false;
+// posts come from the admin panel, so a slug added after the build renders on
+// first visit; one that doesn't exist 404s
+export async function generateStaticParams() {
+  const { posts } = await listPosts();
+  return posts.map((p) => ({ slug: p.slug }));
+}
 
-export function generateStaticParams() {
-  return POSTS.map((p) => ({ slug: p.slug }));
+async function getPost(slug: string) {
+  const { posts } = await listPosts();
+  return { post: posts.find((p) => p.slug === slug), posts };
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post = getPost((await params).slug);
+  const { post } = await getPost((await params).slug);
   if (!post) return {};
   return {
     title: post.title,
@@ -63,14 +69,14 @@ function ArticleBlock({ block }: { block: Block }) {
   }
 }
 
-/** Same topic first, then the newest of the rest. */
-function relatedTo(post: Post, count = 3) {
-  const others = sortedPosts().filter((p) => p.slug !== post.slug);
+/** Same topic first, then the newest of the rest (`posts` is newest first). */
+function relatedTo(post: Post, posts: Post[], count = 3) {
+  const others = posts.filter((p) => p.slug !== post.slug);
   return [...others.filter((p) => p.category === post.category), ...others.filter((p) => p.category !== post.category)].slice(0, count);
 }
 
 export default async function BlogPostPage({ params }: Props) {
-  const post = getPost((await params).slug);
+  const { post, posts } = await getPost((await params).slug);
   if (!post) notFound();
   const headings = post.body.flatMap((b) => (b.type === "h2" ? [b.text] : []));
 
@@ -152,7 +158,7 @@ export default async function BlogPostPage({ params }: Props) {
               Keep reading
             </h2>
             <ul className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6 md:mt-14">
-              {relatedTo(post).map((p) => (
+              {relatedTo(post, posts).map((p) => (
                 <li key={p.slug}>
                   <BlogCard post={p} />
                 </li>

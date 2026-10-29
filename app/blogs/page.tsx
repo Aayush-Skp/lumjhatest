@@ -6,7 +6,7 @@ import CtaPanel from "@/components/site/CtaPanel";
 import BlogFilter from "@/components/site/BlogFilter";
 import { BlogCover, CategoryPill, PostMeta } from "@/components/site/BlogCards";
 import { SECTION_HEAD_GAP } from "@/components/site/SectionHeader";
-import { sortedPosts } from "./posts";
+import { listPosts } from "@/lib/admin/content";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -14,8 +14,9 @@ export const metadata: Metadata = {
     "Guides on retrieval-augmented generation (RAG), AI tech news and Lumjha product updates: how to build AI agents that answer from your own business knowledge.",
 };
 
-export default function BlogsPage() {
-  const posts = sortedPosts();
+export default async function BlogsPage() {
+  // the admin panel's posts (Supabase), or the built-in ones when it has none
+  const { posts } = await listPosts();
   const featured = posts.find((p) => p.featured) ?? posts[0];
   const rest = posts.filter((p) => p !== featured);
 

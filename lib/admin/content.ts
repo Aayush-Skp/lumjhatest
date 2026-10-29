@@ -1,4 +1,4 @@
-import { POSTS, type Block, type Category, type Post } from "@/app/blogs/posts";
+import { POSTS, sortedPosts, type Block, type Category, type Post } from "@/app/blogs/posts";
 import { PLANS, type Feature, type Plan } from "@/lib/content/pricing";
 import { rest, SupabaseError, supabaseConfigured, TAGS } from "./supabase";
 
@@ -127,7 +127,7 @@ type PostRow = {
   body: Block[];
 };
 
-const sitePosts = (): Post[] => [...POSTS].sort((a, b) => b.date.localeCompare(a.date));
+const sitePosts = sortedPosts;
 
 function postFromRow(r: PostRow): Post {
   return {
