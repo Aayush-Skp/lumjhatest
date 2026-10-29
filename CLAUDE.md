@@ -40,6 +40,7 @@ lumjha-website/
 │   │   ├── SectionHeader.tsx   ← shared section title + SECTION_Y / SECTION_HEAD_GAP rhythm
 │   │   ├── CtaPanel.tsx        ← "Ready to Scale" blue panel (every page)
 │   │   ├── ChannelReels.tsx    ← animated channel-logo slot reels
+│   │   ├── EngineFlow.tsx      ← sources → one knowledge base → channels (home hero; data shared with Pricing)
 │   │   ├── WaveGlow.tsx        ← canvas port of Figma's "Glowing wave" shader
 │   │   └── LegalPage.tsx ← Figma-styled shell for legal pages
 │   ├── showcase/

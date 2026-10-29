@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import type { ComponentType, SVGProps } from "react";
 import Image from "next/image";
 import Navbar from "@/components/site/Navbar";
 import Footer from "@/components/site/Footer";
@@ -11,15 +10,7 @@ import SectionHeader, { SECTION_HEAD_GAP, SECTION_Y } from "@/components/site/Se
 import { Faq } from "@/components/site/ProductSections";
 import Tilt from "@/components/ui/Tilt";
 import { listPlans } from "@/lib/admin/content";
-import {
-  WebsiteIcon,
-  WhatsAppIcon,
-  InstagramIcon,
-  MessengerIcon,
-  TelegramIcon,
-  ViberIcon,
-  ShopifyIcon,
-} from "@/components/ui/ChannelIcons";
+import { ChannelGlyph, DEPLOY_CHANNELS, ENGINE_CAPABILITIES, SOURCES } from "@/components/site/EngineFlow";
 
 export const metadata: Metadata = {
   title: "Pricing",
@@ -32,27 +23,6 @@ export const metadata: Metadata = {
    ============================================================ */
 
 /* ---------- deploy one AI engine ---------- */
-
-const SOURCES = [
-  { title: "Your website", body: "Auto-crawl, or manual upload" },
-  { title: "PDFs & docs", body: "Menus, FAQs, catalogues, manuals" },
-  { title: "Your policies", body: "Refunds, warranties, HR, coverage" },
-];
-
-const ENGINE_CAPABILITIES = ["Chatbot", "Site Search", "Policy Vault", "Leads"];
-
-type Icon = ComponentType<SVGProps<SVGSVGElement>>;
-
-const DEPLOY_CHANNELS: { name: string; body: string; icon: Icon | "site-search"; color: string }[] = [
-  { name: "Website chat", body: "answers · captures · books", icon: WebsiteIcon, color: "#527DFF" },
-  { name: "Site Search", body: "instant on-site answers", icon: "site-search", color: "#527DFF" },
-  { name: "WhatsApp", body: "answers · captures · books", icon: WhatsAppIcon, color: "#25D366" },
-  { name: "Instagram", body: "answers · captures · books", icon: InstagramIcon, color: "#E4405F" },
-  { name: "Messenger", body: "answers · captures · books", icon: MessengerIcon, color: "#0084FF" },
-  { name: "Telegram", body: "answers · captures · books", icon: TelegramIcon, color: "#229ED9" },
-  { name: "Viber", body: "answers · captures · books", icon: ViberIcon, color: "#7360F2" },
-  { name: "Shopify", body: "answers · captures · books", icon: ShopifyIcon, color: "#95BF47" },
-];
 
 function FlowArrow() {
   return (
@@ -362,15 +332,10 @@ export default async function PricingPage() {
 
             <ul className="grid w-full max-w-[423px] grid-cols-2 gap-2">
               {DEPLOY_CHANNELS.map((c) => {
-                const ChannelIcon = c.icon;
                 return (
                   <li key={c.name} className="flex items-center gap-3 rounded-xl bg-[#527DFF] p-3 text-white shadow-[0_16px_40px_-20px_rgba(82,125,255,0.7)]">
                     <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white" style={{ color: c.color }}>
-                      {ChannelIcon === "site-search" ? (
-                        <Image src="/assets/site-search.svg" alt="" width={22} height={22} className="h-[22px] w-[22px]" />
-                      ) : (
-                        <ChannelIcon className="h-5 w-5" />
-                      )}
+                      <ChannelGlyph icon={c.icon} className={c.icon === "site-search" ? "h-[22px] w-[22px]" : "h-5 w-5"} />
                     </span>
                     <span className="min-w-0">
                       <span className="block truncate text-[13px] font-semibold">{c.name}</span>

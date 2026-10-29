@@ -5,10 +5,10 @@ import { useEffect, useRef, useState } from "react";
 import type { KeyboardEvent, ReactNode, TouchEvent } from "react";
 import Navbar from "@/components/site/Navbar";
 import Footer from "@/components/site/Footer";
-import ContactDisclosure from "@/components/site/ContactDisclosure";
 import CtaPanel from "@/components/site/CtaPanel";
 import ChannelReels, { CHANNELS } from "@/components/site/ChannelReels";
 import HeroBackdrop from "@/components/site/HeroBackdrop";
+import EngineFlow from "@/components/site/EngineFlow";
 import SectionHeader, { SECTION_HEAD_GAP, SECTION_Y } from "@/components/site/SectionHeader";
 import BlueButton from "@/components/ui/BlueButton";
 import Tilt from "@/components/ui/Tilt";
@@ -559,28 +559,32 @@ export default function HomePage() {
         <div className="pointer-events-none absolute -left-40 top-[1900px] h-[500px] w-[300px] rounded-full bg-glow/20 blur-[120px]" />
 
         {/* HERO — owns the first viewport: 100svh minus the navbar (56px, 66px on desktop) */}
-        <section className="relative isolate mx-auto flex min-h-[calc(100svh-3.5rem)] w-full lg:min-h-[calc(100svh-66px)] max-w-[1440px] flex-col items-center justify-center px-4 py-12 text-center sm:px-6 md:py-20">
+        <section className="relative isolate mx-auto flex min-h-[calc(100svh-3.5rem)] w-full lg:min-h-[calc(100svh-66px)] max-w-[1440px] flex-col items-center justify-center px-4 py-10 text-center sm:px-6 md:py-12">
           {/* code-drawn backdrop — full-bleed past the 1440px container, waves anchored to the bottom and faded out into the next section */}
           <div aria-hidden className="pointer-events-none absolute inset-y-0 left-1/2 -z-10 w-screen -translate-x-1/2 [mask-image:linear-gradient(to_bottom,#000_88%,transparent)] md:[mask-image:linear-gradient(to_bottom,#000_70%,transparent)]">
             <HeroBackdrop />
           </div>
-          <h1 className="max-w-5xl text-[clamp(2.25rem,6vw+1rem,5.25rem)] font-extrabold leading-[1.05] tracking-[-0.03em]">
+          <h1 className="max-w-5xl text-[clamp(2.25rem,4.5vw+1rem,4.5rem)] font-extrabold leading-[1.05] tracking-[-0.03em]">
             Never Miss a Customer.
             <br />
             <span className="text-highlight">Grow While You Sleep.</span>
           </h1>
-          <p className="mx-auto mt-6 max-w-[42rem] text-base leading-relaxed text-balance text-muted sm:text-lg md:mt-8 md:text-xl">
+          {/* wide enough to sit on two lines from md up */}
+          <p className="mx-auto mt-5 max-w-[56rem] text-base leading-relaxed text-balance text-muted sm:text-lg md:mt-6 md:text-xl">
             Lumjha answers your customers&apos; questions, captures sales leads, and books
             appointments around the clock, on platform(s) they already use, so you can
             focus on running your business.
           </p>
-          <ContactDisclosure
-            variant="dark"
-            rowClassName="mt-8 flex w-full max-w-xs flex-col gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:items-center sm:justify-center sm:gap-4 md:mt-10"
-            buttonClassName="inline-flex items-center justify-center rounded-full border border-[#527DFF]/70 px-7 py-3.5 text-[15px] font-semibold text-ink transition hover:bg-[#527DFF]/10 md:px-8 md:text-base"
-          >
-            <BlueButton large>Get Started Free</BlueButton>
-          </ContactDisclosure>
+          <div className="mt-7 flex justify-center md:mt-8">
+            {/* widens a touch on hover (side padding, so the height and text stay put) and eases back */}
+            <div className="inline-flex [&>a]:transition-all [&>a]:duration-300 [&>a]:ease-in-out hover:[&>a]:px-9 focus-within:[&>a]:px-9 md:hover:[&>a]:px-10 md:focus-within:[&>a]:px-10">
+              <BlueButton large outline>
+                Get Started Free
+              </BlueButton>
+            </div>
+          </div>
+          {/* sources → one knowledge base → every channel */}
+          <EngineFlow className="mt-12 md:mt-14" />
         </section>
 
         {/* ALL-IN-ONE PLATFORM */}
