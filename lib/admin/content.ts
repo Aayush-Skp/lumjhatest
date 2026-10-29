@@ -1,6 +1,6 @@
 import { POSTS, type Block, type Category, type Post } from "@/app/blogs/posts";
 import { PLANS, type Feature, type Plan } from "@/lib/content/pricing";
-import { rest, SupabaseError, supabaseConfigured } from "./supabase";
+import { rest, SupabaseError, supabaseConfigured, TAGS } from "./supabase";
 
 /**
  * Admin data access for pricing plans and blog posts. Reads Supabase when it
@@ -89,7 +89,7 @@ function planToRow(p: PlanRecord): PlanRow & { updated_at: string } {
 export async function listPlans(): Promise<{ source: Source; plans: PlanRecord[] }> {
   if (!supabaseConfigured()) return { source: { kind: "site", reason: "not-configured" }, plans: sitePlans() };
   try {
-    const rows = await rest<PlanRow[]>("pricing_plans?select=*&order=position.asc");
+    const rows = await rest<PlanRow[]>("pricing_plans?select=*&order=position.asc", { tags: [TAGS.pricing] });
     if (!rows.length) return { source: { kind: "site", reason: "empty" }, plans: sitePlans() };
     return { source: { kind: "database" }, plans: rows.map(planFromRow) };
   } catch (e) {
@@ -163,7 +163,7 @@ function postToRow(p: Post): PostRow & { updated_at: string } {
 export async function listPosts(): Promise<{ source: Source; posts: Post[] }> {
   if (!supabaseConfigured()) return { source: { kind: "site", reason: "not-configured" }, posts: sitePosts() };
   try {
-    const rows = await rest<PostRow[]>("blog_posts?select=*&order=date.desc");
+    const rows = await rest<PostRow[]>("blog_posts?select=*&order=date.desc", { tags: [TAGS.blogs] });
     if (!rows.length) return { source: { kind: "site", reason: "empty" }, posts: sitePosts() };
     return { source: { kind: "database" }, posts: rows.map(postFromRow) };
   } catch (e) {

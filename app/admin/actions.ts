@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { CATEGORIES, type Category, type Post } from "@/app/blogs/posts";
 import {
@@ -14,6 +14,7 @@ import {
   type PlanRecord,
 } from "@/lib/admin/content";
 import { adminConfigured, createSession, credentialsMatch, destroySession, requireAdmin } from "@/lib/admin/session";
+import { TAGS } from "@/lib/admin/supabase";
 import { textToBlocks } from "@/lib/content/blog-format";
 import type { Feature } from "@/lib/content/pricing";
 
@@ -51,6 +52,8 @@ export async function importSiteData(_: ActionState, form: FormData): Promise<Ac
     if (kind === "pricing" || kind === "all") parts.push(`${await importSitePlans()} plans`);
     if (kind === "blogs" || kind === "all") parts.push(`${await importSitePosts()} blog posts`);
     if (!parts.length) return { ok: false, message: "Nothing to import." };
+    if (kind !== "blogs") updateTag(TAGS.pricing);
+    if (kind !== "pricing") updateTag(TAGS.blogs);
     revalidatePath("/admin", "layout");
     return { ok: true, message: `Copied ${parts.join(" and ")} from the site into Supabase.` };
   } catch (e) {
@@ -98,6 +101,7 @@ export async function savePlanAction(_: ActionState, form: FormData): Promise<Ac
   } catch (e) {
     return { ok: false, message: errorText(e) };
   }
+  updateTag(TAGS.pricing);
   revalidatePath("/admin", "layout");
   return { ok: true, message: `Saved ${plan.name}.` };
 }
@@ -136,6 +140,7 @@ export async function savePostAction(_: ActionState, form: FormData): Promise<Ac
   } catch (e) {
     return { ok: false, message: errorText(e) };
   }
+  updateTag(TAGS.blogs);
   revalidatePath("/admin", "layout");
   // a new post, or a renamed slug, lives at a new URL
   if (previousSlug !== slug) redirect(`/admin/blogs/${slug}?saved=1`);
@@ -149,6 +154,7 @@ export async function deletePostAction(_: ActionState, form: FormData): Promise<
   } catch (e) {
     return { ok: false, message: errorText(e) };
   }
+  updateTag(TAGS.blogs);
   revalidatePath("/admin", "layout");
   redirect("/admin/blogs");
 }

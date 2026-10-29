@@ -14,7 +14,8 @@ import {
  * Lumjha Play demo: compact steps on top; below them a sample website
  * with the real chat widget installed, shown in a browser frame, with an
  * upload button in its toolbar and a working address bar (a visitor can
- * preview the widget on their own site, when that site allows framing). Before an upload the widget is the shared demo
+ * preview the widget on their own site, when that site allows framing; the
+ * upload picker offers the same field). Before an upload the widget is the shared demo
  * agent; while a document is read an overlay covers the preview, and once it
  * is ready the sample site reloads with a sandbox agent that answers only from
  * that document, chat open.
@@ -114,6 +115,8 @@ export default function PlayDemo() {
   const [address, setAddress] = useState("");
   const [checkingSite, setCheckingSite] = useState(false);
   const [siteError, setSiteError] = useState<{ host: string; reason: string } | null>(null);
+  // Why the picker's website fell back to the sample site (shown in the address bar).
+  const [siteNote, setSiteNote] = useState<string | null>(null);
   const closePicker = useCallback(() => setPickerOpen(false), []);
 
   const session = view.kind === "session" ? view.session : null;
@@ -287,18 +290,41 @@ export default function PlayDemo() {
     setSite(null);
     setAddress("");
     setSiteError(null);
+    setSiteNote(null);
   }, []);
 
   // Address bar: check the site allows framing before swapping it in.
-  async function showSite(e: FormEvent) {
+  function showSite(e: FormEvent) {
     e.preventDefault();
     const raw = address.trim();
     if (!raw) return clearSite();
+    void checkSite(raw);
+  }
+
+  // Picker: start the upload and, when a website was typed, check it alongside
+  // so the document's chat appears on that site once ready.
+  function pickFile(file: File) {
+    if (pickerMode === "add") return void addDocument(file);
+    const raw = address.trim();
+    if (raw && raw !== siteHost && !fileProblem(file, token)) void checkSite(raw, true);
+    void upload(file);
+  }
+
+  /**
+   * Show a site in the preview if it allows framing. From the address bar a
+   * refusal gets a notice; from the picker (`quiet`) the preview just stays on
+   * the sample site and the address bar says why.
+   */
+  async function checkSite(raw: string, quiet = false) {
+    const fail = (host: string, reason: string) => {
+      if (!quiet) return setSiteError({ host, reason });
+      setSite(null);
+      setAddress("");
+      setSiteNote(`${host} can’t be previewed here, so you’re seeing the sample site`);
+    };
+    setSiteNote(null);
     const url = normalizeSiteUrl(raw);
-    if (!url) {
-      setSiteError({ host: raw, reason: "That doesn’t look like a website address." });
-      return;
-    }
+    if (!url) return fail(raw, "That doesn’t look like a website address.");
     const host = new URL(url).hostname;
     setSiteError(null);
     setCheckingSite(true);
@@ -314,7 +340,7 @@ export default function PlayDemo() {
       setSite(result.data.url);
       setAddress(host);
     } else {
-      setSiteError({ host, reason: result?.error || "We couldn’t reach that site. Check the address and try again." });
+      fail(host, result?.error || "We couldn’t reach that site. Check the address and try again.");
     }
   }
 
@@ -413,11 +439,25 @@ export default function PlayDemo() {
                 </svg>
                 {docAgent ? "New chat" : "Upload your document"}
               </button>
+              {docAgent && (
+                <button
+                  type="button"
+                  onClick={() => reset()}
+                  title="Drop this document and chat with the demo agent again"
+                  className="inline-flex h-10 shrink-0 items-center gap-2 rounded-lg border border-slate-200 px-4 text-sm font-semibold text-slate-600 transition hover:border-slate-300 hover:bg-slate-50"
+                >
+                  <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                    <path d="M19 12H5m0 0 6-6m-6 6 6 6" />
+                  </svg>
+                  Back to demo
+                </button>
+              )}
               {pickerOpen && (
                 <UploadPicker
                   consent={consent}
                   onConsent={setConsent}
-                  onFile={pickerMode === "add" ? addDocument : upload}
+                  onFile={pickFile}
+                  site={pickerMode === "new" ? { value: address, onChange: setAddress } : undefined}
                   onToken={setToken}
                   error={error}
                   onClose={closePicker}
@@ -435,14 +475,9 @@ export default function PlayDemo() {
 
           <div className="ml-auto flex min-w-0 items-center gap-3 text-xs">
             {docAgent && session ? (
-              <>
-                <span className="flex min-w-0 items-center rounded-full bg-emerald-50 px-2.5 py-1 font-medium text-emerald-700">
-                  <span className="truncate">Answering from {readyNames.join(" and ")}</span>
-                </span>
-                <button type="button" onClick={() => reset()} className="shrink-0 font-semibold text-[#5675FF] hover:underline">
-                  Back to demo
-                </button>
-              </>
+              <span className="flex min-w-0 items-center rounded-full bg-emerald-50 px-3 py-1 text-[13px] font-medium text-emerald-700">
+                <span className="truncate">Answering from {readyNames.join(" and ")}</span>
+              </span>
             ) : busy ? (
               <span className="font-medium text-slate-500">This takes about a minute</span>
             ) : (
@@ -476,13 +511,19 @@ export default function PlayDemo() {
                 type="text"
                 inputMode="url"
                 value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                placeholder="Type your website to preview it, e.g. yourbusiness.com"
+                onChange={(e) => {
+                  setAddress(e.target.value);
+                  setSiteNote(null);
+                }}
+                placeholder={siteNote ?? "Type your website to preview it, e.g. yourbusiness.com"}
+                title={siteNote ?? undefined}
                 aria-label="Website address"
                 autoComplete="url"
                 autoCapitalize="off"
                 spellCheck={false}
-                className="min-w-0 flex-1 bg-transparent text-[16px] text-slate-700 outline-none placeholder:text-slate-400 sm:text-[13px]"
+                className={`min-w-0 flex-1 bg-transparent text-[16px] text-slate-700 outline-none sm:text-[13px] ${
+                  siteNote ? "placeholder:text-amber-600" : "placeholder:text-slate-400"
+                }`}
               />
               {site && (
                 <button
@@ -590,6 +631,7 @@ function UploadPicker({
   error,
   onClose,
   hint,
+  site,
 }: {
   consent: boolean;
   onConsent: (value: boolean) => void;
@@ -599,6 +641,8 @@ function UploadPicker({
   onClose: () => void;
   /** What this upload will do (add to the chat, or start a new one). */
   hint?: string;
+  /** Optional website to preview the chat on (shared with the address bar). */
+  site?: { value: string; onChange: (value: string) => void };
 }) {
   const [dragging, setDragging] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -635,6 +679,27 @@ function UploadPicker({
       className="absolute left-3 top-[calc(100%+8px)] z-20 w-[min(360px,calc(100%-24px))] rounded-2xl border border-slate-200 bg-white p-4 text-center shadow-[0_24px_60px_-20px_rgba(11,21,38,0.35)] sm:left-4"
     >
       {hint && <p className="mb-3 text-left text-xs font-medium text-[#3E63F2]">{hint}</p>}
+      {site && (
+        <label className="mb-3 block text-left">
+          <span className="text-xs font-semibold text-[#0B1526]">
+            Your website <span className="font-normal text-slate-400">(optional)</span>
+          </span>
+          <input
+            type="text"
+            inputMode="url"
+            value={site.value}
+            onChange={(e) => site.onChange(e.target.value)}
+            placeholder="yourbusiness.com"
+            autoComplete="url"
+            autoCapitalize="off"
+            spellCheck={false}
+            className="mt-1 h-9 w-full rounded-lg border border-slate-200 bg-white px-3 text-[16px] text-slate-700 outline-none placeholder:text-slate-400 focus:border-[#5675FF] focus:ring-2 focus:ring-[#5675FF]/20 sm:text-sm"
+          />
+          <span className="mt-1 block text-[11px] leading-snug text-slate-500">
+            We’ll show the chat on your site if it allows previews.
+          </span>
+        </label>
+      )}
       <label
         onDragOver={(e) => {
           e.preventDefault();

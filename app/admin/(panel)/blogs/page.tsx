@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ImportButton from "@/components/admin/ImportButton";
-import { PageHeader, primaryBtn } from "@/components/admin/ui";
+import { LoadError, PageHeader, primaryBtn } from "@/components/admin/ui";
 import { formatDate } from "@/app/blogs/posts";
 import { listPosts } from "@/lib/admin/content";
 import { requireAdmin } from "@/lib/admin/session";
-import { supabaseConfigured } from "@/lib/admin/supabase";
 
 export const metadata: Metadata = { title: "Blogs" };
 
@@ -20,13 +19,14 @@ export default async function AdminBlogsPage() {
         description="Posts on the Blogs page, newest first."
         actions={
           <>
-            {supabaseConfigured() && source.kind !== "database" && <ImportButton kind="blogs" variant="secondary" />}
+            {source.kind === "site" && source.reason === "empty" && <ImportButton kind="blogs" variant="secondary" />}
             <Link href="/admin/blogs/new" className={primaryBtn}>
               + New post
             </Link>
           </>
         }
       />
+      {source.kind === "site" && source.reason === "error" && <LoadError />}
 
       <div className="overflow-hidden rounded-xl border border-line bg-surface">
         <table className="w-full text-left text-[14px]">

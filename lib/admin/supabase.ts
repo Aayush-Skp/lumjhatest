@@ -7,8 +7,15 @@
 
 export class SupabaseError extends Error {}
 
+const ATTEMPTS = 3;
+const ATTEMPT_TIMEOUT_MS = 5000;
+
+/** Data-cache tags for admin reads; saves expire them with updateTag. */
+export const TAGS = { pricing: "admin-pricing", blogs: "admin-blogs" } as const;
+
 function config() {
-  const url = process.env.SUPABASE_URL?.replace(/\/$/, "");
+  // the project URL; tolerate a pasted REST endpoint (…/rest/v1/) too
+  const url = process.env.SUPABASE_URL?.trim().replace(/\/+$/, "").replace(/\/rest\/v1$/, "");
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
   return url && key ? { url, key } : null;
 }
@@ -19,34 +26,41 @@ export function supabaseConfigured(): boolean {
 
 /**
  * Call `/rest/v1/<path>`. `prefer` sets PostgREST's Prefer header (e.g.
- * "resolution=merge-duplicates" for upserts). Returns the parsed JSON body,
- * or null for an empty one.
+ * "resolution=merge-duplicates" for upserts). `tags` caches a read in the
+ * Next data cache until a save calls updateTag on one of them. Returns the
+ * parsed JSON body, or null for an empty one.
  */
 export async function rest<T = unknown>(
   path: string,
-  { method = "GET", body, prefer }: { method?: string; body?: unknown; prefer?: string } = {},
+  { method = "GET", body, prefer, tags }: { method?: string; body?: unknown; prefer?: string; tags?: string[] } = {},
 ): Promise<T> {
   const c = config();
   if (!c) throw new SupabaseError("Supabase isn’t connected. Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY.");
-  let res: Response;
-  try {
-    res = await fetch(`${c.url}/rest/v1/${path}`, {
-      method,
-      headers: {
-        apikey: c.key,
-        // legacy service_role keys are JWTs and go in Authorization too; new
-        // sb_secret_… keys are not JWTs and work from the apikey header alone
-        ...(c.key.startsWith("eyJ") ? { Authorization: `Bearer ${c.key}` } : {}),
-        "Content-Type": "application/json",
-        ...(prefer ? { Prefer: prefer } : {}),
-      },
-      body: body === undefined ? undefined : JSON.stringify(body),
-      cache: "no-store",
-      signal: AbortSignal.timeout(15_000),
-    });
-  } catch {
-    throw new SupabaseError("Couldn’t reach Supabase. Check SUPABASE_URL and your connection.");
+  const init: RequestInit = {
+    method,
+    headers: {
+      apikey: c.key,
+      // legacy service_role keys are JWTs and go in Authorization too; new
+      // sb_secret_… keys are not JWTs and work from the apikey header alone
+      ...(c.key.startsWith("eyJ") ? { Authorization: `Bearer ${c.key}` } : {}),
+      "Content-Type": "application/json",
+      ...(prefer ? { Prefer: prefer } : {}),
+    },
+    body: body === undefined ? undefined : JSON.stringify(body),
+    ...(tags ? { cache: "force-cache", next: { tags, revalidate: 300 } } : { cache: "no-store" }),
+  };
+  // Some requests to a project can stall without ever answering; give each
+  // attempt a few seconds and retry rather than waiting on one for long.
+  // Every call here is safe to repeat (reads, upserts, deletes).
+  let res: Response | undefined;
+  for (let attempt = 0; attempt < ATTEMPTS && !res; attempt++) {
+    try {
+      res = await fetch(`${c.url}/rest/v1/${path}`, { ...init, signal: AbortSignal.timeout(ATTEMPT_TIMEOUT_MS) });
+    } catch {
+      // timed out or network error: try again
+    }
   }
+  if (!res) throw new SupabaseError("Supabase didn’t respond. Check your connection or the project’s status, then try again.");
   const text = await res.text();
   if (!res.ok) {
     let message = text;

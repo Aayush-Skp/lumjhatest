@@ -62,3 +62,12 @@ export function Message({ state }: { state: { ok: boolean; message: string } | n
     </p>
   );
 }
+
+/** Shown when Supabase didn't answer: the page is showing built-in data, so editing is held back. */
+export function LoadError() {
+  return (
+    <p role="alert" className="rounded-lg bg-red-500/10 px-3 py-2 text-[13px] text-red-500">
+      Couldn’t load the latest data from Supabase. Reload the page to try again.
+    </p>
+  );
+}

@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ImportButton from "@/components/admin/ImportButton";
-import { PageHeader } from "@/components/admin/ui";
+import { LoadError, PageHeader } from "@/components/admin/ui";
 import { listPlans } from "@/lib/admin/content";
 import { requireAdmin } from "@/lib/admin/session";
-import { supabaseConfigured } from "@/lib/admin/supabase";
 
 export const metadata: Metadata = { title: "Pricing" };
 
@@ -17,8 +16,9 @@ export default async function AdminPricingPage() {
       <PageHeader
         title="Pricing"
         description="The plan cards on the Pricing page: prices, conversation allowances, features and buttons."
-        actions={supabaseConfigured() && source.kind !== "database" ? <ImportButton kind="pricing" variant="secondary" /> : undefined}
+        actions={source.kind === "site" && source.reason === "empty" ? <ImportButton kind="pricing" variant="secondary" /> : undefined}
       />
+      {source.kind === "site" && source.reason === "error" && <LoadError />}
 
       <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {plans.map((p) => (
