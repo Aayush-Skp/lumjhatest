@@ -18,7 +18,7 @@ import {
 
 type Icon = ComponentType<SVGProps<SVGSVGElement>>;
 
-function DocIcon(props: SVGProps<SVGSVGElement>) {
+export function DocIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" aria-hidden {...props}>
       <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
@@ -27,7 +27,7 @@ function DocIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-function ShieldIcon(props: SVGProps<SVGSVGElement>) {
+export function ShieldIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" aria-hidden {...props}>
       <path d="M12 3 5 6v5c0 4.5 3 8.3 7 10 4-1.7 7-5.5 7-10V6z" />

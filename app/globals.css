@@ -509,6 +509,116 @@ body {
   opacity: 0.4;
 }
 
+/* Hero orbit: a ring turns while its badges counter-turn (--orbit-dur set inline) */
+.orbit-spin {
+  animation: orbitSpin var(--orbit-dur, 90s) linear infinite;
+}
+.orbit-counter {
+  animation: orbitSpin var(--orbit-dur, 90s) linear infinite reverse;
+}
+@keyframes orbitSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Short bright pulse running along a hero connector, then a pause. Lengths
+   are screen px (the paths use non-scaling strokes); the gap outlasts any line. */
+.flow-pulse {
+  stroke-dasharray: 18 600;
+  animation: flowPulse 3.2s linear infinite;
+}
+@keyframes flowPulse {
+  from {
+    stroke-dashoffset: 18;
+  }
+  to {
+    stroke-dashoffset: -400;
+  }
+}
+
+/* Hero sources fly up into the upload box, one after the other: the document
+   at 25–50% of a 4s cycle, then the website (--fly-delay 1s) through the empty
+   slot; both fade back in at their spots. The box glows and its arrow nudges
+   as each lands (50% and 75%). Every animation ends at rest, so reduced motion
+   leaves the icons in place. */
+.upload-fly {
+  animation: uploadFly 4s var(--fly-delay, 0s) infinite;
+}
+@keyframes uploadFly {
+  0%,
+  25% {
+    transform: none;
+    opacity: 1;
+    animation-timing-function: cubic-bezier(0.55, 0, 0.75, 0.2);
+  }
+  50% {
+    transform: translate(var(--fly-x, 0px), var(--fly-y, 0px)) scale(0.5);
+    opacity: 0;
+  }
+  51%,
+  80% {
+    transform: none;
+    opacity: 0;
+    animation-timing-function: ease-out;
+  }
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+}
+.upload-receive {
+  animation: uploadReceive 4s ease-out infinite;
+}
+@keyframes uploadReceive {
+  0%,
+  47%,
+  62%,
+  72%,
+  87%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(82 125 255 / 0);
+  }
+  53%,
+  78% {
+    box-shadow: 0 0 0 6px rgb(82 125 255 / 0.18), 0 0 36px rgb(82 125 255 / 0.35);
+  }
+}
+.upload-arrow {
+  transform-box: fill-box;
+  animation: uploadArrow 4s ease-out infinite;
+}
+@keyframes uploadArrow {
+  0%,
+  49%,
+  60%,
+  74%,
+  85%,
+  100% {
+    transform: none;
+  }
+  54%,
+  79% {
+    transform: translateY(-14%);
+  }
+}
+
+/* Feature band under the hero — each track holds two equal halves */
+.marquee {
+  animation: marquee 45s linear infinite;
+}
+.marquee-reverse {
+  animation-direction: reverse;
+}
+.marquee-band:hover .marquee {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,
