@@ -568,7 +568,48 @@ body {
   }
 }
 .upload-receive {
-  animation: uploadReceive 4s ease-out infinite;
+  animation:
+    uploadReceive 4s ease-out infinite,
+    uploadBump 4s ease-out infinite;
+}
+/* light theme: the glow stays inside the card, so it opens up rather than shines */
+[data-theme="light"] .upload-receive {
+  animation:
+    uploadReceiveInset 4s ease-out infinite,
+    uploadBump 4s ease-out infinite;
+}
+/* a springy swell as each source lands (50% and 75%) */
+@keyframes uploadBump {
+  0%,
+  49%,
+  62%,
+  74%,
+  87%,
+  100% {
+    transform: none;
+  }
+  54%,
+  79% {
+    transform: scale(1.025);
+  }
+  58%,
+  83% {
+    transform: scale(0.995);
+  }
+}
+@keyframes uploadReceiveInset {
+  0%,
+  47%,
+  64%,
+  72%,
+  89%,
+  100% {
+    box-shadow: inset 0 0 0 0 rgb(82 125 255 / 0);
+  }
+  54%,
+  79% {
+    box-shadow: inset 0 0 0 1px rgb(82 125 255 / 0.25), inset 0 0 22px rgb(82 125 255 / 0.18);
+  }
 }
 @keyframes uploadReceive {
   0%,

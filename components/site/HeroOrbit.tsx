@@ -90,7 +90,7 @@ const TILE_SIZE = "h-8 w-8 lg:h-9 lg:w-9 xl:h-11 xl:w-11";
 /** A channel badge: brand-coloured disc with a white glyph, or a glyph on a white disc. */
 function Badge({ icon: Icon, className, glyph = "h-[56%] w-[56%]" }: { icon: Glyph; className: string; glyph?: string }) {
   return (
-    <span className={`flex h-full w-full items-center justify-center rounded-full shadow-[0_6px_16px_-6px_rgba(15,23,42,0.45)] ${className}`}>
+    <span className={`flex h-full w-full items-center justify-center rounded-full shadow-[0_6px_16px_-6px_rgba(15,23,42,0.45)] light:shadow-none ${className}`}>
       <Icon className={glyph} />
     </span>
   );
@@ -169,7 +169,7 @@ function Orbit() {
       <Ring items={OUTER} duration="90s" className="inset-0" />
       <Ring items={INNER} duration="70s" reverse className="inset-[12.5%]" />
       {/* the Lumjha core */}
-      <div className="absolute inset-[31%] flex items-center justify-center rounded-full bg-white shadow-[0_0_0_6px_rgba(82,125,255,0.12),0_0_60px_-4px_rgba(82,125,255,0.7)] light:shadow-[0_18px_30px_-10px_rgba(15,23,42,0.45)]">
+      <div className="absolute inset-[31%] flex items-center justify-center rounded-full bg-white shadow-[0_0_0_6px_rgba(82,125,255,0.12),0_0_60px_-4px_rgba(82,125,255,0.7)] light:shadow-none">
         <Image src="/logo.png" alt="Lumjha AI" width={405} height={564} priority className="h-[52%] w-auto" />
       </div>
     </div>
@@ -287,7 +287,7 @@ const BUBBLE = "rounded-xl bg-white/[0.07] px-3 py-2 light:bg-[#EDF1F8]";
 /** The widget mid-answer, citing where the answer came from. */
 function ChatWidget() {
   return (
-    <div className="relative z-10 w-full max-w-[320px] shrink-0 rounded-2xl border-2 border-[#527DFF]/30 bg-surface/85 p-3 text-left shadow-[0_24px_60px_-28px_rgba(82,125,255,0.6)] backdrop-blur lg:w-[244px] xl:w-[284px] light:border-[#D9E1F2] light:bg-[#F8FAFD] light:shadow-[0_24px_50px_-30px_rgba(15,23,42,0.35)]">
+    <div className="relative z-10 w-full max-w-[320px] shrink-0 rounded-2xl border-2 border-[#527DFF]/30 bg-surface/85 p-3 text-left shadow-[0_24px_60px_-28px_rgba(82,125,255,0.6)] backdrop-blur lg:w-[244px] xl:w-[284px] light:border-[#D9E1F2] light:bg-[#F8FAFD] light:shadow-none">
       <div className="flex items-center gap-2 border-b border-line pb-2.5">
         <ChatAvatar />
         <p className="text-[12px] font-semibold text-ink">Lumjha AI</p>

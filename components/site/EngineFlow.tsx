@@ -67,7 +67,7 @@ const SOURCE_YS = [14.4, 50, 85.6];
 const CHANNEL_YS = [11.4, 37.1, 62.9, 88.6];
 
 const TILE =
-  "border border-line bg-surface/70 backdrop-blur-md light:border-card-ring light:bg-white/90 light:shadow-[0_12px_30px_-22px_rgba(15,23,42,0.35)]";
+  "border border-line bg-surface/70 backdrop-blur-md light:border-card-ring light:bg-white/90";
 const LABEL = "font-mono text-[10.5px] font-medium uppercase tracking-[0.08em] text-subtle";
 
 /** Curves from each left point to each right point (y in %), drawn edge to edge. */
@@ -141,7 +141,7 @@ export default function EngineFlow({ className = "" }: { className?: string }) {
             <Connector left={SOURCE_YS} right={[50]} />
           </div>
 
-          <div className="relative flex flex-col items-center justify-center rounded-[24px] bg-[#527DFF] px-4 text-center text-white shadow-[0_30px_70px_-24px_rgba(82,125,255,0.85)]">
+          <div className="relative flex flex-col items-center justify-center rounded-[24px] bg-[#527DFF] px-4 text-center text-white shadow-[0_30px_70px_-24px_rgba(82,125,255,0.85)] light:shadow-none">
             <EngineLogo size="lg" />
             <p className="mt-5 text-[18px] font-bold leading-tight">One knowledge base</p>
             <p className="mt-1 text-[12.5px] text-white/80">Trained once, always in sync</p>
@@ -183,7 +183,7 @@ export default function EngineFlow({ className = "" }: { className?: string }) {
           ))}
         </ul>
         <FlowDown />
-        <div className="flex w-full items-center gap-4 rounded-2xl bg-[#527DFF] px-5 py-4 text-white shadow-[0_24px_50px_-24px_rgba(82,125,255,0.85)]">
+        <div className="flex w-full items-center gap-4 rounded-2xl bg-[#527DFF] px-5 py-4 text-white shadow-[0_24px_50px_-24px_rgba(82,125,255,0.85)] light:shadow-none">
           <EngineLogo size="sm" />
           <span className="min-w-0 pl-1">
             <span className="block text-[15px] font-bold">One knowledge base</span>
