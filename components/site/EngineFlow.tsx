@@ -12,8 +12,7 @@ import {
 
 /* ============================================================
    One AI engine — your knowledge → one knowledge base → every
-   channel, joined by flowing dashed lines (homepage hero). The
-   data is shared with the pricing page's "Deploy One AI Engine".
+   channel, joined by flowing dashed lines (homepage hero).
    ============================================================ */
 
 type Icon = ComponentType<SVGProps<SVGSVGElement>>;

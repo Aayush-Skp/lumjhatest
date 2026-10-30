@@ -45,9 +45,9 @@ function BillingSwitch({ value, onChange }: { value: Billing; onChange: (b: Bill
 function PlanCard({ plan, billing }: { plan: Plan; billing: Billing }) {
   return (
     <div
-      className={`relative flex h-full flex-col rounded-[18px] bg-gradient-to-b px-5 pb-8 pt-6 text-[#E3EEFB] light:bg-none light:text-[#0B1526] ${
+      className={`relative flex h-full flex-col rounded-[18px] bg-gradient-to-b px-5 pb-8 pt-6 text-[#E3EEFB] light:bg-none light:text-[#0B1526] light:shadow-[0_18px_40px_-28px_rgba(15,23,42,0.25)] ${
         plan.featured
-          ? "border-2 border-[#5078FF] from-[#172A5D] to-[#0D1830] light:bg-[linear-gradient(180deg,#EEF3FF,#FFFFFF)] light:shadow-[0_24px_60px_-24px_rgba(82,125,255,0.45)]"
+          ? "border-2 border-[#5078FF] from-[#172A5D] to-[#0D1830] light:bg-white"
           : "border border-[#213653] from-[#101E3B] to-[#0C172D] light:border-[#D7E3F5] light:bg-white"
       }`}
     >

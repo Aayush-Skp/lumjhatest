@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Navbar from "@/components/site/Navbar";
 import Footer from "@/components/site/Footer";
 import CtaPanel from "@/components/site/CtaPanel";
@@ -8,9 +7,7 @@ import PricingPlans, { Included } from "@/components/site/PricingPlans";
 import PlanMatrix, { OnlyOnLumjha } from "@/components/site/PlanMatrix";
 import SectionHeader, { SECTION_HEAD_GAP, SECTION_Y } from "@/components/site/SectionHeader";
 import { Faq } from "@/components/site/ProductSections";
-import Tilt from "@/components/ui/Tilt";
 import { listPlans } from "@/lib/admin/content";
-import { ChannelGlyph, DEPLOY_CHANNELS, ENGINE_CAPABILITIES, SOURCES } from "@/components/site/EngineFlow";
 
 export const metadata: Metadata = {
   title: "Pricing",
@@ -21,16 +18,6 @@ export const metadata: Metadata = {
 /* ============================================================
    Pricing — plans page (Figma design)
    ============================================================ */
-
-/* ---------- deploy one AI engine ---------- */
-
-function FlowArrow() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-6 w-6 shrink-0 rotate-90 text-white/80 light:text-[#527DFF] lg:rotate-0" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <path d="M5 12h14M13 6l6 6-6 6" />
-    </svg>
-  );
-}
 
 /* ---------- shared card look ----------
    Dark: navy panels with a hairline edge (Figma). Light: white cards. */
@@ -294,58 +281,6 @@ export default async function PricingPage() {
             </p>
           </div>
           <PricingPlans plans={plans} className={SECTION_HEAD_GAP} />
-        </section>
-
-        {/* DEPLOY ONE AI ENGINE — sources → one knowledge base → every channel */}
-        <section id="engine" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
-          <SectionHeader title="Deploy One AI Engine" subtitle="Connect your data to every platform." />
-          <div className={`mx-auto flex max-w-[1160px] flex-col items-center gap-5 lg:flex-row lg:justify-between lg:gap-6 ${SECTION_HEAD_GAP}`}>
-            <ul className="flex w-full max-w-[320px] flex-col gap-3 lg:w-[250px]">
-              {SOURCES.map((s) => (
-                <li key={s.title} className="rounded-xl bg-[#527DFF] px-4 py-4 text-white shadow-[0_16px_40px_-20px_rgba(82,125,255,0.7)]">
-                  <p className="text-[14px] font-semibold">{s.title}</p>
-                  <p className="mt-1 text-[12px] text-white/80">{s.body}</p>
-                </li>
-              ))}
-            </ul>
-
-            <FlowArrow />
-
-            <Tilt className="w-full max-w-[296px] rounded-[20px]" max={8}>
-              <div className="flex aspect-square flex-col items-center justify-center rounded-[20px] bg-[#527DFF] px-5 text-center text-white shadow-[0_24px_60px_-20px_rgba(82,125,255,0.7)]">
-                <span className="flex h-[110px] w-[110px] items-center justify-center rounded-full bg-white">
-                  <Image src="/logo.png" alt="" width={69} height={96} className="h-[72px] w-auto" />
-                </span>
-                <p className="mt-4 text-[19px] font-bold">One knowledge base</p>
-                <p className="mt-1 text-[12px] text-white/85">Trained once, always in sync</p>
-                <ul className="mt-4 flex max-w-[200px] flex-wrap justify-center gap-2">
-                  {ENGINE_CAPABILITIES.map((c) => (
-                    <li key={c} className="rounded-full bg-white px-2.5 py-0.5 text-[11px] font-semibold text-[#3E63F2]">
-                      {c}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </Tilt>
-
-            <FlowArrow />
-
-            <ul className="grid w-full max-w-[423px] grid-cols-2 gap-2">
-              {DEPLOY_CHANNELS.map((c) => {
-                return (
-                  <li key={c.name} className="flex items-center gap-3 rounded-xl bg-[#527DFF] p-3 text-white shadow-[0_16px_40px_-20px_rgba(82,125,255,0.7)]">
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white" style={{ color: c.color }}>
-                      <ChannelGlyph icon={c.icon} className={c.icon === "site-search" ? "h-[22px] w-[22px]" : "h-5 w-5"} />
-                    </span>
-                    <span className="min-w-0">
-                      <span className="block truncate text-[13px] font-semibold">{c.name}</span>
-                      <span className="block truncate text-[10.5px] text-white/80">{c.body}</span>
-                    </span>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
         </section>
 
         {/* WHAT COUNTS AS A CONVERSATION — rules + worked example, thin lines drifting behind */}

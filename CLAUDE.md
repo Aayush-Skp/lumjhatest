@@ -18,7 +18,7 @@ lumjha-website/
 │   ├── page.tsx        ← main landing page (Figma design)
 │   ├── play-area/      ← Lumjha Play: demo chat + document upload (components/site/PlayDemo.tsx)
 │   ├── api/playground/ ← server routes forwarding Play uploads/status to the Lumjha API (key stays server-side)
-│   ├── pricing/        ← Pricing page: plans, AI engine flow, conversation rules, usage alerts, API, comparison matrix, FAQ
+│   ├── pricing/        ← Pricing page: plans, conversation rules, usage alerts, API, comparison matrix, FAQ
 │   ├── chat-agent/     ← Solutions → AI Chat Agent
 │   ├── site-search/    ← Solutions → Site Search
 │   ├── policy-vault/   ← Solutions → Policy Vault
@@ -40,7 +40,7 @@ lumjha-website/
 │   │   ├── SectionHeader.tsx   ← shared section title + SECTION_Y / SECTION_HEAD_GAP rhythm
 │   │   ├── CtaPanel.tsx        ← "Ready to Scale" blue panel (every page)
 │   │   ├── ChannelReels.tsx    ← animated channel-logo slot reels
-│   │   ├── EngineFlow.tsx      ← sources → one knowledge base → channels (home hero; data shared with Pricing)
+│   │   ├── EngineFlow.tsx      ← sources → one knowledge base → channels (home hero)
 │   │   ├── WaveGlow.tsx        ← canvas port of Figma's "Glowing wave" shader
 │   │   └── LegalPage.tsx ← Figma-styled shell for legal pages
 │   ├── showcase/
