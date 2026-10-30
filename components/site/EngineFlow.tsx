@@ -64,7 +64,7 @@ export function ChannelGlyph({ icon, className }: { icon: Icon | "site-search"; 
 /* Vertical centres (in % of the diagram's height) of the three sources and
    the four channel rows; they follow from the fixed heights below. */
 const SOURCE_YS = [14.4, 50, 85.6];
-const CHANNEL_YS = [11.2, 37.1, 62.9, 88.8];
+const CHANNEL_YS = [11.4, 37.1, 62.9, 88.6];
 
 const TILE =
   "border border-line bg-surface/70 backdrop-blur-md light:border-card-ring light:bg-white/90 light:shadow-[0_12px_30px_-22px_rgba(15,23,42,0.35)]";
@@ -102,11 +102,11 @@ function FlowDown() {
 function EngineLogo({ size }: { size: "sm" | "lg" }) {
   const lg = size === "lg";
   return (
-    <span className={`relative flex shrink-0 items-center justify-center ${lg ? "h-[86px] w-[86px]" : "h-12 w-12"}`}>
+    <span className={`relative flex shrink-0 items-center justify-center ${lg ? "h-24 w-24" : "h-12 w-12"}`}>
       {/* slow orbit around the core */}
       <span aria-hidden className="absolute -inset-[7px] animate-[spin_14s_linear_infinite] rounded-full border border-dashed border-white/45" />
       <span className="flex h-full w-full items-center justify-center rounded-full bg-white shadow-[0_8px_24px_-8px_rgba(11,21,38,0.45)]">
-        <Image src="/logo.png" alt="" width={69} height={96} className={lg ? "h-[54px] w-auto" : "h-[30px] w-auto"} />
+        <Image src="/logo.png" alt="" width={69} height={96} className={lg ? "h-[60px] w-auto" : "h-[30px] w-auto"} />
       </span>
     </span>
   );
@@ -117,23 +117,23 @@ export default function EngineFlow({ className = "" }: { className?: string }) {
     <div className={`w-full text-left ${className}`}>
       {/* ---------- desktop: one row, lines flowing left to right ---------- */}
       {/* equal side columns keep the engine on the page's centre line (under the hero CTA) */}
-      <div className="mx-auto hidden max-w-[1160px] lg:block">
-        <div className="mb-3 grid grid-cols-[minmax(0,1fr)_208px_minmax(0,1fr)] xl:grid-cols-[minmax(0,1fr)_224px_minmax(0,1fr)]">
-          <p className={LABEL}>Your knowledge</p>
-          <p className={`${LABEL} text-center`}>One AI engine</p>
-          <p className={`${LABEL} ml-auto w-[336px] xl:w-[360px]`}>Every platform</p>
+      <div className="mx-auto hidden max-w-[1240px] lg:block">
+        <div className="mb-3.5 grid grid-cols-[minmax(0,1fr)_220px_minmax(0,1fr)] xl:grid-cols-[minmax(0,1fr)_250px_minmax(0,1fr)]">
+          <p className={`${LABEL} lg:text-[11.5px]`}>Your knowledge</p>
+          <p className={`${LABEL} text-center lg:text-[11.5px]`}>One AI engine</p>
+          <p className={`${LABEL} ml-auto w-[352px] lg:text-[11.5px] xl:w-[400px]`}>Every platform</p>
         </div>
-        <div className="grid h-[236px] grid-cols-[minmax(0,1fr)_208px_minmax(0,1fr)] xl:grid-cols-[minmax(0,1fr)_224px_minmax(0,1fr)]">
+        <div className="grid h-[264px] grid-cols-[minmax(0,1fr)_220px_minmax(0,1fr)] xl:grid-cols-[minmax(0,1fr)_250px_minmax(0,1fr)]">
           <div className="flex min-w-0">
-            <ul className="flex w-[264px] shrink-0 flex-col justify-between xl:w-[272px]">
+            <ul className="flex w-[300px] shrink-0 flex-col justify-between xl:w-[310px]">
               {SOURCES.map((s) => (
-                <li key={s.title} className={`flex h-[68px] items-center gap-3 rounded-2xl px-3.5 ${TILE}`}>
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#527DFF]/12 text-[#6E8BFF] light:text-[#3E63F2]">
-                    <s.icon className="h-[18px] w-[18px]" />
+                <li key={s.title} className={`flex h-[76px] items-center gap-3.5 rounded-2xl px-4 ${TILE}`}>
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#527DFF]/12 text-[#6E8BFF] light:text-[#3E63F2]">
+                    <s.icon className="h-5 w-5" />
                   </span>
                   <span className="min-w-0">
-                    <span className="block text-[13.5px] font-semibold text-ink">{s.title}</span>
-                    <span className="block truncate text-[11px] text-subtle">{s.body}</span>
+                    <span className="block text-[15px] font-semibold text-ink">{s.title}</span>
+                    <span className="block truncate text-[12px] text-subtle">{s.body}</span>
                   </span>
                 </li>
               ))}
@@ -143,11 +143,11 @@ export default function EngineFlow({ className = "" }: { className?: string }) {
 
           <div className="relative flex flex-col items-center justify-center rounded-[24px] bg-[#527DFF] px-4 text-center text-white shadow-[0_30px_70px_-24px_rgba(82,125,255,0.85)]">
             <EngineLogo size="lg" />
-            <p className="mt-5 text-[16px] font-bold leading-tight">One knowledge base</p>
-            <p className="mt-1 text-[11.5px] text-white/80">Trained once, always in sync</p>
-            <ul className="mt-3 flex flex-wrap justify-center gap-1.5">
+            <p className="mt-5 text-[18px] font-bold leading-tight">One knowledge base</p>
+            <p className="mt-1 text-[12.5px] text-white/80">Trained once, always in sync</p>
+            <ul className="mt-3.5 flex flex-wrap justify-center gap-1.5">
               {ENGINE_CAPABILITIES.map((c) => (
-                <li key={c} className="rounded-full bg-white/95 px-2 py-0.5 text-[10.5px] font-semibold text-[#3E63F2]">
+                <li key={c} className="rounded-full bg-white/95 px-2.5 py-0.5 text-[11.5px] font-semibold text-[#3E63F2]">
                   {c}
                 </li>
               ))}
@@ -156,13 +156,13 @@ export default function EngineFlow({ className = "" }: { className?: string }) {
 
           <div className="flex min-w-0">
             <Connector left={[50]} right={CHANNEL_YS} />
-            <ul className="grid w-[336px] shrink-0 grid-cols-2 grid-rows-4 gap-2 xl:w-[360px]">
+            <ul className="grid w-[352px] shrink-0 grid-cols-2 grid-rows-4 gap-2 xl:w-[400px]">
               {DEPLOY_CHANNELS.map((c) => (
-                <li key={c.name} className={`flex items-center gap-2.5 rounded-xl px-2.5 ${TILE}`}>
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white light:bg-[#F4F6FF]" style={{ color: c.color }}>
-                    <ChannelGlyph icon={c.icon} className="h-[18px] w-[18px]" />
+                <li key={c.name} className={`flex items-center gap-3 rounded-xl px-3 ${TILE}`}>
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white light:bg-[#F4F6FF]" style={{ color: c.color }}>
+                    <ChannelGlyph icon={c.icon} className="h-5 w-5" />
                   </span>
-                  <span className="truncate text-[13px] font-semibold text-ink">{c.name}</span>
+                  <span className="truncate text-[14.5px] font-semibold text-ink">{c.name}</span>
                 </li>
               ))}
             </ul>
