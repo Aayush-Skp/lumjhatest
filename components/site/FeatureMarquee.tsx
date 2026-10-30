@@ -1,5 +1,5 @@
 /* ============================================================
-   Blue feature band under the homepage hero: two rows of
+   Blue feature band (Integration page): two rows of
    capabilities drifting in opposite directions (Figma).
    ============================================================ */
 

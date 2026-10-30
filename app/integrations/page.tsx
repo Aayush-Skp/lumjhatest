@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import ChannelReels from "@/components/site/ChannelReels";
+import FeatureMarquee from "@/components/site/FeatureMarquee";
+import HeroOrbit from "@/components/site/HeroOrbit";
 import SectionHeader, { SECTION_HEAD_GAP, SECTION_Y } from "@/components/site/SectionHeader";
-import { BenefitGrid, Faq, IntroSplit, ProductHero, ProductPage, StepCards } from "@/components/site/ProductSections";
+import { BenefitGrid, Faq, ProductHero, ProductPage, StepCards } from "@/components/site/ProductSections";
 import Tilt from "@/components/ui/Tilt";
 
 export const metadata: Metadata = {
@@ -102,14 +103,16 @@ export default function IntegrationsPage() {
         accent="Customer Channels."
         body="Bring your customer conversations and business knowledge closer together. Explore supported integrations to make it easier for customers to connect with your business."
       />
-      <IntroSplit
-        heading="Your customers are everywhere. Stay connected."
-        body="Customers reach out through different platforms, and managing every conversation separately can be difficult. Lumjha helps bring AI-powered customer experiences to your supported channels."
-        media={
-          // the Figma art here is a still of the home page's channel reels — use the live reels
-          <ChannelReels count={5} className="w-full max-w-[655px]" height="h-[300px] sm:h-[360px] md:h-[414px]" />
-        }
-      />
+      {/* title on top, then the channel orbit + the blue feature band straight under it */}
+      <section className="mx-auto w-full max-w-[1440px] px-4 pb-14 pt-16 [--orbit-bg:var(--site-page-deep)] sm:px-6 md:pt-24 lg:pb-5">
+        <SectionHeader
+          wide
+          title="Your customers are everywhere. Stay connected."
+          subtitle="Customers reach out through different platforms, and managing every conversation separately can be difficult. Lumjha helps bring AI-powered customer experiences to your supported channels."
+        />
+        <HeroOrbit className={SECTION_HEAD_GAP} />
+      </section>
+      <FeatureMarquee />
       <StepCards title="HOW IT WORKS" subtitle="From choosing a channel to helping customers." steps={STEPS} />
       <BenefitGrid title="Integration benefits" subtitle="One platform. More ways to connect." items={BENEFITS} />
 

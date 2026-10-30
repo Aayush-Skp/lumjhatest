@@ -11,10 +11,11 @@ import {
 import { DocIcon, ShieldIcon } from "./EngineFlow";
 
 /* ============================================================
-   Homepage hero diagram (Figma): upload your docs + website →
+   Integration page diagram (Figma): upload your docs + website →
    the Lumjha core, orbited by every channel → a live chat answer.
    Desktop runs left to right with the orbit on the page's centre
    line; phones + tablets stack the same flow top to bottom.
+   Set --orbit-bg to the page colour behind it (default bg-page).
    ============================================================ */
 
 type Glyph = (props: SVGProps<SVGSVGElement>) => ReactNode;
@@ -95,8 +96,8 @@ function Badge({ icon: Icon, className, glyph = "h-[56%] w-[56%]" }: { icon: Gly
   );
 }
 
-/* Badge on the page colour, so the ring line stops behind the bare glyph. */
-const BARE = "bg-page shadow-none!";
+/* Badge on the page colour (--orbit-bg), so the ring line stops behind the bare glyph. */
+const BARE = "bg-[var(--orbit-bg,var(--site-page))] shadow-none!";
 
 type RingItem = { angle: number; label?: string; badge?: ReactNode };
 
@@ -148,7 +149,7 @@ function Ring({ items, duration, reverse, className }: { items: RingItem[]; dura
                 {badge}
               </span>
             ) : (
-              <span className="block h-2.5 w-2.5 rounded-full bg-[#7F95D1] ring-2 ring-page xl:h-3.5 xl:w-3.5 light:bg-[#7D8DB5]" />
+              <span className="block h-2.5 w-2.5 rounded-full bg-[#7F95D1] ring-2 ring-[var(--orbit-bg,var(--site-page))] xl:h-3.5 xl:w-3.5 light:bg-[#7D8DB5]" />
             )}
           </span>
         );
