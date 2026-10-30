@@ -104,7 +104,7 @@ export default function IntegrationsPage() {
         body="Bring your customer conversations and business knowledge closer together. Explore supported integrations to make it easier for customers to connect with your business."
       />
       {/* title on top, then the channel orbit + the blue feature band straight under it */}
-      <section className="mx-auto w-full max-w-[1440px] px-4 pb-14 pt-16 [--orbit-bg:var(--site-page-deep)] sm:px-6 md:pt-24 lg:pb-5">
+      <section className="mx-auto w-full max-w-[1440px] px-4 pb-14 pt-12 [--orbit-bg:var(--site-page-deep)] sm:px-6 md:pt-[72px] lg:pb-5">
         <SectionHeader
           wide
           title="Your customers are everywhere. Stay connected."

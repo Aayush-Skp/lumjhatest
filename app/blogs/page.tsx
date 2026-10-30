@@ -5,7 +5,7 @@ import Footer from "@/components/site/Footer";
 import CtaPanel from "@/components/site/CtaPanel";
 import BlogFilter from "@/components/site/BlogFilter";
 import { BlogCover, CategoryPill, PostMeta } from "@/components/site/BlogCards";
-import { SECTION_HEAD_GAP } from "@/components/site/SectionHeader";
+import { SECTION_HEAD_GAP, SECTION_Y } from "@/components/site/SectionHeader";
 import { listPosts } from "@/lib/admin/content";
 
 export const metadata: Metadata = {
@@ -75,7 +75,7 @@ export default async function BlogsPage() {
         </section>
 
         {/* ALL POSTS */}
-        <section aria-labelledby="latest-title" className="relative mx-auto max-w-[1440px] px-4 pb-16 pt-16 sm:px-6 md:pb-24 md:pt-24">
+        <section aria-labelledby="latest-title" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
           <div className="mx-auto max-w-[1160px]">
             <h2 id="latest-title" className="text-center font-heading text-[28px] font-bold leading-tight tracking-tight text-ink sm:text-4xl">
               Latest articles

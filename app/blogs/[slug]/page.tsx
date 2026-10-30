@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import Navbar from "@/components/site/Navbar";
 import Footer from "@/components/site/Footer";
 import CtaPanel from "@/components/site/CtaPanel";
+import { SECTION_Y } from "@/components/site/SectionHeader";
 import { BlogCard, BlogCover, PostMeta } from "@/components/site/BlogCards";
 import { listPosts } from "@/lib/admin/content";
 import { headingId, type Block, type Post } from "../posts";
@@ -152,7 +153,7 @@ export default async function BlogPostPage({ params }: Props) {
         </article>
 
         {/* KEEP READING */}
-        <section aria-labelledby="related-title" className="relative mx-auto max-w-[1440px] border-t border-line px-4 py-16 sm:px-6 md:py-24">
+        <section aria-labelledby="related-title" className={`relative mx-auto max-w-[1440px] border-t border-line px-4 sm:px-6 ${SECTION_Y}`}>
           <div className="mx-auto max-w-[1160px]">
             <h2 id="related-title" className="text-center font-heading text-[28px] font-bold leading-tight tracking-tight text-ink sm:text-4xl">
               Keep reading

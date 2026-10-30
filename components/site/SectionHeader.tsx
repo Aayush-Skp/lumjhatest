@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 /* Vertical rhythm shared by every content section, so the gaps between
    sections (and between a section's header and its content) always match. */
-export const SECTION_Y = "py-16 md:py-24";
+export const SECTION_Y = "py-12 md:py-[72px]";
 export const SECTION_HEAD_GAP = "mt-10 md:mt-14";
 
 /* Shared title + subtitle for content sections: Poppins headline in the
