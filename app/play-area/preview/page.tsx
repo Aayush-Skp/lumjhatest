@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import WidgetLoader from "@/components/site/WidgetLoader";
 import { AGENT_SUBDOMAIN, normalizeSiteUrl } from "@/lib/playground";
 
@@ -26,16 +27,18 @@ const DEMO_AGENT = process.env.LUMJHA_PLAY_DEMO_AGENT || "bedrocktest";
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 
-const NAV = ["Services", "Projects", "About", "Contact"];
+const NAV = ["AI Chat Agent", "Site Search", "Policy Vault", "Pricing"];
 
-const SERVICES = [
-  { title: "Kitchens", body: "Layouts that work the way you cook, with custom cabinetry." },
-  { title: "Bathrooms", body: "Walk-in showers, heated floors and lasting tile work." },
-  { title: "Additions", body: "More room, designed to match the home you already love." },
-];
+const CHANNELS = ["Website", "WhatsApp", "Instagram", "Messenger", "Telegram", "Slack"];
 
-/** Kitchen elevation as a fine gray line drawing, in place of a project photo. */
-function KitchenDrawing() {
+/** How Lumjha works, as a fine gray line drawing: sources → one knowledge base → channels. */
+function FlowDrawing() {
+  const sources = [
+    { y: 55, label: "Web pages" },
+    { y: 165, label: "Documents" },
+    { y: 275, label: "Policies" },
+  ];
+  const outputs = CHANNELS.slice(0, 5).map((label, i) => ({ y: 60 + i * 60, label }));
   return (
     <svg
       viewBox="0 0 520 400"
@@ -44,27 +47,40 @@ function KitchenDrawing() {
       stroke="#9CA3AF"
       strokeWidth="1.25"
       role="img"
-      aria-label="Line drawing of a Northwind kitchen"
+      aria-label="Line drawing: web pages, documents and policies feed one Lumjha knowledge base that answers on every channel"
     >
-      {/* upper cabinets */}
-      <rect x="30" y="40" width="240" height="96" />
-      <path d="M90 40v96M150 40v96M210 40v96M80 116v10M100 116v10M200 116v10M220 116v10" />
-      {/* window */}
-      <rect x="310" y="40" width="160" height="128" />
-      <path d="M390 40v128M310 104h160" />
-      {/* backsplash, counter, lower cabinets */}
-      <path d="M0 230h520M0 244h520" />
-      <rect x="0" y="244" width="520" height="100" />
-      <path d="M86 244v100M172 244v100M258 244v100M344 244v100M430 244v100M60 262h12M146 262h12M232 262h12M318 262h12M404 262h12M490 262h12" />
-      {/* faucet + plant */}
-      <path d="M390 230v-24a10 10 0 0 1 20 0v4" />
-      <path d="M444 230v-18h18v18M453 212c-8-12-6-22 0-28 6 6 8 16 0 28" />
-      {/* island */}
-      <path d="M120 290h300M132 290v84h276v-84M201 290v84M270 290v84M339 290v84" />
-      {/* pendants */}
-      <path d="M210 0v200M330 0v200M192 220a18 18 0 0 1 36 0zM312 220a18 18 0 0 1 36 0z" />
-      {/* stools + floor */}
-      <path d="M164 374h40M336 374h40M172 374v26M196 374v26M344 374v26M368 374v26M0 374h120M420 374h100" />
+      {/* sources: a page with a folded corner and text lines */}
+      {sources.map(({ y, label }) => (
+        <g key={label}>
+          <path d={`M30 ${y}h62l18 18v52h-80z M92 ${y}v18h18`} />
+          <path d={`M42 ${y + 30}h50M42 ${y + 42}h56M42 ${y + 54}h38`} />
+          <text x="70" y={y + 88} textAnchor="middle" fontSize="11" fill="#9CA3AF" stroke="none">
+            {label}
+          </text>
+          <path d={`M110 ${y + 35}C160 ${y + 35} 160 200 204 200`} />
+        </g>
+      ))}
+
+      {/* the one knowledge base */}
+      <circle cx="260" cy="200" r="56" stroke="#527DFF" />
+      <circle cx="260" cy="200" r="66" stroke="#527DFF" strokeOpacity="0.3" />
+      <text x="260" y="196" textAnchor="middle" fontSize="15" fill="#111827" stroke="none">
+        Lumjha
+      </text>
+      <text x="260" y="214" textAnchor="middle" fontSize="10" fill="#9CA3AF" stroke="none">
+        Knowledge base
+      </text>
+
+      {/* channels it answers on */}
+      {outputs.map(({ y, label }) => (
+        <g key={label}>
+          <path d={`M316 200C360 200 360 ${y + 18} 400 ${y + 18}`} />
+          <rect x="400" y={y} width="100" height="36" rx="18" />
+          <text x="450" y={y + 22} textAnchor="middle" fontSize="11" fill="#6B7280" stroke="none">
+            {label}
+          </text>
+        </g>
+      ))}
     </svg>
   );
 }
@@ -102,56 +118,55 @@ export default async function WebsitePreviewPage({ searchParams }: { searchParam
 
       <header className="border-b border-[#E5E7EB]">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-8 py-5">
-          <span className="text-[13px] font-semibold uppercase tracking-[0.3em] text-[#111827]">Northwind</span>
-          <nav className="hidden gap-9 text-[13px] lg:flex" aria-label="Sample site">
+          <span className="flex items-center gap-2.5">
+            <Image src="/logo.png" alt="" width={405} height={564} className="h-7 w-auto" priority />
+            <span className="text-[15px] font-semibold tracking-tight text-[#111827]">Lumjha</span>
+          </span>
+          <nav className="hidden gap-9 text-[13px] md:flex" aria-label="Sample site">
             {NAV.map((n) => (
               <span key={n}>{n}</span>
             ))}
           </nav>
-          <span className="border border-[#D1D5DB] px-4 py-2 text-[12px] font-medium uppercase tracking-[0.15em] text-[#374151]">
-            Enquire
-          </span>
         </div>
       </header>
 
       <main>
         <section className="mx-auto grid max-w-6xl items-center gap-14 px-8 py-16 lg:grid-cols-[1fr_1fr]">
           <div>
-            <p className="text-[11px] font-medium uppercase tracking-[0.3em] text-[#9CA3AF]">Design-build renovation · Portland</p>
+            <p className="text-[11px] font-medium uppercase tracking-[0.3em] text-[#9CA3AF]">No-code AI agents</p>
             <h1 className="mt-6 text-[38px] font-light leading-[1.15] tracking-tight text-[#111827] sm:text-[48px]">
-              Kitchens, baths and additions, built to last.
+              Never miss a customer. Grow while you sleep.
             </h1>
             <p className="mt-6 max-w-[440px] text-[15px] leading-relaxed">
-              We design, permit and build home renovations from start to finish, with one project manager, a
-              fixed-price quote and a 10-year warranty on our work.
+              Lumjha AI learns your website, documents and policies, then answers customer questions, captures
+              leads and books appointments around the clock, on the channels they already use.
             </p>
             <div className="mt-10 flex items-center gap-8 text-[12px] font-medium uppercase tracking-[0.15em]">
-              <span className="border border-[#D1D5DB] px-5 py-3 text-[#374151]">Book a consultation</span>
-              <span className="border-b border-[#D1D5DB] pb-1 text-[#6B7280]">View projects</span>
+              <span className="rounded-full bg-[#527DFF] px-6 py-3 text-white">Start free</span>
+              <span className="border-b border-[#D1D5DB] pb-1 text-[#6B7280]">See pricing</span>
             </div>
           </div>
 
           <div className="hidden aspect-[52/40] border border-[#E5E7EB] p-6 lg:block">
-            <KitchenDrawing />
+            <FlowDrawing />
           </div>
         </section>
 
         <section className="mx-auto max-w-6xl px-8 pb-16">
-          <div className="grid gap-10 border-t border-[#E5E7EB] pt-10 sm:grid-cols-3">
-            {SERVICES.map((s, i) => (
-              <div key={s.title}>
-                <span className="text-[11px] tracking-[0.2em] text-[#9CA3AF]">{String(i + 1).padStart(2, "0")}</span>
-                <h2 className="mt-3 text-[17px] font-normal text-[#111827]">{s.title}</h2>
-                <p className="mt-2 text-[14px] leading-relaxed">{s.body}</p>
-              </div>
-            ))}
+          <div className="flex flex-col gap-4 border-t border-[#E5E7EB] pt-8 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-[14px] text-[#111827]">One knowledge base. Every channel.</p>
+            <ul className="flex flex-wrap gap-x-6 gap-y-2 text-[13px]">
+              {CHANNELS.map((c) => (
+                <li key={c}>{c}</li>
+              ))}
+            </ul>
           </div>
         </section>
       </main>
 
       <footer className="border-t border-[#E5E7EB]">
         <div className="mx-auto max-w-6xl px-8 py-6 text-[11px] tracking-[0.1em] text-[#9CA3AF]">
-          © Northwind Homes · A sample website for Lumjha Play, not a real company.
+          © Lumjha · A sample website for Lumjha Play.
         </div>
       </footer>
 
