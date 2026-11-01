@@ -571,7 +571,7 @@ export default function HomePage() {
           </h1>
           {/* wide enough to sit on two lines from md up */}
           <p className="mx-auto mt-5 max-w-[56rem] text-base leading-relaxed text-balance text-muted sm:text-lg md:mt-6 md:text-xl">
-            Lumjha answers your customers&apos; questions, captures sales leads, and books
+            Lumjha AI answers your customers&apos; questions, captures sales leads, and books
             appointments around the clock, on platform(s) they already use, so you can
             focus on running your business.
           </p>
