@@ -674,8 +674,8 @@ body {
 
 html {
   scroll-behavior: smooth;
-  /* anchor jumps land just below the sticky 3.5rem navbar */
-  scroll-padding-top: 3.5rem;
+  /* anchor jumps land just below the sticky navbar (4rem; 76px on desktop) */
+  scroll-padding-top: 4rem;
 }
 
 /* Brief colour cross-fade while the theme switches (class added by

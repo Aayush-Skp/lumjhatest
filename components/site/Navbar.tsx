@@ -74,7 +74,7 @@ function SolutionsMenu({ active }: { active: boolean }) {
         // A mouse click lands after hover already opened the menu, so it only
         // opens; keyboard activation (detail === 0) toggles.
         onClick={(e) => setOpen((v) => (e.detail === 0 ? !v : true))}
-        className={`flex items-center gap-1.5 text-[15px] font-medium transition-colors duration-300 ease-out hover:text-ink ${
+        className={`flex items-center gap-1.5 text-[16px] font-medium transition-colors duration-300 ease-out hover:text-ink ${
           active || open ? "text-ink" : "text-nav-link"
         }`}
       >
@@ -97,7 +97,7 @@ function SolutionsMenu({ active }: { active: boolean }) {
                 className="block rounded-xl px-3.5 py-2.5 transition-colors hover:bg-[#5675FF]/[0.08]"
               >
                 <span className="block text-[14px] font-semibold text-ink">{s.label}</span>
-                <span className="mt-0.5 block text-[12px] text-subtle">{s.blurb}</span>
+                <span className="mt-0.5 block text-[13px] text-subtle">{s.blurb}</span>
               </Link>
             </li>
           ))}
@@ -122,25 +122,25 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-page/90 backdrop-blur-md">
-      <div className="mx-auto flex h-14 max-w-[1440px] items-center justify-between px-4 sm:px-6 lg:h-[66px] xl:px-[142px]">
+      <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-4 sm:px-6 lg:h-[76px] xl:px-[142px]">
         <Link href="/" className="flex items-center gap-2" aria-label="Lumjha home">
           <Image
             src="/logo.png"
             alt="Lumjha logo"
-            width={32}
-            height={44}
-            className="h-11 w-auto shrink-0 object-contain"
+            width={40}
+            height={56}
+            className="h-12 w-auto lg:h-14 shrink-0 object-contain"
             priority
           />
           {/* thin divider + two even lines, as in the brand lockup */}
-          <span aria-hidden className="ml-1.5 hidden h-10 w-px shrink-0 bg-ink/30 min-[420px]:block" />
-          <span className="hidden flex-col pl-1 text-[12px] font-medium leading-[1.3] text-nav-link min-[420px]:flex">
+          <span aria-hidden className="ml-1.5 hidden h-11 w-px shrink-0 bg-ink/30 min-[420px]:block" />
+          <span className="hidden flex-col pl-1 text-[13px] font-medium leading-[1.3] text-nav-link lg:text-[14px] min-[420px]:flex">
             <span>Knowledgebase,</span>
             <span>Activated Everywhere</span>
           </span>
         </Link>
 
-        <nav aria-label="Main" className="hidden items-center gap-[30px] lg:flex">
+        <nav aria-label="Main" className="hidden items-center gap-[34px] lg:flex">
           {NAV_LINKS.map((l) =>
             "children" in l ? (
               <SolutionsMenu key={l.label} active={solutionsActive} />
@@ -149,7 +149,7 @@ export default function Navbar() {
                 key={l.label}
                 href={l.href}
                 aria-current={isActive(l.href) ? "page" : undefined}
-                className={`text-[15px] font-medium transition-colors duration-300 ease-out hover:text-ink ${
+                className={`text-[16px] font-medium transition-colors duration-300 ease-out hover:text-ink ${
                   isActive(l.href) ? "text-ink" : "text-nav-link"
                 }`}
               >
@@ -161,14 +161,14 @@ export default function Navbar() {
 
         <div className="hidden items-center gap-[26px] lg:flex">
           <ThemeToggle />
-          <a href={APP_LOGIN} className="text-[15px] font-medium text-ink transition-opacity duration-300 hover:opacity-80">
+          <a href={APP_LOGIN} className="text-[16px] font-medium text-ink transition-opacity duration-300 hover:opacity-80">
             Log in
           </a>
           <a
             href={APP_LOGIN}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex h-9 items-center gap-2.5 rounded-full bg-[#5675FF] pl-[19px] pr-[19px] text-[14px] font-semibold text-white transition hover:bg-[#3E63F2]"
+            className="flex h-10 items-center gap-2.5 rounded-full bg-[#5675FF] px-[22px] text-[15px] font-semibold text-white transition hover:bg-[#3E63F2]"
           >
             Start Free
             <Image src="/assets/shared/arrow.svg" alt="" width={14} height={13} aria-hidden />

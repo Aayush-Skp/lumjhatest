@@ -558,8 +558,8 @@ export default function HomePage() {
         <div className="pointer-events-none absolute -right-40 top-[900px] h-[500px] w-[300px] rounded-full bg-glow/25 blur-[120px]" />
         <div className="pointer-events-none absolute -left-40 top-[1900px] h-[500px] w-[300px] rounded-full bg-glow/20 blur-[120px]" />
 
-        {/* HERO — owns the first viewport: 100svh minus the navbar (56px, 66px on desktop) */}
-        <section className="relative isolate mx-auto flex min-h-[calc(100svh-3.5rem)] w-full lg:min-h-[calc(100svh-66px)] max-w-[1440px] flex-col items-center justify-center px-4 py-10 text-center sm:px-6 md:py-12">
+        {/* HERO — owns the first viewport: 100svh minus the navbar (64px, 76px on desktop) */}
+        <section className="relative isolate mx-auto flex min-h-[calc(100svh-4rem)] w-full lg:min-h-[calc(100svh-76px)] max-w-[1440px] flex-col items-center justify-center px-4 py-10 text-center sm:px-6 md:py-12">
           {/* code-drawn backdrop — full-bleed past the 1440px container, waves anchored to the bottom and faded out into the next section */}
           <div aria-hidden className="pointer-events-none absolute inset-y-0 left-1/2 -z-10 w-screen -translate-x-1/2 [mask-image:linear-gradient(to_bottom,#000_88%,transparent)] md:[mask-image:linear-gradient(to_bottom,#000_70%,transparent)]">
             <HeroBackdrop />
