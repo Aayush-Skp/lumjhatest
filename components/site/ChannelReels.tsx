@@ -7,6 +7,8 @@ import {
   TelegramIcon,
   GoogleCalendarIcon,
   ShopifyIcon,
+  DiscordIcon,
+  SlackIcon,
 } from "@/components/ui/ChannelIcons";
 
 /* ---------- channel logos (same set as previous landing page) ---------- */
@@ -23,6 +25,8 @@ export const CHANNELS: {
     { name: "Telegram", bg: "#229ED9", Icon: TelegramIcon },
     { name: "Google Calendar", bg: "#4285F4", Icon: GoogleCalendarIcon },
     { name: "Shopify", bg: "#95BF47", Icon: ShopifyIcon },
+    { name: "Discord", bg: "#5865F2", Icon: DiscordIcon },
+    { name: "Slack", bg: "#4A154B", Icon: SlackIcon },
   ];
 
 type Channel = (typeof CHANNELS)[number];
@@ -31,7 +35,7 @@ type Channel = (typeof CHANNELS)[number];
    with plain CSS keyframes (no animation library). Each reel shows the
    channels in a different order, speed and direction; edge reels are dimmed
    so focus lands in the middle. */
-const REEL_DURATIONS = [16, 23, 14, 20, 26, 18];
+const REEL_DURATIONS = [21, 30, 18, 26, 33, 23];
 const REEL_OPACITY = [0.3, 0.6, 1, 1, 0.6, 0.3];
 // odd counts have a single bright centre reel
 const REEL_OPACITY_5 = [0.3, 0.6, 1, 0.6, 0.3];

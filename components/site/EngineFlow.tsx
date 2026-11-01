@@ -1,11 +1,12 @@
 import Image from "next/image";
 import type { ComponentType, SVGProps } from "react";
 import {
+  DiscordIcon,
   InstagramIcon,
   MessengerIcon,
   ShopifyIcon,
+  SlackIcon,
   TelegramIcon,
-  ViberIcon,
   WebsiteIcon,
   WhatsAppIcon,
 } from "@/components/ui/ChannelIcons";
@@ -43,19 +44,18 @@ export const SOURCES: { title: string; body: string; icon: Icon }[] = [
 
 export const ENGINE_CAPABILITIES = ["Chatbot", "Site Search", "Policy Vault", "Leads"];
 
-export const DEPLOY_CHANNELS: { name: string; body: string; icon: Icon | "site-search"; color: string }[] = [
+export const DEPLOY_CHANNELS: { name: string; body: string; icon: Icon; color: string }[] = [
   { name: "Website chat", body: "answers · captures · books", icon: WebsiteIcon, color: "#527DFF" },
-  { name: "Site Search", body: "instant on-site answers", icon: "site-search", color: "#527DFF" },
+  { name: "Discord", body: "answers · captures · books", icon: DiscordIcon, color: "#5865F2" },
   { name: "WhatsApp", body: "answers · captures · books", icon: WhatsAppIcon, color: "#25D366" },
   { name: "Instagram", body: "answers · captures · books", icon: InstagramIcon, color: "#E4405F" },
   { name: "Messenger", body: "answers · captures · books", icon: MessengerIcon, color: "#0084FF" },
   { name: "Telegram", body: "answers · captures · books", icon: TelegramIcon, color: "#229ED9" },
-  { name: "Viber", body: "answers · captures · books", icon: ViberIcon, color: "#7360F2" },
+  { name: "Slack", body: "answers · captures · books", icon: SlackIcon, color: "#4A154B" },
   { name: "Shopify", body: "answers · captures · books", icon: ShopifyIcon, color: "#95BF47" },
 ];
 
-export function ChannelGlyph({ icon, className }: { icon: Icon | "site-search"; className: string }) {
-  if (icon === "site-search") return <Image src="/assets/site-search.svg" alt="" width={22} height={22} className={className} />;
+export function ChannelGlyph({ icon, className }: { icon: Icon; className: string }) {
   const Glyph = icon;
   return <Glyph className={className} />;
 }
