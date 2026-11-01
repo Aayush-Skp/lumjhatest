@@ -264,7 +264,7 @@ const PLATFORM_TABS: {
           Delivered Exactly.
         </>
       ),
-      body: "Upgrade site search with AI. Lumjha instantly scans your entire website and documentation to deliver precise, summarized answers directly to your visitors with sources attached.",
+      body: "Ask in plain, everyday words and get the exact wording back. Lumjha Policy Vault searches your policies and documents, then quotes the relevant passage word for word, with its source attached so anyone can verify it.",
     },
   ];
 

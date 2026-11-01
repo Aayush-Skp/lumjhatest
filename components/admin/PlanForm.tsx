@@ -50,7 +50,7 @@ export default function PlanForm({ plan }: { plan: PlanRecord }) {
         <Card>
           <h2 className="text-[15px] font-semibold text-ink">Price</h2>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
-            <Field label="Monthly price" hint="Shown as written, e.g. $119">
+            <Field label="Monthly price" hint="Shown as written, e.g. $119 or Custom">
               <input name="priceMonthly" defaultValue={plan.price.monthly} required className={inputCls} />
             </Field>
             <Field label="Annual price (per month)" hint="e.g. $99">

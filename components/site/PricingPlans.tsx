@@ -62,7 +62,8 @@ function PlanCard({ plan, billing }: { plan: Plan; billing: Billing }) {
 
       <p className="mt-2.5 whitespace-nowrap font-bold">
         <span className="text-[44px] leading-none">{plan.price[billing]}</span>
-        <span className="text-[13px] font-normal"> /mo</span>
+        {/* worded prices ("Custom") read on their own, without "/mo" */}
+        {/\d/.test(plan.price[billing]) && <span className="text-[13px] font-normal"> /mo</span>}
       </p>
       <p className="mt-2 text-[12px] leading-[1.4] light:text-slate-600">{plan.detail[billing]}</p>
 
