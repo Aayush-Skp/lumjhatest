@@ -40,7 +40,7 @@ export default function FeatureMarquee() {
       </ul>
       {ROWS.map((row, r) => (
         // the second row drifts the other way and starts half a step along
-        <div key={r} aria-hidden className={`flex w-max py-2 md:py-3 ${r ? "marquee marquee-reverse -ml-40" : "marquee"}`}>
+        <div key={r} aria-hidden className={`flex w-max py-1 md:py-2 ${r ? "marquee marquee-reverse -ml-40" : "marquee"}`}>
           <Run items={row} />
           <Run items={row} />
         </div>

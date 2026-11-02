@@ -646,7 +646,7 @@ body {
 
 /* Feature band under the hero — each track holds two equal halves */
 .marquee {
-  animation: marquee 45s linear infinite;
+  animation: marquee 90s linear infinite;
 }
 .marquee-reverse {
   animation-direction: reverse;
