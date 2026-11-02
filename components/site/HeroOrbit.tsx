@@ -12,7 +12,7 @@ import { DocIcon, ShieldIcon } from "./EngineFlow";
 
 /* ============================================================
    Integration page diagram (Figma): upload your docs + website →
-   the Lumjha core, orbited by every channel → a live chat answer.
+   the Lumjha AI core, orbited by every channel → a live chat answer.
    Desktop runs left to right with the orbit on the page's centre
    line; phones + tablets stack the same flow top to bottom.
    Set --orbit-bg to the page colour behind it (default bg-page).

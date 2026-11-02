@@ -13,7 +13,7 @@ export default async function AdminLoginPage() {
       <div className="w-full max-w-[380px]">
         <div className="flex flex-col items-center text-center">
           <Image src="/logo.png" alt="" width={69} height={96} className="h-12 w-auto" priority />
-          <h1 className="mt-4 font-heading text-[22px] font-semibold tracking-tight text-ink">Lumjha Admin</h1>
+          <h1 className="mt-4 font-heading text-[22px] font-semibold tracking-tight text-ink">Lumjha AI Admin</h1>
           <p className="mt-1 text-[14px] text-muted">Sign in to manage pricing and blogs.</p>
         </div>
         <div className="mt-8 rounded-2xl border border-line bg-surface p-6 shadow-[0_24px_70px_-30px_rgba(82,125,255,0.35)]">

@@ -86,13 +86,13 @@ const ESSENTIALS: { icon: keyof typeof ESSENTIAL_ICONS; title: string; body: str
   {
     icon: "sun",
     title: "Live in minutes",
-    body: "Paste your URL: Lumjha auto-crawls your site and builds the knowledge base. Add PDFs, DOCX, CSV, Google Drive or Shopify as Knowledge Documents.",
+    body: "Paste your URL: Lumjha AI auto-crawls your site and builds the knowledge base. Add PDFs, DOCX, CSV, Google Drive or Shopify as Knowledge Documents.",
   },
   { icon: "shield", title: "Your brand, safely", body: "Your logo, colors, voice, tone and messaging, with chat safety moderation and controls always on." },
   { icon: "list", title: "Leads & bookings", body: "Form-less lead capture plus multiple forms, full chat history and Google Calendar booking." },
   { icon: "chat", title: "Human takeover, any channel", body: "Step into any conversation on the website, WhatsApp, Instagram, Messenger, Telegram or Viber from one inbox." },
   { icon: "code", title: "API", body: "Ingest sources and export leads, conversations and analytics programmatically." },
-  { icon: "share", title: "MCP connector", body: "Connect ChatGPT, Claude and your own agents to Lumjha with scoped, read-only-by-default access." },
+  { icon: "share", title: "MCP connector", body: "Connect ChatGPT, Claude and your own agents to Lumjha AI with scoped, read-only-by-default access." },
 ];
 
 function EssentialIcon({ name }: { name: keyof typeof ESSENTIAL_ICONS }) {
@@ -117,7 +117,7 @@ const ADD_ONS = [
   { price: "+$49", title: "Policy Vault (PIN-protected)", body: "Starter & Growth. Included on Pro." },
   { price: "+$25", title: "Site Search", body: "Starter only. Included on Growth and above." },
   { price: "$99", title: "Agency Kit (on Pro)", body: "Full white-label (widget, dashboard, custom domain), client sub-accounts, per-client usage reports, multi-client API/MCP keys." },
-  { price: "$19", title: "Remove badge", body: "Remove “Powered by Lumjha” on Starter." },
+  { price: "$19", title: "Remove badge", body: "Remove “Powered by Lumjha AI” on Starter." },
   { price: "$15", title: "Extra agent", body: "Another AI agent for a new brand, site or location." },
   { price: "$10", title: "Extra seat", body: "Another teammate in your workspace." },
   { price: "$15", title: "Extra WhatsApp number / IG account", body: "Connect another number or account to your agent." },
@@ -168,7 +168,7 @@ const COMPETITORS = ["Chatbase", "SiteGPT", "DocsBot", "Tidio", "ChatBot.com"] a
 
 /* Copied from the Figma matrix. Cell markers: "✓" = check (optionally
    followed by detail), "?" = unconfirmed (yellow), "" = blank cell.
-   `strong` bolds the Lumjha cell. */
+   `strong` bolds the Lumjha AI cell. */
 type MatrixRow = { capability: string; lumjha: string; strong?: boolean; competitors: [string, string, string, string, string] };
 
 const MATRIX: MatrixRow[] = [
@@ -212,34 +212,34 @@ function MatrixCell({ value }: { value: string }) {
 const FAQS = [
   {
     q: "What happens if I go over my conversations?",
-    a: "Lumjha alerts you at 75% and 90% usage. At 100%, a top-up may be applied based on your plan and billing settings, subject to your spending cap. If the cap is reached, the agent can switch to collecting visitor details.",
+    a: "Lumjha AI alerts you at 75% and 90% usage. At 100%, a top-up may be applied based on your plan and billing settings, subject to your spending cap. If the cap is reached, the agent can switch to collecting visitor details.",
   },
   {
     q: "Do I pay WhatsApp or Viber fees on top?",
-    a: "Third-party messaging fees may apply separately from your Lumjha subscription, depending on the channel and its pricing terms.",
+    a: "Third-party messaging fees may apply separately from your Lumjha AI subscription, depending on the channel and its pricing terms.",
   },
   {
     q: "I’m on Gold or Platinum. What changes for me?",
-    a: "Your available features, usage limits, and pricing may differ depending on your existing plan. Check your account or contact the Lumjha team to confirm your migration options.",
+    a: "Your available features, usage limits, and pricing may differ depending on your existing plan. Check your account or contact the Lumjha AI team to confirm your migration options.",
   },
   {
-    q: "What’s the difference between the Lumjha Free plan and the 14-day trial?",
+    q: "What’s the difference between the Lumjha AI Free plan and the 14-day trial?",
     a: "The Free plan provides ongoing access to its included features and limits. The proposed 14-day Growth trial offers temporary access to Growth plan features.",
   },
   {
     q: "Does Lumjha AI use my data to train AI models?",
-    a: "Review Lumjha’s current privacy policy and data-processing terms for details on AI training, data handling, and information protection.",
+    a: "Review Lumjha AI’s current privacy policy and data-processing terms for details on AI training, data handling, and information protection.",
   },
   {
     q: "How does Lumjha AI safety moderation work?",
-    a: "Safety moderation depends on the safeguards and features available in your Lumjha setup. Refer to the product documentation for current details.",
+    a: "Safety moderation depends on the safeguards and features available in your Lumjha AI setup. Refer to the product documentation for current details.",
   },
   {
-    q: "How secure is Lumjha Policy Vault with PIN protection?",
-    a: "Policy Vault offers restricted-access features. Consult Lumjha’s current security documentation for details about PIN protection and permissions.",
+    q: "How secure is Lumjha AI Policy Vault with PIN protection?",
+    a: "Policy Vault offers restricted-access features. Consult Lumjha AI’s current security documentation for details about PIN protection and permissions.",
   },
   {
-    q: "Which messaging channels are included in each Lumjha pricing plan?",
+    q: "Which messaging channels are included in each Lumjha AI pricing plan?",
     a: "Supported channels and account limits vary by plan. Check the pricing comparison table for current allowances and integration availability.",
   },
   {
@@ -248,7 +248,7 @@ const FAQS = [
   },
   {
     q: "Can I upgrade or downgrade my Lumjha AI pricing plan anytime?",
-    a: "Yes, plan changes can be made according to Lumjha’s billing terms. Check your account’s billing settings for available upgrade, downgrade, and billing-cycle options.",
+    a: "Yes, plan changes can be made according to Lumjha AI’s billing terms. Check your account’s billing settings for available upgrade, downgrade, and billing-cycle options.",
   },
 ];
 
@@ -348,7 +348,7 @@ export default async function PricingPage() {
         <section id="features" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
           <SectionHeader
             title="Every channel is just the start."
-            subtitle="Other tools put a chatbot on more apps. Lumjha puts the same brain everywhere: search, exact policy answers and lead capture included."
+            subtitle="Other tools put a chatbot on more apps. Lumjha AI puts the same brain everywhere: search, exact policy answers and lead capture included."
           />
           <div className={`mx-auto grid max-w-[1048px] grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 ${SECTION_HEAD_GAP}`}>
             {/* 01 · site search */}
@@ -386,12 +386,12 @@ export default async function PricingPage() {
 
             {/* 02 · policy vault */}
             <article className={`${CARD} flex flex-col p-5 sm:p-6`}>
-              <p className={EYEBROW}>02 · Lumjha Vault</p>
+              <p className={EYEBROW}>02 · Lumjha AI Vault</p>
               <h3 className="mt-3 text-[19px] font-bold leading-snug text-ink">
                 Exact policy quotes, on every channel. <OnlyOnLumjha />
               </h3>
               <p className="mt-3 text-[13.5px] leading-relaxed text-muted">
-                Refunds, warranties, coverage, HR: Lumjha answers with the exact clause and its source, never a
+                Refunds, warranties, coverage, HR: Lumjha AI answers with the exact clause and its source, never a
                 paraphrase, on your site or in a DM. Lock it with a PIN for staff or partners.
               </p>
               <div aria-hidden className={`${INSET} mt-5 p-3 text-[11.5px]`}>
@@ -452,7 +452,7 @@ export default async function PricingPage() {
                 <p className={EYEBROW}>Plus · Gap insights</p>
                 <h3 className="mt-3 text-[19px] font-bold leading-snug text-ink">Know what customers couldn’t find, on any channel.</h3>
                 <p className="mt-2 text-[13.5px] leading-relaxed text-muted">
-                  Lumjha flags unanswered questions across chat, site search and policy lookups, and suggests the
+                  Lumjha AI flags unanswered questions across chat, site search and policy lookups, and suggests the
                   answer to add. One click to fix. Top questions on Starter · full suggestions on Growth ·
                   cross-surface on Pro.
                 </p>
@@ -550,7 +550,7 @@ export default async function PricingPage() {
                 Your agent never goes silent at month-end.
               </h2>
               <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-muted md:text-base lg:mx-0">
-                Other tools stop answering when you hit a limit. Lumjha warns you early, tops up within the cap
+                Other tools stop answering when you hit a limit. Lumjha AI warns you early, tops up within the cap
                 you set, and if you reach the cap, it still collects visitors’ details so you never lose a lead.
               </p>
             </div>
@@ -582,7 +582,7 @@ export default async function PricingPage() {
               </h2>
               <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-muted md:text-base lg:mx-0">
                 Push sources in and pull leads, conversations and analytics out with the API. Connect ChatGPT,
-                Claude, Cursor or your own agents through the Lumjha MCP connector, with OAuth scopes and
+                Claude, Cursor or your own agents through the Lumjha AI MCP connector, with OAuth scopes and
                 read-only access by default.
               </p>
               <ul className="mt-5 flex flex-wrap justify-center gap-2 lg:justify-start">
@@ -621,13 +621,13 @@ export default async function PricingPage() {
 
         {/* FEATURE & PRICING MATRIX */}
         <section id="compare" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
-          <SectionHeader title="Feature & Pricing Matrix" subtitle="Lumjha vs. Competitors" />
+          <SectionHeader title="Feature & Pricing Matrix" subtitle="Lumjha AI vs. Competitors" />
           <div className={`mx-auto max-w-[1137px] overflow-x-auto rounded-xl border border-[#2D5BFF]/70 shadow-[0_24px_80px_-30px_rgba(45,91,255,0.7)] light:border-[#C9D8FF] ${SECTION_HEAD_GAP}`}>
             <table className="w-full min-w-[1000px] table-fixed border-collapse text-left text-[13.5px] leading-snug text-white/90 light:text-[#0B1526]">
               <thead>
                 <tr className="bg-[#1A46DB] text-[15px] font-bold text-white">
                   <th scope="col" className="sticky left-0 z-10 w-[190px] bg-[#1A46DB] px-4 py-3">Capability</th>
-                  <th scope="col" className="w-[170px] bg-[#2D63FF] px-4 py-3 text-center">Lumjha</th>
+                  <th scope="col" className="w-[170px] bg-[#2D63FF] px-4 py-3 text-center">Lumjha AI</th>
                   {COMPETITORS.map((c) => (
                     <th key={c} scope="col" className="px-4 py-3 text-center">{c}</th>
                   ))}
@@ -660,7 +660,7 @@ export default async function PricingPage() {
         {/* TODO: social proof (customer logos, an approved testimonial, real compliance status) goes here once approved — never invented. */}
 
         {/* FAQ */}
-        <Faq product="Lumjha Pricing" items={FAQS} />
+        <Faq product="Lumjha AI Pricing" items={FAQS} />
 
         <CtaPanel />
 

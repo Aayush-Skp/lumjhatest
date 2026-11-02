@@ -9,7 +9,7 @@ import Tilt from "@/components/ui/Tilt";
 export const metadata: Metadata = {
   title: "Integrations",
   description:
-    "Connect Lumjha to your customer channels — website, WhatsApp, Instagram, Messenger, Telegram, Google Calendar and Shopify.",
+    "Connect Lumjha AI to your customer channels — website, WhatsApp, Instagram, Messenger, Telegram, Google Calendar and Shopify.",
 };
 
 const A = "/assets/integration";
@@ -71,18 +71,18 @@ const INTEGRATIONS = [
 const FAQ = [
   {
     q: "What are Lumjha AI integrations?",
-    a: "Integrations connect Lumjha with supported platforms and tools to enable AI-powered customer experiences.",
+    a: "Integrations connect Lumjha AI with supported platforms and tools to enable AI-powered customer experiences.",
   },
   {
-    q: "Which platforms does Lumjha support?",
-    a: "Available integrations depend on your current Lumjha setup. Check the integrations available in your account.",
+    q: "Which platforms does Lumjha AI support?",
+    a: "Available integrations depend on your current Lumjha AI setup. Check the integrations available in your account.",
   },
   {
-    q: "Can I connect Lumjha to my website?",
-    a: "Website integration lets you bring Lumjha experiences to your website, depending on your selected product.",
+    q: "Can I connect Lumjha AI to my website?",
+    a: "Website integration lets you bring Lumjha AI experiences to your website, depending on your selected product.",
   },
   {
-    q: "Does Lumjha support appointment booking?",
+    q: "Does Lumjha AI support appointment booking?",
     a: "Google Calendar appointment booking may be available when the relevant integration and features are configured.",
   },
   {
@@ -91,7 +91,7 @@ const FAQ = [
   },
   {
     q: "How do I set up an integration?",
-    a: "Choose an available integration and follow its setup instructions in Lumjha.",
+    a: "Choose an available integration and follow its setup instructions in Lumjha AI.",
   },
 ];
 
@@ -99,7 +99,7 @@ export default function IntegrationsPage() {
   return (
     <ProductPage>
       <ProductHero
-        title="Connect Lumjha to Your"
+        title="Connect Lumjha AI to Your"
         accent="Customer Channels."
         body="Bring your customer conversations and business knowledge closer together. Explore supported integrations to make it easier for customers to connect with your business."
       />
@@ -108,7 +108,7 @@ export default function IntegrationsPage() {
         <SectionHeader
           wide
           title="Your customers are everywhere. Stay connected."
-          subtitle="Customers reach out through different platforms, and managing every conversation separately can be difficult. Lumjha helps bring AI-powered customer experiences to your supported channels."
+          subtitle="Customers reach out through different platforms, and managing every conversation separately can be difficult. Lumjha AI helps bring AI-powered customer experiences to your supported channels."
         />
         <HeroOrbit className={SECTION_HEAD_GAP} />
       </section>
@@ -139,7 +139,7 @@ export default function IntegrationsPage() {
         </ul>
       </section>
 
-      <Faq product="Lumjha Integrations" items={FAQ} />
+      <Faq product="Lumjha AI Integrations" items={FAQ} />
     </ProductPage>
   );
 }

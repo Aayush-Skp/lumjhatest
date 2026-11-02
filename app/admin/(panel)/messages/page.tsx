@@ -44,7 +44,7 @@ export default async function AdminMessagesPage() {
             <p className="mt-3 whitespace-pre-wrap break-words text-[14px] leading-relaxed text-muted">{m.message}</p>
             <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-line pt-3">
               <a
-                href={`mailto:${m.email}?subject=${encodeURIComponent("Re: your message to Lumjha")}`}
+                href={`mailto:${m.email}?subject=${encodeURIComponent("Re: your message to Lumjha AI")}`}
                 className="text-[13px] font-semibold text-[#527DFF] hover:underline"
               >
                 Reply

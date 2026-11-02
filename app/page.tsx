@@ -14,7 +14,7 @@ import BlueButton from "@/components/ui/BlueButton";
 import Tilt from "@/components/ui/Tilt";
 
 /* ============================================================
-   Lumjha — main landing page (Figma design, mobile-first)
+   Lumjha AI — main landing page (Figma design, mobile-first)
    ============================================================ */
 
 function Highlight({ children }: { children: React.ReactNode }) {
@@ -90,7 +90,7 @@ function ChatCard({
           <AgentAvatar size="lg" />
           <div className="leading-tight">
             <p className="text-[13px] font-bold lg:text-[15px]" style={{ color: accent }}>
-              Lumjha.AI
+              Lumjha AI
             </p>
             <p className="mt-0.5 flex items-center gap-1.5 text-[11px] text-gray-500 lg:text-xs">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
@@ -105,7 +105,7 @@ function ChatCard({
         <div className="flex items-end gap-2">
           <AgentAvatar size="sm" />
           <p className="max-w-[80%] rounded-2xl rounded-bl-md border border-gray-200 bg-[#F4F6FA] px-3 py-2 text-gray-700">
-            Welcome! You&apos;re connected with Lumjha support. How can we help today?
+            Welcome! You&apos;re connected with Lumjha AI support. How can we help today?
             Chat with us or book a free demo!
           </p>
         </div>
@@ -238,12 +238,12 @@ const PLATFORM_TABS: {
           Across Every Channel.
         </>
       ),
-      body: "Deliver instant, accurate answers across your website, messaging apps, and social platforms. Lumjha engages visitors, captures lead data naturally during chat, and schedules meetings directly into your calendar.",
+      body: "Deliver instant, accurate answers across your website, messaging apps, and social platforms. Lumjha AI engages visitors, captures lead data naturally during chat, and schedules meetings directly into your calendar.",
     },
     {
       id: "site-search",
       label: "Site Search",
-    card: <SearchCard title="Lumjha - Site Search" />,
+    card: <SearchCard title="Lumjha AI - Site Search" />,
       heading: (
         <>
           <Highlight>Search</Highlight>
@@ -251,7 +251,7 @@ const PLATFORM_TABS: {
           That Actually Answers.
         </>
       ),
-      body: "Upgrade site search with AI. Lumjha instantly scans your entire website and documentation to deliver precise, summarized answers directly to your visitors with sources attached.",
+      body: "Upgrade site search with AI. Lumjha AI instantly scans your entire website and documentation to deliver precise, summarized answers directly to your visitors with sources attached.",
     },
     {
       id: "policy-vault",
@@ -264,7 +264,7 @@ const PLATFORM_TABS: {
           Delivered Exactly.
         </>
       ),
-      body: "Ask in plain, everyday words and get the exact wording back. Lumjha Policy Vault searches your policies and documents, then quotes the relevant passage word for word, with its source attached so anyone can verify it.",
+      body: "Ask in plain, everyday words and get the exact wording back. Lumjha AI Policy Vault searches your policies and documents, then quotes the relevant passage word for word, with its source attached so anyone can verify it.",
     },
   ];
 
@@ -352,7 +352,7 @@ function PlatformTabs() {
       <div className={`flex justify-center ${SECTION_HEAD_GAP}`}>
         <div
           role="tablist"
-          aria-label="Lumjha products"
+          aria-label="Lumjha AI products"
           onKeyDown={onKeyDown}
           className="relative grid w-full max-w-sm grid-cols-3 rounded-full border border-line bg-ink/[0.04] p-1 sm:w-auto sm:max-w-none"
         >
@@ -614,7 +614,7 @@ export default function HomePage() {
         <section id="leads" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
           <SectionHeader
             title="Where conversations meet conversion."
-            subtitle="Lumjha captures lead details effortlessly within normal conversations, identifying intent without intrusive forms."
+            subtitle="Lumjha AI captures lead details effortlessly within normal conversations, identifying intent without intrusive forms."
           />
           <div className={`flex flex-col items-center justify-center gap-6 md:flex-row md:gap-10 ${SECTION_HEAD_GAP}`}>
             {LEADS.map((lead) => (

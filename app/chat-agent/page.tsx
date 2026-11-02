@@ -73,11 +73,11 @@ const FAQ = [
     a: "Connect your business information, configure your agent, and deploy it through supported channels.",
   },
   {
-    q: "Can Lumjha provide 24/7 customer support?",
+    q: "Can Lumjha AI provide 24/7 customer support?",
     a: "Yes, it can help answer customer questions around the clock when deployed and available.",
   },
   {
-    q: "Where does Lumjha get its answers?",
+    q: "Where does Lumjha AI get its answers?",
     a: "It uses your connected website content, documents, help resources, and business information.",
   },
   {
@@ -85,7 +85,7 @@ const FAQ = [
     a: "It should acknowledge missing information instead of making up an answer.",
   },
   {
-    q: "Which channels does Lumjha support?",
+    q: "Which channels does Lumjha AI support?",
     a: "Available channels depend on your setup. Visit our Integrations page to explore supported options.",
   },
 ];
@@ -104,11 +104,11 @@ export default function ChatAgentPage() {
             Your business knowledge, all <span className="text-[#5675FF]">connected.</span>
           </>
         }
-        body="Bring your website content, documents, help center, and business information together in one place. Lumjha uses your knowledge to deliver relevant answers and help customers find the information they need."
+        body="Bring your website content, documents, help center, and business information together in one place. Lumjha AI uses your knowledge to deliver relevant answers and help customers find the information they need."
         media={
           <Image
             src={`${A}/knowledge-connected.png`}
-            alt="Website content, PDF documents, help center and custom information flowing into Lumjha"
+            alt="Website content, PDF documents, help center and custom information flowing into Lumjha AI"
             width={1598}
             height={984}
             sizes="(min-width: 1024px) 655px, 100vw"
@@ -118,8 +118,8 @@ export default function ChatAgentPage() {
       />
       <StepCards title="HOW IT WORKS" subtitle="From your knowledge to helpful conversations." steps={STEPS} />
       <BenefitGrid
-        title="Benefits - Lumjha Chat Agent"
-        subtitle="Lumjha answers instantly across your channels, in your voice, using your own content, so more customers can take the next step."
+        title="Benefits - Lumjha AI Chat Agent"
+        subtitle="Lumjha AI answers instantly across your channels, in your voice, using your own content, so more customers can take the next step."
         items={BENEFITS}
       />
       <Faq product="Lumjha AI Chat Agent" items={FAQ} />

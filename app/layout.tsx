@@ -32,8 +32,8 @@ const jetbrains = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://lumjha.ai"),
   title: {
-    default: "Lumjha — No-Code AI Agents Trained on Your Business",
-    template: "%s · Lumjha",
+    default: "Lumjha AI — No-Code AI Agents Trained on Your Business",
+    template: "%s · Lumjha AI",
   },
   description:
     "Build a no-code AI assistant that knows every document, page, and policy in your business. Answer customers 24/7 across your website, WhatsApp, Instagram, Facebook, and Telegram — and capture qualified leads while you sleep.",

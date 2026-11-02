@@ -11,7 +11,7 @@ import { listPosts } from "@/lib/admin/content";
 export const metadata: Metadata = {
   title: "Blog",
   description:
-    "Guides on retrieval-augmented generation (RAG), AI tech news and Lumjha product updates: how to build AI agents that answer from your own business knowledge.",
+    "Guides on retrieval-augmented generation (RAG), AI tech news and Lumjha AI product updates: how to build AI agents that answer from your own business knowledge.",
 };
 
 export default async function BlogsPage() {
@@ -29,13 +29,13 @@ export default async function BlogsPage() {
 
         {/* HERO */}
         <section className="relative mx-auto max-w-[1440px] px-4 pb-10 pt-14 text-center sm:px-6 md:pb-14 md:pt-20">
-          <p className="font-mono text-[12px] font-medium uppercase tracking-[0.08em] text-highlight">The Lumjha Blog</p>
+          <p className="font-mono text-[12px] font-medium uppercase tracking-[0.08em] text-highlight">The Lumjha AI Blog</p>
           <h1 className="mx-auto mt-4 max-w-4xl font-heading text-[clamp(2.25rem,4vw+1rem,3.75rem)] font-semibold leading-[1.12] tracking-tight text-balance text-headline">
             RAG, AI agents and <span className="text-[#5675FF]">what’s new</span>
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-[15px] leading-relaxed text-balance text-muted sm:text-lg md:mt-6">
             How retrieval-augmented generation really works, the AI news that matters for customer
-            conversations, and what we’re shipping at Lumjha.
+            conversations, and what we’re shipping at Lumjha AI.
           </p>
         </section>
 

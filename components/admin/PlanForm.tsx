@@ -104,7 +104,7 @@ export default function PlanForm({ plan }: { plan: PlanRecord }) {
                   </label>
                   <label className="flex shrink-0 items-center gap-1.5 text-[12px] text-muted">
                     <input type="checkbox" checked={Boolean(f.exclusive)} onChange={(e) => update(i, { exclusive: e.target.checked })} className="accent-[#527DFF]" />
-                    Only on Lumjha
+                    Only on Lumjha AI
                   </label>
                   <span className="flex shrink-0 gap-1">
                     <IconButton label="Move up" onClick={() => move(i, -1)} d="m6 15 6-6 6 6" />

@@ -55,8 +55,8 @@ const BENEFITS = [
 
 const FAQ = [
   {
-    q: "What is Lumjha Policy Vault?",
-    a: "Lumjha Policy Vault helps users find policy information through source-backed answers and exact quotations.",
+    q: "What is Lumjha AI Policy Vault?",
+    a: "Lumjha AI Policy Vault helps users find policy information through source-backed answers and exact quotations.",
   },
   {
     q: "How does Policy Vault work?",
@@ -75,8 +75,8 @@ const FAQ = [
     a: "Yes. Its exact quote mode provides quotations from source documents with attribution.",
   },
   {
-    q: "How do I get started with Lumjha Policy Vault?",
-    a: "Get started with Lumjha to explore the available setup and document options.",
+    q: "How do I get started with Lumjha AI Policy Vault?",
+    a: "Get started with Lumjha AI to explore the available setup and document options.",
   },
 ];
 
@@ -86,7 +86,7 @@ export default function PolicyVaultPage() {
       <ProductHero
         title="Every Policy Answer,"
         accent="Backed by Your Sources."
-        body="Help people find clear answers in your business policies and documents. Lumjha Policy Vault delivers answers with exact quotations and source attribution, so users can verify the information themselves."
+        body="Help people find clear answers in your business policies and documents. Lumjha AI Policy Vault delivers answers with exact quotations and source attribution, so users can verify the information themselves."
       />
       <IntroSplit
         heading={
@@ -96,11 +96,11 @@ export default function PolicyVaultPage() {
             Find the <span className="text-[#5675FF]">Exact Answer.</span>
           </>
         }
-        body="Important policy details can be difficult to locate across lengthy documents. Lumjha Policy Vault helps users find relevant policy information through source-backed answers and exact quotations."
+        body="Important policy details can be difficult to locate across lengthy documents. Lumjha AI Policy Vault helps users find relevant policy information through source-backed answers and exact quotations."
         media={
           <Image
             src={`${A}/exact-answer.png`}
-            alt="Policy documents feeding Lumjha, which answers “What is the refund policy?” with a quoted source"
+            alt="Policy documents feeding Lumjha AI, which answers “What is the refund policy?” with a quoted source"
             width={1833}
             height={858}
             sizes="(min-width: 1024px) 805px, 100vw"
@@ -110,11 +110,11 @@ export default function PolicyVaultPage() {
       />
       <StepCards title="HOW IT WORKS" subtitle="From Policy Documents to Clear Answers." steps={STEPS} />
       <BenefitGrid
-        title="Benefits - Lumjha Policy Vault"
-        subtitle="Lumjha answers instantly across your channels, in your voice, using your own content, so more customers can take the next step."
+        title="Benefits - Lumjha AI Policy Vault"
+        subtitle="Lumjha AI answers instantly across your channels, in your voice, using your own content, so more customers can take the next step."
         items={BENEFITS}
       />
-      <Faq product="Lumjha Policy Vault" items={FAQ} />
+      <Faq product="Lumjha AI Policy Vault" items={FAQ} />
     </ProductPage>
   );
 }

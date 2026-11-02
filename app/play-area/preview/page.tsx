@@ -47,7 +47,7 @@ function FlowDrawing() {
       stroke="#9CA3AF"
       strokeWidth="1.25"
       role="img"
-      aria-label="Line drawing: web pages, documents and policies feed one Lumjha knowledge base that answers on every channel"
+      aria-label="Line drawing: web pages, documents and policies feed one Lumjha AI knowledge base that answers on every channel"
     >
       {/* sources: a page with a folded corner and text lines */}
       {sources.map(({ y, label }) => (
@@ -65,7 +65,7 @@ function FlowDrawing() {
       <circle cx="260" cy="200" r="56" stroke="#527DFF" />
       <circle cx="260" cy="200" r="66" stroke="#527DFF" strokeOpacity="0.3" />
       <text x="260" y="196" textAnchor="middle" fontSize="15" fill="#111827" stroke="none">
-        Lumjha
+        Lumjha AI
       </text>
       <text x="260" y="214" textAnchor="middle" fontSize="10" fill="#9CA3AF" stroke="none">
         Knowledge base
@@ -120,7 +120,7 @@ export default async function WebsitePreviewPage({ searchParams }: { searchParam
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-8 py-5">
           <span className="flex items-center gap-2.5">
             <Image src="/logo.png" alt="" width={405} height={564} className="h-7 w-auto" priority />
-            <span className="text-[15px] font-semibold tracking-tight text-[#111827]">Lumjha</span>
+            <span className="text-[15px] font-semibold tracking-tight text-[#111827]">Lumjha AI</span>
           </span>
           <nav className="hidden gap-9 text-[13px] md:flex" aria-label="Sample site">
             {NAV.map((n) => (
@@ -153,22 +153,11 @@ export default async function WebsitePreviewPage({ searchParams }: { searchParam
         </section>
 
         <section className="mx-auto max-w-6xl px-8 pb-16">
-          <div className="flex flex-col gap-4 border-t border-[#E5E7EB] pt-8 sm:flex-row sm:items-center sm:justify-between">
+          <div className="border-t border-[#E5E7EB] pt-8">
             <p className="text-[14px] text-[#111827]">One knowledge base. Every channel.</p>
-            <ul className="flex flex-wrap gap-x-6 gap-y-2 text-[13px]">
-              {CHANNELS.map((c) => (
-                <li key={c}>{c}</li>
-              ))}
-            </ul>
           </div>
         </section>
       </main>
-
-      <footer className="border-t border-[#E5E7EB]">
-        <div className="mx-auto max-w-6xl px-8 py-6 text-[11px] tracking-[0.1em] text-[#9CA3AF]">
-          © Lumjha · A sample website for Lumjha Play.
-        </div>
-      </footer>
 
       {widget}
     </div>

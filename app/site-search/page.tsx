@@ -68,7 +68,7 @@ const FAQ = [
   },
   {
     q: "What content can Lumjha AI Site Search search?",
-    a: "Available content sources depend on your Lumjha setup and supported integrations.",
+    a: "Available content sources depend on your Lumjha AI setup and supported integrations.",
   },
   {
     q: "Can AI Site Search help visitors find information faster?",
@@ -76,7 +76,7 @@ const FAQ = [
   },
   {
     q: "How do I get started with Lumjha AI Site Search?",
-    a: "Explore the demo or get started with Lumjha to see how site search can work for your website.",
+    a: "Explore the demo or get started with Lumjha AI to see how site search can work for your website.",
   },
 ];
 
@@ -94,11 +94,11 @@ export default function SiteSearchPage() {
             Your website knowledge, easily <span className="text-[#5675FF]">discovered.</span>
           </>
         }
-        body="Connect your website content and help visitors find relevant information with less effort. Lumjha makes your existing content easier to search and navigate on your website."
+        body="Connect your website content and help visitors find relevant information with less effort. Lumjha AI makes your existing content easier to search and navigate on your website."
         media={
           <Image
             src={`${A}/website-discovered.png`}
-            alt="Lumjha Site Search answering “How do I choose the right plan?” with relevant pages"
+            alt="Lumjha AI Site Search answering “How do I choose the right plan?” with relevant pages"
             width={1536}
             height={1024}
             sizes="(min-width: 1024px) 616px, 100vw"
@@ -108,8 +108,8 @@ export default function SiteSearchPage() {
       />
       <StepCards title="HOW IT WORKS" subtitle="From your knowledge to helpful conversations." steps={STEPS} />
       <BenefitGrid
-        title="Benefits - Lumjha Search Site"
-        subtitle="Lumjha answers instantly across your channels, in your voice, using your own content, so more customers can take the next step."
+        title="Benefits - Lumjha AI Search Site"
+        subtitle="Lumjha AI answers instantly across your channels, in your voice, using your own content, so more customers can take the next step."
         items={BENEFITS}
       />
       <Faq product="Lumjha AI Site Search" items={FAQ} />

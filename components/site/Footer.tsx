@@ -39,7 +39,7 @@ export default function Footer() {
             />
           </Link>
           <p className="mt-5 max-w-[260px] text-[13px] leading-relaxed md:text-sm">
-            Lumjha is the no-code AI layer for modern customer engagement.
+            Lumjha AI is the no-code AI layer for modern customer engagement.
           </p>
           <div className="mt-5 flex gap-4 text-sm">
             <a href="#" aria-label="Facebook" className="hover:text-ink">f</a>

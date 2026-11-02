@@ -38,7 +38,7 @@ export const POSTS: Post[] = [
     category: "RAG",
     date: "2026-10-21",
     readMinutes: 7,
-    author: "Lumjha Engineering",
+    author: "Lumjha AI Engineering",
     image: { src: "/assets/blog/what-is-rag.jpg", credit: "Annie Spratt", creditUrl: "https://unsplash.com/photos/t61ffOYIn-Q" },
     featured: true,
     body: [
@@ -73,10 +73,10 @@ export const POSTS: Post[] = [
         type: "quote",
         text: "A RAG system is only as good as the passage it retrieves. Generation is the easy part.",
       },
-      { type: "h2", text: "How Lumjha uses it" },
+      { type: "h2", text: "How Lumjha AI uses it" },
       {
         type: "p",
-        text: "Every Lumjha agent is a RAG system over one knowledge base. The same index powers the chat agent on your website and messaging channels, Site Search, and Policy Vault, so an answer on WhatsApp matches the one on your site.",
+        text: "Every Lumjha AI agent is a RAG system over one knowledge base. The same index powers the chat agent on your website and messaging channels, Site Search, and Policy Vault, so an answer on WhatsApp matches the one on your site.",
       },
     ],
   },
@@ -88,7 +88,7 @@ export const POSTS: Post[] = [
     category: "RAG",
     date: "2026-10-14",
     readMinutes: 6,
-    author: "Lumjha Engineering",
+    author: "Lumjha AI Engineering",
     image: { src: "/assets/blog/chunking-strategies-for-business-documents.jpg", credit: "Tanja Tepavac", creditUrl: "https://unsplash.com/photos/81ikZZG7_AA" },
     body: [
       {
@@ -138,7 +138,7 @@ export const POSTS: Post[] = [
     category: "RAG",
     date: "2026-09-30",
     readMinutes: 5,
-    author: "Lumjha Engineering",
+    author: "Lumjha AI Engineering",
     image: { src: "/assets/blog/why-chatbots-hallucinate.jpg", credit: "Alex Knight", creditUrl: "https://unsplash.com/photos/2EJCSULRwC8" },
     body: [
       {
@@ -166,7 +166,7 @@ export const POSTS: Post[] = [
       },
       {
         type: "p",
-        text: "In Lumjha, questions the agent couldn't answer feed Gap Insights, so every 'I don't know' becomes a one-click improvement.",
+        text: "In Lumjha AI, questions the agent couldn't answer feed Gap Insights, so every 'I don't know' becomes a one-click improvement.",
       },
     ],
   },
@@ -178,7 +178,7 @@ export const POSTS: Post[] = [
     category: "RAG",
     date: "2026-09-16",
     readMinutes: 6,
-    author: "Lumjha Engineering",
+    author: "Lumjha AI Engineering",
     image: { src: "/assets/blog/hybrid-search-keywords-and-embeddings.jpg", credit: "Sasun Bughdaryan", creditUrl: "https://unsplash.com/photos/pCwb5OuObls" },
     body: [
       {
@@ -222,7 +222,7 @@ export const POSTS: Post[] = [
     category: "RAG",
     date: "2026-08-26",
     readMinutes: 4,
-    author: "Lumjha Product",
+    author: "Lumjha AI Product",
     image: { src: "/assets/blog/exact-quotes-for-policy-answers.jpg", credit: "Planet Volumes", creditUrl: "https://unsplash.com/photos/wgbZ4ZeJCV0" },
     body: [
       {
@@ -245,7 +245,7 @@ export const POSTS: Post[] = [
       },
       {
         type: "p",
-        text: "This is the idea behind Lumjha's Policy Vault: verbatim answers with sources, on your site or in a DM, optionally locked for staff or partners.",
+        text: "This is the idea behind Lumjha AI's Policy Vault: verbatim answers with sources, on your site or in a DM, optionally locked for staff or partners.",
       },
     ],
   },
@@ -257,7 +257,7 @@ export const POSTS: Post[] = [
     category: "Tech news",
     date: "2026-10-09",
     readMinutes: 5,
-    author: "Lumjha Team",
+    author: "Lumjha AI Team",
     image: { src: "/assets/blog/mcp-usb-c-for-ai-agents.jpg", credit: "Mika Baumeister", creditUrl: "https://unsplash.com/photos/RWxeE7wu1T8" },
     body: [
       {
@@ -297,7 +297,7 @@ export const POSTS: Post[] = [
     category: "Tech news",
     date: "2026-09-23",
     readMinutes: 5,
-    author: "Lumjha Engineering",
+    author: "Lumjha AI Engineering",
     image: { src: "/assets/blog/long-context-windows-and-rag.jpg", credit: "imgix", creditUrl: "https://unsplash.com/photos/klWUhr-wPJ8" },
     body: [
       {
@@ -331,18 +331,18 @@ export const POSTS: Post[] = [
   },
   {
     slug: "lumjha-mcp-connector",
-    title: "Connect ChatGPT, Claude and your own agents to Lumjha with MCP",
+    title: "Connect ChatGPT, Claude and your own agents to Lumjha AI with MCP",
     excerpt:
-      "The Lumjha MCP connector lets your favourite AI assistant read your leads, conversations and analytics, with scoped access that's read-only by default.",
+      "The Lumjha AI MCP connector lets your favourite AI assistant read your leads, conversations and analytics, with scoped access that's read-only by default.",
     category: "Product",
     date: "2026-10-17",
     readMinutes: 3,
-    author: "Lumjha Product",
+    author: "Lumjha AI Product",
     image: { src: "/assets/blog/lumjha-mcp-connector.jpg", credit: "Michael Baccin", creditUrl: "https://unsplash.com/photos/XopauR-Nagk" },
     body: [
       {
         type: "p",
-        text: "Your Lumjha agent collects a lot of useful information: leads, full chat histories, the questions customers ask most. With the MCP connector you can reach all of it from the AI assistant you already use.",
+        text: "Your Lumjha AI agent collects a lot of useful information: leads, full chat histories, the questions customers ask most. With the MCP connector you can reach all of it from the AI assistant you already use.",
       },
       { type: "h2", text: "What you can do" },
       {
@@ -374,7 +374,7 @@ mcp add lumjha https://<your-lumjha-mcp-endpoint>`,
     category: "Product",
     date: "2026-09-09",
     readMinutes: 3,
-    author: "Lumjha Product",
+    author: "Lumjha AI Product",
     image: { src: "/assets/blog/gap-insights.jpg", credit: "Luke Chesser", creditUrl: "https://unsplash.com/photos/JKUTrJ4vK00" },
     body: [
       {
@@ -389,7 +389,7 @@ mcp add lumjha https://<your-lumjha-mcp-endpoint>`,
       { type: "h2", text: "Suggested answers" },
       {
         type: "p",
-        text: "For each gap, Lumjha drafts an answer you can review, edit and publish with one click. The agent picks it up immediately on every channel.",
+        text: "For each gap, Lumjha AI drafts an answer you can review, edit and publish with one click. The agent picks it up immediately on every channel.",
       },
       {
         type: "ul",
@@ -409,7 +409,7 @@ mcp add lumjha https://<your-lumjha-mcp-endpoint>`,
     category: "Guides",
     date: "2026-08-12",
     readMinutes: 6,
-    author: "Lumjha Engineering",
+    author: "Lumjha AI Engineering",
     image: { src: "/assets/blog/measuring-rag-quality.jpg", credit: "Bozhin Karaivanov", creditUrl: "https://unsplash.com/photos/AgxK4Ohn1Cw" },
     body: [
       {

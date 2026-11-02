@@ -5,7 +5,7 @@ import LegalPage from "@/components/site/LegalPage";
 export const metadata: Metadata = {
   title: "Terms of Service",
   description:
-    "The terms governing your access to and use of the Lumjha platform and services.",
+    "The terms governing your access to and use of the Lumjha AI platform and services.",
 };
 
 export default function TermsOfServicePage() {

@@ -123,10 +123,10 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-page/90 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-4 sm:px-6 lg:h-[76px] xl:px-[142px]">
-        <Link href="/" className="flex items-center gap-2" aria-label="Lumjha home">
+        <Link href="/" className="flex items-center gap-2" aria-label="Lumjha AI home">
           <Image
             src="/logo.png"
-            alt="Lumjha logo"
+            alt="Lumjha AI logo"
             width={40}
             height={56}
             className="h-12 w-auto lg:h-14 shrink-0 object-contain"

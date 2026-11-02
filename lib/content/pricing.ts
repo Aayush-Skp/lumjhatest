@@ -70,7 +70,7 @@ export const PLANS: Plan[] = [
       { text: "Advanced Reporting & Insights · full gap suggestions + one-click “add answer”" },
       { text: "Unlimited forms · custom fields · CRM, webhooks, Shopify" },
       { text: "Custom guardrails, escalation rules, PII masking" },
-      { text: "Remove Lumjha badge" },
+      { text: "Remove Lumjha AI badge" },
       { text: "API (ingest + export) + full MCP" },
       { text: "Priority email/chat support" },
       { text: "Early access to new features & capabilities", strong: true },
@@ -109,7 +109,7 @@ export const PLANS: Plan[] = [
     allowance: "Custom",
     allowanceNote: "committed volume",
     cta: "Talk to sales",
-    href: "mailto:info@lumjha.ai?subject=Lumjha%20Enterprise",
+    href: "mailto:info@lumjha.ai?subject=Lumjha%20AI%20Enterprise",
     includes: "Everything in Pro, plus",
     features: [
       { text: "Committed conversation volume" },

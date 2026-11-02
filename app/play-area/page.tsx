@@ -10,7 +10,7 @@ import BlueButton from "@/components/ui/BlueButton";
 export const metadata: Metadata = {
   title: "Lumjha Play",
   description:
-    "Test-drive Lumjha in real time. Ask a question and see how Lumjha delivers instant, accurate and helpful answers.",
+    "Test-drive Lumjha AI in real time. Ask a question and see how Lumjha AI delivers instant, accurate and helpful answers.",
 };
 
 /** Email capture above the demo — hidden until it's wired to a backend. */
@@ -48,7 +48,7 @@ export default function PlayAreaPage() {
           <Glow className="left-[2%] top-[9%] h-[423px] w-[89%]" />
 
           <h1 className="font-heading text-[28px] font-bold leading-tight tracking-tight text-ink sm:text-4xl md:text-[40px]">
-            Test-drive Lumjha in real time.
+            Test-drive Lumjha AI in real time.
           </h1>
 
           {/* TODO(backend): email capture for the demo isn't wired to anything yet */}

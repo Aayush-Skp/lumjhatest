@@ -4,7 +4,7 @@ import LegalPage from "@/components/site/LegalPage";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
-    "How Lumjha collects, uses, and protects your personal information and Customer Data.",
+    "How Lumjha AI collects, uses, and protects your personal information and Customer Data.",
 };
 
 export default function PrivacyPolicyPage() {

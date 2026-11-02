@@ -52,7 +52,7 @@ const GROUPS: { title: string; rows: Row[] }[] = [
     title: "Brand & safety",
     rows: [
       { feature: "Brand kit (logo, colors, voice, tone, messaging)", cells: ["Logo + colors", "Full brand kit", "Full brand kit", "Per-agent / per-location kits", "Full white-label"] },
-      { feature: "“Powered by Lumjha” badge", cells: ["Shown", add("Remove +$19"), inc("Removable"), inc("Removable"), inc("White-label")] },
+      { feature: "“Powered by Lumjha AI” badge", cells: ["Shown", add("Remove +$19"), inc("Removable"), inc("Removable"), inc("White-label")] },
       {
         feature: "Safety moderation",
         cells: ["Baseline (always on)", "+ blocked topics", "+ custom guardrails, escalation rules, PII masking", "+ moderation log", "+ audit export, custom policies"],
@@ -152,7 +152,7 @@ export default function PlanMatrix({ className = "" }: { className?: string }) {
     <div className={className}>
       <div className="mx-auto max-w-[1040px] overflow-x-auto rounded-2xl border border-[#3B5BDB]/70 bg-[#0B1530] shadow-[0_24px_80px_-40px_rgba(82,125,255,0.6)] light:border-[#C9D8FF] light:bg-white">
         <table className="w-full min-w-[860px] border-collapse text-left text-[13px] leading-snug text-ink/90">
-          <caption className="sr-only">Features included in each Lumjha plan</caption>
+          <caption className="sr-only">Features included in each Lumjha AI plan</caption>
           <thead>
             <tr className="border-b border-[#2A3F6B] light:border-[#E1E8F5]">
               <th scope="col" className="sticky left-0 z-10 w-[150px] bg-[#0B1530] sm:w-[230px] px-4 py-4 align-top text-[13px] font-semibold light:bg-white">

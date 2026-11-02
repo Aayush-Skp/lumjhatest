@@ -71,7 +71,7 @@ export default function PostForm({
                 </Field>
               </div>
               <Field label="Author">
-                <input name="author" defaultValue={post?.author ?? "Lumjha Team"} className={inputCls} />
+                <input name="author" defaultValue={post?.author ?? "Lumjha AI Team"} className={inputCls} />
               </Field>
               <label className="flex items-center gap-2 text-[14px] text-ink">
                 <input name="featured" type="checkbox" defaultChecked={post?.featured} className="h-4 w-4 accent-[#527DFF]" />

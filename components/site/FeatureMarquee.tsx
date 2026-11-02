@@ -32,7 +32,7 @@ function Run({ items }: { items: string[] }) {
 
 export default function FeatureMarquee() {
   return (
-    <section aria-label="Lumjha features" className="marquee-band overflow-hidden bg-[#527DFF] py-3 text-[clamp(1.125rem,1.4vw+0.6rem,1.75rem)] font-light text-white md:py-5">
+    <section aria-label="Lumjha AI features" className="marquee-band overflow-hidden bg-[#527DFF] py-3 text-[clamp(1.125rem,1.4vw+0.6rem,1.75rem)] font-light text-white md:py-5">
       <ul className="sr-only">
         {ROWS.flat().map((item) => (
           <li key={item}>{item}</li>

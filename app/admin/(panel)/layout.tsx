@@ -15,7 +15,7 @@ export default async function AdminPanelLayout({ children }: { children: ReactNo
         <div className="flex items-center justify-between gap-3 lg:px-2">
           <Link href="/admin/pricing" className="flex items-center gap-2.5">
             <Image src="/logo.png" alt="" width={69} height={96} className="h-8 w-auto" />
-            <span className="font-heading text-[16px] font-semibold text-ink">Lumjha</span>
+            <span className="font-heading text-[16px] font-semibold text-ink">Lumjha AI</span>
             <span className="rounded-md bg-[#527DFF]/15 px-1.5 py-0.5 text-[11px] font-semibold text-[#527DFF]">Admin</span>
           </Link>
           <ThemeToggle className="lg:hidden" />

@@ -12,7 +12,7 @@ export const PLAYGROUND_ACCEPT = ".pdf,.docx,.txt,.md";
  * Which wording of the upload notice the visitor accepted. Bump it whenever
  * that text changes, so each stored upload records what its uploader agreed to.
  */
-export const PLAYGROUND_CONSENT_VERSION = "2026-10-27";
+export const PLAYGROUND_CONSENT_VERSION = "2026-11-02";
 
 export type PlaygroundState = "processing" | "ready" | "failed" | "expired";
 

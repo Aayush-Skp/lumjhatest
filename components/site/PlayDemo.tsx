@@ -384,7 +384,7 @@ export default function PlayDemo() {
   } else if (docAgent && loadedSrc !== previewSrc) {
     overlay = <Progress title="Starting your document agent…" fileName={session?.document.fileName ?? ""} percent={100} />;
   } else if (siteHost && loadedSrc !== previewSrc) {
-    overlay = <Progress title={`Loading ${siteHost}…`} fileName="" percent={100} hint="Your site appears here with the Lumjha chat in the corner." />;
+    overlay = <Progress title={`Loading ${siteHost}…`} fileName="" percent={100} hint="Your site appears here with the Lumjha AI chat in the corner." />;
   }
 
   return (
@@ -538,7 +538,7 @@ export default function PlayDemo() {
             <iframe
               key={previewSrc}
               src={previewSrc}
-              title={siteHost ? `${siteHost} with the Lumjha chat widget` : docAgent ? "Sample website with a chat agent for your document" : "Sample website with the Lumjha chat widget"}
+              title={siteHost ? `${siteHost} with the Lumjha AI chat widget` : docAgent ? "Sample website with a chat agent for your document" : "Sample website with the Lumjha AI chat widget"}
               loading="lazy"
               allow="microphone; clipboard-write"
               onLoad={() => setLoadedSrc(previewSrc)}
@@ -736,7 +736,7 @@ function UploadPicker({
           className="mt-0.5 h-3.5 w-3.5 shrink-0 accent-[#5675FF]"
         />
         <span>
-          Lumjha keeps documents and chats from Lumjha Play and may use them to improve its products. Don’t upload
+          Lumjha AI keeps documents and chats from Lumjha Play and may use them to improve its products. Don’t upload
           personal or confidential information.{" "}
           <a href="/privacy" className="font-medium text-[#5675FF] underline underline-offset-2">
             Privacy Policy
