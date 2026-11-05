@@ -1,31 +1,38 @@
 import type { Metadata } from "next";
-import { Inter, Inter_Tight, JetBrains_Mono, Poppins } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const inter = Inter({
+/* Fonts are self-hosted (app/fonts, latin subset from Fontsource) rather than
+   next/font/google, so builds never depend on reaching Google Fonts — a failed
+   fetch there broke deploys with "Module not found" on the font CSS. */
+const inter = localFont({
   variable: "--font-inter",
-  subsets: ["latin"],
+  src: "./fonts/inter-latin-wght.woff2",
+  weight: "100 900",
   display: "swap",
 });
 
-const interTight = Inter_Tight({
+const interTight = localFont({
   variable: "--font-inter-tight",
-  subsets: ["latin"],
+  src: "./fonts/inter-tight-latin-wght.woff2",
+  weight: "100 900",
   display: "swap",
-  weight: ["500", "600", "700", "800"],
 });
 
 // Section headings (Pricing, Add-ons, Channels)
-const poppins = Poppins({
+const poppins = localFont({
   variable: "--font-poppins",
-  subsets: ["latin"],
+  src: [
+    { path: "./fonts/poppins-latin-600.woff2", weight: "600", style: "normal" },
+    { path: "./fonts/poppins-latin-700.woff2", weight: "700", style: "normal" },
+  ],
   display: "swap",
-  weight: ["600", "700"],
 });
 
-const jetbrains = JetBrains_Mono({
+const jetbrains = localFont({
   variable: "--font-jetbrains",
-  subsets: ["latin"],
+  src: "./fonts/jetbrains-mono-latin-wght.woff2",
+  weight: "100 800",
   display: "swap",
 });
 
