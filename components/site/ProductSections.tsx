@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { isValidElement, useState } from "react";
+import { useState } from "react";
 import type { ReactNode } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -122,6 +122,10 @@ function FigmaIcon({ icon }: { icon: Icon }) {
 /** A grid card's icon: a Figma image export, or an inline SVG element (drawn in brand blue). */
 export type GridItem = { icon: Icon | ReactNode; title: string; body: string };
 
+function isIconAsset(icon: GridItem["icon"]): icon is Icon {
+  return typeof icon === "object" && icon !== null && "src" in icon;
+}
+
 export function BenefitGrid({
   id,
   title,
@@ -150,7 +154,7 @@ export function BenefitGrid({
               }`}
             >
               <span className="flex h-10 w-10 shrink-0 items-center justify-center text-[#5675FF] [&>svg]:h-[38px] [&>svg]:w-[38px]">
-                {isValidElement(b.icon) ? b.icon : <FigmaIcon icon={b.icon as Icon} />}
+                {isIconAsset(b.icon) ? <FigmaIcon icon={b.icon} /> : b.icon}
               </span>
               <span>
                 <span className="block text-xl font-bold leading-[30px] md:text-2xl">{b.title}</span>
