@@ -44,15 +44,15 @@ export const SOURCES: { title: string; body: string; icon: Icon }[] = [
 
 export const ENGINE_CAPABILITIES = ["Chatbot", "Site Search", "Policy Vault", "Leads"];
 
-export const DEPLOY_CHANNELS: { name: string; body: string; icon: Icon; color: string }[] = [
-  { name: "Website chat", body: "answers · captures · books", icon: WebsiteIcon, color: "#527DFF" },
-  { name: "Discord", body: "answers · captures · books", icon: DiscordIcon, color: "#5865F2" },
-  { name: "WhatsApp", body: "answers · captures · books", icon: WhatsAppIcon, color: "#25D366" },
-  { name: "Instagram", body: "answers · captures · books", icon: InstagramIcon, color: "#E4405F" },
-  { name: "Messenger", body: "answers · captures · books", icon: MessengerIcon, color: "#0084FF" },
-  { name: "Telegram", body: "answers · captures · books", icon: TelegramIcon, color: "#229ED9" },
-  { name: "Slack", body: "answers · captures · books", icon: SlackIcon, color: "#4A154B" },
-  { name: "Shopify", body: "answers · captures · books", icon: ShopifyIcon, color: "#95BF47" },
+export const DEPLOY_CHANNELS: { name: string; body: string; icon: Icon }[] = [
+  { name: "Website chat", body: "Chat widget", icon: WebsiteIcon },
+  { name: "Discord", body: "Community server", icon: DiscordIcon },
+  { name: "WhatsApp", body: "Customer messages", icon: WhatsAppIcon },
+  { name: "Instagram", body: "DMs & comments", icon: InstagramIcon },
+  { name: "Messenger", body: "Page inbox", icon: MessengerIcon },
+  { name: "Telegram", body: "Bots & groups", icon: TelegramIcon },
+  { name: "Slack", body: "Team workspace", icon: SlackIcon },
+  { name: "Shopify", body: "Store assistant", icon: ShopifyIcon },
 ];
 
 export function ChannelGlyph({ icon, className }: { icon: Icon; className: string }) {
@@ -157,11 +157,14 @@ export default function EngineFlow({ className = "" }: { className?: string }) {
             <Connector left={[50]} right={CHANNEL_YS} />
             <ul className="grid w-[352px] shrink-0 grid-cols-2 grid-rows-4 gap-2 xl:w-[400px]">
               {DEPLOY_CHANNELS.map((c) => (
-                <li key={c.name} className={`flex items-center gap-3 rounded-xl px-3 ${TILE}`}>
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white light:bg-[#F4F6FF]" style={{ color: c.color }}>
+                <li key={c.name} className={`flex min-w-0 items-center gap-3 rounded-2xl px-3.5 ${TILE}`}>
+                  <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#527DFF]/12 text-[#6E8BFF] light:text-[#3E63F2] ${c.icon === SlackIcon ? "[&_path]:fill-current" : ""}`}>
                     <ChannelGlyph icon={c.icon} className="h-5 w-5" />
                   </span>
-                  <span className="truncate text-[14.5px] font-semibold text-ink">{c.name}</span>
+                  <span className="min-w-0">
+                    <span className="block truncate text-[14.5px] font-semibold text-ink">{c.name}</span>
+                    <span className="block truncate text-[11.5px] text-subtle">{c.body}</span>
+                  </span>
                 </li>
               ))}
             </ul>
@@ -193,7 +196,7 @@ export default function EngineFlow({ className = "" }: { className?: string }) {
         <ul className="grid w-full grid-cols-4 gap-2">
           {DEPLOY_CHANNELS.map((c) => (
             <li key={c.name} className={`flex flex-col items-center gap-1.5 rounded-xl px-1 py-2.5 ${TILE}`}>
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white light:bg-[#F4F6FF]" style={{ color: c.color }}>
+              <span className={`flex h-8 w-8 items-center justify-center rounded-lg bg-[#527DFF]/12 text-[#6E8BFF] light:text-[#3E63F2] ${c.icon === SlackIcon ? "[&_path]:fill-current" : ""}`}>
                 <ChannelGlyph icon={c.icon} className="h-[18px] w-[18px]" />
               </span>
               <span className="w-full truncate text-center text-[10.5px] font-medium text-muted">{c.name}</span>

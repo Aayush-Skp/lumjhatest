@@ -9,6 +9,7 @@ import CtaPanel from "@/components/site/CtaPanel";
 import ChannelReels, { CHANNELS } from "@/components/site/ChannelReels";
 import HeroBackdrop from "@/components/site/HeroBackdrop";
 import EngineFlow from "@/components/site/EngineFlow";
+import Commitments from "@/components/site/Commitments";
 import SectionHeader, { SECTION_HEAD_GAP, SECTION_Y } from "@/components/site/SectionHeader";
 import BlueButton from "@/components/ui/BlueButton";
 import Tilt from "@/components/ui/Tilt";
@@ -537,16 +538,6 @@ function LeadCard({ lead }: { lead: (typeof LEADS)[number] }) {
   );
 }
 
-/* ---------- commitments ---------- */
-
-const COMMITMENTS = [
-  "We never look at your private business content without permission.",
-  "We never share your data with other businesses.",
-  "We never train AI on your content without your consent.",
-  "We never expose your customers' conversations.",
-  "Your content is never deleted. If you pause, your data is safely preserved.",
-];
-
 /* ---------- page ---------- */
 
 export default function HomePage() {
@@ -561,7 +552,7 @@ export default function HomePage() {
         {/* HERO — owns the first viewport: 100svh minus the navbar (64px, 76px on desktop) */}
         <section className="relative isolate mx-auto flex min-h-[calc(100svh-4rem)] w-full lg:min-h-[calc(100svh-76px)] max-w-[1440px] flex-col items-center justify-center px-4 py-10 text-center sm:px-6 md:py-12">
           {/* code-drawn backdrop — full-bleed past the 1440px container, waves anchored to the bottom and faded out into the next section */}
-          <div aria-hidden className="pointer-events-none absolute inset-y-0 left-1/2 -z-10 w-screen -translate-x-1/2 [mask-image:linear-gradient(to_bottom,#000_88%,transparent)] md:[mask-image:linear-gradient(to_bottom,#000_70%,transparent)]">
+          <div aria-hidden className="pointer-events-none absolute inset-y-0 left-1/2 -z-10 w-screen -translate-x-1/2 opacity-20 [mask-image:linear-gradient(to_bottom,#000_88%,transparent)] md:[mask-image:linear-gradient(to_bottom,#000_70%,transparent)]">
             <HeroBackdrop />
           </div>
           <h1 className="max-w-5xl text-[clamp(2.25rem,4.5vw+1rem,4.5rem)] font-extrabold leading-[1.05] tracking-[-0.03em]">
@@ -624,24 +615,7 @@ export default function HomePage() {
         </section>
 
         {/* COMMITMENTS */}
-        <section id="commitments" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
-          <SectionHeader title="Our Commitments" subtitle="Total transparency, absolute data security." />
-          <ol className={`mx-auto max-w-3xl space-y-3 ${SECTION_HEAD_GAP}`}>
-            {COMMITMENTS.map((c, i) => (
-              <li key={c}>
-                {/* wide, short rows → gentle angle so the far edge doesn't swing */}
-                <Tilt className="flex items-stretch gap-3 rounded-lg" max={3} scale={1.01} glare={false}>
-                <span className="flex w-11 shrink-0 items-center justify-center rounded-lg bg-white text-[15px] font-bold text-[#3E63F2] ring-1 ring-card-ring">
-                  {i + 1}.
-                </span>
-                <span className="flex-1 rounded-lg bg-white px-4 py-3 ring-1 ring-card-ring text-[14px] font-medium text-[#3E63F2] md:text-[15px]">
-                  {c}
-                </span>
-                </Tilt>
-              </li>
-            ))}
-          </ol>
-        </section>
+        <Commitments />
 
         <CtaPanel />
 
