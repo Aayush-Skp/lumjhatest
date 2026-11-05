@@ -1,10 +1,21 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import type { SVGProps } from "react";
 import FeatureMarquee from "@/components/site/FeatureMarquee";
 import HeroOrbit from "@/components/site/HeroOrbit";
-import SectionHeader, { SECTION_HEAD_GAP, SECTION_Y } from "@/components/site/SectionHeader";
+import SectionHeader, { SECTION_HEAD_GAP } from "@/components/site/SectionHeader";
 import { BenefitGrid, Faq, ProductHero, ProductPage, StepCards } from "@/components/site/ProductSections";
-import Tilt from "@/components/ui/Tilt";
+import {
+  DiscordIcon,
+  GoogleCalendarIcon,
+  GoogleDriveIcon,
+  SlackIcon,
+  InstagramIcon,
+  MessengerIcon,
+  ShopifyIcon,
+  TelegramIcon,
+  WebsiteIcon,
+  WhatsAppIcon,
+} from "@/components/ui/ChannelIcons";
 
 export const metadata: Metadata = {
   title: "Integrations",
@@ -57,15 +68,19 @@ const BENEFITS = [
   },
 ];
 
-// Logo boxes keep each icon's Figma footprint (the art is cropped to fit, as in the design).
+const MonoSlackIcon = (props: SVGProps<SVGSVGElement>) => <SlackIcon mono {...props} />;
+
 const INTEGRATIONS = [
-  { name: "Website", logo: "website.png", w: 79, h: 78, body: "Bring AI-powered assistance directly to your website." },
-  { name: "WhatsApp", logo: "whatsapp.png", w: 79, h: 78, body: "Support customer conversations through WhatsApp, where available." },
-  { name: "Instagram", logo: "instagram.png", w: 89, h: 88, body: "Connect customer interactions through supported Instagram integrations." },
-  { name: "Messenger", logo: "messenger.png", w: 79, h: 82, body: "Help customers connect through supported messaging channels." },
-  { name: "Telegram", logo: "telegram.png", w: 89, h: 89, body: "Explore AI-powered messaging experiences through supported Telegram integrations." },
-  { name: "Google Calendar", logo: "google-calendar.png", w: 79, h: 79, body: "Support appointment booking when configured." },
-  { name: "Shopify", logo: "shopify.png", w: 79, h: 90, body: "Help shoppers discover products when supported features are enabled." },
+  { title: "Website", icon: <WebsiteIcon />, body: "Bring AI-powered assistance directly to your website." },
+  { title: "WhatsApp", icon: <WhatsAppIcon />, body: "Support customer conversations through WhatsApp, where available." },
+  { title: "Instagram", icon: <InstagramIcon />, body: "Connect customer interactions through supported Instagram integrations." },
+  { title: "Messenger", icon: <MessengerIcon />, body: "Help customers connect through supported messaging channels." },
+  { title: "Telegram", icon: <TelegramIcon />, body: "Explore AI-powered messaging experiences through supported Telegram integrations." },
+  { title: "Google Calendar", icon: <GoogleCalendarIcon />, body: "Support appointment booking when configured." },
+  { title: "Google Drive", icon: <GoogleDriveIcon />, body: "Train your AI agent on the documents you already keep in Google Drive." },
+  { title: "Shopify", icon: <ShopifyIcon />, body: "Help shoppers discover products when supported features are enabled." },
+  { title: "Discord", icon: <DiscordIcon />, body: "Answer questions for your community right inside your Discord server." },
+  { title: "Slack", icon: <MonoSlackIcon />, body: "Bring your AI agent into Slack to help your team find answers fast." },
 ];
 
 const FAQ = [
@@ -116,28 +131,7 @@ export default function IntegrationsPage() {
       <StepCards title="HOW IT WORKS" subtitle="From choosing a channel to helping customers." steps={STEPS} />
       <BenefitGrid title="Integration benefits" subtitle="One platform. More ways to connect." items={BENEFITS} />
 
-      <section id="integrations" className={`mx-auto w-full max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
-        <SectionHeader title="Integrations" subtitle="One platform. More ways to connect." />
-        <ul className={`mx-auto flex w-full max-w-[1160px] flex-col gap-5 md:gap-[52px] ${SECTION_HEAD_GAP}`}>
-          {INTEGRATIONS.map((it) => (
-            <li key={it.name}>
-              <Tilt className="rounded-[10px]" max={2} scale={1.01} glare={false}>
-              <div className="flex min-h-[114px] items-center gap-5 rounded-[10px] bg-white px-4 py-3 text-[#5675FF] ring-1 ring-card-ring md:gap-0 md:px-[21px]">
-                <span className="flex w-16 shrink-0 items-center justify-center md:w-[127px] md:justify-start">
-                  <span className="relative block max-h-16 max-w-16 md:max-h-none md:max-w-none" style={{ width: it.w, height: it.h }}>
-                    <Image src={`${A}/${it.logo}`} alt={`${it.name} logo`} fill sizes="90px" className="object-cover" />
-                  </span>
-                </span>
-                <span>
-                  <span className="block text-xl font-bold leading-[30px] md:text-2xl">{it.name}</span>
-                  <span className="block text-[15px] leading-[30px] md:text-base">{it.body}</span>
-                </span>
-              </div>
-              </Tilt>
-            </li>
-          ))}
-        </ul>
-      </section>
+      <BenefitGrid id="integrations" title="Integrations" subtitle="One platform. More ways to connect." items={INTEGRATIONS} />
 
       <Faq product="Lumjha AI Integrations" items={FAQ} />
     </ProductPage>

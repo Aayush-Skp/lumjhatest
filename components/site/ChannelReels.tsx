@@ -15,18 +15,17 @@ import {
 
 export const CHANNELS: {
   name: string;
-  bg: string;
   Icon: ComponentType<SVGProps<SVGSVGElement>>;
 }[] = [
-    { name: "Website", bg: "#2E9BF0", Icon: WebsiteIcon },
-    { name: "WhatsApp", bg: "#25D366", Icon: WhatsAppIcon },
-    { name: "Instagram", bg: "#E1306C", Icon: InstagramIcon },
-    { name: "Facebook", bg: "#1877F2", Icon: FacebookIcon },
-    { name: "Telegram", bg: "#229ED9", Icon: TelegramIcon },
-    { name: "Google Calendar", bg: "#4285F4", Icon: GoogleCalendarIcon },
-    { name: "Shopify", bg: "#95BF47", Icon: ShopifyIcon },
-    { name: "Discord", bg: "#5865F2", Icon: DiscordIcon },
-    { name: "Slack", bg: "#4A154B", Icon: SlackIcon },
+    { name: "Website", Icon: WebsiteIcon },
+    { name: "WhatsApp", Icon: WhatsAppIcon },
+    { name: "Instagram", Icon: InstagramIcon },
+    { name: "Facebook", Icon: FacebookIcon },
+    { name: "Telegram", Icon: TelegramIcon },
+    { name: "Google Calendar", Icon: GoogleCalendarIcon },
+    { name: "Shopify", Icon: ShopifyIcon },
+    { name: "Discord", Icon: DiscordIcon },
+    { name: "Slack", Icon: (p) => <SlackIcon mono {...p} /> },
   ];
 
 type Channel = (typeof CHANNELS)[number];
@@ -46,11 +45,11 @@ function rotate<T>(arr: readonly T[], by: number): T[] {
 }
 
 function ChannelTile({ channel }: { channel: Channel }) {
-  const { Icon, bg } = channel;
+  const { Icon } = channel;
   return (
     <div className="flex h-20 items-center justify-center sm:h-24 md:h-32">
-      <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-line bg-surface shadow-[0_12px_36px_rgba(0,0,0,0.2)] sm:h-16 sm:w-16 sm:rounded-2xl md:h-24 md:w-24">
-        <Icon style={{ color: bg }} className="h-5 w-5 sm:h-8 sm:w-8 md:h-12 md:w-12" aria-hidden />
+      <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-[#527DFF]/30 bg-[#527DFF]/12 text-[#6E8BFF] shadow-[0_12px_36px_rgba(0,0,0,0.2)] light:border-card-ring light:bg-[#EEF3FF] light:text-[#3E63F2] light:shadow-none sm:h-16 sm:w-16 sm:rounded-2xl md:h-24 md:w-24">
+        <Icon className="h-5 w-5 sm:h-8 sm:w-8 md:h-12 md:w-12" aria-hidden />
       </div>
     </div>
   );

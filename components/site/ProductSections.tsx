@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { isValidElement, useState } from "react";
 import type { ReactNode } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -115,20 +115,29 @@ export function StepCards({ title, subtitle, steps }: { title: string; subtitle:
 }
 
 /** White benefit cards: blue icon + title + one-liner, two per row. */
+function FigmaIcon({ icon }: { icon: Icon }) {
+  return <Image src={icon.src} alt="" width={icon.width} height={icon.height} style={{ width: icon.width, height: icon.height }} />;
+}
+
+/** A grid card's icon: a Figma image export, or an inline SVG element (drawn in brand blue). */
+export type GridItem = { icon: Icon | ReactNode; title: string; body: string };
+
 export function BenefitGrid({
+  id,
   title,
   subtitle,
   items,
   compact,
 }: {
+  id?: string;
   title: string;
   subtitle: string;
-  items: Item[];
+  items: GridItem[];
   /** Play Area cards are shorter (96px vs 114px in Figma). */
   compact?: boolean;
 }) {
   return (
-    <section className={`${CONTAINER} ${SECTION_Y}`}>
+    <section id={id} className={`${CONTAINER} ${SECTION_Y}`}>
       <SectionHeader title={title} subtitle={subtitle} />
       <ul className={`${CONTENT} grid gap-5 md:grid-cols-2 md:gap-x-14 md:gap-y-[34px] ${SECTION_HEAD_GAP}`}>
         {items.map((b) => (
@@ -136,12 +145,12 @@ export function BenefitGrid({
             {/* white cards: tilt without the (invisible) white glare */}
             <Tilt className="h-full rounded-[10px]" max={4} scale={1.01} glare={false}>
             <div
-              className={`flex h-full items-start gap-4 rounded-[10px] bg-white px-6 ring-1 ring-card-ring py-3.5 text-[#5675FF] md:gap-[25px] ${
+              className={`flex h-full items-center gap-4 rounded-[10px] bg-white px-6 ring-1 ring-card-ring py-3.5 text-[#5675FF] md:gap-[25px] ${
                 compact ? "min-h-[96px]" : "min-h-[114px]"
               }`}
             >
-              <span className="mt-3.5 flex h-10 w-10 shrink-0 items-center justify-center">
-                <Image src={b.icon.src} alt="" width={b.icon.width} height={b.icon.height} style={{ width: b.icon.width, height: b.icon.height }} />
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center text-[#5675FF] [&>svg]:h-[38px] [&>svg]:w-[38px]">
+                {isValidElement(b.icon) ? b.icon : <FigmaIcon icon={b.icon as Icon} />}
               </span>
               <span>
                 <span className="block text-xl font-bold leading-[30px] md:text-2xl">{b.title}</span>

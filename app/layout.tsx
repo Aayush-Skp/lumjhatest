@@ -74,7 +74,7 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body className="min-h-full flex flex-col bg-bg-0 text-fg-mid selection:bg-brand-300/30 selection:text-fg-high">
+      <body className="min-h-full flex flex-col bg-bg-0 text-fg-mid">
         {children}
       </body>
     </html>

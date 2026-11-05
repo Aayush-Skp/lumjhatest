@@ -18,6 +18,8 @@ import {
 
 type Icon = ComponentType<SVGProps<SVGSVGElement>>;
 
+const MonoSlackIcon = (props: SVGProps<SVGSVGElement>) => <SlackIcon mono {...props} />;
+
 export function DocIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" aria-hidden {...props}>
@@ -51,7 +53,7 @@ export const DEPLOY_CHANNELS: { name: string; body: string; icon: Icon }[] = [
   { name: "Instagram", body: "DMs & comments", icon: InstagramIcon },
   { name: "Messenger", body: "Page inbox", icon: MessengerIcon },
   { name: "Telegram", body: "Bots & groups", icon: TelegramIcon },
-  { name: "Slack", body: "Team workspace", icon: SlackIcon },
+  { name: "Slack", body: "Team workspace", icon: MonoSlackIcon },
   { name: "Shopify", body: "Store assistant", icon: ShopifyIcon },
 ];
 
@@ -158,7 +160,7 @@ export default function EngineFlow({ className = "" }: { className?: string }) {
             <ul className="grid w-[352px] shrink-0 grid-cols-2 grid-rows-4 gap-2 xl:w-[400px]">
               {DEPLOY_CHANNELS.map((c) => (
                 <li key={c.name} className={`flex min-w-0 items-center gap-3 rounded-2xl px-3.5 ${TILE}`}>
-                  <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#527DFF]/12 text-[#6E8BFF] light:text-[#3E63F2] ${c.icon === SlackIcon ? "[&_path]:fill-current" : ""}`}>
+                  <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#527DFF]/12 text-[#6E8BFF] light:text-[#3E63F2]`}>
                     <ChannelGlyph icon={c.icon} className="h-5 w-5" />
                   </span>
                   <span className="min-w-0">
@@ -196,7 +198,7 @@ export default function EngineFlow({ className = "" }: { className?: string }) {
         <ul className="grid w-full grid-cols-4 gap-2">
           {DEPLOY_CHANNELS.map((c) => (
             <li key={c.name} className={`flex flex-col items-center gap-1.5 rounded-xl px-1 py-2.5 ${TILE}`}>
-              <span className={`flex h-8 w-8 items-center justify-center rounded-lg bg-[#527DFF]/12 text-[#6E8BFF] light:text-[#3E63F2] ${c.icon === SlackIcon ? "[&_path]:fill-current" : ""}`}>
+              <span className={`flex h-8 w-8 items-center justify-center rounded-lg bg-[#527DFF]/12 text-[#6E8BFF] light:text-[#3E63F2]`}>
                 <ChannelGlyph icon={c.icon} className="h-[18px] w-[18px]" />
               </span>
               <span className="w-full truncate text-center text-[10.5px] font-medium text-muted">{c.name}</span>

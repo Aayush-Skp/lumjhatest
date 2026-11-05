@@ -69,7 +69,7 @@ const COMMITMENTS = [
 /** Glowing shield + padlock standing on a ring of light (drawn in code). */
 function ShieldArt() {
   return (
-    <svg aria-hidden viewBox="0 0 320 380" className="h-auto w-full max-w-[300px]">
+    <svg aria-hidden viewBox="0 0 320 380" className="mx-auto h-auto w-full max-w-[240px]">
       <defs>
         <linearGradient id="cm-shield" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor="#4F7BFF" />
@@ -86,11 +86,14 @@ function ShieldArt() {
           <stop offset="1" stopColor="#A9BFFF" />
         </linearGradient>
         <radialGradient id="cm-floor" cx="0.5" cy="0.5" r="0.5">
-          <stop offset="0" stopColor="#527DFF" stopOpacity="0.55" />
+          <stop offset="0" stopColor="#527DFF" stopOpacity="0.35" />
           <stop offset="1" stopColor="#527DFF" stopOpacity="0" />
         </radialGradient>
         <filter id="cm-glow" x="-30%" y="-30%" width="160%" height="160%">
-          <feGaussianBlur stdDeviation="9" result="b" />
+          <feGaussianBlur stdDeviation="6" result="b" />
+          <feComponentTransfer in="b" result="b">
+            <feFuncA type="linear" slope="0.55" />
+          </feComponentTransfer>
           <feMerge>
             <feMergeNode in="b" />
             <feMergeNode in="SourceGraphic" />
@@ -101,7 +104,7 @@ function ShieldArt() {
       {/* floor: pool of light + rings */}
       <ellipse cx="160" cy="330" rx="150" ry="40" fill="url(#cm-floor)" />
       <ellipse cx="160" cy="330" rx="140" ry="32" fill="none" stroke="#527DFF" strokeOpacity="0.35" />
-      <ellipse cx="160" cy="330" rx="104" ry="22" fill="none" stroke="#7FA0FF" strokeOpacity="0.9" strokeWidth="2" filter="url(#cm-glow)" />
+      <ellipse cx="160" cy="330" rx="104" ry="22" fill="none" stroke="#7FA0FF" strokeOpacity="0.7" strokeWidth="2" filter="url(#cm-glow)" />
 
       {/* shield */}
       <g filter="url(#cm-glow)">
@@ -145,7 +148,7 @@ export default function Commitments() {
       </div>
 
       <div className={`grid items-center gap-10 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,2fr)] lg:gap-12 ${SECTION_HEAD_GAP}`}>
-        <div className="mx-auto w-48 sm:w-60 lg:w-full">
+        <div className="mx-auto w-40 sm:w-52 lg:w-full">
           <ShieldArt />
         </div>
         <ul className="grid gap-4 sm:grid-cols-2">
