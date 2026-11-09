@@ -3,7 +3,6 @@
    ============================================================ */
 
 const PLAN_COLUMNS = [
-  { name: "Free", price: "$0" },
   { name: "Starter", price: "$41/mo annual" },
   { name: "Growth ★", price: "$83/mo annual", featured: true },
   { name: "Pro", price: "$208/mo annual" },
@@ -19,23 +18,23 @@ type Cell = string | { text: string; tone: "addon" | "included" };
 const add = (text: string): Cell => ({ text, tone: "addon" });
 const inc = (text: string): Cell => ({ text, tone: "included" });
 
-type Row = { feature: string; exclusive?: boolean; cells: [Cell, Cell, Cell, Cell, Cell] };
+type Row = { feature: string; exclusive?: boolean; cells: [Cell, Cell, Cell, Cell] };
 
 const GROUPS: { title: string; rows: Row[] }[] = [
   {
     title: "Usage",
     rows: [
-      { feature: "AI conversations / month", cells: ["50", "500", "2,000", "6,000", "Custom (committed)"] },
-      { feature: "AI agents", cells: ["1", "1", "3", "10", "Custom"] },
-      { feature: "Top-up packs (auto, capped)", cells: ["Upgrade prompt", "250 / $25", "500 / $25", "1,000 / $45", "Committed rate"] },
+      { feature: "AI conversations / month", cells: ["500", "2,000", "6,000", "Custom (committed)"] },
+      { feature: "AI agents", cells: ["1", "3", "10", "Custom"] },
+      { feature: "Top-up packs (auto, capped)", cells: ["250 / $25", "500 / $25", "1,000 / $45", "Committed rate"] },
     ],
   },
   {
     title: "Knowledge & setup",
     rows: [
-      { feature: "Auto-crawl (web pages)", cells: ["50 pages", "2,000 pages", "Up to 5,000 web pages", "Up to 10,000 web pages", "Custom"] },
-      { feature: "Knowledge Documents (uploads)", cells: ["2 (up to 3MB each)", "15 (up to 5MB each)", "35 (up to 5MB each)", "100 (up to 6MB each)", "Custom"] },
-      { feature: "Auto re-crawl", cells: ["Manual", "Monthly", "Bi-weekly", "Weekly", "Real-time via API"] },
+      { feature: "Auto-crawl (web pages)", cells: ["2,000 pages", "Up to 5,000 web pages", "Up to 10,000 web pages", "Custom"] },
+      { feature: "Knowledge Documents (uploads)", cells: ["15 (up to 5MB each)", "35 (up to 5MB each)", "100 (up to 6MB each)", "Custom"] },
+      { feature: "Auto re-crawl", cells: ["Monthly", "Bi-weekly", "Weekly", "Real-time via API"] },
     ],
   },
   {
@@ -43,28 +42,28 @@ const GROUPS: { title: string; rows: Row[] }[] = [
     rows: [
       {
         feature: "Channels (website + WhatsApp, Instagram, Messenger, Telegram, Viber*)",
-        cells: ["Website + 1 messaging", "All, 1 account each", "All, 3 per channel", "All, 10 per channel", "All + custom/API"],
+        cells: ["All, 1 account each", "All, 3 per channel", "All, 10 per channel", "All + custom/API"],
       },
-      { feature: "Human handoff inbox", cells: ["–", "✓", "✓", "✓ + assignment rules", "✓"] },
+      { feature: "Human handoff inbox", cells: ["✓", "✓", "✓ + assignment rules", "✓"] },
     ],
   },
   {
     title: "Brand & safety",
     rows: [
-      { feature: "Brand kit (logo, colors, voice, tone, messaging)", cells: ["Logo + colors", "Full brand kit", "Full brand kit", "Per-agent / per-location kits", "Full white-label"] },
-      { feature: "“Powered by Lumjha AI” badge", cells: ["Shown", add("Remove +$19"), inc("Removable"), inc("Removable"), inc("White-label")] },
+      { feature: "Brand kit (logo, colors, voice, tone, messaging)", cells: ["Full brand kit", "Full brand kit", "Per-agent / per-location kits", "Full white-label"] },
+      { feature: "“Powered by Lumjha AI” badge", cells: [add("Remove +$19"), inc("Removable"), inc("Removable"), inc("White-label")] },
       {
         feature: "Safety moderation",
-        cells: ["Baseline (always on)", "+ blocked topics", "+ custom guardrails, escalation rules, PII masking", "+ moderation log", "+ audit export, custom policies"],
+        cells: ["+ blocked topics", "+ custom guardrails, escalation rules, PII masking", "+ moderation log", "+ audit export, custom policies"],
       },
     ],
   },
   {
     title: "Leads & bookings",
     rows: [
-      { feature: "Lead forms & chat history", cells: ["1 form, last 25 leads", "3 forms, full history, CSV", "Unlimited forms, custom fields", "+ routing by location/agent", "Custom retention"] },
-      { feature: "Google Calendar booking", cells: ["–", "✓", "✓", "✓", "✓"] },
-      { feature: "CRM, webhooks, Shopify", cells: ["–", "–", "✓", "✓", "✓"] },
+      { feature: "Lead forms & chat history", cells: ["3 forms, full history, CSV", "Unlimited forms, custom fields", "+ routing by location/agent", "Custom retention"] },
+      { feature: "Google Calendar booking", cells: ["✓", "✓", "✓", "✓"] },
+      { feature: "CRM, webhooks, Shopify", cells: ["–", "✓", "✓", "✓"] },
     ],
   },
   {
@@ -72,38 +71,38 @@ const GROUPS: { title: string; rows: Row[] }[] = [
     rows: [
       {
         feature: "Reporting & Insights",
-        cells: ["Basic Reporting", "Detailed Reporting & Insights", inc("Advanced Reporting & Insights"), inc("Advanced Reporting & Insights"), inc("Advanced + custom/BI export")],
+        cells: ["Detailed Reporting & Insights", inc("Advanced Reporting & Insights"), inc("Advanced Reporting & Insights"), inc("Advanced + custom/BI export")],
       },
       {
         feature: "Knowledge-gap analytics",
-        cells: ["Basic counts", "Top unanswered questions", "Full gap suggestions + one-click fix, topics, cost-per-lead", "Cross-surface gaps, per-location, scheduled reports", "+ BI export"],
+        cells: ["Top unanswered questions", "Full gap suggestions + one-click fix, topics, cost-per-lead", "Cross-surface gaps, per-location, scheduled reports", "+ BI export"],
       },
     ],
   },
   {
     title: "Search & vault",
     rows: [
-      { feature: "Site Search (same knowledge base)", exclusive: true, cells: ["–", add("+$25/mo"), inc("Included"), inc("Included"), inc("Included")] },
+      { feature: "Site Search (same knowledge base)", exclusive: true, cells: [add("+$25/mo"), inc("Included"), inc("Included"), inc("Included")] },
       {
         feature: "PIN-protected Policy Vault",
         exclusive: true,
-        cells: ["–", add("+$49/mo"), add("+$49/mo"), inc("Included (multiple vaults, PIN rotation)"), inc("Included + SSO/magic-link, audit log")],
+        cells: [add("+$49/mo"), add("+$49/mo"), inc("Included (multiple vaults, PIN rotation)"), inc("Included + SSO/magic-link, audit log")],
       },
     ],
   },
   {
     title: "Developers",
     rows: [
-      { feature: "API (ingestion & export)", cells: ["–", "CSV export only", inc("Standard API"), "Higher limits, bulk export", "Custom limits, SLA"] },
-      { feature: "MCP connector", cells: ["–", "Read-only", inc("Full read + write"), "Multi-agent scopes, Vault over MCP", "OAuth/SSO scopes + audit"] },
-      { feature: "AI model", cells: ["Efficient default", "Efficient default", "Efficient default", "+ Premium reasoning (3× conversations)", "+ BYO LLM key"] },
+      { feature: "API (ingestion & export)", cells: ["CSV export only", inc("Standard API"), "Higher limits, bulk export", "Custom limits, SLA"] },
+      { feature: "MCP connector", cells: ["Read-only", inc("Full read + write"), "Multi-agent scopes, Vault over MCP", "OAuth/SSO scopes + audit"] },
+      { feature: "AI model", cells: ["Efficient default", "Efficient default", "+ Premium reasoning (3× conversations)", "+ BYO LLM key"] },
     ],
   },
   {
     title: "Support",
     rows: [
-      { feature: "Support", cells: ["Community / email", "Email", "Priority email/chat", "Priority + onboarding call", "Dedicated CSM, SLA"] },
-      { feature: "Early access to new features & capabilities", cells: ["–", "–", "✓", "✓", "On request"] },
+      { feature: "Support", cells: ["Email", "Priority email/chat", "Priority + onboarding call", "Dedicated CSM, SLA"] },
+      { feature: "Early access to new features & capabilities", cells: ["–", "✓", "✓", "On request"] },
     ],
   },
 ];
@@ -151,7 +150,7 @@ export default function PlanMatrix({ className = "" }: { className?: string }) {
   return (
     <div className={className}>
       <div className="mx-auto max-w-[1040px] overflow-x-auto rounded-2xl border border-[#3B5BDB]/70 bg-[#0B1530] shadow-[0_24px_80px_-40px_rgba(82,125,255,0.6)] light:border-[#C9D8FF] light:bg-white">
-        <table className="w-full min-w-[860px] border-collapse text-left text-[13px] leading-snug text-ink/90">
+        <table className="w-full min-w-[740px] border-collapse text-left text-[13px] leading-snug text-ink/90">
           <caption className="sr-only">Features included in each Lumjha AI plan</caption>
           <thead>
             <tr className="border-b border-[#2A3F6B] light:border-[#E1E8F5]">
