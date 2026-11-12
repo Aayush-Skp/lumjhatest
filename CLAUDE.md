@@ -21,7 +21,7 @@ lumjha-website/
 │   ├── pricing/        ← Pricing page: plans, conversation rules, usage alerts, API, comparison matrix, FAQ
 │   ├── chat-agent/     ← Solutions → AI Chat Agent
 │   ├── site-search/    ← Solutions → Site Search
-│   ├── policy-vault/   ← Solutions → Policy Vault
+│   ├── lumjha-vault/   ← Solutions → Lumjha Vault (images still in public/assets/policy-vault/)
 │   ├── integrations/   ← Integration page
 │   ├── blogs/          ← blog: posts.ts (static posts) → listing + [slug] article pages
 │   ├── admin/          ← /admin panel (login, pricing + blog editors, messages, newsletter); actions.ts = server actions

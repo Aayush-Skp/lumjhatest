@@ -75,7 +75,7 @@ export const PLANS: Plan[] = [
       { text: "Priority email/chat support" },
       { text: "Early access to new features & capabilities", strong: true },
     ],
-    note: "Top-up: 500 conversations / $25 · Policy Vault +$49",
+    note: "Top-up: 500 conversations / $25 · Lumjha Vault +$49",
   },
   {
     name: "Pro",
@@ -90,7 +90,7 @@ export const PLANS: Plan[] = [
       { text: "Up to 10 numbers/accounts per channel" },
       { text: "Up to 10,000 web pages · weekly auto re-crawl" },
       { text: "100 Knowledge Documents (up to 6MB each)" },
-      { text: "PIN-protected Policy Vault included", strong: true, exclusive: true },
+      { text: "PIN-protected Lumjha Vault included", strong: true, exclusive: true },
       { text: "Advanced Reporting & Insights · cross-surface gaps (chat + search + vault), scheduled reports" },
       { text: "Per-location brand kits & lead routing" },
       { text: "Moderation log" },
@@ -113,7 +113,7 @@ export const PLANS: Plan[] = [
     includes: "Everything in Pro, plus",
     features: [
       { text: "Committed conversation volume" },
-      { text: "SSO-gated Policy Vault with audit log" },
+      { text: "SSO-gated Lumjha Vault with audit log" },
       { text: "Full white-label" },
       { text: "Custom moderation policies" },
       { text: "Custom API/MCP limits with OAuth/SSO scopes" },

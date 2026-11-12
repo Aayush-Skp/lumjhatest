@@ -255,8 +255,8 @@ const PLATFORM_TABS: {
       body: "Upgrade site search with AI. Lumjha AI instantly scans your entire website and documentation to deliver precise, summarized answers directly to your visitors with sources attached.",
     },
     {
-      id: "policy-vault",
-      label: "Policy Vault",
+      id: "lumjha-vault",
+      label: "Lumjha Vault",
     card: <ChatCard question="What is your refund policy?" status="Checking policies" />,
       heading: (
         <>
@@ -265,7 +265,7 @@ const PLATFORM_TABS: {
           Delivered Exactly.
         </>
       ),
-      body: "Ask in plain, everyday words and get the exact wording back. Lumjha AI Policy Vault searches your policies and documents, then quotes the relevant passage word for word, with its source attached so anyone can verify it.",
+      body: "Ask in plain, everyday words and get the exact wording back. Lumjha Vault searches your policies and documents, then quotes the relevant passage word for word, with its source attached so anyone can verify it.",
     },
   ];
 
@@ -462,7 +462,7 @@ function PlatformTabs() {
                   {tab.body}
                 </p>
                 <div className="mt-6 flex justify-center md:justify-start lg:mt-8">
-                  <BlueButton large>Get Started Free</BlueButton>
+                  <BlueButton large>Start 14-day Trial</BlueButton>
                 </div>
               </div>
             </div>
@@ -570,7 +570,7 @@ export default function HomePage() {
             {/* widens a touch on hover (side padding, so the height and text stay put) and eases back */}
             <div className="inline-flex [&>a]:transition-all [&>a]:duration-300 [&>a]:ease-in-out hover:[&>a]:px-9 focus-within:[&>a]:px-9 md:hover:[&>a]:px-10 md:focus-within:[&>a]:px-10">
               <BlueButton large outline>
-                Get Started Free
+                Start 14-day Trial
               </BlueButton>
             </div>
           </div>

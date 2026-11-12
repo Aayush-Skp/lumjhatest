@@ -13,7 +13,7 @@ import Tilt from "@/components/ui/Tilt";
 
 /* ============================================================
    Building blocks for the product pages (Chat Agent, Site Search,
-   Policy Vault, Integration) — all share one Figma template:
+   Lumjha Vault, Integration) — all share one Figma template:
    hero → intro split → how it works → benefits → FAQ → CTA.
    ============================================================ */
 
@@ -49,7 +49,6 @@ export function ProductHero({ title, accent, body }: { title: string; accent: st
         {body}
       </p>
       <ContactDisclosure
-        variant="dark"
         label="Book a Demo"
         rowClassName="mt-8 flex w-full max-w-xs flex-col gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:items-center sm:justify-center sm:gap-10 md:mt-11"
         buttonClassName="inline-flex items-center justify-center rounded-full border-2 border-[#5675FF] px-7 py-3.5 text-[15px] font-semibold text-ink transition hover:bg-[#5675FF]/10"

@@ -767,3 +767,8 @@ html {
 .legal-prose li:last-child {
   margin-bottom: 0;
 }
+
+/* Keep the page from scrolling behind an open modal (contact / demo dialog). */
+html:has(dialog[open]:modal) {
+  overflow: hidden;
+}

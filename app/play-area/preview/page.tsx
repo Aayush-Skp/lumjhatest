@@ -27,7 +27,7 @@ const DEMO_AGENT = process.env.LUMJHA_PLAY_DEMO_AGENT || "bedrocktest";
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 
-const NAV = ["AI Chat Agent", "Site Search", "Policy Vault", "Pricing"];
+const NAV = ["AI Chat Agent", "Site Search", "Lumjha Vault", "Pricing"];
 
 const CHANNELS = ["Website", "WhatsApp", "Instagram", "Messenger", "Telegram", "Slack"];
 

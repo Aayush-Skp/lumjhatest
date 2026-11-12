@@ -56,7 +56,7 @@ export default function TermsOfServicePage() {
           </li>
           <li>
             <strong>Module:</strong> A packaged set of Service features — Engage
-            (chatbot), Discover (site search), or Comply (policy vault).
+            (chatbot), Discover (site search), or Comply (Lumjha Vault).
           </li>
           <li>
             <strong>Subscription:</strong> Your selected plan granting access to
@@ -182,7 +182,7 @@ export default function TermsOfServicePage() {
           </li>
           <li>
             <strong>Comply:</strong> Store, manage, and surface policy and
-            compliance documents through an AI-powered policy vault. Supports
+            compliance documents through the AI-powered Lumjha Vault. Supports
             regulatory document retrieval and policy-specific agent responses.
           </li>
         </ul>

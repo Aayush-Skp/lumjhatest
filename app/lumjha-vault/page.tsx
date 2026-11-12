@@ -3,7 +3,7 @@ import Image from "next/image";
 import { BenefitGrid, Faq, IntroSplit, ProductHero, ProductPage, StepCards } from "@/components/site/ProductSections";
 
 export const metadata: Metadata = {
-  title: "Policy Vault",
+  title: "Lumjha Vault",
   description:
     "Help people find clear answers in your business policies and documents, with exact quotations and source attribution.",
 };
@@ -14,7 +14,7 @@ const STEPS = [
   {
     icon: { src: `${A}/add-documents.svg`, width: 91.14, height: 91.14 },
     title: "Add your documents",
-    body: "Bring your policy information into your configured Policy Vault.",
+    body: "Bring your policy information into your configured Lumjha Vault.",
   },
   {
     icon: { src: `${A}/find-passages.svg`, width: 93.93, height: 93.93 },
@@ -55,11 +55,11 @@ const BENEFITS = [
 
 const FAQ = [
   {
-    q: "What is Lumjha AI Policy Vault?",
-    a: "Lumjha AI Policy Vault helps users find policy information through source-backed answers and exact quotations.",
+    q: "What is Lumjha Vault?",
+    a: "Lumjha Vault helps users find policy information through source-backed answers and exact quotations.",
   },
   {
-    q: "How does Policy Vault work?",
+    q: "How does Lumjha Vault work?",
     a: "It uses your configured policy sources to locate relevant passages and present the original wording.",
   },
   {
@@ -71,22 +71,22 @@ const FAQ = [
     a: "It helps users locate relevant policy details without manually searching lengthy documents.",
   },
   {
-    q: "Does Policy Vault provide exact quotations?",
+    q: "Does Lumjha Vault provide exact quotations?",
     a: "Yes. Its exact quote mode provides quotations from source documents with attribution.",
   },
   {
-    q: "How do I get started with Lumjha AI Policy Vault?",
+    q: "How do I get started with Lumjha Vault?",
     a: "Get started with Lumjha AI to explore the available setup and document options.",
   },
 ];
 
-export default function PolicyVaultPage() {
+export default function LumjhaVaultPage() {
   return (
     <ProductPage>
       <ProductHero
         title="Every Policy Answer,"
         accent="Backed by Your Sources."
-        body="Help people find clear answers in your business policies and documents. Lumjha AI Policy Vault delivers answers with exact quotations and source attribution, so users can verify the information themselves."
+        body="Help people find clear answers in your business policies and documents. Lumjha Vault delivers answers with exact quotations and source attribution, so users can verify the information themselves."
       />
       <IntroSplit
         heading={
@@ -96,7 +96,7 @@ export default function PolicyVaultPage() {
             Find the <span className="text-[#5675FF]">Exact Answer.</span>
           </>
         }
-        body="Important policy details can be difficult to locate across lengthy documents. Lumjha AI Policy Vault helps users find relevant policy information through source-backed answers and exact quotations."
+        body="Important policy details can be difficult to locate across lengthy documents. Lumjha Vault helps users find relevant policy information through source-backed answers and exact quotations."
         media={
           <Image
             src={`${A}/exact-answer.png`}
@@ -110,11 +110,11 @@ export default function PolicyVaultPage() {
       />
       <StepCards title="HOW IT WORKS" subtitle="From Policy Documents to Clear Answers." steps={STEPS} />
       <BenefitGrid
-        title="Benefits - Lumjha AI Policy Vault"
+        title="Benefits - Lumjha Vault"
         subtitle="Lumjha AI answers instantly across your channels, in your voice, using your own content, so more customers can take the next step."
         items={BENEFITS}
       />
-      <Faq product="Lumjha AI Policy Vault" items={FAQ} />
+      <Faq product="Lumjha Vault" items={FAQ} />
     </ProductPage>
   );
 }

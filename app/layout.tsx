@@ -58,7 +58,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Enable Your best agent. Automate your growth.",
     description:
-      "One knowledge base. Three AI modules — Intelligent AI Chatbot, Website Search, Policy Vault (Exact Answers). Live across every channel in minutes.",
+      "One knowledge base. Three AI modules — Intelligent AI Chatbot, Website Search, Lumjha Vault (Exact Answers). Live across every channel in minutes.",
     type: "website",
   },
 };

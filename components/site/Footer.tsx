@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import FooterWordmark from "./FooterWordmark";
 import NewsletterForm from "./NewsletterForm";
+import { FacebookIcon, InstagramIcon, LinkedInIcon } from "@/components/ui/ChannelIcons";
 
 const QUICK_LINKS = [
   { label: "Lumjha Play", href: "/play-area" },
@@ -13,7 +14,7 @@ const QUICK_LINKS = [
 const PLATFORMS = [
   { label: "Chatbot", href: "/chat-agent" },
   { label: "Site Search", href: "/site-search" },
-  { label: "Policy Vault", href: "/policy-vault" },
+  { label: "Lumjha Vault", href: "/lumjha-vault" },
   { label: "Integrations", href: "/integrations" },
   { label: "Lumjha Play", href: "/play-area" },
 ];
@@ -41,10 +42,16 @@ export default function Footer() {
           <p className="mt-5 max-w-[260px] text-[13px] leading-relaxed md:text-sm">
             Lumjha AI is the no-code AI layer for modern customer engagement.
           </p>
-          <div className="mt-5 flex gap-4 text-sm">
-            <a href="#" aria-label="Facebook" className="hover:text-ink">f</a>
-            <a href="#" aria-label="Instagram" className="hover:text-ink">◉</a>
-            <a href="#" aria-label="LinkedIn" className="hover:text-ink">in</a>
+          <div className="mt-5 flex items-center gap-4">
+            <a href="#" aria-label="Facebook" className="transition hover:text-ink">
+              <FacebookIcon className="h-5 w-5" />
+            </a>
+            <a href="#" aria-label="Instagram" className="transition hover:text-ink">
+              <InstagramIcon className="h-5 w-5" />
+            </a>
+            <a href="#" aria-label="LinkedIn" className="transition hover:text-ink">
+              <LinkedInIcon className="h-[18px] w-[18px]" />
+            </a>
           </div>
         </div>
         <div>

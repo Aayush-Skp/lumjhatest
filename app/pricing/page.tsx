@@ -114,7 +114,7 @@ const TOP_UPS = [
 ];
 
 const ADD_ONS = [
-  { price: "+$49", title: "Policy Vault (PIN-protected)", body: "Starter & Growth. Included on Pro." },
+  { price: "+$49", title: "Lumjha Vault (PIN-protected)", body: "Starter & Growth. Included on Pro." },
   { price: "+$25", title: "Site Search", body: "Starter only. Included on Growth and above." },
   { price: "$99", title: "Agency Kit (on Pro)", body: "Full white-label (widget, dashboard, custom domain), client sub-accounts, per-client usage reports, multi-client API/MCP keys." },
   { price: "$19", title: "Remove badge", body: "Remove “Powered by Lumjha AI” on Starter." },
@@ -180,7 +180,7 @@ const MATRIX: MatrixRow[] = [
   { capability: "Lead capture in chat", lumjha: "✓ native, form-less", competitors: ["actions", "leads", "✓ forms", "Flows", "✓"] },
   { capability: "Calendar booking", lumjha: "✓ Google Calendar", competitors: ["via actions", "?", "✓ Calendly/Cal.com", "via Flows", "?"] },
   { capability: "AI site search", lumjha: "✓ +$25", competitors: ["", "", "", "", ""] },
-  { capability: "Exact-quote policy answers", lumjha: "✓ Policy Vault + $25 (unique)", competitors: ["", "", "partial (citations)", "", ""] },
+  { capability: "Exact-quote policy answers", lumjha: "✓ Lumjha Vault + $25 (unique)", competitors: ["", "", "partial (citations)", "", ""] },
   { capability: "Human handoff/inbox", lumjha: "exists in code, not marketed", competitors: ["✓ helpdesk inbox", "✓ iOS app", "✓ escalation", "✓ core", "✓ core"] },
   { capability: "White-label", lumjha: "? not stated", competitors: ["$1,188/yr", "$59/mo", "Business $499", "Plus", "Enterprise"] },
   { capability: "SOC 2 / HIPAA", lumjha: "? none stated", competitors: ["SOC2 II, HIPAA", "HIPAA (Ent)", "SOC2 II", "SSO (Premium)", "SOC2 II"] },
@@ -235,8 +235,8 @@ const FAQS = [
     a: "Safety moderation depends on the safeguards and features available in your Lumjha AI setup. Refer to the product documentation for current details.",
   },
   {
-    q: "How secure is Lumjha AI Policy Vault with PIN protection?",
-    a: "Policy Vault offers restricted-access features. Consult Lumjha AI’s current security documentation for details about PIN protection and permissions.",
+    q: "How secure is Lumjha Vault with PIN protection?",
+    a: "Lumjha Vault offers restricted-access features. Consult Lumjha AI’s current security documentation for details about PIN protection and permissions.",
   },
   {
     q: "Which messaging channels are included in each Lumjha AI pricing plan?",
@@ -384,7 +384,7 @@ export default async function PricingPage() {
               </div>
             </article>
 
-            {/* 02 · policy vault */}
+            {/* 02 · Lumjha Vault */}
             <article className={`${CARD} flex flex-col p-5 sm:p-6`}>
               <p className={EYEBROW}>02 · Lumjha AI Vault</p>
               <h3 className="mt-3 text-[19px] font-bold leading-snug text-ink">

@@ -17,7 +17,7 @@ export default function PrivacyPolicyPage() {
           operates a no-code AI agent platform that enables businesses to build,
           deploy, and manage intelligent conversational agents trained on their
           own data. Our platform includes the Engage (chatbot), Discover (site
-          search), and Comply (policy vault) modules, along with integrations to
+          search), and Comply (Lumjha Vault) modules, along with integrations to
           messaging platforms including Facebook Messenger, WhatsApp Business,
           Instagram, Telegram, TikTok, and Viber.
         </p>

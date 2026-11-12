@@ -84,7 +84,7 @@ const GROUPS: { title: string; rows: Row[] }[] = [
     rows: [
       { feature: "Site Search (same knowledge base)", exclusive: true, cells: [add("+$25/mo"), inc("Included"), inc("Included"), inc("Included")] },
       {
-        feature: "PIN-protected Policy Vault",
+        feature: "PIN-protected Lumjha Vault",
         exclusive: true,
         cells: [add("+$49/mo"), add("+$49/mo"), inc("Included (multiple vaults, PIN rotation)"), inc("Included + SSO/magic-link, audit log")],
       },

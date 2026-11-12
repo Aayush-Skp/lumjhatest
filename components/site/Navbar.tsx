@@ -10,7 +10,7 @@ import ThemeToggle from "@/components/ui/ThemeToggle";
 const SOLUTIONS = [
   { label: "AI Chat Agent", href: "/chat-agent", blurb: "Answer every customer question, 24/7" },
   { label: "Site Search", href: "/site-search", blurb: "Help visitors find what they need, faster" },
-  { label: "Policy Vault", href: "/policy-vault", blurb: "Exact answers, backed by your sources" },
+  { label: "Lumjha Vault", href: "/lumjha-vault", blurb: "Exact answers, backed by your sources" },
 ];
 
 const NAV_LINKS = [
