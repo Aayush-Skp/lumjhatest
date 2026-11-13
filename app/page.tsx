@@ -603,8 +603,8 @@ export default function HomePage() {
             focus on running your business.
           </p>
           <div className="mt-9 flex justify-center md:mt-10">
-            {/* hover: tint + glow + the arrow nudges right (see .hero-cta in globals.css) */}
-            <div className="hero-cta inline-flex">
+            {/* widens a touch on hover (side padding, so the height and text stay put) and eases back */}
+            <div className="inline-flex [&>a]:transition-all [&>a]:duration-300 [&>a]:ease-in-out hover:[&>a]:px-9 focus-within:[&>a]:px-9 md:hover:[&>a]:px-10 md:focus-within:[&>a]:px-10">
               <BlueButton large outline>
                 Start 14-day Trial
               </BlueButton>

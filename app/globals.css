@@ -379,37 +379,6 @@ body {
   }
 }
 
-/* Hero CTA (outline BlueButton inside .hero-cta): tint, border and a soft lift
-   on hover/focus, arrow nudges right, slight press on click. */
-.hero-cta > a {
-  transition:
-    background-color 0.3s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.3s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.15s ease-out;
-}
-.hero-cta > a > span[aria-hidden] {
-  display: inline-block;
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.hero-cta > a:hover,
-.hero-cta > a:focus-visible {
-  background-color: rgb(82 125 255 / 0.12);
-  border-color: #527dff;
-  box-shadow: 0 10px 30px -14px rgb(82 125 255 / 0.8);
-}
-[data-theme="light"] .hero-cta > a:hover,
-[data-theme="light"] .hero-cta > a:focus-visible {
-  box-shadow: 0 8px 18px -10px rgb(15 23 42 / 0.3);
-}
-.hero-cta > a:hover > span[aria-hidden],
-.hero-cta > a:focus-visible > span[aria-hidden] {
-  transform: translateX(4px);
-}
-.hero-cta > a:active {
-  transform: scale(0.98);
-}
-
 /* Platform tabs autoplay countdown — duration is set inline */
 .tab-progress {
   stroke-dashoffset: 100;
