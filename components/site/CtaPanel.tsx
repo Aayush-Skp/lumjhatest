@@ -4,6 +4,7 @@ import Image from "next/image";
 import ContactDisclosure from "./ContactDisclosure";
 import BlueButton from "@/components/ui/BlueButton";
 import Tilt from "@/components/ui/Tilt";
+import { HEADING } from "./SectionHeader";
 
 /** "Ready to Scale" blue panel on the topographic white band — closes every page. */
 export default function CtaPanel({ contactLabel = "Contact Us" }: { contactLabel?: string }) {
@@ -21,7 +22,7 @@ export default function CtaPanel({ contactLabel = "Contact Us" }: { contactLabel
         {/* gentle tilt for the large panel; pauses while something inside has focus */}
         <Tilt className="rounded-3xl" max={3} scale={1.01}>
         <div className="rounded-3xl bg-[#506DFF] px-6 py-14 text-center shadow-xl sm:px-10 md:py-20 lg:py-24">
-          <h2 className="mx-auto max-w-4xl font-heading text-[28px] font-bold leading-tight tracking-tight text-balance text-white sm:max-w-none sm:whitespace-nowrap sm:text-[clamp(1.5rem,calc((100vw_-_128px)/22),3rem)]">
+          <h2 className={`mx-auto max-w-5xl ${HEADING} text-white!`}>
             Ready to Scale Your Customer Experience?
           </h2>
           <p className="mx-auto mt-5 max-w-2xl text-[15px] leading-relaxed text-balance text-white/85 sm:text-base md:mt-6 md:text-lg">

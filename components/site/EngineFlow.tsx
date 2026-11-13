@@ -1,4 +1,5 @@
 import Image from "next/image";
+import EngineGlobe from "./EngineGlobe";
 import type { ComponentType, SVGProps } from "react";
 import {
   DiscordIcon,
@@ -69,6 +70,16 @@ const CHANNEL_YS = [11.4, 37.1, 62.9, 88.6];
 
 const TILE =
   "border border-line bg-surface/70 backdrop-blur-md light:border-card-ring light:bg-white/90";
+/* desktop tiles lift slightly on hover and their icon well brightens */
+const TILE_HOVER =
+  "group transition-[transform,border-color] duration-[350ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-[#527DFF]/45 motion-reduce:hover:translate-y-0";
+const WELL_HOVER = "transition-colors duration-[350ms] ease-out group-hover:bg-[#527DFF]/25";
+
+/* Each connector line flows at its own pace (multiples of FLOW_BASE) so
+   the dashes never march in lockstep. */
+const FLOW_PACE = [1, 1.17, 0.9, 1.31];
+/* seconds per 20px of dash travel: ~12px/s, brisk enough to read as flowing */
+const FLOW_BASE = 1.6;
 const LABEL = "font-mono text-[10.5px] font-medium uppercase tracking-[0.08em] text-subtle";
 
 /** Curves from each left point to each right point (y in %), drawn edge to edge. */
@@ -76,17 +87,30 @@ function Connector({ left, right }: { left: number[]; right: number[] }) {
   const paths = left.flatMap((l) => right.map((r) => `M0 ${l} C55 ${l} 45 ${r} 100 ${r}`));
   return (
     <div aria-hidden className="relative h-full min-w-8 flex-1">
-      <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 h-full w-full overflow-visible">
-        {paths.map((d) => (
+      {/* lines fade in from the left so they read as leaving the tiles */}
+      <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="ef-fade absolute inset-0 h-full w-full overflow-visible">
+        {paths.map((d, i) => (
           <g key={d} fill="none">
-            <path d={d} stroke="#527DFF" strokeOpacity={0.18} strokeWidth={1} vectorEffect="non-scaling-stroke" />
-            <path d={d} stroke="#527DFF" strokeOpacity={0.85} strokeWidth={1.5} vectorEffect="non-scaling-stroke" className="dash-flow" />
+            <path d={d} stroke="#527DFF" strokeOpacity={0.28} strokeWidth={1} vectorEffect="non-scaling-stroke" />
+            <path
+              d={d}
+              stroke="#527DFF"
+              strokeOpacity={0.95}
+              strokeWidth={2}
+              vectorEffect="non-scaling-stroke"
+              className="ef-flow"
+              style={{ animationDuration: `${FLOW_BASE * FLOW_PACE[i % 4]}s` }}
+            />
           </g>
         ))}
       </svg>
-      {/* end caps: plain dots (an SVG circle would stretch with the box) */}
-      {right.map((y) => (
-        <span key={y} style={{ top: `${y}%` }} className="absolute right-0 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-[#527DFF] shadow-[0_0_8px_#527DFF]" />
+      {/* end caps: plain dots that pulse a soft ring in turn (an SVG circle would stretch with the box) */}
+      {right.map((y, i) => (
+        <span
+          key={y}
+          style={{ top: `${y}%`, animationDelay: `${i * 0.7}s` }}
+          className="ef-cap absolute right-0 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-[#527DFF]"
+        />
       ))}
     </div>
   );
@@ -95,7 +119,7 @@ function Connector({ left, right }: { left: number[]; right: number[] }) {
 function FlowDown() {
   return (
     <svg aria-hidden viewBox="0 0 2 28" className="h-7 w-0.5 overflow-visible">
-      <line x1="1" y1="0" x2="1" y2="28" stroke="#527DFF" strokeWidth={1.5} className="dash-flow" />
+      <line x1="1" y1="0" x2="1" y2="28" stroke="#527DFF" strokeWidth={2} className="ef-flow" style={{ animationDuration: `${FLOW_BASE}s` }} />
     </svg>
   );
 }
@@ -103,11 +127,11 @@ function FlowDown() {
 function EngineLogo({ size }: { size: "sm" | "lg" }) {
   const lg = size === "lg";
   return (
-    <span className={`relative flex shrink-0 items-center justify-center ${lg ? "h-24 w-24" : "h-12 w-12"}`}>
+    <span className={`relative flex shrink-0 items-center justify-center ${lg ? "h-16 w-16" : "h-12 w-12"}`}>
       {/* slow orbit around the core */}
-      <span aria-hidden className="absolute -inset-[7px] animate-[spin_14s_linear_infinite] rounded-full border border-dashed border-white/45" />
-      <span className="flex h-full w-full items-center justify-center rounded-full bg-white shadow-[0_8px_24px_-8px_rgba(11,21,38,0.45)]">
-        <Image src="/logo.png" alt="" width={69} height={96} className={lg ? "h-[60px] w-auto" : "h-[30px] w-auto"} />
+      <span aria-hidden className="absolute -inset-[7px] animate-[spin_24s_linear_infinite] rounded-full border border-dashed border-[#7C9BFF]/50" />
+      <span className="flex h-full w-full items-center justify-center rounded-full bg-white shadow-[0_0_0_6px_rgb(82_125_255/0.16),0_10px_30px_-6px_rgb(82_125_255/0.7)]">
+        <Image src="/logo.png" alt="" width={69} height={96} className={lg ? "h-10 w-auto" : "h-[30px] w-auto"} />
       </span>
     </span>
   );
@@ -118,7 +142,7 @@ export default function EngineFlow({ className = "" }: { className?: string }) {
     <div className={`w-full text-left ${className}`}>
       {/* ---------- desktop: one row, lines flowing left to right ---------- */}
       {/* equal side columns keep the engine on the page's centre line (under the hero CTA) */}
-      <div className="mx-auto hidden max-w-[1240px] lg:block">
+      <div className="mx-auto hidden max-w-[1240px] pb-14 lg:block">
         <div className="mb-3.5 grid grid-cols-[minmax(0,1fr)_220px_minmax(0,1fr)] xl:grid-cols-[minmax(0,1fr)_250px_minmax(0,1fr)]">
           <p className={`${LABEL} lg:text-[11.5px]`}>Your knowledge</p>
           <p className={`${LABEL} text-center lg:text-[11.5px]`}>One AI engine</p>
@@ -128,8 +152,8 @@ export default function EngineFlow({ className = "" }: { className?: string }) {
           <div className="flex min-w-0">
             <ul className="flex w-[300px] shrink-0 flex-col justify-between xl:w-[310px]">
               {SOURCES.map((s) => (
-                <li key={s.title} className={`flex h-[76px] items-center gap-3.5 rounded-2xl px-4 ${TILE}`}>
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#527DFF]/12 text-[#6E8BFF] light:text-[#3E63F2]">
+                <li key={s.title} className={`flex h-[76px] items-center gap-3.5 rounded-2xl px-4 ${TILE} ${TILE_HOVER}`}>
+                  <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#527DFF]/12 text-[#6E8BFF] light:text-[#3E63F2] ${WELL_HOVER}`}>
                     <s.icon className="h-5 w-5" />
                   </span>
                   <span className="min-w-0">
@@ -142,25 +166,30 @@ export default function EngineFlow({ className = "" }: { className?: string }) {
             <Connector left={SOURCE_YS} right={[50]} />
           </div>
 
-          <div className="relative flex flex-col items-center justify-center rounded-[24px] bg-[#527DFF] px-4 text-center text-white shadow-[0_30px_70px_-24px_rgba(82,125,255,0.85)] light:shadow-none">
-            <EngineLogo size="lg" />
-            <p className="mt-5 text-[18px] font-bold leading-tight">One knowledge base</p>
-            <p className="mt-1 text-[12.5px] text-white/80">Trained once, always in sync</p>
-            <ul className="mt-3.5 flex flex-wrap justify-center gap-1.5">
-              {ENGINE_CAPABILITIES.map((c) => (
-                <li key={c} className="rounded-full bg-white/95 px-2.5 py-0.5 text-[11.5px] font-semibold text-[#3E63F2]">
-                  {c}
-                </li>
-              ))}
-            </ul>
+          {/* the engine: a turning brain-globe (drag to spin), the logo at its centre,
+              the modules pinned to its surface and its caption underneath */}
+          <div className="relative">
+            <div className="absolute left-1/2 top-1/2 h-[264px] w-[264px] -translate-x-1/2 -translate-y-1/2">
+              <EngineGlobe size={264} labels={ENGINE_CAPABILITIES.filter((c) => c !== "Leads")} className="absolute inset-0" />
+              {/* the logo sits dead centre; a small page-coloured halo quiets the mesh behind it */}
+              <div className="pointer-events-none absolute inset-0 z-1 flex items-center justify-center">
+                <span aria-hidden className="absolute h-32 w-32 rounded-full bg-[radial-gradient(closest-side,var(--color-page)_55%,transparent)] opacity-90" />
+                <EngineLogo size="lg" />
+              </div>
+              {/* caption under the globe */}
+              <p className="absolute left-1/2 top-full mt-3 -translate-x-1/2 whitespace-nowrap text-center">
+                <span className="block text-[16px] font-bold leading-tight tracking-[-0.01em] text-ink">One knowledge base</span>
+                <span className="mt-1 block text-[11.5px] text-subtle">Trained once, always in sync</span>
+              </p>
+            </div>
           </div>
 
           <div className="flex min-w-0">
             <Connector left={[50]} right={CHANNEL_YS} />
             <ul className="grid w-[352px] shrink-0 grid-cols-2 grid-rows-4 gap-2 xl:w-[400px]">
               {DEPLOY_CHANNELS.map((c) => (
-                <li key={c.name} className={`flex min-w-0 items-center gap-3 rounded-2xl px-3.5 ${TILE}`}>
-                  <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#527DFF]/12 text-[#6E8BFF] light:text-[#3E63F2]`}>
+                <li key={c.name} className={`flex min-w-0 items-center gap-3 rounded-2xl px-3.5 ${TILE} ${TILE_HOVER}`}>
+                  <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#527DFF]/12 text-[#6E8BFF] light:text-[#3E63F2] ${WELL_HOVER}`}>
                     <ChannelGlyph icon={c.icon} className="h-5 w-5" />
                   </span>
                   <span className="min-w-0">
@@ -187,13 +216,18 @@ export default function EngineFlow({ className = "" }: { className?: string }) {
           ))}
         </ul>
         <FlowDown />
-        <div className="flex w-full items-center gap-4 rounded-2xl bg-[#527DFF] px-5 py-4 text-white shadow-[0_24px_50px_-24px_rgba(82,125,255,0.85)] light:shadow-none">
-          <EngineLogo size="sm" />
-          <span className="min-w-0 pl-1">
-            <span className="block text-[15px] font-bold">One knowledge base</span>
-            <span className="block text-[12px] text-white/80">{ENGINE_CAPABILITIES.join(" · ")}</span>
-          </span>
+        {/* the same brain-globe as desktop, sized to the screen (264px max) */}
+        <div className="relative my-2 aspect-square w-[min(264px,78vw)]">
+          <EngineGlobe labels={ENGINE_CAPABILITIES.filter((c) => c !== "Leads")} className="absolute inset-0" />
+          <div className="pointer-events-none absolute inset-0 z-1 flex items-center justify-center">
+            <span aria-hidden className="absolute h-28 w-28 rounded-full bg-[radial-gradient(closest-side,var(--color-page)_55%,transparent)] opacity-90" />
+            <EngineLogo size="sm" />
+          </div>
         </div>
+        <p className="text-center">
+          <span className="block text-[15px] font-bold leading-tight text-ink">One knowledge base</span>
+          <span className="mt-1 block text-[12px] text-subtle">Trained once, always in sync</span>
+        </p>
         <FlowDown />
         <ul className="grid w-full grid-cols-4 gap-2">
           {DEPLOY_CHANNELS.map((c) => (

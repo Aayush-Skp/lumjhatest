@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
-import type { SVGProps } from "react";
-import FeatureMarquee from "@/components/site/FeatureMarquee";
+// import FeatureMarquee from "@/components/site/FeatureMarquee"; // band parked, see below
 import HeroOrbit from "@/components/site/HeroOrbit";
-import SectionHeader, { SECTION_HEAD_GAP } from "@/components/site/SectionHeader";
+import IntegrationBento, { type Integration } from "@/components/site/IntegrationBento";
+// SectionHeader is only used by the parked "Your Customers Are Everywhere" section below
+// import SectionHeader from "@/components/site/SectionHeader";
+import { Accent } from "@/components/site/SectionHeader";
 import { BenefitGrid, Faq, ProductHero, ProductPage, StepCards } from "@/components/site/ProductSections";
 import {
   DiscordIcon,
   GoogleCalendarIcon,
-  GoogleDriveIcon,
+  DropboxIcon,
+  GoogleDriveColorIcon,
   SlackIcon,
   InstagramIcon,
   MessengerIcon,
@@ -68,19 +71,20 @@ const BENEFITS = [
   },
 ];
 
-const MonoSlackIcon = (props: SVGProps<SVGSVGElement>) => <SlackIcon mono {...props} />;
-
-const INTEGRATIONS = [
-  { title: "Website", icon: <WebsiteIcon />, body: "Bring AI-powered assistance directly to your website." },
-  { title: "WhatsApp", icon: <WhatsAppIcon />, body: "Support customer conversations through WhatsApp, where available." },
-  { title: "Instagram", icon: <InstagramIcon />, body: "Connect customer interactions through supported Instagram integrations." },
-  { title: "Messenger", icon: <MessengerIcon />, body: "Help customers connect through supported messaging channels." },
-  { title: "Telegram", icon: <TelegramIcon />, body: "Explore AI-powered messaging experiences through supported Telegram integrations." },
-  { title: "Google Calendar", icon: <GoogleCalendarIcon />, body: "Support appointment booking when configured." },
-  { title: "Google Drive", icon: <GoogleDriveIcon />, body: "Train your AI agent on the documents you already keep in Google Drive." },
-  { title: "Shopify", icon: <ShopifyIcon />, body: "Help shoppers discover products when supported features are enabled." },
-  { title: "Discord", icon: <DiscordIcon />, body: "Answer questions for your community right inside your Discord server." },
-  { title: "Slack", icon: <MonoSlackIcon />, body: "Bring your AI agent into Slack to help your team find answers fast." },
+/* Desktop rows on a 6-column grid: wide|narrow · three equal · two halves · narrow|wide,
+   then Discord + Slack as halves behind "See all". Tablets: WhatsApp spans, the rest pair up. */
+const INTEGRATIONS: Integration[] = [
+  { title: "WhatsApp", brand: "#25D366", icon: <WhatsAppIcon />, wide: true, span: "md:col-span-2 lg:col-span-4", body: "Support customer conversations through WhatsApp, where available." },
+  { title: "Instagram", brand: "#E1306C", icon: <InstagramIcon stroke="url(#ig-brand)" color="#D62976" />, body: "Connect customer interactions through supported Instagram integrations." },
+  { title: "Website", brand: "#527DFF", icon: <WebsiteIcon />, body: "Bring AI-powered assistance directly to your website." },
+  { title: "Messenger", brand: "#0A7CFF", icon: <MessengerIcon fill="url(#msg-brand)" />, body: "Help customers connect through supported messaging channels." },
+  { title: "Telegram", brand: "#26A5E4", icon: <TelegramIcon />, body: "Explore AI-powered messaging experiences through supported Telegram integrations." },
+  { title: "Google Drive", brand: "#00AC47", icon: <GoogleDriveColorIcon />, span: "lg:col-span-3", body: "Train your AI agent on the documents you already keep in Google Drive." },
+  { title: "Dropbox", brand: "#0061FF", icon: <DropboxIcon />, span: "lg:col-span-3", body: "Train your AI agent on the documents you already keep in Dropbox." },
+  { title: "Shopify", brand: "#95BF47", icon: <ShopifyIcon />, body: "Help shoppers discover products when supported features are enabled." },
+  { title: "Google Calendar", brand: "#4285F4", icon: <GoogleCalendarIcon />, wide: true, span: "lg:col-span-4", body: "Support appointment booking when configured." },
+  { title: "Discord", brand: "#5865F2", icon: <DiscordIcon />, span: "lg:col-span-3", body: "Answer questions for your community right inside your Discord server." },
+  { title: "Slack", brand: "#E01E5A", icon: <SlackIcon />, span: "lg:col-span-3", body: "Bring your AI agent into Slack to help your team find answers fast." },
 ];
 
 const FAQ = [
@@ -118,20 +122,24 @@ export default function IntegrationsPage() {
         accent="Customer Channels."
         body="Bring your customer conversations and business knowledge closer together. Explore supported integrations to make it easier for customers to connect with your business."
       />
-      {/* title on top, then the channel orbit + the blue feature band straight under it */}
-      <section className="mx-auto w-full max-w-[1440px] px-4 pb-14 pt-12 [--orbit-bg:var(--site-page-deep)] sm:px-6 md:pt-[72px] lg:pb-5">
+      {/* hero → CTAs → the channel orbit straight under them */}
+      <section className="mx-auto w-full max-w-[1440px] px-4 pt-4 sm:px-6 md:pt-8">
+        <HeroOrbit />
+      </section>
+      {/* "Your Customers Are Everywhere" section, parked for now
+      <section className="mx-auto w-full max-w-[1440px] px-4 pb-14 pt-12 sm:px-6 md:pt-[72px] lg:pb-14">
         <SectionHeader
           wide
-          title="Your customers are everywhere. Stay connected."
+          title={<>Your Customers Are Everywhere. <Accent>Stay Connected</Accent></>}
           subtitle="Customers reach out through different platforms, and managing every conversation separately can be difficult. Lumjha AI helps bring AI-powered customer experiences to your supported channels."
         />
-        <HeroOrbit className={SECTION_HEAD_GAP} />
       </section>
-      <FeatureMarquee />
-      <StepCards title="HOW IT WORKS" subtitle="From choosing a channel to helping customers." steps={STEPS} />
-      <BenefitGrid title="Integration benefits" subtitle="One platform. More ways to connect." items={BENEFITS} />
-
-      <BenefitGrid id="integrations" title="Integrations" subtitle="One platform. More ways to connect." items={INTEGRATIONS} />
+      */}
+      {/* scrolling feature band, parked for now */}
+      {/* <FeatureMarquee /> */}
+      <IntegrationBento id="integrations" title={<>We <Accent>Support</Accent></>} subtitle="One platform. More ways to connect." items={INTEGRATIONS} visible={9} />
+      <StepCards title={<>How It <Accent>Works</Accent></>} subtitle="From choosing a channel to helping customers." steps={STEPS} />
+      <BenefitGrid title={<>Integration <Accent>Benefits</Accent></>} subtitle="One platform. More ways to connect." items={BENEFITS} bento />
 
       <Faq product="Lumjha AI Integrations" items={FAQ} />
     </ProductPage>

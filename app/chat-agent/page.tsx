@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { Accent } from "@/components/site/SectionHeader";
 import { BenefitGrid, Faq, IntroSplit, ProductHero, ProductPage, StepCards } from "@/components/site/ProductSections";
 
 export const metadata: Metadata = {
@@ -101,7 +102,7 @@ export default function ChatAgentPage() {
       <IntroSplit
         heading={
           <>
-            Your business knowledge, all <span className="text-[#5675FF]">connected.</span>
+            Your Business Knowledge, All <Accent>Connected</Accent>
           </>
         }
         body="Bring your website content, documents, help center, and business information together in one place. Lumjha AI uses your knowledge to deliver relevant answers and help customers find the information they need."
@@ -116,11 +117,12 @@ export default function ChatAgentPage() {
           />
         }
       />
-      <StepCards title="HOW IT WORKS" subtitle="From your knowledge to helpful conversations." steps={STEPS} />
+      <StepCards title={<>How It <Accent>Works</Accent></>} subtitle="From your knowledge to helpful conversations." steps={STEPS} />
       <BenefitGrid
-        title="Benefits - Lumjha AI Chat Agent"
+        title={<>Benefits - <Accent>Lumjha AI Chat Agent</Accent></>}
         subtitle="Lumjha AI answers instantly across your channels, in your voice, using your own content, so more customers can take the next step."
         items={BENEFITS}
+        bento
       />
       <Faq product="Lumjha AI Chat Agent" items={FAQ} />
     </ProductPage>

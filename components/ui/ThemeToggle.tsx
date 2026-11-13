@@ -28,18 +28,45 @@ function getServerSnapshot(): Theme {
   return "dark";
 }
 
-function setTheme(next: Theme) {
-  const root = document.documentElement;
-  // brief colour cross-fade (see .theme-transition in globals.css)
-  root.classList.add("theme-transition");
-  root.dataset.theme = next;
+function applyTheme(next: Theme) {
+  document.documentElement.dataset.theme = next;
   try {
     localStorage.setItem("lumjha-theme", next);
   } catch {
     // localStorage unavailable (private mode) — theme still applies for the session.
   }
   listeners.forEach((listener) => listener());
-  window.setTimeout(() => root.classList.remove("theme-transition"), 300);
+}
+
+/* The page swaps as two snapshots (View Transitions): the new theme opens as
+   a circle growing out of the toggle until it covers the viewport. One
+   compositor animation, instead of transitioning colours on every element
+   (which repainted the blurs each frame). Reduced motion gets a soft
+   cross-fade (.theme-fade in globals.css); browsers without View
+   Transitions switch instantly. */
+function setTheme(next: Theme, from: HTMLElement) {
+  const root = document.documentElement;
+  if (!document.startViewTransition) {
+    applyTheme(next);
+    return;
+  }
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const mode = reduce ? "theme-fade" : "theme-reveal";
+  root.classList.add(mode);
+  const transition = document.startViewTransition(() => applyTheme(next));
+  transition.finished.finally(() => root.classList.remove(mode));
+  if (reduce) return;
+
+  const box = from.getBoundingClientRect();
+  const x = box.left + box.width / 2;
+  const y = box.top + box.height / 2;
+  const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+  transition.ready.then(() => {
+    root.animate(
+      { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+      { duration: 700, easing: "cubic-bezier(0.65, 0, 0.35, 1)", pseudoElement: "::view-transition-new(root)" },
+    );
+  });
 }
 
 const ICON = "absolute h-[18px] w-[18px] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none";
@@ -52,7 +79,7 @@ export default function ThemeToggle({ className = "" }: { className?: string }) 
   return (
     <button
       type="button"
-      onClick={() => setTheme(isDark ? "light" : "dark")}
+      onClick={(e) => setTheme(isDark ? "light" : "dark", e.currentTarget)}
       aria-label={label}
       title={label}
       className={`relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full border border-line text-ink transition-colors hover:border-[#5675FF]/60 hover:text-[#5675FF] ${className}`}
