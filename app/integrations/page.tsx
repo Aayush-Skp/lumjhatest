@@ -9,6 +9,7 @@ import { BenefitGrid, Faq, ProductHero, ProductPage, StepCards } from "@/compone
 import {
   DiscordIcon,
   GoogleCalendarIcon,
+  DropboxIcon,
   GoogleDriveColorIcon,
   SlackIcon,
   InstagramIcon,
@@ -70,19 +71,20 @@ const BENEFITS = [
   },
 ];
 
-/* lg rhythm (3 cols): wide|narrow · three narrow · narrow|wide · three narrow.
-   md (2 cols): WhatsApp and Slack span the row so no tile is left alone. */
+/* Desktop rows on a 6-column grid: wide|narrow · three equal · two halves · narrow|wide,
+   then Discord + Slack as halves behind "See all". Tablets: WhatsApp spans, the rest pair up. */
 const INTEGRATIONS: Integration[] = [
-  { title: "WhatsApp", brand: "#25D366", icon: <WhatsAppIcon />, wide: true, span: "md:col-span-2", body: "Support customer conversations through WhatsApp, where available." },
+  { title: "WhatsApp", brand: "#25D366", icon: <WhatsAppIcon />, wide: true, span: "md:col-span-2 lg:col-span-4", body: "Support customer conversations through WhatsApp, where available." },
   { title: "Instagram", brand: "#E1306C", icon: <InstagramIcon stroke="url(#ig-brand)" color="#D62976" />, body: "Connect customer interactions through supported Instagram integrations." },
   { title: "Website", brand: "#527DFF", icon: <WebsiteIcon />, body: "Bring AI-powered assistance directly to your website." },
   { title: "Messenger", brand: "#0A7CFF", icon: <MessengerIcon fill="url(#msg-brand)" />, body: "Help customers connect through supported messaging channels." },
   { title: "Telegram", brand: "#26A5E4", icon: <TelegramIcon />, body: "Explore AI-powered messaging experiences through supported Telegram integrations." },
-  { title: "Google Drive", brand: "#00AC47", icon: <GoogleDriveColorIcon />, body: "Train your AI agent on the documents you already keep in Google Drive." },
-  { title: "Google Calendar", brand: "#4285F4", icon: <GoogleCalendarIcon />, wide: true, span: "lg:col-span-2", body: "Support appointment booking when configured." },
+  { title: "Google Drive", brand: "#00AC47", icon: <GoogleDriveColorIcon />, span: "lg:col-span-3", body: "Train your AI agent on the documents you already keep in Google Drive." },
+  { title: "Dropbox", brand: "#0061FF", icon: <DropboxIcon />, span: "lg:col-span-3", body: "Train your AI agent on the documents you already keep in Dropbox." },
   { title: "Shopify", brand: "#95BF47", icon: <ShopifyIcon />, body: "Help shoppers discover products when supported features are enabled." },
-  { title: "Discord", brand: "#5865F2", icon: <DiscordIcon />, body: "Answer questions for your community right inside your Discord server." },
-  { title: "Slack", brand: "#E01E5A", icon: <SlackIcon />, span: "md:col-span-2 lg:col-span-1", body: "Bring your AI agent into Slack to help your team find answers fast." },
+  { title: "Google Calendar", brand: "#4285F4", icon: <GoogleCalendarIcon />, wide: true, span: "lg:col-span-4", body: "Support appointment booking when configured." },
+  { title: "Discord", brand: "#5865F2", icon: <DiscordIcon />, span: "lg:col-span-3", body: "Answer questions for your community right inside your Discord server." },
+  { title: "Slack", brand: "#E01E5A", icon: <SlackIcon />, span: "lg:col-span-3", body: "Bring your AI agent into Slack to help your team find answers fast." },
 ];
 
 const FAQ = [
@@ -135,7 +137,7 @@ export default function IntegrationsPage() {
       */}
       {/* scrolling feature band, parked for now */}
       {/* <FeatureMarquee /> */}
-      <IntegrationBento id="integrations" title={<>We <Accent>Support</Accent></>} subtitle="One platform. More ways to connect." items={INTEGRATIONS} />
+      <IntegrationBento id="integrations" title={<>We <Accent>Support</Accent></>} subtitle="One platform. More ways to connect." items={INTEGRATIONS} visible={9} />
       <StepCards title={<>How It <Accent>Works</Accent></>} subtitle="From choosing a channel to helping customers." steps={STEPS} />
       <BenefitGrid title={<>Integration <Accent>Benefits</Accent></>} subtitle="One platform. More ways to connect." items={BENEFITS} bento />
 

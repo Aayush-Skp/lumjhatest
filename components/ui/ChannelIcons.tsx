@@ -72,6 +72,15 @@ export function GoogleDriveIcon(props: IconProps) {
   );
 }
 
+/** Dropbox's open-box mark (fills with currentColor). */
+export function DropboxIcon(props: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden {...props}>
+      <path d="M6 1.807 0 5.629l6 3.822 6.001-3.822L6 1.807zM18 1.807l-6 3.822 6 3.822 6-3.822-6-3.822zM0 13.274l6 3.822 6.001-3.822L6 9.452l-6 3.822zM18 9.452l-6 3.822 6 3.822 6-3.822-6-3.822zM6 18.371l6.001 3.822 6-3.822-6-3.822L6 18.371z" />
+    </svg>
+  );
+}
+
 /** Google Drive's full-colour mark. */
 export function GoogleDriveColorIcon(props: IconProps) {
   return (
