@@ -122,8 +122,10 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-page/90 backdrop-blur-md">
-      {/* from xl the side padding lines up with the 1160px content column (≈140px at 1440px, 60px at 1280px) */}
-      <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-4 sm:px-6 lg:h-[76px] xl:px-[max(1.5rem,calc((100%-1160px)/2))]">
+      {/* from xl the row is the 1160px content column plus its 24px gutters, so the
+          logo and CTA line up with the page content at every width (140px in at 1440px,
+          60px at 1280px, still aligned on wider screens) */}
+      <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-4 sm:px-6 lg:h-[76px] xl:max-w-[calc(1160px+3rem)]">
         <Link href="/" className="flex items-center gap-2" aria-label="Lumjha AI home">
           <Image
             src="/logo.png"

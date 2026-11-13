@@ -516,11 +516,7 @@ const LEADS: {
   { name: "Sarah Chen", email: "sarah@venture.co", interest: "Platinum plan", source: "Website chat", session: "sess_a1b2c3d4e5f6g", status: "new" },
 ];
 
-/* Solid, light pills so each status reads clearly on the blue card. */
-const LEAD_STATUS: Record<LeadStatus, { label: string; pill: string; dot: string }> = {
-  qualified: { label: "Qualified", pill: "bg-[#DCFCE7] text-[#14532D]", dot: "bg-[#16A34A]" },
-  new: { label: "New", pill: "bg-[#FEF3C7] text-[#78350F]", dot: "bg-[#F59E0B]" },
-};
+const LEAD_STATUS: Record<LeadStatus, string> = { qualified: "Qualified", new: "New" };
 
 const LEAD_SOURCE_ICON = { WhatsApp: WhatsAppIcon, "Website chat": WebsiteIcon } as const;
 
@@ -559,9 +555,9 @@ function LeadCard({ lead }: { lead: (typeof LEADS)[number] }) {
             <p className="truncate text-[16px] font-bold leading-tight">{lead.name}</p>
             <p className="truncate text-[13px] text-white/80">{lead.email}</p>
           </div>
-          <span className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-[11.5px] font-bold ${status.pill}`}>
-            <span className={`h-1.5 w-1.5 rounded-full ${status.dot}`} />
-            {status.label}
+          {/* white outline pill, as in the original Lead Profile card */}
+          <span className="shrink-0 rounded-full border border-white/80 px-2.5 py-0.5 text-[11px] font-semibold">
+            {status}
           </span>
         </header>
         <dl className="mt-5 divide-y divide-white/20 border-t border-white/20 text-[14px]">
