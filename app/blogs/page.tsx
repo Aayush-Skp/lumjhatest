@@ -5,7 +5,7 @@ import Footer from "@/components/site/Footer";
 import CtaPanel from "@/components/site/CtaPanel";
 import BlogFilter from "@/components/site/BlogFilter";
 import { BlogCover, CategoryPill, PostMeta } from "@/components/site/BlogCards";
-import { SECTION_HEAD_GAP, SECTION_Y } from "@/components/site/SectionHeader";
+import { HEADING, HERO_BODY, HERO_TITLE, SECTION_HEAD_GAP, SECTION_Y } from "@/components/site/SectionHeader";
 import { listPosts } from "@/lib/admin/content";
 
 export const metadata: Metadata = {
@@ -30,10 +30,10 @@ export default async function BlogsPage() {
         {/* HERO */}
         <section className="relative mx-auto max-w-[1440px] px-4 pb-10 pt-14 text-center sm:px-6 md:pb-14 md:pt-20">
           <p className="font-mono text-[12px] font-medium uppercase tracking-[0.08em] text-highlight">The Lumjha AI Blog</p>
-          <h1 className="mx-auto mt-4 max-w-4xl font-heading text-[clamp(2.25rem,4vw+1rem,3.75rem)] font-semibold leading-[1.12] tracking-tight text-balance text-headline">
+          <h1 className={`mx-auto mt-4 max-w-4xl ${HERO_TITLE}`}>
             RAG, AI agents and <span className="text-[#5675FF]">what’s new</span>
           </h1>
-          <p className="mx-auto mt-5 max-w-2xl text-[15px] leading-relaxed text-balance text-muted sm:text-lg md:mt-6">
+          <p className={`mx-auto mt-6 max-w-[1120px] text-ink/85 md:mt-8 ${HERO_BODY}`}>
             How retrieval-augmented generation really works, the AI news that matters for customer
             conversations, and what we’re shipping at Lumjha AI.
           </p>
@@ -77,8 +77,8 @@ export default async function BlogsPage() {
         {/* ALL POSTS */}
         <section aria-labelledby="latest-title" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
           <div className="mx-auto max-w-[1160px]">
-            <h2 id="latest-title" className="text-center font-heading text-[28px] font-bold leading-tight tracking-tight text-ink sm:text-4xl">
-              Latest articles
+            <h2 id="latest-title" className={`text-center ${HEADING}`}>
+              Latest <span className="text-highlight">Articles</span>
             </h2>
             <BlogFilter posts={rest} className={SECTION_HEAD_GAP} />
           </div>

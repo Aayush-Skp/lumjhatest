@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { Accent } from "@/components/site/SectionHeader";
 import { BenefitGrid, Faq, IntroSplit, ProductHero, ProductPage, StepCards } from "@/components/site/ProductSections";
 
 export const metadata: Metadata = {
@@ -91,7 +92,7 @@ export default function SiteSearchPage() {
       <IntroSplit
         heading={
           <>
-            Your website knowledge, easily <span className="text-[#5675FF]">discovered.</span>
+            Your Website Knowledge, Easily <Accent>Discovered</Accent>
           </>
         }
         body="Connect your website content and help visitors find relevant information with less effort. Lumjha AI makes your existing content easier to search and navigate on your website."
@@ -106,11 +107,12 @@ export default function SiteSearchPage() {
           />
         }
       />
-      <StepCards title="HOW IT WORKS" subtitle="From your knowledge to helpful conversations." steps={STEPS} />
+      <StepCards title={<>How It <Accent>Works</Accent></>} subtitle="From your knowledge to helpful conversations." steps={STEPS} />
       <BenefitGrid
-        title="Benefits - Lumjha AI Search Site"
+        title={<>Benefits - <Accent>Lumjha AI Search Site</Accent></>}
         subtitle="Lumjha AI answers instantly across your channels, in your voice, using your own content, so more customers can take the next step."
         items={BENEFITS}
+        bento
       />
       <Faq product="Lumjha AI Site Search" items={FAQ} />
     </ProductPage>

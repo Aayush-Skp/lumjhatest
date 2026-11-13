@@ -10,9 +10,10 @@ import ChannelReels, { CHANNELS } from "@/components/site/ChannelReels";
 import HeroBackdrop from "@/components/site/HeroBackdrop";
 import EngineFlow from "@/components/site/EngineFlow";
 import Commitments from "@/components/site/Commitments";
-import SectionHeader, { SECTION_HEAD_GAP, SECTION_Y } from "@/components/site/SectionHeader";
+import SectionHeader, { Accent, HERO_BODY, HERO_TITLE, SECTION_HEAD_GAP, SECTION_Y } from "@/components/site/SectionHeader";
 import BlueButton from "@/components/ui/BlueButton";
 import Tilt from "@/components/ui/Tilt";
+import { WebsiteIcon, WhatsAppIcon } from "@/components/ui/ChannelIcons";
 
 /* ============================================================
    Lumjha AI — main landing page (Figma design, mobile-first)
@@ -501,39 +502,78 @@ const LEAD_ICONS = {
   hash: "M5 9h14M5 15h14M10 4 8 20M16 4l-2 16",
 } as const;
 
-const LEADS: { name: string; email: string; interest: string; source: string; session: string }[] = [
-  { name: "Jordan Lee", email: "jordan@acme.co", interest: "Gold plan", source: "WhatsApp", session: "sess_8f2a47b1c3e5a" },
-  { name: "Sarah Chen", email: "sarah@venture.co", interest: "Platinum plan", source: "Website chat", session: "sess_a1b2c3d4e5f6g" },
+type LeadStatus = "qualified" | "new";
+
+const LEADS: {
+  name: string;
+  email: string;
+  interest: string;
+  source: "WhatsApp" | "Website chat";
+  session: string;
+  status: LeadStatus;
+}[] = [
+  { name: "Jordan Lee", email: "jordan@acme.co", interest: "Gold plan", source: "WhatsApp", session: "sess_8f2a47b1c3e5a", status: "qualified" },
+  { name: "Sarah Chen", email: "sarah@venture.co", interest: "Platinum plan", source: "Website chat", session: "sess_a1b2c3d4e5f6g", status: "new" },
 ];
 
+/* Solid, light pills so each status reads clearly on the blue card. */
+const LEAD_STATUS: Record<LeadStatus, { label: string; pill: string; dot: string }> = {
+  qualified: { label: "Qualified", pill: "bg-[#DCFCE7] text-[#14532D]", dot: "bg-[#16A34A]" },
+  new: { label: "New", pill: "bg-[#FEF3C7] text-[#78350F]", dot: "bg-[#F59E0B]" },
+};
+
+const LEAD_SOURCE_ICON = { WhatsApp: WhatsAppIcon, "Website chat": WebsiteIcon } as const;
+
+function LeadIcon({ name }: { name: keyof typeof LEAD_ICONS }) {
+  return (
+    <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0 text-white/70" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d={LEAD_ICONS[name]} />
+    </svg>
+  );
+}
+
 function LeadCard({ lead }: { lead: (typeof LEADS)[number] }) {
-  const rows: [keyof typeof LEAD_ICONS, string, string][] = [
-    ["user", "Name", lead.name],
-    ["mail", "Email", lead.email],
+  const status = LEAD_STATUS[lead.status];
+  const Source = LEAD_SOURCE_ICON[lead.source];
+  const initials = lead.name.split(" ").map((w) => w[0]).join("");
+  const rows: [keyof typeof LEAD_ICONS, string, ReactNode][] = [
     ["tag", "Interest", lead.interest],
-    ["source", "Source", lead.source],
-    ["hash", "Session ID", lead.session],
+    [
+      "source",
+      "Source",
+      <span key="s" className="inline-flex items-center gap-1.5">
+        <Source className="h-4 w-4" />
+        {lead.source}
+      </span>,
+    ],
+    ["hash", "Session", <span key="h" className="font-mono text-[12.5px]">{lead.session}</span>],
   ];
   return (
-    <Tilt className="w-full max-w-sm rounded-2xl" max={10}>
-    <div className="rounded-2xl bg-[#506DFF] p-5 text-white shadow-[0_24px_60px_-20px_rgba(82,125,255,0.6)] sm:p-6">
-      <div className="flex items-center justify-between border-b border-white/25 pb-3">
-        <p className="text-[15px] font-bold">Lead Profile</p>
-        <span className="rounded-full border border-white/80 px-2.5 py-0.5 text-[11px] font-semibold">Qualified</span>
-      </div>
-      <ul className="mt-4 space-y-3.5 text-[14px]">
-        {rows.map(([icon, label, value]) => (
-          <li key={label} className="flex items-center gap-3">
-            <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0 text-white/90" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-              <path d={LEAD_ICONS[icon]} />
-            </svg>
-            <span className="truncate">
-              <span className="text-white/75">{label}:</span> {value}
-            </span>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Tilt className="w-full max-w-[400px] rounded-2xl" max={8}>
+      <article className="rounded-2xl bg-[#506DFF] p-5 text-white shadow-[0_24px_60px_-20px_rgba(82,125,255,0.6)] sm:p-6 light:shadow-[0_20px_44px_-22px_rgba(15,23,42,0.4)]">
+        <header className="flex items-center gap-3">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-[14px] font-bold text-[#3E63F2]">
+            {initials}
+          </span>
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-[16px] font-bold leading-tight">{lead.name}</p>
+            <p className="truncate text-[13px] text-white/80">{lead.email}</p>
+          </div>
+          <span className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-[11.5px] font-bold ${status.pill}`}>
+            <span className={`h-1.5 w-1.5 rounded-full ${status.dot}`} />
+            {status.label}
+          </span>
+        </header>
+        <dl className="mt-5 divide-y divide-white/20 border-t border-white/20 text-[14px]">
+          {rows.map(([icon, label, value]) => (
+            <div key={label} className="flex items-center gap-3 py-3 last:pb-0">
+              <LeadIcon name={icon} />
+              <dt className="w-20 shrink-0 text-white/75">{label}</dt>
+              <dd className="min-w-0 truncate font-semibold">{value}</dd>
+            </div>
+          ))}
+        </dl>
+      </article>
     </Tilt>
   );
 }
@@ -555,20 +595,20 @@ export default function HomePage() {
           <div aria-hidden className="pointer-events-none absolute inset-y-0 left-1/2 -z-10 w-screen -translate-x-1/2 opacity-20 [mask-image:linear-gradient(to_bottom,#000_88%,transparent)] md:[mask-image:linear-gradient(to_bottom,#000_70%,transparent)]">
             <HeroBackdrop />
           </div>
-          <h1 className="max-w-5xl text-[clamp(2.25rem,4.5vw+1rem,4.5rem)] font-extrabold leading-[1.05] tracking-[-0.03em]">
+          <h1 className={`max-w-5xl ${HERO_TITLE}`}>
             Never Miss a Customer.
             <br />
             <span className="text-highlight">Grow While You Sleep.</span>
           </h1>
           {/* wide enough to sit on two lines from md up */}
-          <p className="mx-auto mt-5 max-w-[56rem] text-base leading-relaxed text-balance text-muted sm:text-lg md:mt-6 md:text-xl">
+          <p className={`mx-auto mt-6 max-w-[1120px] text-ink/85 md:mt-8 ${HERO_BODY}`}>
             Lumjha AI answers your customers&apos; questions, captures sales leads, and books
             appointments around the clock, on platform(s) they already use, so you can
             focus on running your business.
           </p>
-          <div className="mt-7 flex justify-center md:mt-8">
-            {/* widens a touch on hover (side padding, so the height and text stay put) and eases back */}
-            <div className="inline-flex [&>a]:transition-all [&>a]:duration-300 [&>a]:ease-in-out hover:[&>a]:px-9 focus-within:[&>a]:px-9 md:hover:[&>a]:px-10 md:focus-within:[&>a]:px-10">
+          <div className="mt-9 flex justify-center md:mt-10">
+            {/* hover: tint + glow + the arrow nudges right (see .hero-cta in globals.css) */}
+            <div className="hero-cta inline-flex">
               <BlueButton large outline>
                 Get Started Free
               </BlueButton>
@@ -581,7 +621,7 @@ export default function HomePage() {
         {/* ALL-IN-ONE PLATFORM */}
         <section id="platform" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
           <SectionHeader
-            title="All-in-One Knowledge Platform"
+            title={<>All-in-One <Accent>Knowledge Platform</Accent></>}
             subtitle="One knowledge base powering your chatbot, site search, and policy answers."
           />
           <PlatformTabs />
@@ -590,7 +630,7 @@ export default function HomePage() {
         {/* CHANNELS */}
         <section id="channels" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
           <SectionHeader
-            title="Be Wherever Your Customers Are"
+            title={<>Be Wherever <Accent>Your Customers Are</Accent></>}
             subtitle="Connect your central knowledge base directly to every major customer touchpoint in minutes."
           />
           <ul className="sr-only">
@@ -604,7 +644,7 @@ export default function HomePage() {
         {/* CONVERSION */}
         <section id="leads" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
           <SectionHeader
-            title="Where conversations meet conversion."
+            title={<>Where Conversations <Accent>Meet Conversion</Accent></>}
             subtitle="Lumjha AI captures lead details effortlessly within normal conversations, identifying intent without intrusive forms."
           />
           <div className={`flex flex-col items-center justify-center gap-6 md:flex-row md:gap-10 ${SECTION_HEAD_GAP}`}>

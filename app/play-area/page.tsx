@@ -5,6 +5,7 @@ import CtaPanel from "@/components/site/CtaPanel";
 import PlayDemo from "@/components/site/PlayDemo";
 import WaveGlow from "@/components/site/WaveGlow";
 import { BenefitGrid } from "@/components/site/ProductSections";
+import { Accent, HEADING } from "@/components/site/SectionHeader";
 import BlueButton from "@/components/ui/BlueButton";
 
 export const metadata: Metadata = {
@@ -80,10 +81,10 @@ export default function PlayAreaPage() {
           <Glow className="-left-[24%] -top-[10%] h-[875px] w-[1091px]" />
           <Glow className="-right-[15%] -top-[8%] h-[865px] w-[884px]" />
           <BenefitGrid
-            title="Why try it?"
+            title={<>Why <Accent>Try It?</Accent></>}
             subtitle="Save time, delight your customers, and never miss an opportunity."
             items={WHY}
-            compact
+            bento
           />
         </div>
 
@@ -92,10 +93,10 @@ export default function PlayAreaPage() {
           <div aria-hidden className="absolute inset-0 -z-10">
             <WaveGlow x={61.99686050415039} y={50} radius={65.49695587158203} angle={26.073211669921875} />
           </div>
-          <h2 className="font-heading text-[28px] font-bold leading-tight tracking-tight text-ink sm:text-4xl md:text-[40px] md:leading-[72px]">
-            Be Wherever Your Customers Are
+          <h2 className={HEADING}>
+            Be Wherever <Accent>Your Customers Are</Accent>
           </h2>
-          <p className="mx-auto mt-3 max-w-[1022px] text-base leading-relaxed text-balance text-ink sm:text-lg md:mt-0 md:text-xl md:leading-9">
+          <p className="mx-auto mt-4 max-w-[1022px] text-base leading-relaxed text-balance text-ink sm:text-lg md:mt-0 md:text-xl md:leading-9">
             Ask questions, test instant responses, and see how our AI processes information right here
             in your browser. Want to upload your own business data? Sign in for full access free for 14
             days, no credit card required.

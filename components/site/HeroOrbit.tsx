@@ -1,5 +1,5 @@
 import Image from "next/image";
-import type { CSSProperties, ReactNode, SVGProps } from "react";
+import type { ReactNode, SVGProps } from "react";
 import {
   FacebookIcon,
   SlackIcon,
@@ -11,13 +11,14 @@ import {
 } from "@/components/ui/ChannelIcons";
 import { DocIcon } from "./EngineFlow";
 import OrbitChat from "./OrbitChat";
+import EngineGlobe, { type GlobeBadge } from "./EngineGlobe";
 
 /* ============================================================
    Integration page diagram (Figma): upload your docs + website →
-   the Lumjha AI core, orbited by every channel → a live chat answer.
+   the Lumjha AI brain-globe, every channel riding a ring round it →
+   a live chat answer.
    Desktop runs left to right with the orbit on the page's centre
    line; phones + tablets stack the same flow top to bottom.
-   Set --orbit-bg to the page colour behind it (default bg-page).
    ============================================================ */
 
 type Glyph = (props: SVGProps<SVGSVGElement>) => ReactNode;
@@ -70,78 +71,56 @@ function Badge({ icon: Icon, className, glyph = "h-[56%] w-[56%]" }: { icon: Gly
   );
 }
 
-/* Badge on the page colour (--orbit-bg), so the ring line stops behind the bare glyph. */
-const BARE = "bg-[var(--orbit-bg,var(--site-page))] shadow-none!";
-
-type RingItem = { angle: number; label?: string; badge?: ReactNode };
-
-/* Angles in degrees, clockwise from 3 o'clock — read off the Figma frame. */
-const MonoSlack: Glyph = (p) => <SlackIcon mono {...p} />;
-
-/* Every channel badge shares the brand-blue look of the rest of the site. */
+/* Brand badges wear their real app-icon colours; Website and API (not brands) keep Lumjha Blue. */
 const BLUE = "bg-[#101C46] text-[#6E8BFF] ring-1 ring-[#527DFF]/45 light:bg-[#EEF3FF] light:text-[#3E63F2] light:ring-[#C6D0EC]";
+const ON_WHITE = "bg-white ring-1 ring-black/5";
+const BRAND = {
+  messenger: "bg-[linear-gradient(45deg,#0099FF,#A033FF_60%,#FF5280_90%,#FF7061)] text-white",
+  facebook: `${ON_WHITE} text-[#0866FF]`, // the mark is a blue disc with the "f" cut out
+  telegram: "bg-[#26A5E4] text-white",
+  instagram: "bg-[radial-gradient(circle_at_30%_107%,#FDF497_0%,#FDF497_5%,#FD5949_45%,#D6249F_60%,#285AEB_90%)] text-white",
+  whatsapp: "bg-[#25D366] text-white",
+  mcp: `${ON_WHITE} text-[#0B0D14]`,
+  slack: ON_WHITE, // four-colour mark
+};
 
-const OUTER: RingItem[] = [
-  { angle: -93, label: "Website", badge: <Badge icon={WebsiteIcon} className={BLUE} /> },
-  { angle: -47, label: "Messenger", badge: <Badge icon={MessengerIcon} className={BLUE} /> },
-  { angle: -3, label: "Facebook", badge: <Badge icon={FacebookIcon} className={BLUE} /> },
-  { angle: 25 },
-  { angle: 55, label: "Telegram", badge: <Badge icon={TelegramIcon} className={BLUE} glyph="-ml-[6%] h-[54%] w-[54%]" /> },
-  { angle: 115, label: "Instagram", badge: <Badge icon={InstagramIcon} className={BLUE} /> },
-  { angle: 158, label: "WhatsApp", badge: <Badge icon={WhatsAppIcon} className={BLUE} glyph="h-[54%] w-[54%]" /> },
-  { angle: 198 },
-  { angle: 215, label: "Slack", badge: <Badge icon={MonoSlack} className={BLUE} glyph="h-[48%] w-[48%]" /> },
+/* Channels, then the developer connectors, in order round the ring. */
+const BADGES: { label: string; icon: Glyph; className: string; glyph?: string }[] = [
+  { label: "Website", icon: WebsiteIcon, className: BLUE },
+  { label: "Messenger", icon: MessengerIcon, className: BRAND.messenger },
+  { label: "Facebook", icon: FacebookIcon, className: BRAND.facebook, glyph: "h-[86%] w-[86%]" },
+  { label: "API", icon: ApiIcon, className: BLUE, glyph: "h-[70%] w-[70%]" },
+  { label: "Telegram", icon: TelegramIcon, className: BRAND.telegram, glyph: "-ml-[6%] h-[54%] w-[54%]" },
+  { label: "Instagram", icon: InstagramIcon, className: BRAND.instagram },
+  { label: "WhatsApp", icon: WhatsAppIcon, className: BRAND.whatsapp, glyph: "h-[54%] w-[54%]" },
+  { label: "MCP", icon: McpIcon, className: BRAND.mcp, glyph: "h-[52%] w-[52%]" },
+  { label: "Slack", icon: SlackIcon, className: BRAND.slack, glyph: "h-[50%] w-[50%]" },
 ];
 
-const INNER: RingItem[] = [
-  { angle: -127, label: "API", badge: <Badge icon={ApiIcon} className={`${BARE} text-[#6E8BFF] light:text-[#3E63F2]`} glyph="h-[92%] w-[92%]" /> },
-  { angle: -84 },
-  { angle: 68, label: "MCP", badge: <Badge icon={McpIcon} className={`${BARE} text-[#6E8BFF] light:text-[#3E63F2]`} glyph="h-[72%] w-[72%]" /> },
-  { angle: 109 },
-];
+const GLOBE_BADGES: GlobeBadge[] = BADGES.map((b) => ({
+  label: b.label,
+  node: (
+    <span className={`block ${TILE_SIZE}`}>
+      <Badge icon={b.icon} className={b.className} glyph={b.glyph} />
+    </span>
+  ),
+}));
 
-const RING_LINE = "border-2 border-[#527DFF]/35 light:border-[#C6D0EC]";
-
-/**
- * A ring that turns slowly while its badges counter-turn, so every logo
- * stays upright. Items sit on the circle by angle (percent positions).
- */
-function Ring({ items, duration, reverse, className }: { items: RingItem[]; duration: string; reverse?: boolean; className: string }) {
-  const [turn, counter] = reverse ? ["orbit-counter", "orbit-spin"] : ["orbit-spin", "orbit-counter"];
-  return (
-    <div className={`${turn} absolute rounded-full ${RING_LINE} ${className}`} style={{ "--orbit-dur": duration } as CSSProperties}>
-      {items.map(({ angle, label, badge }) => {
-        const rad = (angle * Math.PI) / 180;
-        const pos = { left: `${(50 + 50 * Math.cos(rad)).toFixed(3)}%`, top: `${(50 + 50 * Math.sin(rad)).toFixed(3)}%` };
-        return (
-          <span key={angle} style={pos} className="absolute -translate-x-1/2 -translate-y-1/2">
-            {badge ? (
-              <span className={`${counter} block ${TILE_SIZE}`} title={label}>
-                {badge}
-              </span>
-            ) : (
-              <span className="block h-2.5 w-2.5 rounded-full bg-[#7F95D1] ring-2 ring-[var(--orbit-bg,var(--site-page))] xl:h-3.5 xl:w-3.5 light:bg-[#7D8DB5]" />
-            )}
-          </span>
-        );
-      })}
-    </div>
-  );
-}
-
+/** The same brain-globe as the home hero; here every channel rides a ring round it. */
 function Orbit() {
   return (
     <div className={`relative z-10 my-6 shrink-0 lg:my-0 ${ORBIT_SIZE}`}>
       <ul className="sr-only">
-        {[...OUTER, ...INNER].map((i) => i.label && <li key={i.angle}>{i.label}</li>)}
+        {BADGES.map((b) => (
+          <li key={b.label}>{b.label}</li>
+        ))}
       </ul>
       {/* soft halo behind the core */}
-      <div aria-hidden className="absolute inset-[18%] rounded-full bg-[#527DFF]/25 blur-3xl light:bg-[#527DFF]/10" />
-      <Ring items={OUTER} duration="90s" className="inset-0" />
-      <Ring items={INNER} duration="70s" reverse className="inset-[12.5%]" />
-      {/* the Lumjha core */}
-      <div className="absolute inset-[31%] flex items-center justify-center rounded-full bg-white shadow-[0_0_0_6px_rgba(82,125,255,0.12),0_0_60px_-4px_rgba(82,125,255,0.7)] light:shadow-none">
-        <Image src="/logo.png" alt="Lumjha AI" width={405} height={564} priority className="h-[52%] w-auto" />
+      <div aria-hidden className="absolute inset-[22%] rounded-full bg-[#527DFF]/20 blur-3xl light:bg-[#527DFF]/10" />
+      <EngineGlobe badges={GLOBE_BADGES} className="absolute inset-0" />
+      {/* the Lumjha core; badges in front of the globe pass over it, those behind pass under */}
+      <div className="pointer-events-none absolute inset-[39%] z-2 flex items-center justify-center rounded-full bg-white shadow-[0_0_0_6px_rgba(82,125,255,0.14),0_0_40px_-4px_rgba(82,125,255,0.7)] light:shadow-[0_0_0_6px_rgba(82,125,255,0.12),0_10px_30px_-8px_rgba(82,125,255,0.5)]">
+        <Image src="/logo.png" alt="Lumjha AI" width={405} height={564} priority className="h-[56%] w-auto" />
       </div>
     </div>
   );
@@ -149,23 +128,9 @@ function Orbit() {
 
 /* ---------- connectors ---------- */
 
-const LINE = "stroke-[#527DFF]/45 light:stroke-[#B9C5E8]";
-
-/** A faint line with a bright pulse travelling along it now and then. */
-function FlowPath({ d, gradient }: { d: string; gradient?: string }) {
-  return (
-    <g fill="none" strokeLinecap="round">
-      {gradient ? (
-        <>
-          <path d={d} stroke={gradient} strokeWidth={7} strokeOpacity={0.18} vectorEffect="non-scaling-stroke" />
-          <path d={d} stroke={gradient} strokeWidth={2} vectorEffect="non-scaling-stroke" />
-        </>
-      ) : (
-        <path d={d} className={LINE} strokeWidth={2} vectorEffect="non-scaling-stroke" />
-      )}
-      <path d={d} stroke="#527DFF" strokeWidth={2.5} vectorEffect="non-scaling-stroke" className="flow-pulse" />
-    </g>
-  );
+/** The home hero's connector: a dotted Lumjha Blue line streaming toward the chat. */
+function FlowPath({ d }: { d: string }) {
+  return <path d={d} fill="none" stroke="#527DFF" strokeOpacity={0.95} strokeWidth={2} vectorEffect="non-scaling-stroke" className="ef-flow" />;
 }
 
 /** Upload box → orbit: horizontal on desktop, vertical when stacked. */
@@ -182,30 +147,18 @@ function FeedLine() {
   );
 }
 
-/** Orbit → chat: two glowing curves leave the ring and meet at the widget. */
+/** Orbit → chat: two dotted streams leave the globe and meet at the widget. */
 function Funnel() {
   // the curves leave the ring ±13.5% of its height off-centre (Figma)
   return (
     <>
       <svg aria-hidden viewBox="0 0 100 100" preserveAspectRatio="none" className="-ml-2 hidden h-[340px] min-w-12 flex-1 overflow-visible lg:block xl:h-[410px]">
-        <defs>
-          <linearGradient id="hero-funnel-x" x1="0" x2="1" y1="0" y2="0">
-            <stop offset="0" stopColor="#8EA4EE" />
-            <stop offset="1" stopColor="#5EE0F0" />
-          </linearGradient>
-        </defs>
-        <FlowPath d="M0 36.5C38 37.5 62 50 100 50" gradient="url(#hero-funnel-x)" />
-        <FlowPath d="M0 63.5C38 62.5 62 50 100 50" gradient="url(#hero-funnel-x)" />
+        <FlowPath d="M0 36.5C38 37.5 62 50 100 50" />
+        <FlowPath d="M0 63.5C38 62.5 62 50 100 50" />
       </svg>
       <svg aria-hidden viewBox="0 0 100 100" preserveAspectRatio="none" className="-mt-2 h-14 w-[min(300px,74vw)] overflow-visible lg:hidden">
-        <defs>
-          <linearGradient id="hero-funnel-y" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0" stopColor="#8EA4EE" />
-            <stop offset="1" stopColor="#5EE0F0" />
-          </linearGradient>
-        </defs>
-        <FlowPath d="M36.5 0C37.5 38 50 62 50 100" gradient="url(#hero-funnel-y)" />
-        <FlowPath d="M63.5 0C62.5 38 50 62 50 100" gradient="url(#hero-funnel-y)" />
+        <FlowPath d="M36.5 0C37.5 38 50 62 50 100" />
+        <FlowPath d="M63.5 0C62.5 38 50 62 50 100" />
       </svg>
     </>
   );

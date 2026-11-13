@@ -122,7 +122,8 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-page/90 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-4 sm:px-6 lg:h-[76px] xl:px-[142px]">
+      {/* from xl the side padding lines up with the 1160px content column (≈140px at 1440px, 60px at 1280px) */}
+      <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-4 sm:px-6 lg:h-[76px] xl:px-[max(1.5rem,calc((100%-1160px)/2))]">
         <Link href="/" className="flex items-center gap-2" aria-label="Lumjha AI home">
           <Image
             src="/logo.png"
@@ -133,14 +134,15 @@ export default function Navbar() {
             priority
           />
           {/* thin divider + two even lines, as in the brand lockup */}
-          <span aria-hidden className="ml-1.5 hidden h-11 w-px shrink-0 bg-ink/30 min-[420px]:block" />
-          <span className="hidden flex-col pl-1 text-[13px] font-medium leading-[1.3] text-nav-link lg:text-[14px] min-[420px]:flex">
+          {/* tagline hides on small laptops (1024–1279px) so the nav fits on one line */}
+          <span aria-hidden className="ml-1.5 hidden h-11 w-px shrink-0 bg-ink/30 min-[420px]:block lg:hidden xl:block" />
+          <span className="hidden flex-col whitespace-nowrap pl-1 text-[13px] font-medium leading-[1.3] text-nav-link lg:text-[14px] min-[420px]:flex lg:hidden xl:flex">
             <span>Knowledgebase,</span>
             <span>Activated Everywhere</span>
           </span>
         </Link>
 
-        <nav aria-label="Main" className="hidden items-center gap-[34px] lg:flex">
+        <nav aria-label="Main" className="hidden items-center gap-7 whitespace-nowrap lg:flex xl:gap-[34px]">
           {NAV_LINKS.map((l) =>
             "children" in l ? (
               <SolutionsMenu key={l.label} active={solutionsActive} />
@@ -159,7 +161,7 @@ export default function Navbar() {
           )}
         </nav>
 
-        <div className="hidden items-center gap-[26px] lg:flex">
+        <div className="hidden items-center gap-5 whitespace-nowrap lg:flex xl:gap-[26px]">
           <ThemeToggle />
           <a href={APP_LOGIN} className="text-[16px] font-medium text-ink transition-opacity duration-300 hover:opacity-80">
             Log in

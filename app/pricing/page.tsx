@@ -3,10 +3,11 @@ import Navbar from "@/components/site/Navbar";
 import Footer from "@/components/site/Footer";
 import CtaPanel from "@/components/site/CtaPanel";
 import WaveLines from "@/components/site/WaveLines";
+import { ESSENTIALS } from "@/components/site/Essentials";
 import PricingPlans, { Included } from "@/components/site/PricingPlans";
 import PlanMatrix, { OnlyOnLumjha } from "@/components/site/PlanMatrix";
-import SectionHeader, { SECTION_HEAD_GAP, SECTION_Y } from "@/components/site/SectionHeader";
-import { Faq } from "@/components/site/ProductSections";
+import SectionHeader, { Accent, HEADING, HERO_BODY, HERO_TITLE, SECTION_HEAD_GAP, SECTION_Y } from "@/components/site/SectionHeader";
+import { BenefitGrid, Faq } from "@/components/site/ProductSections";
 import { listPlans } from "@/lib/admin/content";
 
 export const metadata: Metadata = {
@@ -65,45 +66,6 @@ const WEEKLY_GAPS = [
 ];
 
 /* ---------- the essentials ---------- */
-
-/* Line icons in the 24×24 Lucide style; each entry is one stroked path. */
-const ESSENTIAL_ICONS = {
-  sun: ["M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0", "M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"],
-  shield: [
-    "M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z",
-    "m9 12 2 2 4-4",
-  ],
-  list: ["M6 3h12a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z", "M9 8h6M9 12h6M9 16h4"],
-  chat: ["M7.9 20A9 9 0 1 0 4 16.1L2 22Z"],
-  code: ["m16 18 6-6-6-6", "m8 6-6 6 6 6", "M14.5 4l-5 16"],
-  share: [
-    "M21 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M9 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0M21 19a3 3 0 1 1-6 0 3 3 0 0 1 6 0",
-    "m8.6 13.5 6.8 4M15.4 6.5l-6.8 4",
-  ],
-} as const;
-
-const ESSENTIALS: { icon: keyof typeof ESSENTIAL_ICONS; title: string; body: string }[] = [
-  {
-    icon: "sun",
-    title: "Live in minutes",
-    body: "Paste your URL: Lumjha AI auto-crawls your site and builds the knowledge base. Add PDFs, DOCX, CSV, Google Drive or Shopify as Knowledge Documents.",
-  },
-  { icon: "shield", title: "Your brand, safely", body: "Your logo, colors, voice, tone and messaging, with chat safety moderation and controls always on." },
-  { icon: "list", title: "Leads & bookings", body: "Form-less lead capture plus multiple forms, full chat history and Google Calendar booking." },
-  { icon: "chat", title: "Human takeover, any channel", body: "Step into any conversation on the website, WhatsApp, Instagram, Messenger, Telegram or Viber from one inbox." },
-  { icon: "code", title: "API", body: "Ingest sources and export leads, conversations and analytics programmatically." },
-  { icon: "share", title: "MCP connector", body: "Connect ChatGPT, Claude and your own agents to Lumjha AI with scoped, read-only-by-default access." },
-];
-
-function EssentialIcon({ name }: { name: keyof typeof ESSENTIAL_ICONS }) {
-  return (
-    <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      {ESSENTIAL_ICONS[name].map((d) => (
-        <path key={d} d={d} />
-      ))}
-    </svg>
-  );
-}
 
 /* ---------- grow without jumping tiers ---------- */
 
@@ -270,12 +232,12 @@ export default async function PricingPage() {
         {/* HERO + PLANS */}
         <section id="plans" className="relative mx-auto max-w-[1440px] px-4 pb-16 pt-12 sm:px-6 md:pb-24 md:pt-20">
           <div className="text-center">
-            <h1 className="font-heading text-[clamp(2.25rem,4.5vw+1rem,4rem)] font-semibold leading-[1.15] tracking-tight text-balance">
+            <h1 className={HERO_TITLE}>
               One Knowledge Base.
               <br />
               <span className="text-[#527DFF] light:text-[#3E63F2]">Smarter Conversations.</span>
             </h1>
-            <p className="mx-auto mt-5 max-w-[1022px] text-[15px] leading-relaxed text-balance text-white/85 light:text-slate-600 sm:text-lg md:mt-6 md:text-xl">
+            <p className={`mx-auto mt-6 max-w-[1120px] text-ink/85 md:mt-8 ${HERO_BODY}`}>
               Activate your business knowledge across customer channels with Lumjha AI. Start free,
               choose a plan that fits your conversation volume, and scale as your business grows.
             </p>
@@ -289,7 +251,7 @@ export default async function PricingPage() {
             <WaveLines />
           </div>
           <SectionHeader
-            title="What counts as a conversation?"
+            title={<>What Counts as <Accent>a Conversation?</Accent></>}
             subtitle={
               <>
                 You pay for conversations your AI actually has, not for every message, and never for seats.{" "}
@@ -347,7 +309,7 @@ export default async function PricingPage() {
         {/* EVERY CHANNEL IS JUST THE START — what only Lumjha does */}
         <section id="features" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
           <SectionHeader
-            title="Every channel is just the start."
+            title={<>Every Channel Is <Accent>Just the Start</Accent></>}
             subtitle="Other tools put a chatbot on more apps. Lumjha AI puts the same brain everywhere: search, exact policy answers and lead capture included."
           />
           <div className={`mx-auto grid max-w-[1048px] grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 ${SECTION_HEAD_GAP}`}>
@@ -474,29 +436,12 @@ export default async function PricingPage() {
         </section>
 
         {/* THE ESSENTIALS */}
-        <section id="essentials" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
-          <h2 className="text-center font-heading text-[28px] font-bold leading-tight tracking-tight text-balance text-ink sm:text-4xl md:text-[44px]">
-            The essentials, done properly
-          </h2>
-          <ul className={`mx-auto grid max-w-[1048px] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5 ${SECTION_HEAD_GAP}`}>
-            {ESSENTIALS.map((e) => (
-              <li key={e.title} className={`${CARD} flex gap-4 p-5`}>
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#3A5795] bg-[#132550] text-[#9DB6FF] light:border-[#C9D8FF] light:bg-[#EEF3FF] light:text-[#3E63F2]">
-                  <EssentialIcon name={e.icon} />
-                </span>
-                <div className="min-w-0">
-                  <h3 className="text-[15px] font-semibold text-ink">{e.title}</h3>
-                  <p className="mt-1.5 text-[13px] leading-relaxed text-muted">{e.body}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </section>
+        <BenefitGrid id="essentials" bento title={<>The Essentials, <Accent>Done Properly</Accent></>} items={ESSENTIALS} />
 
         {/* EVERY FEATURE, EVERY PLAN */}
         <section id="plan-matrix" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
-          <h2 className="text-center font-heading text-[28px] font-bold leading-tight tracking-tight text-balance text-ink sm:text-4xl md:text-[44px]">
-            Every feature, every plan
+          <h2 className={`text-center ${HEADING}`}>
+            Every Feature, <Accent>Every Plan</Accent>
           </h2>
           <PlanMatrix className={SECTION_HEAD_GAP} />
         </section>
@@ -504,7 +449,7 @@ export default async function PricingPage() {
         {/* GROW WITHOUT JUMPING TIERS — top-ups + add-ons */}
         <section id="add-ons" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
           <SectionHeader
-            title="Grow without jumping tiers"
+            title={<>Grow Without <Accent>Jumping Tiers</Accent></>}
             subtitle="Add exactly what you need. Add-ons renew with your plan and can be removed any time."
           />
           <div className={`mx-auto max-w-[1040px] space-y-4 ${SECTION_HEAD_GAP}`}>
@@ -546,8 +491,8 @@ export default async function PricingPage() {
         <section id="usage" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
           <div className="mx-auto grid max-w-[1040px] grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-8">
             <div className="text-center lg:text-left">
-              <h2 className="text-[28px] font-extrabold leading-[1.15] tracking-tight text-balance text-ink sm:text-4xl">
-                Your agent never goes silent at month-end.
+              <h2 className={HEADING}>
+                Your Agent Never Goes <Accent>Silent at Month-End</Accent>
               </h2>
               <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-muted md:text-base lg:mx-0">
                 Other tools stop answering when you hit a limit. Lumjha AI warns you early, tops up within the cap
@@ -577,8 +522,8 @@ export default async function PricingPage() {
         <section id="developers" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
           <div className="mx-auto grid max-w-[1040px] grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-10">
             <div className="text-center lg:text-left">
-              <h2 className="text-[28px] font-bold leading-[1.15] tracking-tight text-[#DDE6FF] light:text-[#0B1526] sm:text-4xl">
-                Open by design: API + MCP
+              <h2 className={HEADING}>
+                Open by Design: <Accent>API + MCP</Accent>
               </h2>
               <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-muted md:text-base lg:mx-0">
                 Push sources in and pull leads, conversations and analytics out with the API. Connect ChatGPT,
@@ -621,7 +566,7 @@ export default async function PricingPage() {
 
         {/* FEATURE & PRICING MATRIX */}
         <section id="compare" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
-          <SectionHeader title="Feature & Pricing Matrix" subtitle="Lumjha AI vs. Competitors" />
+          <SectionHeader title={<>Feature & Pricing <Accent>Matrix</Accent></>} subtitle="Lumjha AI vs. Competitors" />
           <div className={`mx-auto max-w-[1137px] overflow-x-auto rounded-xl border border-[#2D5BFF]/70 shadow-[0_24px_80px_-30px_rgba(45,91,255,0.7)] light:border-[#C9D8FF] ${SECTION_HEAD_GAP}`}>
             <table className="w-full min-w-[1000px] table-fixed border-collapse text-left text-[13.5px] leading-snug text-white/90 light:text-[#0B1526]">
               <thead>

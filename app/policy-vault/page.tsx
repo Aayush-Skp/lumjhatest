@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { Accent } from "@/components/site/SectionHeader";
 import { BenefitGrid, Faq, IntroSplit, ProductHero, ProductPage, StepCards } from "@/components/site/ProductSections";
 
 export const metadata: Metadata = {
@@ -93,7 +94,7 @@ export default function PolicyVaultPage() {
           <>
             Stop Guessing.
             <br />
-            Find the <span className="text-[#5675FF]">Exact Answer.</span>
+            Find the <Accent>Exact Answer</Accent>
           </>
         }
         body="Important policy details can be difficult to locate across lengthy documents. Lumjha AI Policy Vault helps users find relevant policy information through source-backed answers and exact quotations."
@@ -108,11 +109,12 @@ export default function PolicyVaultPage() {
           />
         }
       />
-      <StepCards title="HOW IT WORKS" subtitle="From Policy Documents to Clear Answers." steps={STEPS} />
+      <StepCards title={<>How It <Accent>Works</Accent></>} subtitle="From Policy Documents to Clear Answers." steps={STEPS} />
       <BenefitGrid
-        title="Benefits - Lumjha AI Policy Vault"
+        title={<>Benefits - <Accent>Lumjha AI Policy Vault</Accent></>}
         subtitle="Lumjha AI answers instantly across your channels, in your voice, using your own content, so more customers can take the next step."
         items={BENEFITS}
+        bento
       />
       <Faq product="Lumjha AI Policy Vault" items={FAQ} />
     </ProductPage>

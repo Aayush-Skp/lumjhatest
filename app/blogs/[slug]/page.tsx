@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import Navbar from "@/components/site/Navbar";
 import Footer from "@/components/site/Footer";
 import CtaPanel from "@/components/site/CtaPanel";
-import { SECTION_Y } from "@/components/site/SectionHeader";
+import { HEADING, SECTION_Y } from "@/components/site/SectionHeader";
 import { BlogCard, BlogCover, PostMeta } from "@/components/site/BlogCards";
 import { listPosts } from "@/lib/admin/content";
 import { headingId, type Block, type Post } from "../posts";
@@ -95,11 +95,11 @@ export default async function BlogPostPage({ params }: Props) {
               <span aria-hidden>←</span> All articles
             </Link>
           </div>
-          <header className="relative mx-auto max-w-[860px] px-4 pt-6 text-center sm:px-6 md:pt-8">
-            <h1 className="font-heading text-[clamp(1.875rem,3vw+1rem,3rem)] font-semibold leading-[1.15] tracking-tight text-balance text-headline">
+          <header className="relative mx-auto max-w-[1100px] px-4 pt-6 text-center sm:px-6 md:pt-8">
+            <h1 className="font-heading text-[clamp(1.875rem,3vw+1rem,3rem)] font-semibold leading-[1.2] tracking-[-0.015em] text-balance text-headline">
               {post.title}
             </h1>
-            <p className="mx-auto mt-5 max-w-2xl text-[16px] leading-relaxed text-balance text-muted md:text-lg">{post.excerpt}</p>
+            <p className="mx-auto mt-5 max-w-[56rem] text-[16px] leading-[1.7] text-pretty text-muted md:text-lg">{post.excerpt}</p>
             <div className="mt-6 flex flex-col items-center gap-1">
               <p className="text-[14px] font-semibold text-ink">{post.author}</p>
               <PostMeta post={post} />
@@ -155,8 +155,8 @@ export default async function BlogPostPage({ params }: Props) {
         {/* KEEP READING */}
         <section aria-labelledby="related-title" className={`relative mx-auto max-w-[1440px] border-t border-line px-4 sm:px-6 ${SECTION_Y}`}>
           <div className="mx-auto max-w-[1160px]">
-            <h2 id="related-title" className="text-center font-heading text-[28px] font-bold leading-tight tracking-tight text-ink sm:text-4xl">
-              Keep reading
+            <h2 id="related-title" className={`text-center ${HEADING}`}>
+              Keep <span className="text-highlight">Reading</span>
             </h2>
             <ul className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6 md:mt-14">
               {relatedTo(post, posts).map((p) => (
