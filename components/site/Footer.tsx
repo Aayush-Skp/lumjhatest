@@ -12,12 +12,10 @@ const QUICK_LINKS = [
   { label: "Our Commitments", href: "/#commitments" },
 ];
 
-const PLATFORMS = [
+const SOLUTIONS = [
   { label: "Chatbot", href: "/chat-agent" },
   { label: "Site Search", href: "/site-search" },
   { label: "Lumjha Vault", href: "/lumjha-vault" },
-  { label: "Integrations", href: "/integrations" },
-  { label: "Lumjha Play", href: "/play-area" },
 ];
 
 const ABOUT = [
@@ -74,9 +72,9 @@ export default function Footer() {
           </ul>
         </div>
         <div>
-          <p className="text-[13px] font-bold text-ink md:text-sm">Platforms</p>
+          <p className="text-[13px] font-bold text-ink md:text-sm">Solutions</p>
           <ul className="mt-4 space-y-3 text-[13px] font-medium md:text-sm">
-            {PLATFORMS.map((x) => (
+            {SOLUTIONS.map((x) => (
               <li key={x.label}><a href={x.href} className="hover:text-ink">{x.label}</a></li>
             ))}
           </ul>
