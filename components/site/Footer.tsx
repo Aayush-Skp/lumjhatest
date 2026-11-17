@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import FooterWordmark from "./FooterWordmark";
 import NewsletterForm from "./NewsletterForm";
+import ContactDisclosure from "./ContactDisclosure";
 import { FacebookIcon, InstagramIcon, LinkedInIcon } from "@/components/ui/ChannelIcons";
 
 const QUICK_LINKS = [
@@ -19,7 +20,7 @@ const PLATFORMS = [
   { label: "Lumjha Play", href: "/play-area" },
 ];
 
-const LEGAL = [
+const ABOUT = [
   { label: "Privacy", href: "/privacy" },
   { label: "Terms", href: "/terms" },
   { label: "Help", href: "#" },
@@ -42,6 +43,16 @@ export default function Footer() {
           <p className="mt-5 max-w-[260px] text-[13px] leading-relaxed md:text-sm">
             Lumjha AI is the no-code AI layer for modern customer engagement.
           </p>
+          <a
+            href="mailto:info@lumjha.ai"
+            className="mt-4 inline-flex items-center gap-2 text-[13px] font-medium transition hover:text-ink md:text-sm"
+          >
+            <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <rect x="3" y="5" width="18" height="14" rx="2" />
+              <path d="m3 7 9 6 9-6" />
+            </svg>
+            info@lumjha.ai
+          </a>
           <div className="mt-5 flex items-center gap-4">
             <a href="#" aria-label="Facebook" className="transition hover:text-ink">
               <FacebookIcon className="h-5 w-5" />
@@ -71,11 +82,17 @@ export default function Footer() {
           </ul>
         </div>
         <div>
-          <p className="text-[13px] font-bold text-ink md:text-sm">Legal</p>
+          <p className="text-[13px] font-bold text-ink md:text-sm">About</p>
           <ul className="mt-4 space-y-3 text-[13px] font-medium md:text-sm">
-            {LEGAL.map((x) => (
+            {ABOUT.map((x) => (
               <li key={x.label}><a href={x.href} className="hover:text-ink">{x.label}</a></li>
             ))}
+            <li>
+              {/* opens the same Contact Us form as the CTA panel */}
+              <ContactDisclosure label="Contact" rowClassName="contents" buttonClassName="cursor-pointer hover:text-ink">
+                {null}
+              </ContactDisclosure>
+            </li>
           </ul>
         </div>
         <div className="col-span-2 md:col-span-1">
