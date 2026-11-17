@@ -52,13 +52,20 @@ export default function Footer() {
             info@lumjha.ai
           </a>
           <div className="mt-5 flex items-center gap-4">
-            <a href="#" aria-label="Facebook" className="transition hover:text-ink">
+            {/* no Facebook / Instagram pages yet: shown, but not links */}
+            <span aria-label="Facebook" role="img">
               <FacebookIcon className="h-5 w-5" />
-            </a>
-            <a href="#" aria-label="Instagram" className="transition hover:text-ink">
+            </span>
+            <span aria-label="Instagram" role="img">
               <InstagramIcon className="h-5 w-5" />
-            </a>
-            <a href="#" aria-label="LinkedIn" className="transition hover:text-ink">
+            </span>
+            <a
+              href="https://www.linkedin.com/company/lumjha/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Lumjha on LinkedIn"
+              className="transition hover:text-ink"
+            >
               <LinkedInIcon className="h-[18px] w-[18px]" />
             </a>
           </div>
