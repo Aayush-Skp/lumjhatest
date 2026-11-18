@@ -158,7 +158,8 @@ export default function Navbar() {
           </span>
         </Link>
 
-        <nav aria-label="Main" className="hidden shrink-0 items-center gap-7 whitespace-nowrap lg:flex xl:gap-[34px]">
+        {/* extra side padding gives the links breathing room from the logo and the search */}
+        <nav aria-label="Main" className="hidden shrink-0 items-center gap-7 whitespace-nowrap lg:flex lg:px-2 xl:gap-[34px] xl:px-8">
           {NAV_LINKS.map((l) =>
             "children" in l ? (
               <SolutionsMenu key={l.label} active={isActive(l.href)} current={pathname === l.href} />
@@ -179,7 +180,7 @@ export default function Navbar() {
 
         {/* search fills the free space between Blogs and the button */}
         <div className="hidden min-w-0 flex-1 items-center justify-end gap-5 whitespace-nowrap lg:flex xl:gap-[26px]">
-          <SiteSearch className="min-w-[180px] max-w-[480px] flex-1" />
+          <SiteSearch className="min-w-[180px] max-w-[400px] flex-1" />
           <a
             href={APP_LOGIN}
             target="_blank"

@@ -153,6 +153,28 @@ export default function EngineGlobe({
     const glow = new Float32Array(NODES.length); // per-node flash, decays
     const pulses: { e: number; t: number; fwd: boolean }[] = [];
 
+    // the dust colour follows the theme; read it once and again only when the
+    // theme flips, not every frame (a per-frame getComputedStyle forces a style
+    // recalc right after the label writes, which costs frames)
+    const readInk = () => getComputedStyle(canvas).color.replace(/rgba?\(|\)/g, "").split(",").slice(0, 3).join(",");
+    let ink = readInk();
+    const themeWatch = new MutationObserver(() => {
+      ink = readInk();
+      if (!raf) draw();
+    });
+    themeWatch.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme", "class"] });
+
+    // label sizes, kept off the frame loop (re-measured when a label resizes,
+    // e.g. once the web font loads)
+    const labelHalf: [number, number][] = [];
+    const measureLabels = () =>
+      labelRefs.current.forEach((el, i) => {
+        if (el) labelHalf[i] = [el.offsetWidth / 2, el.offsetHeight / 2];
+      });
+    measureLabels();
+    const labelWatch = new ResizeObserver(measureLabels);
+    labelRefs.current.forEach((el) => el && labelWatch.observe(el));
+
     // rotate around Y (spin), then X (lean + drag); orthographic projection
     const project = ([x, y, z]: V3, k = 1) => {
       const cy = Math.cos(rotY), sy = Math.sin(rotY);
@@ -165,7 +187,6 @@ export default function EngineGlobe({
 
     const draw = () => {
       ctx.clearRect(0, 0, size, size);
-      const ink = getComputedStyle(canvas).color.replace(/rgba?\(|\)/g, "").split(",").slice(0, 3).join(",");
 
       // soft core light + rim
       const g = ctx.createRadialGradient(c, c, 0, c, c, R);
@@ -295,11 +316,16 @@ export default function EngineGlobe({
       });
 
       // labels circle the logo, evenly spaced and upright; they turn with the
-      // globe (so a drag spins them too)
+      // globe (so a drag spins them too). translate3d on a will-change layer moves
+      // them at sub-pixel precision; a 2D translate snaps to whole pixels each
+      // frame, which reads as a jitter at this slow pace.
       labelRefs.current.forEach((el, i) => {
         if (!el) return;
         const a = rotY * 0.6 + (i / labels.length) * TAU - Math.PI / 2;
-        el.style.transform = `translate(${c + Math.cos(a) * LABEL_RX * R}px, ${c + Math.sin(a) * LABEL_RY * R}px) translate(-50%, -50%)`;
+        const [hw, hh] = labelHalf[i] ?? [0, 0];
+        const x = c + Math.cos(a) * LABEL_RX * R - hw;
+        const y = c + Math.sin(a) * LABEL_RY * R - hh;
+        el.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0)`;
       });
     };
 
@@ -392,6 +418,8 @@ export default function EngineGlobe({
     return () => {
       cancelAnimationFrame(raf);
       io.disconnect();
+      themeWatch.disconnect();
+      labelWatch.disconnect();
       canvas.removeEventListener("pointerdown", onDown);
       canvas.removeEventListener("pointermove", onMove);
       canvas.removeEventListener("pointerup", onUp);
@@ -426,9 +454,8 @@ export default function EngineGlobe({
           ref={(el) => {
             labelRefs.current[i] = el;
           }}
-          className="pointer-events-none absolute left-0 top-0 z-2 flex items-center gap-1.5 whitespace-nowrap rounded-full border border-[#527DFF]/35 bg-[#0B1530]/90 py-0.5 pl-1.5 pr-2.5 text-[11px] font-semibold text-[#C9D8FF] shadow-[0_4px_14px_-6px_rgb(82_125_255/0.6)] light:border-[#527DFF]/30 light:bg-white/95 light:text-[#3E63F2]"
+          className="pointer-events-none absolute left-0 top-0 z-2 flex items-center whitespace-nowrap will-change-transform [backface-visibility:hidden] rounded-full border border-[#527DFF]/35 bg-[#0B1530]/90 px-2.5 py-0.5 text-[11px] font-semibold text-[#C9D8FF] shadow-[0_4px_14px_-6px_rgb(82_125_255/0.6)] light:border-[#527DFF]/30 light:bg-white/95 light:text-[#3E63F2]"
         >
-          <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[#527DFF] shadow-[0_0_6px_rgb(82_125_255)]" />
           {l}
         </span>
       ))}
