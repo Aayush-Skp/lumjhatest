@@ -5,18 +5,23 @@ import { useSyncExternalStore } from "react";
 type Theme = "light" | "dark";
 
 /**
- * Dark / light switch. The active theme lives on
- * `document.documentElement.dataset.theme` (set before first paint by the
- * inline script in the root layout); we read it with `useSyncExternalStore`
- * so the icon never mismatches on hydration, and persist changes to
- * localStorage under the same `lumjha-theme` key the script reads.
+ * Dark / light switch (admin panel, and a small one in the site footer). The
+ * public site starts from the system theme. The active theme lives on `document.documentElement.dataset.theme`
+ * (set before first paint by the inline script in the root layout, which also
+ * follows system theme changes); we read it with `useSyncExternalStore` so the
+ * icon never mismatches on hydration. A manual switch lasts until the next
+ * page load or system theme change.
  */
 const listeners = new Set<() => void>();
 
 function subscribe(callback: () => void) {
   listeners.add(callback);
+  // the layout script flips the theme when the OS theme changes; re-read then too
+  const media = window.matchMedia("(prefers-color-scheme: light)");
+  media.addEventListener("change", callback);
   return () => {
     listeners.delete(callback);
+    media.removeEventListener("change", callback);
   };
 }
 
@@ -30,11 +35,6 @@ function getServerSnapshot(): Theme {
 
 function applyTheme(next: Theme) {
   document.documentElement.dataset.theme = next;
-  try {
-    localStorage.setItem("lumjha-theme", next);
-  } catch {
-    // localStorage unavailable (private mode) — theme still applies for the session.
-  }
   listeners.forEach((listener) => listener());
 }
 
@@ -69,12 +69,13 @@ function setTheme(next: Theme, from: HTMLElement) {
   });
 }
 
-const ICON = "absolute h-[18px] w-[18px] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none";
+const ICON = "absolute transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none";
 
-export default function ThemeToggle({ className = "" }: { className?: string }) {
+export default function ThemeToggle({ className = "", small = false }: { className?: string; small?: boolean }) {
   const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const isDark = theme === "dark";
   const label = isDark ? "Switch to light mode" : "Switch to dark mode";
+  const iconSize = small ? "h-3.5 w-3.5" : "h-[18px] w-[18px]";
 
   return (
     <button
@@ -82,7 +83,9 @@ export default function ThemeToggle({ className = "" }: { className?: string }) 
       onClick={(e) => setTheme(isDark ? "light" : "dark", e.currentTarget)}
       aria-label={label}
       title={label}
-      className={`relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full border border-line text-ink transition-colors hover:border-[#5675FF]/60 hover:text-[#5675FF] ${className}`}
+      className={`relative flex shrink-0 items-center justify-center overflow-hidden rounded-full border text-ink transition-colors hover:text-[#5675FF] ${
+        small ? "h-7 w-7 border-transparent" : "h-9 w-9 border-line hover:border-[#5675FF]/60"
+      } ${className}`}
     >
       {/* sun (shown in dark mode → go light) and moon swap with a small spin */}
       <svg
@@ -92,7 +95,7 @@ export default function ThemeToggle({ className = "" }: { className?: string }) 
         strokeWidth={1.8}
         strokeLinecap="round"
         aria-hidden
-        className={`${ICON} ${isDark ? "rotate-0 opacity-100" : "-rotate-90 scale-50 opacity-0"}`}
+        className={`${ICON} ${iconSize} ${isDark ? "rotate-0 opacity-100" : "-rotate-90 scale-50 opacity-0"}`}
       >
         <circle cx="12" cy="12" r="4" />
         <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
@@ -105,7 +108,7 @@ export default function ThemeToggle({ className = "" }: { className?: string }) 
         strokeLinecap="round"
         strokeLinejoin="round"
         aria-hidden
-        className={`${ICON} ${isDark ? "rotate-90 scale-50 opacity-0" : "rotate-0 opacity-100"}`}
+        className={`${ICON} ${iconSize} ${isDark ? "rotate-90 scale-50 opacity-0" : "rotate-0 opacity-100"}`}
       >
         <path d="M20.5 14.1A8.5 8.5 0 0 1 9.9 3.5a8.5 8.5 0 1 0 10.6 10.6Z" />
       </svg>

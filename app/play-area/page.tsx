@@ -9,7 +9,7 @@ import { Accent, HEADING } from "@/components/site/SectionHeader";
 import BlueButton from "@/components/ui/BlueButton";
 
 export const metadata: Metadata = {
-  title: "Lumjha Play",
+  title: "Playground",
   description:
     "Test-drive Lumjha AI in real time. Ask a question and see how Lumjha AI delivers instant, accurate and helpful answers.",
 };

@@ -12,7 +12,7 @@ export const PLAYGROUND_ACCEPT = ".pdf,.docx,.txt,.md";
  * Which wording of the upload notice the visitor accepted. Bump it whenever
  * that text changes, so each stored upload records what its uploader agreed to.
  */
-export const PLAYGROUND_CONSENT_VERSION = "2026-11-02";
+export const PLAYGROUND_CONSENT_VERSION = "2026-11-18";
 
 export type PlaygroundState = "processing" | "ready" | "failed" | "expired";
 
@@ -48,7 +48,7 @@ export const SESSION_ID = /^[A-Za-z0-9_-]{16,64}$/;
 /** An agent subdomain, as Lumjha allows them (3–30 chars). */
 export const AGENT_SUBDOMAIN = /^[a-z0-9][a-z0-9-]{1,28}[a-z0-9]$/;
 
-/** The sample website (with the real widget installed) that Lumjha Play frames. */
+/** The sample website (with the real widget installed) that Playground frames. */
 export const PREVIEW_PATH = "/play-area/preview";
 
 /** The agent behind a Lumjha chat URL (`…/chat/<subdomain>`), or null. */

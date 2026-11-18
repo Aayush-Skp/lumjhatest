@@ -63,9 +63,11 @@ export const metadata: Metadata = {
   },
 };
 
-// Runs before first paint to set the saved theme (default: dark), so there is
-// no flash of the wrong theme on load.
-const themeInitScript = `(function(){try{var t=localStorage.getItem('lumjha-theme');document.documentElement.dataset.theme=(t==='light'||t==='dark')?t:'dark';}catch(e){document.documentElement.dataset.theme='dark';}})();`;
+// Runs before first paint so the page matches the browser/OS theme with no
+// flash, and follows it live when the system theme changes. Falls back to dark
+// (the Figma default) when the preference can't be read. Clears the old
+// `lumjha-theme` choice saved by the former navbar toggle.
+const themeInitScript = `(function(){var d=document.documentElement;try{localStorage.removeItem('lumjha-theme');}catch(e){}try{var m=window.matchMedia('(prefers-color-scheme: light)');var a=function(){d.dataset.theme=m.matches?'light':'dark';};a();if(m.addEventListener)m.addEventListener('change',a);else if(m.addListener)m.addListener(a);}catch(e){d.dataset.theme='dark';}})();`;
 
 export default function RootLayout({
   children,

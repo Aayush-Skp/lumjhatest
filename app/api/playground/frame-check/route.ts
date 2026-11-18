@@ -8,7 +8,7 @@ import { json } from "../lumjha";
 export const runtime = "nodejs";
 
 /**
- * Can Lumjha Play show this website in its preview? Fetches the page's headers
+ * Can Playground show this website in its preview? Fetches the page's headers
  * once and reads X-Frame-Options / CSP frame-ancestors, so the demo can say
  * "we can't show this site" instead of an empty frame.
  *

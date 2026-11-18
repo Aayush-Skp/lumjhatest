@@ -3,10 +3,11 @@ import Link from "next/link";
 import FooterWordmark from "./FooterWordmark";
 import NewsletterForm from "./NewsletterForm";
 import ContactDisclosure from "./ContactDisclosure";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 import { FacebookIcon, InstagramIcon, LinkedInIcon } from "@/components/ui/ChannelIcons";
 
 const QUICK_LINKS = [
-  { label: "Lumjha Play", href: "/play-area" },
+  { label: "Playground", href: "/play-area" },
   { label: "Pricing", href: "/pricing" },
   { label: "Integrations", href: "/#channels" },
   { label: "Our Commitments", href: "/#commitments" },
@@ -108,10 +109,14 @@ export default function Footer() {
       <div className="mx-auto mt-16 max-w-[1440px] md:mt-24">
         <FooterWordmark />
       </div>
-      <div className="mx-auto mt-6 max-w-[1440px] border-t border-line pt-8 md:mt-10">
-        <p className="text-center text-[12px] text-subtle">
-          © 2026 Lumjha AI. All rights reserved.
-        </p>
+      <div className="relative mx-auto mt-6 max-w-[1440px] border-t border-line pt-8 md:mt-10">
+        <div className="relative">
+          {/* quiet theme switch, bottom-left under the wordmark */}
+          <ThemeToggle small className="absolute left-0 top-1/2 -translate-y-1/2 opacity-40 hover:opacity-100" />
+          <p className="text-center text-[12px] text-subtle">
+            © 2026 Lumjha AI. All rights reserved.
+          </p>
+        </div>
       </div>
     </footer>
   );

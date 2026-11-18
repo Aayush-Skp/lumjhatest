@@ -16,7 +16,7 @@ lumjha-website/
 ├── app/
 │   ├── layout.tsx      ← root layout (Inter fonts, dark theme default)
 │   ├── page.tsx        ← main landing page (Figma design)
-│   ├── play-area/      ← Lumjha Play: demo chat + document upload (components/site/PlayDemo.tsx)
+│   ├── play-area/      ← Playground: demo chat + document upload (components/site/PlayDemo.tsx)
 │   ├── api/playground/ ← server routes forwarding Play uploads/status to the Lumjha API (key stays server-side)
 │   ├── pricing/        ← Pricing page: plans, conversation rules, usage alerts, API, comparison matrix, FAQ
 │   ├── chat-agent/     ← Solutions → AI Chat Agent
@@ -31,7 +31,7 @@ lumjha-website/
 │   └── globals.css     ← design tokens + base utilities + .legal-prose
 ├── components/
 │   ├── site/
-│   │   ├── Navbar.tsx    ← Play Area · Solutions ▾ · Pricing · Integration · Blogs
+│   │   ├── Navbar.tsx    ← Playground · Solutions ▾ · Pricing · Integration · Blogs
 │   │   ├── PricingPlans.tsx ← Monthly/Annual switch + the four plan cards (data: lib/content/pricing.ts)
 │   │   ├── WaveLines.tsx ← simple code-drawn line backdrop (Pricing page band)
 │   │   ├── Footer.tsx    ← shared footer (Privacy/Terms wired)
@@ -47,7 +47,7 @@ lumjha-website/
 │   │   └── LumjhaSpotlight.tsx ← preserved hover-torch wordmark (unused, for later)
 │   └── ui/
 │       ├── BlueButton.tsx      ← pill CTA (solid / outline / white)
-│       ├── ThemeToggle.tsx     ← dark/light switch (navbar), persists to localStorage
+│       ├── ThemeToggle.tsx     ← dark/light switch (admin panel + small one in the footer)
 │       └── ChannelIcons.tsx    ← brand SVG channel logos (incl. Messenger, Viber)
 └── public/
     ├── logo.png
@@ -64,7 +64,8 @@ lumjha-website/
   keep it dependency-free so it can be dropped in later.
 - Legal page bodies are verbatim copies; style them only via
   `components/site/LegalPage.tsx` + `.legal-prose` in `globals.css`.
-- Dark is the Figma default; light theme is driven by `[data-theme="light"]`.
+- The site follows the browser/system theme (script in `app/layout.tsx`; dark fallback);
+  light theme is driven by `[data-theme="light"]`.
   Use the site tokens (`bg-page`, `bg-page-deep`, `text-ink`, `text-muted`,
   `text-subtle`, `border-line`, `bg-surface`, `bg-band`, …) from `globals.css`
   instead of hardcoded dark hexes, so new sections theme automatically.
@@ -74,7 +75,7 @@ lumjha-website/
   icon, or state libraries unless the design truly needs them.
 ```
 
-## 4. Lumjha Play environment
+## 4. Playground environment
 
 The Play upload talks to the Lumjha API through `app/api/playground/*` (server-side):
 

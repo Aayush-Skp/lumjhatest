@@ -5,7 +5,7 @@ import { AGENT_SUBDOMAIN, normalizeSiteUrl } from "@/lib/playground";
 
 /**
  * A sample business website with the real Lumjha chat widget installed — the
- * page Lumjha Play frames so visitors see the widget as it sits on a site.
+ * page Playground frames so visitors see the widget as it sits on a site.
  *
  * `?agent=` picks the agent (a visitor's document agent); without it, the
  * shared demo agent. `?open=1` starts with the chat open. `?site=` shows a
@@ -113,7 +113,7 @@ export default async function WebsitePreviewPage({ searchParams }: { searchParam
   return (
     <div className="min-h-screen bg-white font-sans text-[#6B7280] antialiased">
       {/* framed at a fixed height: the sample site never scrolls itself, so the
-          wheel scrolls the Lumjha Play page around it (the chat panel still scrolls) */}
+          wheel scrolls the Playground page around it (the chat panel still scrolls) */}
       <style>{"html,body{overflow:hidden}"}</style>
 
       <header className="border-b border-[#E5E7EB]">

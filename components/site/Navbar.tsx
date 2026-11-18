@@ -4,9 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import ThemeToggle from "@/components/ui/ThemeToggle";
 
-// Figma nav: Lumjha Play · Solutions ▾ · Pricing · Integration · Blogs
+// Figma nav: Playground · Solutions ▾ · Pricing · Integration · Blogs
 const SOLUTIONS = [
   { label: "AI Chat Agent", href: "/chat-agent", blurb: "Answer every customer question, 24/7" },
   { label: "Site Search", href: "/site-search", blurb: "Help visitors find what they need, faster" },
@@ -14,7 +13,7 @@ const SOLUTIONS = [
 ];
 
 const NAV_LINKS = [
-  { label: "Lumjha Play", href: "/play-area" },
+  { label: "Playground", href: "/play-area" },
   { label: "Solutions", children: SOLUTIONS },
   { label: "Pricing", href: "/pricing" },
   { label: "Integration", href: "/integrations" },
@@ -164,23 +163,17 @@ export default function Navbar() {
         </nav>
 
         <div className="hidden items-center gap-5 whitespace-nowrap lg:flex xl:gap-[26px]">
-          <ThemeToggle />
-          <a href={APP_LOGIN} className="text-[16px] font-medium text-ink transition-opacity duration-300 hover:opacity-80">
-            Log in
-          </a>
           <a
             href={APP_LOGIN}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex h-10 items-center gap-2.5 rounded-full bg-[#5675FF] px-[22px] text-[15px] font-semibold text-white transition hover:bg-[#3E63F2]"
+            className="flex h-10 items-center rounded-full bg-[#5675FF] px-[22px] text-[15px] font-semibold text-white transition hover:bg-[#3E63F2]"
           >
-            Start Free
-            <Image src="/assets/shared/arrow.svg" alt="" width={14} height={13} aria-hidden />
+            Login/SignUp
           </a>
         </div>
 
         <div className="flex items-center gap-2 lg:hidden">
-        <ThemeToggle />
         <button
           className="relative flex h-9 w-9 items-center justify-center"
           onClick={() => setOpen((v) => !v)}
@@ -242,15 +235,11 @@ export default function Navbar() {
               ),
             )}
             <div style={stagger(NAV_LINKS.length)} className={`mt-2 flex items-center gap-4 ${rowAnim}`}>
-              <a href={APP_LOGIN} className="text-sm text-ink">
-                Log in
-              </a>
               <a
                 href={APP_LOGIN}
-                className="flex items-center gap-2 rounded-full bg-[#5675FF] px-4 py-1.5 text-sm font-semibold text-white"
+                className="flex items-center rounded-full bg-[#5675FF] px-4 py-1.5 text-sm font-semibold text-white"
               >
-                Start Free
-                <Image src="/assets/shared/arrow.svg" alt="" width={14} height={13} aria-hidden />
+                Login/SignUp
               </a>
             </div>
           </nav>

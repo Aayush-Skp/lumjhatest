@@ -6,7 +6,7 @@ import type { DragEvent } from "react";
 const ACCEPT = [".pdf", ".doc", ".docx", ".txt"];
 const MAX_BYTES = 5 * 1024 * 1024;
 
-/** Click-or-drop document box beside the Lumjha Play chat demo. */
+/** Click-or-drop document box beside the Playground chat demo. */
 export default function DocumentDrop({ className = "" }: { className?: string }) {
   const [dragging, setDragging] = useState(false);
   const [file, setFile] = useState<File | null>(null);

@@ -11,7 +11,7 @@ import {
 } from "@/lib/playground";
 
 /**
- * Lumjha Play demo: compact steps on top; below them a sample website
+ * Playground demo: compact steps on top; below them a sample website
  * with the real chat widget installed, shown in a browser frame, with an
  * upload button in its toolbar and a working address bar (a visitor can
  * preview the widget on their own site, when that site allows framing; the
@@ -81,7 +81,7 @@ async function call(input: string, init?: RequestInit): Promise<ApiResult> {
     const body = (await res.json().catch(() => null)) as ApiResult | null;
     return body ?? { success: false, error: "Something went wrong. Please try again." };
   } catch {
-    return { success: false, error: "Could not reach Lumjha Play. Check your connection and try again." };
+    return { success: false, error: "Could not reach the Playground. Check your connection and try again." };
   }
 }
 
@@ -736,7 +736,7 @@ function UploadPicker({
           className="mt-0.5 h-3.5 w-3.5 shrink-0 accent-[#5675FF]"
         />
         <span>
-          Lumjha AI keeps documents and chats from Lumjha Play and may use them to improve its products. Don’t upload
+          Lumjha AI keeps documents and chats from the Playground and may use them to improve its products. Don’t upload
           personal or confidential information.{" "}
           <a href="/privacy" className="font-medium text-[#5675FF] underline underline-offset-2">
             Privacy Policy

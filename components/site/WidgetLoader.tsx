@@ -5,7 +5,7 @@ import { useEffect } from "react";
 /**
  * Installs the real Lumjha chat widget (agent-widget.js) exactly as a
  * customer's site does: one <script> tag with data attributes. Meant for the
- * Lumjha Play sample-site page, which is framed — so the widget's fixed
+ * Playground sample-site page, which is framed — so the widget's fixed
  * launcher and panel sit inside that frame, like on a real website.
  *
  * The loader cannot be removed once running, so a page loads one agent; the
