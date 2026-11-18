@@ -36,5 +36,9 @@ export default function SiteSearch({ className = "" }: { className?: string }) {
     };
   }, []);
 
-  return <div ref={slot} className={className} />;
+  // The widget sizes the mount node to bar (48px) + optional "Powered by"
+  // caption (22px) and draws the bar at its top. Fixing the slot to the bar's
+  // height keeps the bar centred in the navbar either way; the caption just
+  // overflows below it without affecting layout.
+  return <div ref={slot} className={`h-12 ${className}`} />;
 }
