@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -238,10 +237,9 @@ function BenefitBento({ id, title, subtitle, items }: { id?: string; title: Reac
   );
 }
 
-/** Numbered FAQ accordion — every answer starts open, as in Figma.
-    An answer is usually a sentence, but may carry a link or a short list. */
+/** Numbered FAQ list: every answer is always shown. An answer is usually a
+    sentence, but may carry a link or a short list. */
 export function Faq({ id, product, items }: { id?: string; product: string; items: { q: string; a: ReactNode }[] }) {
-  const [open, setOpen] = useState<boolean[]>(() => items.map(() => true));
   return (
     <section id={id} className={`${CONTAINER} ${SECTION_Y}`}>
       <div className="text-center">
@@ -251,49 +249,19 @@ export function Faq({ id, product, items }: { id?: string; product: string; item
         <p className="mt-4 text-base font-medium text-ink/80 md:mt-5 md:text-lg">{product}</p>
       </div>
       <ul className={`${CONTENT} border-b border-[#DBE3ED] ${SECTION_HEAD_GAP}`}>
-        {items.map((item, i) => {
-          const isOpen = open[i];
-          const id = `faq-${i}`;
-          return (
-            <li key={item.q} className="border-t border-[#DBE3ED] pb-8">
-              <button
-                type="button"
-                aria-expanded={isOpen}
-                aria-controls={id}
-                onClick={() => setOpen((o) => o.map((v, k) => (k === i ? !v : v)))}
-                className="flex w-full items-center gap-4 pt-8 text-left md:gap-[23px]"
-              >
-                <span className="flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-lg bg-[#5675FF] text-[15px] font-bold text-white">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="flex-1 text-[17px] font-semibold text-ink md:text-xl">{item.q}</span>
-                {/* minus; a second, rotated bar turns it into a plus when closed */}
-                <span className="relative mr-1 flex h-5 w-5 shrink-0 items-center justify-center md:mr-10" aria-hidden>
-                  <Image src="/assets/shared/faq-minus.svg" alt="" width={20} height={5} className="absolute" />
-                  <Image
-                    src="/assets/shared/faq-minus.svg"
-                    alt=""
-                    width={20}
-                    height={5}
-                    className={`absolute transition-transform duration-300 ${isOpen ? "rotate-0 opacity-0" : "rotate-90 opacity-100"}`}
-                  />
-                </span>
-              </button>
-              <div
-                id={id}
-                className={`grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
-                  isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-                }`}
-              >
-                <div className="overflow-hidden">
-                  <div className="pl-[58px] pt-2 text-[15px] leading-relaxed text-muted md:pl-[65px] md:text-[17px] md:leading-8">
-                    {item.a}
-                  </div>
-                </div>
-              </div>
-            </li>
-          );
-        })}
+        {items.map((item, i) => (
+          <li key={item.q} className="border-t border-[#DBE3ED] pb-8">
+            <h3 className="flex items-center gap-4 pt-8 md:gap-[23px]">
+              <span className="flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-lg bg-[#5675FF] text-[15px] font-bold text-white">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <span className="flex-1 text-[17px] font-semibold text-ink md:text-xl">{item.q}</span>
+            </h3>
+            <div className="pl-[58px] pt-2 text-[15px] leading-relaxed text-muted md:pl-[65px] md:text-[17px] md:leading-8">
+              {item.a}
+            </div>
+          </li>
+        ))}
       </ul>
     </section>
   );
