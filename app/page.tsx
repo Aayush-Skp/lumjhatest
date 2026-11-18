@@ -429,7 +429,7 @@ function PlatformTabs() {
       <div
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
-        className="grid touch-pan-y pb-8 pt-10 md:pb-10 md:pt-14"
+        className="mx-auto grid w-full max-w-[1280px] touch-pan-y pb-8 pt-10 md:pb-10 md:pt-14"
       >
         {PLATFORM_TABS.map((tab, i) => {
           const isActive = active === i;
@@ -458,7 +458,7 @@ function PlatformTabs() {
                     : "translate-y-4 opacity-0 duration-300"
                   }`}
               >
-                <h3 className="text-[24px] font-extrabold leading-[1.25] tracking-tight sm:text-3xl lg:text-[40px]">
+                <h3 className="font-heading text-[24px] font-medium leading-[1.3] tracking-[-0.012em] sm:text-3xl lg:text-[36px]">
                   {tab.heading}
                 </h3>
                 <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-muted sm:mt-5 md:mx-0 md:text-base lg:mt-6 lg:text-lg">
@@ -669,7 +669,7 @@ export default function HomePage() {
             <span className="text-highlight">Grow While You Sleep.</span>
           </h1>
           {/* wide enough to sit on two lines from md up */}
-          <p className={`mx-auto mt-6 max-w-[1120px] text-ink/85 md:mt-8 ${HERO_BODY}`}>
+          <p className={`mx-auto mt-6 max-w-[860px] text-ink/85 md:mt-8 ${HERO_BODY}`}>
             Lumjha AI answers your customers&apos; questions, captures sales leads, and books
             appointments around the clock, on platform(s) they already use, so you can
             focus on running your business.

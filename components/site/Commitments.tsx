@@ -280,7 +280,7 @@ function PreservedArt() {
 export default function Commitments() {
   const [privateC, yours, training, convos, preserved] = COMMITMENTS;
   return (
-    <section id="commitments" className={`relative mx-auto max-w-[1240px] px-4 sm:px-6 ${SECTION_Y}`}>
+    <section id="commitments" className={`relative mx-auto max-w-[1280px] px-4 sm:px-6 ${SECTION_Y}`}>
       <SectionHeader
         title={
           <>

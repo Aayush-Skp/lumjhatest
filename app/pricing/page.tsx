@@ -235,7 +235,7 @@ export default async function PricingPage() {
               <br />
               <span className="text-[#527DFF] light:text-[#3E63F2]">Smarter Conversations.</span>
             </h1>
-            <p className={`mx-auto mt-6 max-w-[1120px] text-ink/85 md:mt-8 ${HERO_BODY}`}>
+            <p className={`mx-auto mt-6 max-w-[860px] text-ink/85 md:mt-8 ${HERO_BODY}`}>
               Activate your business knowledge across customer channels with Lumjha AI. Start free,
               choose a plan that fits your conversation volume, and scale as your business grows.
             </p>

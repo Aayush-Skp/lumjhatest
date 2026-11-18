@@ -77,7 +77,7 @@ function SolutionsMenu({ active, current }: { active: boolean; current: boolean 
         href="/solutions"
         aria-current={current ? "page" : undefined}
         onClick={() => setOpen(false)}
-        className={`text-[16px] font-medium ${tone}`}
+        className={`text-[15px] font-medium ${tone}`}
       >
         Solutions
       </Link>
@@ -136,10 +136,10 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-page/90 backdrop-blur-md">
-      {/* from xl the row is the 1160px content column plus its 24px gutters, so the
-          logo and CTA line up with the page content at every width (140px in at 1440px,
-          60px at 1280px, still aligned on wider screens) */}
-      <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between gap-4 px-4 sm:px-6 lg:gap-8 lg:h-[76px] xl:max-w-[calc(1160px+3rem)]">
+      {/* from xl the row is the 1280px content column plus its 24px gutters, so the
+          logo and CTA line up with the page content at every width (80px in at 1440px,
+          24px at 1280px, still aligned on wider screens) */}
+      <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between gap-4 px-4 sm:px-6 lg:gap-8 lg:h-[76px] xl:max-w-[calc(1280px+3rem)]">
         <Link href="/" className="flex shrink-0 items-center gap-2" aria-label="Lumjha AI home">
           <Image
             src="/logo.png"
@@ -167,7 +167,7 @@ export default function Navbar() {
               key={l.label}
               href={l.href}
               aria-current={pathname === l.href ? "page" : undefined}
-              className={`text-[16px] font-medium transition-colors duration-300 ease-out hover:text-ink ${
+              className={`text-[15px] font-medium transition-colors duration-300 ease-out hover:text-ink ${
                 isActive(l.href) ? "text-ink" : "text-nav-link"
               }`}
             >

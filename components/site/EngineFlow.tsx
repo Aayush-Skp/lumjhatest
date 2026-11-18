@@ -142,7 +142,7 @@ export default function EngineFlow({ className = "" }: { className?: string }) {
     <div className={`w-full text-left ${className}`}>
       {/* ---------- desktop: one row, lines flowing left to right ---------- */}
       {/* equal side columns keep the engine on the page's centre line (under the hero CTA) */}
-      <div className="mx-auto hidden max-w-[1240px] pb-14 lg:block">
+      <div className="mx-auto hidden max-w-[1280px] pb-14 lg:block">
         <div className="mb-3.5 grid grid-cols-[minmax(0,1fr)_220px_minmax(0,1fr)] xl:grid-cols-[minmax(0,1fr)_250px_minmax(0,1fr)]">
           <p className={`${LABEL} lg:text-[11.5px]`}>Your knowledge</p>
           <p className={`${LABEL} text-center lg:text-[11.5px]`}>One AI engine</p>

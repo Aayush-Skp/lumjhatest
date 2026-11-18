@@ -94,7 +94,7 @@ export default function SolutionsPage() {
           title={<>Our <Accent>Solutions</Accent></>}
           subtitle="Pick the one that fits today. They all run on the same knowledge, so you can add another whenever you’re ready."
         />
-        <ul className={`mx-auto grid w-full max-w-[1160px] gap-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-6 ${SECTION_HEAD_GAP}`}>
+        <ul className={`mx-auto grid w-full max-w-[1280px] gap-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-6 ${SECTION_HEAD_GAP}`}>
           {SOLUTIONS.map((s, i) => (
             // the last card takes the full row on tablets so the grid never leaves a hole
             <li key={s.href} className={i === SOLUTIONS.length - 1 ? "md:col-span-2 lg:col-span-1" : ""}>
@@ -144,7 +144,7 @@ export default function SolutionsPage() {
 
       <section className={`${CONTAINER} ${SECTION_Y} pt-0! md:pt-0!`}>
         <SectionHeader title={<>Which One <Accent>Fits?</Accent></>} subtitle="Start from the problem you want to solve." />
-        <ul className={`mx-auto w-full max-w-[1160px] overflow-hidden rounded-2xl border border-line bg-surface light:border-card-ring light:bg-white ${SECTION_HEAD_GAP}`}>
+        <ul className={`mx-auto w-full max-w-[1280px] overflow-hidden rounded-2xl border border-line bg-surface light:border-card-ring light:bg-white ${SECTION_HEAD_GAP}`}>
           {FIT.map((f, i) => (
             <li key={f.href} className={i > 0 ? "border-t border-line light:border-card-ring" : ""}>
               <Link

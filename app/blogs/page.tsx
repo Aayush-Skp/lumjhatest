@@ -33,7 +33,7 @@ export default async function BlogsPage() {
           <h1 className={`mx-auto mt-4 max-w-4xl ${HERO_TITLE}`}>
             RAG, AI agents and <span className="text-[#5675FF]">what’s new</span>
           </h1>
-          <p className={`mx-auto mt-6 max-w-[1120px] text-ink/85 md:mt-8 ${HERO_BODY}`}>
+          <p className={`mx-auto mt-6 max-w-[860px] text-ink/85 md:mt-8 ${HERO_BODY}`}>
             How retrieval-augmented generation really works, the AI news that matters for customer
             conversations, and what we’re shipping at Lumjha AI.
           </p>
@@ -43,13 +43,13 @@ export default async function BlogsPage() {
         <section aria-labelledby="featured-title" className="relative mx-auto max-w-[1440px] px-4 sm:px-6">
           <Link
             href={`/blogs/${featured.slug}`}
-            className="group mx-auto grid max-w-[1160px] grid-cols-1 overflow-hidden rounded-3xl border border-line bg-surface transition duration-300 hover:border-[#527DFF]/60 hover:shadow-[0_30px_80px_-40px_rgba(82,125,255,0.7)] light:border-card-ring lg:grid-cols-[1.1fr_1fr]"
+            className="group mx-auto grid max-w-[1280px] grid-cols-1 overflow-hidden rounded-3xl border border-line bg-surface transition duration-300 hover:border-[#527DFF]/60 hover:shadow-[0_30px_80px_-40px_rgba(82,125,255,0.7)] light:border-card-ring lg:grid-cols-[1.1fr_1fr]"
           >
             <BlogCover
               post={featured}
               large
               priority
-              sizes="(min-width: 1160px) 610px, (min-width: 1024px) 53vw, 100vw"
+              sizes="(min-width: 1280px) 670px, (min-width: 1024px) 53vw, 100vw"
               className="aspect-[16/9] w-full lg:aspect-auto lg:min-h-[380px]"
             />
             <div className="flex flex-col justify-center p-6 sm:p-8 lg:p-10">
@@ -76,7 +76,7 @@ export default async function BlogsPage() {
 
         {/* ALL POSTS */}
         <section aria-labelledby="latest-title" className={`relative mx-auto max-w-[1440px] px-4 sm:px-6 ${SECTION_Y}`}>
-          <div className="mx-auto max-w-[1160px]">
+          <div className="mx-auto max-w-[1280px]">
             <h2 id="latest-title" className={`text-center ${HEADING}`}>
               Latest <span className="text-highlight">Articles</span>
             </h2>

@@ -388,7 +388,7 @@ export default function PlayDemo() {
   }
 
   return (
-    <div className="mx-auto mt-5 flex w-full max-w-[1160px] flex-col gap-4 text-left md:mt-6">
+    <div className="mx-auto mt-5 flex w-full max-w-[1280px] flex-col gap-4 text-left md:mt-6">
       <PlaySteps current={step} busy={busy} />
 
       {/* the sample site with the real widget, framed as a browser window */}

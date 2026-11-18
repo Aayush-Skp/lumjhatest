@@ -90,13 +90,13 @@ export default async function BlogPostPage({ params }: Props) {
         <article>
           {/* HEADER */}
           {/* back link sits on the content column's left edge, in line with the cover */}
-          <div className="mx-auto max-w-[1160px] px-4 pt-8 sm:px-6 md:pt-10">
+          <div className="mx-auto max-w-[1280px] px-4 pt-8 sm:px-6 md:pt-10">
             <Link href="/blogs" className="inline-flex items-center gap-1.5 text-[13px] font-medium text-[#527DFF] hover:text-ink">
               <span aria-hidden>←</span> All articles
             </Link>
           </div>
           <header className="relative mx-auto max-w-[1100px] px-4 pt-6 text-center sm:px-6 md:pt-8">
-            <h1 className="font-heading text-[clamp(1.875rem,3vw+1rem,3rem)] font-semibold leading-[1.2] tracking-[-0.015em] text-balance text-headline">
+            <h1 className="font-heading text-[clamp(1.875rem,3vw+1rem,3rem)] font-medium leading-[1.2] tracking-[-0.015em] text-balance text-headline">
               {post.title}
             </h1>
             <p className="mx-auto mt-5 max-w-[56rem] text-[16px] leading-[1.7] text-pretty text-muted md:text-lg">{post.excerpt}</p>
@@ -106,12 +106,12 @@ export default async function BlogPostPage({ params }: Props) {
             </div>
           </header>
 
-          <div className="mx-auto mt-10 max-w-[1160px] px-4 sm:px-6 md:mt-12">
+          <div className="mx-auto mt-10 max-w-[1280px] px-4 sm:px-6 md:mt-12">
             <BlogCover
               post={post}
               large
               priority
-              sizes="(min-width: 1160px) 1112px, 100vw"
+              sizes="(min-width: 1280px) 1232px, 100vw"
               className="aspect-[16/9] w-full rounded-2xl md:aspect-[21/8] md:rounded-3xl"
             />
             {post.image && (
@@ -126,7 +126,7 @@ export default async function BlogPostPage({ params }: Props) {
           </div>
 
           {/* BODY + table of contents */}
-          <div className="mx-auto grid max-w-[1160px] grid-cols-1 gap-10 px-4 pb-16 pt-6 sm:px-6 md:pb-24 lg:grid-cols-[minmax(0,1fr)_240px] lg:gap-16 lg:pt-10">
+          <div className="mx-auto grid max-w-[1280px] grid-cols-1 gap-10 px-4 pb-16 pt-6 sm:px-6 md:pb-24 lg:grid-cols-[minmax(0,1fr)_240px] lg:gap-16 lg:pt-10">
             <div className="mx-auto w-full max-w-[720px] lg:mx-0 lg:justify-self-end">
               {post.body.map((block, i) => (
                 <ArticleBlock key={i} block={block} />
@@ -154,7 +154,7 @@ export default async function BlogPostPage({ params }: Props) {
 
         {/* KEEP READING */}
         <section aria-labelledby="related-title" className={`relative mx-auto max-w-[1440px] border-t border-line px-4 sm:px-6 ${SECTION_Y}`}>
-          <div className="mx-auto max-w-[1160px]">
+          <div className="mx-auto max-w-[1280px]">
             <h2 id="related-title" className={`text-center ${HEADING}`}>
               Keep <span className="text-highlight">Reading</span>
             </h2>

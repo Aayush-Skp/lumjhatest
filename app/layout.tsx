@@ -24,6 +24,7 @@ const interTight = localFont({
 const poppins = localFont({
   variable: "--font-poppins",
   src: [
+    { path: "./fonts/poppins-latin-500.woff2", weight: "500", style: "normal" },
     { path: "./fonts/poppins-latin-600.woff2", weight: "600", style: "normal" },
     { path: "./fonts/poppins-latin-700.woff2", weight: "700", style: "normal" },
   ],

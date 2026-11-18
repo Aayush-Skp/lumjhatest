@@ -120,7 +120,7 @@ export default function PricingPlans({ plans, className = "" }: { plans: Plan[];
   return (
     <div className={className}>
       <BillingSwitch value={billing} onChange={setBilling} />
-      <ul className="mx-auto mt-9 grid max-w-[1160px] grid-cols-1 gap-x-[18px] gap-y-8 sm:grid-cols-2 xl:grid-cols-4">
+      <ul className="mx-auto mt-9 grid max-w-[1280px] grid-cols-1 gap-x-[18px] gap-y-8 sm:grid-cols-2 xl:grid-cols-4">
         {/* no Tilt here — the cards are too tall for the effect to read well */}
         {plans.map((p) => (
           <li key={p.name} className="flex">

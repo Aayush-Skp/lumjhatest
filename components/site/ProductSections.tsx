@@ -21,8 +21,8 @@ export type Icon = { src: string; width: number; height: number };
 export type Item = { icon: Icon; title: string; body: string };
 
 const CONTAINER = "mx-auto w-full max-w-[1440px] px-4 sm:px-6";
-// Figma content column: 1160px, centred
-const CONTENT = "mx-auto w-full max-w-[1160px]";
+// content column: 1280px, centred (widened from Figma's 1160px for more air)
+const CONTENT = "mx-auto w-full max-w-[1280px]";
 
 /** Page frame: navbar, the near-black Figma background, CTA panel and footer. */
 export function ProductPage({ children }: { children: ReactNode }) {
@@ -45,7 +45,7 @@ export function ProductHero({ title, accent, body }: { title: string; accent: st
       <h1 className={`max-w-[980px] ${HERO_TITLE}`}>
         {title} <span className="text-[#5675FF]">{accent}</span>
       </h1>
-      <p className={`mx-auto mt-6 max-w-[1120px] text-ink/85 md:mt-8 ${HERO_BODY}`}>
+      <p className={`mx-auto mt-6 max-w-[860px] text-ink/85 md:mt-8 ${HERO_BODY}`}>
         {body}
       </p>
       <ContactDisclosure
@@ -71,16 +71,16 @@ export function IntroSplit({
 }) {
   return (
     <section className={`${CONTAINER} ${SECTION_Y}`}>
-      {/* copy starts on the 1160px content column's left edge (like every other
+      {/* copy starts on the 1280px content column's left edge (like every other
           section); the artwork runs on to the section's right edge.
           `100%` here is the section's content width, so the offset is exact. */}
-      <div className="mx-auto grid max-w-[1160px] items-center gap-10 lg:ml-[max(0px,calc((100%-1160px)/2))] lg:mr-0 lg:max-w-none lg:grid-cols-[minmax(0,560px)_minmax(0,1fr)] lg:gap-14">
+      <div className="mx-auto grid max-w-[1280px] items-center gap-10 lg:ml-[max(0px,calc((100%-1280px)/2))] lg:mr-0 lg:max-w-none lg:grid-cols-[minmax(0,560px)_minmax(0,1fr)] lg:gap-14">
       <div className="text-center lg:text-left">
         {/* narrow column: wrap naturally so balancing doesn't strand one word per line */}
         <h2 className={`${HEADING} lg:text-pretty!`}>
           {heading}
         </h2>
-        <p className="mx-auto mt-5 max-w-[581px] text-base leading-relaxed text-ink sm:text-lg md:mt-8 md:text-xl md:leading-9 lg:mx-0">
+        <p className="mx-auto mt-5 max-w-[581px] text-base leading-relaxed text-muted sm:text-[17px] md:mt-8 md:text-lg md:leading-8 lg:mx-0">
           {body}
         </p>
       </div>
@@ -179,8 +179,7 @@ export function BenefitGrid({
    six tiles → 4 columns, wide|narrow|narrow then narrow|narrow|wide;
    otherwise 3 columns, wide|narrow then narrow|wide (an odd last tile takes the row). */
 function bentoCols(n: number) {
-  // four columns get a slightly wider measure so descriptions don't over-wrap
-  return n === 6 ? "max-w-[1240px] lg:grid-cols-4" : "max-w-[1160px] lg:grid-cols-3";
+  return n === 6 ? "max-w-[1280px] lg:grid-cols-4" : "max-w-[1280px] lg:grid-cols-3";
 }
 function bentoWide(i: number, n: number) {
   if (n === 6) return i === 0 || i === 5 ? "lg:col-span-2" : "";
@@ -267,7 +266,7 @@ export function Faq({ id, product, items }: { id?: string; product: string; item
                 <span className="flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-lg bg-[#5675FF] text-[15px] font-bold text-white">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <span className="flex-1 text-lg font-semibold text-ink md:text-2xl">{item.q}</span>
+                <span className="flex-1 text-[17px] font-semibold text-ink md:text-xl">{item.q}</span>
                 {/* minus; a second, rotated bar turns it into a plus when closed */}
                 <span className="relative mr-1 flex h-5 w-5 shrink-0 items-center justify-center md:mr-10" aria-hidden>
                   <Image src="/assets/shared/faq-minus.svg" alt="" width={20} height={5} className="absolute" />
@@ -287,7 +286,7 @@ export function Faq({ id, product, items }: { id?: string; product: string; item
                 }`}
               >
                 <div className="overflow-hidden">
-                  <div className="pl-[58px] pt-2 text-base leading-relaxed text-ink md:pl-[65px] md:text-xl md:leading-9">
+                  <div className="pl-[58px] pt-2 text-[15px] leading-relaxed text-muted md:pl-[65px] md:text-[17px] md:leading-8">
                     {item.a}
                   </div>
                 </div>
