@@ -37,7 +37,7 @@ export function ProductPage({ children }: { children: ReactNode }) {
   );
 }
 
-/** Centred hero: two-tone headline, intro, Get Started + Book a Demo. */
+/** Centred hero: two-tone headline, intro, Get Started For Free + Book a Demo. */
 export function ProductHero({ title, accent, body }: { title: string; accent: string; body: string }) {
   return (
     <section className={`${CONTAINER} flex flex-col items-center pb-10 pt-16 text-center md:pb-12 md:pt-28`}>
@@ -52,7 +52,7 @@ export function ProductHero({ title, accent, body }: { title: string; accent: st
         rowClassName="mt-10 flex w-full max-w-xs flex-col gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:items-center sm:justify-center sm:gap-6 md:mt-12"
         buttonClassName="inline-flex items-center justify-center rounded-full border-2 border-[#5675FF] px-7 py-3.5 text-[15px] font-semibold text-ink transition hover:bg-[#5675FF]/10"
       >
-        <BlueButton large>Get Started</BlueButton>
+        <BlueButton large>Get Started For Free</BlueButton>
       </ContactDisclosure>
     </section>
   );
