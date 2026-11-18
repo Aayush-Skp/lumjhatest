@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import SiteSearch from "./SiteSearch";
 
 // Figma nav: Playground · Solutions ▾ · Pricing · Integration · Blogs
 const SOLUTIONS = [
@@ -124,8 +125,8 @@ export default function Navbar() {
       {/* from xl the row is the 1160px content column plus its 24px gutters, so the
           logo and CTA line up with the page content at every width (140px in at 1440px,
           60px at 1280px, still aligned on wider screens) */}
-      <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-4 sm:px-6 lg:h-[76px] xl:max-w-[calc(1160px+3rem)]">
-        <Link href="/" className="flex items-center gap-2" aria-label="Lumjha AI home">
+      <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between gap-4 px-4 sm:px-6 lg:gap-8 lg:h-[76px] xl:max-w-[calc(1160px+3rem)]">
+        <Link href="/" className="flex shrink-0 items-center gap-2" aria-label="Lumjha AI home">
           <Image
             src="/logo.png"
             alt="Lumjha AI logo"
@@ -143,7 +144,7 @@ export default function Navbar() {
           </span>
         </Link>
 
-        <nav aria-label="Main" className="hidden items-center gap-7 whitespace-nowrap lg:flex xl:gap-[34px]">
+        <nav aria-label="Main" className="hidden shrink-0 items-center gap-7 whitespace-nowrap lg:flex xl:gap-[34px]">
           {NAV_LINKS.map((l) =>
             "children" in l ? (
               <SolutionsMenu key={l.label} active={solutionsActive} />
@@ -162,7 +163,9 @@ export default function Navbar() {
           )}
         </nav>
 
-        <div className="hidden items-center gap-5 whitespace-nowrap lg:flex xl:gap-[26px]">
+        {/* search fills the free space between Blogs and the button */}
+        <div className="hidden min-w-0 flex-1 items-center justify-end gap-5 whitespace-nowrap lg:flex xl:gap-[26px]">
+          <SiteSearch className="min-w-[180px] max-w-[480px] flex-1" />
           <a
             href={APP_LOGIN}
             target="_blank"

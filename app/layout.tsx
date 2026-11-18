@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import SiteChatWidget from "@/components/site/SiteChatWidget";
 
 /* Fonts are self-hosted (app/fonts, latin subset from Fontsource) rather than
    next/font/google, so builds never depend on reaching Google Fonts — a failed
@@ -82,6 +83,20 @@ export default function RootLayout({
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        {/* Lumjha search widget; mounts into the navbar's <SiteSearch> box */}
+        <script
+          id="lumjha-search-widget"
+          src="https://app.lumjha.ai/search-widget.js"
+          data-subdomain="lumjha-ai"
+          data-app-host="https://app.lumjha.ai"
+          data-theme="dark"
+          data-color="#0059ff"
+          data-placeholder="Ask anything..."
+          data-label="Powered by lumjha.ai"
+          async
+        />
+        {/* Lumjha chat widget (skipped on the Playground's framed sample site) */}
+        <SiteChatWidget />
       </head>
       <body className="min-h-full flex flex-col bg-bg-0 text-fg-mid">
         {children}
