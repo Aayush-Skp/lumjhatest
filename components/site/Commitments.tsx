@@ -128,13 +128,21 @@ function ShieldArt() {
 const TILE =
   "relative overflow-hidden rounded-2xl border border-line bg-surface shadow-[0_1px_0_rgb(255_255_255/0.04)_inset,0_16px_32px_-18px_rgb(0_0_0/0.8)] light:border-card-ring light:bg-white light:shadow-[0_1px_2px_rgb(15_23_42/0.05),0_12px_28px_-14px_rgb(15_23_42/0.18)]";
 
-/* Hover: the tile rises a touch and its shadow deepens; its drawing grows (see ART_HOVER). */
-const LIFT =
-  "group transition-[transform,box-shadow,border-color] duration-500 ease-out hover:-translate-y-0.5 hover:border-[#527DFF]/40 hover:shadow-[0_1px_0_rgb(255_255_255/0.05)_inset,0_24px_44px_-20px_rgb(0_0_0/0.9)] light:hover:shadow-[0_2px_4px_rgb(15_23_42/0.06),0_22px_40px_-18px_rgb(15_23_42/0.24)] motion-reduce:hover:translate-y-0";
+/* One motion for the whole hover, in and out: a slow, symmetric ease-in-out
+   (sine) on the tile and its drawing, so it drifts up and settles back down
+   at the same gentle pace and both move as one piece. */
+const EASE = "duration-1000 ease-[cubic-bezier(0.37,0,0.63,1)]";
 
-/* The drawing slowly grows and lifts while its tile is hovered, and eases back. */
+/* Hover: the tile rises a touch, its edge turns blue and its shadow deepens;
+   its drawing grows a little (see ART_HOVER). The hover is read from the <li>,
+   which never moves, while the card inside it lifts, so a pointer resting near
+   the bottom edge can't slip off the lifted card and make it flicker. */
+const LIFT =
+  `transition-[transform,box-shadow,border-color] ${EASE} will-change-transform group-hover:-translate-y-[3px] group-hover:border-[#527DFF]/30 group-hover:shadow-[0_1px_0_rgb(255_255_255/0.05)_inset,0_24px_44px_-20px_rgb(0_0_0/0.9)] light:group-hover:shadow-[0_2px_4px_rgb(15_23_42/0.06),0_22px_40px_-18px_rgb(15_23_42/0.24)] motion-reduce:transition-[box-shadow,border-color] motion-reduce:group-hover:translate-y-0`;
+
+/* The drawing grows very slightly while its tile is hovered, and eases back. */
 const ART_HOVER =
-  "transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-1 group-hover:scale-110 motion-reduce:transition-none motion-reduce:group-hover:translate-y-0 motion-reduce:group-hover:scale-100";
+  `transition-transform ${EASE} will-change-transform group-hover:scale-[1.04] motion-reduce:transition-none motion-reduce:group-hover:scale-100`;
 
 /* Each promise draws its own idea in the same thin blue line language. */
 const ART = "text-[#527DFF] light:text-[#3E63F2]";
@@ -149,14 +157,28 @@ function Copy({ c }: { c: (typeof COMMITMENTS)[number] }) {
 }
 
 /** Text on the left, the promise's drawing on the right, both vertically centred. */
-function PromiseTile({ c, art, className }: { c: (typeof COMMITMENTS)[number]; art: ReactNode; className: string }) {
+function PromiseTile({
+  c,
+  art,
+  className,
+  cardClassName = "",
+}: {
+  c: (typeof COMMITMENTS)[number];
+  art: ReactNode;
+  /** grid placement, on the (still) <li> */
+  className: string;
+  /** extra spacing, on the (lifting) card */
+  cardClassName?: string;
+}) {
   return (
-    <li className={`flex flex-col items-start gap-3 p-4 sm:gap-4 sm:p-5 md:p-6 desk:flex-row desk:items-center desk:justify-between desk:gap-5 ${TILE} ${LIFT} ${className}`}>
-      <div className="min-w-0 flex-1">
-        <Copy c={c} />
-      </div>
-      <div aria-hidden className={`order-first max-w-full shrink-0 origin-center sm:order-none [&>svg]:max-w-full ${ART_HOVER}`}>
-        {art}
+    <li className={`group ${className}`}>
+      <div className={`flex h-full flex-col items-start gap-3 p-4 sm:gap-4 sm:p-5 md:p-6 desk:flex-row desk:items-center desk:justify-between desk:gap-5 ${TILE} ${LIFT} ${cardClassName}`}>
+        <div className="min-w-0 flex-1">
+          <Copy c={c} />
+        </div>
+        <div aria-hidden className={`order-first max-w-full shrink-0 origin-center sm:order-none [&>svg]:max-w-full ${ART_HOVER}`}>
+          {art}
+        </div>
       </div>
     </li>
   );
@@ -306,7 +328,7 @@ export default function Commitments() {
           <PromiseTile c={yours} art={<IsolationArt />} className="desk:col-span-5 desk:col-start-8 desk:row-start-1" />
           <PromiseTile c={training} art={<TrainingArt />} className="desk:col-span-5 desk:col-start-1 desk:row-start-2" />
           <PromiseTile c={convos} art={<RedactedArt />} className="desk:col-span-5 desk:col-start-8 desk:row-start-2" />
-          <PromiseTile c={preserved} art={<PreservedArt />} className="col-span-2 desk:col-span-12 desk:row-start-3 desk:px-8" />
+          <PromiseTile c={preserved} art={<PreservedArt />} className="col-span-2 desk:col-span-12 desk:row-start-3" cardClassName="desk:px-8" />
         </ul>
       </div>
     </section>

@@ -46,7 +46,7 @@ export default function BlueButton({
     <a
       href={href}
       {...target}
-      className={`inline-flex items-center rounded-full bg-[#527DFF] font-semibold text-white shadow-[0_8px_30px_-6px_rgba(82,125,255,0.7)] transition hover:bg-[#3E63F2] ${size}`}
+      className={`inline-flex items-center rounded-full bg-[#527DFF] font-semibold text-white transition hover:bg-[#3E63F2] ${size}`}
     >
       {children} <span aria-hidden>→</span>
     </a>

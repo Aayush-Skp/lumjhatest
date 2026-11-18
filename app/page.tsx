@@ -47,7 +47,7 @@ function MockCard({
     // white glare would be invisible on a white card, so tilt only
     <Tilt className="w-full max-w-[340px] rounded-2xl sm:max-w-[360px] lg:max-w-[480px]" max={8} glare={false}>
     <div
-      className="w-full rounded-2xl border-2 bg-white p-3.5 shadow-[0_24px_70px_-20px_rgba(82,125,255,0.5)] sm:p-4 lg:p-5"
+      className="w-full rounded-2xl border-2 bg-white p-3.5 sm:p-4 lg:p-5"
       style={{ borderColor: accent }}
     >
       {header ?? (
@@ -548,7 +548,7 @@ function LeadCard({ lead }: { lead: (typeof LEADS)[number] }) {
   ];
   return (
     <Tilt className="w-full max-w-[400px] rounded-2xl" max={8}>
-      <article className="rounded-2xl bg-[#506DFF] p-5 text-white shadow-[0_24px_60px_-20px_rgba(82,125,255,0.6)] sm:p-6 light:shadow-[0_20px_44px_-22px_rgba(15,23,42,0.4)]">
+      <article className="rounded-2xl bg-[#506DFF] p-5 text-white sm:p-6">
         <header className="flex items-center gap-3">
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-[14px] font-bold text-[#3E63F2]">
             {initials}
