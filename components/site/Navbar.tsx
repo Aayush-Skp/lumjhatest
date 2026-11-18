@@ -7,6 +7,8 @@ import { usePathname } from "next/navigation";
 import SiteSearch from "./SiteSearch";
 
 // Figma nav: Playground · Solutions ▾ · Pricing · Integration · Blogs
+// "Solutions" links to the /solutions overview; hovering it (or its caret) opens
+// a dropdown straight to each product page
 const SOLUTIONS = [
   { label: "AI Chat Agent", href: "/chat-agent", blurb: "Answer every customer question, 24/7" },
   { label: "Site Search", href: "/site-search", blurb: "Help visitors find what they need, faster" },
@@ -15,7 +17,7 @@ const SOLUTIONS = [
 
 const NAV_LINKS = [
   { label: "Playground", href: "/play-area" },
-  { label: "Solutions", children: SOLUTIONS },
+  { label: "Solutions", href: "/solutions", children: SOLUTIONS },
   { label: "Pricing", href: "/pricing" },
   { label: "Integration", href: "/integrations" },
   { label: "Blogs", href: "/blogs" },
@@ -36,8 +38,10 @@ function Caret({ open }: { open: boolean }) {
   );
 }
 
-/** Desktop "Solutions" menu: opens on hover or click, closes on Escape / outside click. */
-function SolutionsMenu({ active }: { active: boolean }) {
+/** Desktop "Solutions": the label is a link to /solutions; hovering opens the
+    dropdown, and the caret button toggles it for keyboard and touch users.
+    Closes on Escape / outside click. */
+function SolutionsMenu({ active, current }: { active: boolean; current: boolean }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
@@ -65,20 +69,28 @@ function SolutionsMenu({ active }: { active: boolean }) {
     closeTimer.current = setTimeout(() => setOpen(false), 120);
   };
 
+  const tone = `transition-colors duration-300 ease-out hover:text-ink ${active || open ? "text-ink" : "text-nav-link"}`;
+
   return (
-    <div ref={ref} className="relative" onMouseEnter={show} onMouseLeave={hide}>
-      <button
-        type="button"
-        aria-expanded={open}
-        aria-controls="solutions-menu"
-        // A mouse click lands after hover already opened the menu, so it only
-        // opens; keyboard activation (detail === 0) toggles.
-        onClick={(e) => setOpen((v) => (e.detail === 0 ? !v : true))}
-        className={`flex items-center gap-1.5 text-[16px] font-medium transition-colors duration-300 ease-out hover:text-ink ${
-          active || open ? "text-ink" : "text-nav-link"
-        }`}
+    <div ref={ref} className="relative flex items-center gap-1.5" onMouseEnter={show} onMouseLeave={hide}>
+      <Link
+        href="/solutions"
+        aria-current={current ? "page" : undefined}
+        onClick={() => setOpen(false)}
+        className={`text-[16px] font-medium ${tone}`}
       >
         Solutions
+      </Link>
+      <button
+        type="button"
+        aria-label="Show solutions"
+        aria-expanded={open}
+        aria-controls="solutions-menu"
+        // a mouse click lands after hover already opened the menu, so it only
+        // opens; keyboard activation (detail === 0) toggles
+        onClick={(e) => setOpen((v) => (e.detail === 0 ? !v : true))}
+        className={`-m-1.5 flex h-6 w-6 items-center justify-center rounded ${tone}`}
+      >
         <Caret open={open} />
       </button>
       <div
@@ -89,18 +101,18 @@ function SolutionsMenu({ active }: { active: boolean }) {
         }`}
       >
         <ul className="rounded-2xl border border-line bg-menu p-2 shadow-[0_24px_60px_-12px_rgba(0,0,0,0.35)]">
-          {SOLUTIONS.map((s) => (
-            <li key={s.href}>
-              <Link
-                href={s.href}
-                onClick={() => setOpen(false)}
-                className="block rounded-xl px-3.5 py-2.5 transition-colors hover:bg-[#5675FF]/[0.08]"
-              >
-                <span className="block text-[14px] font-semibold text-ink">{s.label}</span>
-                <span className="mt-0.5 block text-[13px] text-subtle">{s.blurb}</span>
-              </Link>
-            </li>
-          ))}
+            {SOLUTIONS.map((s) => (
+              <li key={s.href}>
+                <Link
+                  href={s.href}
+                  onClick={() => setOpen(false)}
+                  className="block rounded-xl px-3.5 py-2.5 transition-colors hover:bg-[#5675FF]/[0.08]"
+                >
+                  <span className="block text-[14px] font-semibold text-ink">{s.label}</span>
+                  <span className="mt-0.5 block text-[13px] text-subtle">{s.blurb}</span>
+                </Link>
+              </li>
+            ))}
         </ul>
       </div>
     </div>
@@ -111,8 +123,10 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   // section roots stay active on their sub-pages (/blogs → /blogs/what-is-rag)
-  const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
-  const solutionsActive = SOLUTIONS.some((s) => isActive(s.href));
+  const under = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
+  // "Solutions" also stays lit on the three product pages it leads to
+  const isActive = (href: string) =>
+    under(href) || (href === "/solutions" && SOLUTIONS.some((s) => under(s.href)));
 
   // mobile menu: staggered fade-in, one step per row
   const stagger = (row: number) => ({ transitionDelay: open ? `${100 + row * 60}ms` : "0ms" });
@@ -147,18 +161,18 @@ export default function Navbar() {
         <nav aria-label="Main" className="hidden shrink-0 items-center gap-7 whitespace-nowrap lg:flex xl:gap-[34px]">
           {NAV_LINKS.map((l) =>
             "children" in l ? (
-              <SolutionsMenu key={l.label} active={solutionsActive} />
+              <SolutionsMenu key={l.label} active={isActive(l.href)} current={pathname === l.href} />
             ) : (
-              <Link
-                key={l.label}
-                href={l.href}
-                aria-current={isActive(l.href) ? "page" : undefined}
-                className={`text-[16px] font-medium transition-colors duration-300 ease-out hover:text-ink ${
-                  isActive(l.href) ? "text-ink" : "text-nav-link"
-                }`}
-              >
-                {l.label}
-              </Link>
+            <Link
+              key={l.label}
+              href={l.href}
+              aria-current={pathname === l.href ? "page" : undefined}
+              className={`text-[16px] font-medium transition-colors duration-300 ease-out hover:text-ink ${
+                isActive(l.href) ? "text-ink" : "text-nav-link"
+              }`}
+            >
+              {l.label}
+            </Link>
             ),
           )}
         </nav>
@@ -208,35 +222,40 @@ export default function Navbar() {
               open ? "border-line" : "border-transparent"
             }`}
           >
-            {NAV_LINKS.map((l, i) =>
-              "children" in l ? (
-                <div key={l.label} style={stagger(i)} className={rowAnim}>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-subtle">{l.label}</p>
-                  <div className="mt-2 flex flex-col gap-2.5 border-l border-line pl-3">
+            {NAV_LINKS.map((l, i) => {
+              const link = (
+                <Link
+                  key={l.label}
+                  href={l.href}
+                  onClick={() => setOpen(false)}
+                  aria-current={pathname === l.href ? "page" : undefined}
+                  style={"children" in l ? undefined : stagger(i)}
+                  className={`text-sm font-medium ${isActive(l.href) ? "text-ink" : "text-muted"} ${"children" in l ? "" : rowAnim}`}
+                >
+                  {l.label}
+                </Link>
+              );
+              if (!("children" in l)) return link;
+              // Solutions: the label opens the overview, the indented rows go straight to a product
+              return (
+                <div key={l.label} style={stagger(i)} className={`flex flex-col ${rowAnim}`}>
+                  {link}
+                  <div className="mt-2.5 flex flex-col gap-2.5 border-l border-line pl-3">
                     {l.children.map((s) => (
                       <Link
                         key={s.href}
                         href={s.href}
                         onClick={() => setOpen(false)}
-                        className={`text-sm font-medium ${isActive(s.href) ? "text-ink" : "text-muted"}`}
+                        aria-current={pathname === s.href ? "page" : undefined}
+                        className={`text-sm font-medium ${under(s.href) ? "text-ink" : "text-muted"}`}
                       >
                         {s.label}
                       </Link>
                     ))}
                   </div>
                 </div>
-              ) : (
-                <Link
-                  key={l.label}
-                  href={l.href}
-                  onClick={() => setOpen(false)}
-                  style={stagger(i)}
-                  className={`text-sm font-medium ${isActive(l.href) ? "text-ink" : "text-muted"} ${rowAnim}`}
-                >
-                  {l.label}
-                </Link>
-              ),
-            )}
+              );
+            })}
             <div style={stagger(NAV_LINKS.length)} className={`mt-2 flex items-center gap-4 ${rowAnim}`}>
               <a
                 href={APP_LOGIN}
