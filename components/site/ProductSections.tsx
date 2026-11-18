@@ -239,11 +239,12 @@ function BenefitBento({ id, title, subtitle, items }: { id?: string; title: Reac
   );
 }
 
-/** Numbered FAQ accordion — every answer starts open, as in Figma. */
-export function Faq({ product, items }: { product: string; items: { q: string; a: string }[] }) {
+/** Numbered FAQ accordion — every answer starts open, as in Figma.
+    An answer is usually a sentence, but may carry a link or a short list. */
+export function Faq({ id, product, items }: { id?: string; product: string; items: { q: string; a: ReactNode }[] }) {
   const [open, setOpen] = useState<boolean[]>(() => items.map(() => true));
   return (
-    <section className={`${CONTAINER} ${SECTION_Y}`}>
+    <section id={id} className={`${CONTAINER} ${SECTION_Y}`}>
       <div className="text-center">
         <h2 className={HEADING}>
           Frequently Asked <span className="text-highlight">Questions</span>
@@ -286,9 +287,9 @@ export function Faq({ product, items }: { product: string; items: { q: string; a
                 }`}
               >
                 <div className="overflow-hidden">
-                  <p className="pl-[58px] pt-2 text-base leading-relaxed text-ink md:pl-[65px] md:text-xl md:leading-9">
+                  <div className="pl-[58px] pt-2 text-base leading-relaxed text-ink md:pl-[65px] md:text-xl md:leading-9">
                     {item.a}
-                  </p>
+                  </div>
                 </div>
               </div>
             </li>

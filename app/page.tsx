@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import type { KeyboardEvent, ReactNode, TouchEvent } from "react";
 import Navbar from "@/components/site/Navbar";
@@ -10,6 +11,7 @@ import ChannelReels, { CHANNELS } from "@/components/site/ChannelReels";
 import HeroBackdrop from "@/components/site/HeroBackdrop";
 import EngineFlow from "@/components/site/EngineFlow";
 import Commitments from "@/components/site/Commitments";
+import { Faq } from "@/components/site/ProductSections";
 import SectionHeader, { Accent, HERO_BODY, HERO_TITLE, SECTION_HEAD_GAP, SECTION_Y } from "@/components/site/SectionHeader";
 import BlueButton from "@/components/ui/BlueButton";
 import Tilt from "@/components/ui/Tilt";
@@ -574,6 +576,76 @@ function LeadCard({ lead }: { lead: (typeof LEADS)[number] }) {
   );
 }
 
+/* ---------- FAQ ---------- */
+
+const FAQ_LINK = "font-semibold text-highlight underline-offset-4 hover:underline";
+
+const FAQS: { q: string; a: ReactNode }[] = [
+  {
+    q: "What is Lumjha AI?",
+    a: "Lumjha is a no-code AI platform that helps businesses answer questions, capture leads, and make information easier to find.",
+  },
+  {
+    q: "What products does Lumjha offer?",
+    a: "Lumjha offers three products: AI Chat Agent, Site Search, and Lumjha Vault.",
+  },
+  {
+    q: "How does the AI Chat Agent work?",
+    a: "It uses your website content and uploaded documents to answer customer questions around the clock.",
+  },
+  {
+    q: "Do I need coding skills to use Lumjha?",
+    a: "No. You can connect your website, upload documents, and configure your AI agent without coding.",
+  },
+  {
+    q: "Which channels does Lumjha support?",
+    a: "Lumjha supports websites and selected messaging platforms, including WhatsApp, Instagram, Messenger, Telegram, and more.",
+  },
+  {
+    q: "What content can I add to Lumjha?",
+    a: "You can connect your website and upload business documents to build your knowledge base.",
+  },
+  {
+    q: "Can Lumjha capture leads and book appointments?",
+    a: "Yes. The AI Chat Agent can collect customer details and help book appointments through a connected calendar.",
+  },
+  {
+    q: "What makes the three products different?",
+    a: (
+      <ul className="flex flex-col gap-1 md:gap-0">
+        {[
+          { name: "Chat Agent", href: "/chat-agent", body: "Answers questions and captures leads." },
+          { name: "Site Search", href: "/site-search", body: "Helps visitors find website information." },
+          { name: "Lumjha Vault", href: "/lumjha-vault", body: "Provides exact quotations with source references." },
+        ].map((p) => (
+          <li key={p.href}>
+            <Link href={p.href} className={FAQ_LINK}>
+              {p.name}
+            </Link>
+            : {p.body}
+          </li>
+        ))}
+      </ul>
+    ),
+  },
+  {
+    q: "Is my business data private?",
+    a: (
+      <>
+        Lumjha&apos;s privacy commitments explain how business content and customer conversations are handled. See our{" "}
+        <Link href="/privacy" className={FAQ_LINK}>
+          Privacy Policy
+        </Link>{" "}
+        for details.
+      </>
+    ),
+  },
+  {
+    q: "Can I try Lumjha for free?",
+    a: "Yes. Start with a 14-day trial and explore Lumjha before choosing a plan.",
+  },
+];
+
 /* ---------- page ---------- */
 
 export default function HomePage() {
@@ -652,6 +724,8 @@ export default function HomePage() {
 
         {/* COMMITMENTS */}
         <Commitments />
+
+        <Faq id="faq" product="Lumjha AI" items={FAQS} />
 
         <CtaPanel />
 
