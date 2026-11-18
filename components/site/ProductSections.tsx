@@ -250,9 +250,19 @@ export function Faq({ id, product, items }: { id?: string; product: string; item
       </div>
       <ul className={`${CONTENT} border-b border-[#DBE3ED] ${SECTION_HEAD_GAP}`}>
         {items.map((item, i) => (
-          <li key={item.q} className="border-t border-[#DBE3ED] pb-8">
+          <li key={item.q} className="group relative isolate border-t border-[#DBE3ED] pb-8">
+            {/* hover: a faint blue wash fades in under the row and a soft sheen
+                sweeps across it once (the sweep snaps back unseen on leave).
+                No box edge: it fills the row between the divider lines and
+                feathers out to nothing on the left and right. */}
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-x-0 inset-y-0 -z-10 overflow-hidden bg-[#527DFF]/[0.06] opacity-0 transition-opacity duration-500 [mask-image:linear-gradient(to_right,transparent,#000_18%,#000_82%,transparent)] group-hover:opacity-100"
+            >
+              <span className="absolute inset-y-0 -left-1/3 w-1/3 -skew-x-12 bg-linear-to-r from-transparent via-[#7C9BFF]/[0.10] to-transparent group-hover:translate-x-[420%] group-hover:transition-transform group-hover:duration-1000 group-hover:ease-out motion-reduce:hidden" />
+            </span>
             <h3 className="flex items-center gap-4 pt-8 md:gap-[23px]">
-              <span className="flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-lg bg-[#5675FF] text-[15px] font-bold text-white">
+              <span className="flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-lg bg-[#5675FF] text-[15px] font-bold text-white transition-shadow duration-500 group-hover:shadow-[0_0_0_4px_rgb(86_117_255/0.14),0_6px_18px_-6px_rgb(86_117_255/0.7)]">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <span className="flex-1 text-[17px] font-semibold text-ink md:text-xl">{item.q}</span>
