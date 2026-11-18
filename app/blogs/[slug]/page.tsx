@@ -96,7 +96,7 @@ export default async function BlogPostPage({ params }: Props) {
             </Link>
           </div>
           <header className="relative mx-auto max-w-[1100px] px-4 pt-6 text-center sm:px-6 md:pt-8">
-            <h1 className="font-heading text-[clamp(1.875rem,3vw+1rem,3rem)] font-medium leading-[1.2] tracking-[-0.015em] text-balance text-headline">
+            <h1 className="font-heading text-[clamp(1.875rem,3vw+1rem,3rem)] font-semibold leading-[1.2] tracking-[-0.015em] text-balance text-headline">
               {post.title}
             </h1>
             <p className="mx-auto mt-5 max-w-[56rem] text-[16px] leading-[1.7] text-pretty text-muted md:text-lg">{post.excerpt}</p>

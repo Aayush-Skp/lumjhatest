@@ -458,7 +458,7 @@ function PlatformTabs() {
                     : "translate-y-4 opacity-0 duration-300"
                   }`}
               >
-                <h3 className="font-heading text-[24px] font-medium leading-[1.3] tracking-[-0.012em] sm:text-3xl lg:text-[36px]">
+                <h3 className="font-heading text-[24px] font-semibold leading-[1.3] tracking-[-0.012em] sm:text-3xl lg:text-[36px]">
                   {tab.heading}
                 </h3>
                 <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-muted sm:mt-5 md:mx-0 md:text-base lg:mt-6 lg:text-lg">
