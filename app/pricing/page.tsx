@@ -27,8 +27,8 @@ const CARD =
   "rounded-2xl border border-[#1F3156] bg-[#0D1934] light:border-[#D7E3F5] light:bg-white light:shadow-[0_18px_40px_-28px_rgba(15,23,42,0.25)]";
 /* recessed panel inside a card (mock UIs) */
 const INSET = "rounded-xl border border-[#2A3F6B] bg-[#081229] light:border-[#D7E3F5] light:bg-[#F5F8FE]";
-const EYEBROW = "font-mono text-[11px] font-medium uppercase tracking-[0.04em] text-[#6E8BFF] light:text-[#3E63F2]";
-const MOCK_LABEL = "font-mono text-[9.5px] uppercase tracking-[0.06em] text-subtle";
+const EYEBROW = "text-[12px] font-semibold text-[#6E8BFF] light:text-[#3E63F2]";
+const MOCK_LABEL = "text-[10.5px] font-medium text-subtle";
 
 /* ---------- what counts as a conversation ---------- */
 
@@ -279,7 +279,7 @@ export default async function PricingPage() {
               <ul className="mt-4 space-y-3 text-[13px] leading-snug">
                 {EXAMPLE_CHAT.map((line) =>
                   line.from === "gap" ? (
-                    <li key={line.text} className="text-center font-mono text-[10.5px] text-subtle">
+                    <li key={line.text} className="text-center text-[11px] text-subtle">
                       {line.text}
                     </li>
                   ) : (
@@ -364,11 +364,11 @@ export default async function PricingPage() {
                   ))}
                 </div>
                 <p className="mt-3 text-ink">“What’s the return window for opened items?”</p>
-                <blockquote className="mt-2.5 border-l-2 border-[#F2C94C] bg-[#2A2A1F] px-2.5 py-2 italic text-[#F2D27A] light:bg-[#FFF8E1] light:text-[#7A5B00]">
+                <blockquote className="mt-2.5 border-l-2 border-[#F2C94C] bg-[#2A2A1F] px-2.5 py-2 text-[#F2D27A] light:bg-[#FFF8E1] light:text-[#7A5B00]">
                   “Opened items may be returned within 14 days of delivery for store credit.”
                 </blockquote>
-                <p className="mt-2.5 font-mono text-[9.5px] uppercase text-[#6E97FF] light:text-[#3E63F2]">
-                  Source: Returns-Policy-2026.pdf · §3.2
+                <p className="mt-2.5 text-[10.5px] font-medium text-[#6E97FF] light:text-[#3E63F2]">
+                  Source: Returns-Policy-2026.pdf · Section 3.2
                 </p>
               </div>
               <div className="mt-auto pt-5">
@@ -392,7 +392,7 @@ export default async function PricingPage() {
                   {TODAYS_LEADS.map((l) => (
                     <li key={l.who} className="flex items-center justify-between gap-3 py-2 text-ink">
                       <span className="min-w-0">{l.who}</span>
-                      <span className="shrink-0 rounded bg-[#16264D] px-1.5 py-0.5 font-mono text-[9px] text-[#7FA3FF] light:bg-[#EEF3FF] light:text-[#3E63F2]">
+                      <span className="shrink-0 rounded bg-[#16264D] px-1.5 py-0.5 text-[10px] font-medium text-[#7FA3FF] light:bg-[#EEF3FF] light:text-[#3E63F2]">
                         {l.channel}
                       </span>
                     </li>
@@ -423,7 +423,7 @@ export default async function PricingPage() {
                   {WEEKLY_GAPS.map((g) => (
                     <li key={g.q} className="grid grid-cols-[1fr_auto_auto] items-center gap-3 py-1.5">
                       <span className="min-w-0 text-ink">{g.q}</span>
-                      <span className="font-mono text-[10px] text-[#F2C94C] light:text-[#B7791F]">{g.where}</span>
+                      <span className="text-[10.5px] font-medium text-[#F2C94C] light:text-[#B7791F]">{g.where}</span>
                       <span className="rounded-full bg-[#527DFF] px-2.5 py-1 text-[10px] font-semibold text-white">Add answer</span>
                     </li>
                   ))}
@@ -530,7 +530,7 @@ export default async function PricingPage() {
               </p>
               <ul className="mt-5 flex flex-wrap justify-center gap-2 lg:justify-start">
                 {DEV_CHIPS.map((c) => (
-                  <li key={c} className="rounded-md border border-[#2A3F6B] bg-[#0D1934] px-2 py-1 font-mono text-[10.5px] text-ink light:border-[#C9D8FF] light:bg-white">
+                  <li key={c} className="rounded-md border border-[#2A3F6B] bg-[#0D1934] px-2 py-1 text-[11.5px] font-medium text-ink light:border-[#C9D8FF] light:bg-white">
                     {c}
                   </li>
                 ))}
