@@ -45,7 +45,7 @@ export const SOURCES: { title: string; body: string; icon: Icon }[] = [
   { title: "Your policies", body: "Refunds, warranties, HR, coverage", icon: ShieldIcon },
 ];
 
-export const ENGINE_CAPABILITIES = ["Chatbot", "Site Search", "Lumjha Vault", "Leads"];
+export const ENGINE_CAPABILITIES = ["AI Chat Agent", "Site Search", "Lumjha Vault", "Leads"];
 
 export const DEPLOY_CHANNELS: { name: string; body: string; icon: Icon }[] = [
   { name: "Website chat", body: "Chat widget", icon: WebsiteIcon },

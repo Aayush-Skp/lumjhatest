@@ -233,7 +233,7 @@ const PLATFORM_TABS: {
 }[] = [
     {
       id: "chatbot",
-      label: "Chat Bot",
+      label: "AI Chat Agent",
     card: <ChatCard question="What services do you offer?" status="Gathering information" />,
       heading: (
         <>
