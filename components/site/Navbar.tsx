@@ -191,7 +191,16 @@ export default function Navbar() {
           </a>
         </div>
 
-        <div className="flex items-center gap-2 lg:hidden">
+        {/* mobile: the CTA sits in the bar, just before the menu toggle */}
+        <div className="flex shrink-0 items-center gap-2 lg:hidden">
+        <a
+          href={APP_LOGIN}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex h-9 items-center whitespace-nowrap rounded-full bg-[#5675FF] px-4 text-sm font-semibold text-white transition hover:bg-[#3E63F2]"
+        >
+          Login/SignUp
+        </a>
         <button
           className="relative flex h-9 w-9 items-center justify-center"
           onClick={() => setOpen((v) => !v)}
@@ -257,14 +266,6 @@ export default function Navbar() {
                 </div>
               );
             })}
-            <div style={stagger(NAV_LINKS.length)} className={`mt-2 flex items-center gap-4 ${rowAnim}`}>
-              <a
-                href={APP_LOGIN}
-                className="flex items-center rounded-full bg-[#5675FF] px-4 py-1.5 text-sm font-semibold text-white"
-              >
-                Login/SignUp
-              </a>
-            </div>
           </nav>
         </div>
       </div>

@@ -129,7 +129,9 @@ export default function EngineGlobe({
   useEffect(() => {
     const size = px;
     const canvas = canvasRef.current;
-    if (!canvas || !size) return;
+    // a fluid wrapper can measure a few px mid-layout; R = size/2 - 6 would go
+    // negative and createRadialGradient throws, so wait for a real size
+    if (!canvas || size < 24) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
