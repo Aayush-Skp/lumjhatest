@@ -80,7 +80,7 @@ const WELL_HOVER = "transition-colors duration-[350ms] ease-out group-hover:bg-[
 const FLOW_PACE = [1, 1.17, 0.9, 1.31];
 /* seconds per 20px of dash travel: ~12px/s, brisk enough to read as flowing */
 const FLOW_BASE = 1.6;
-const LABEL = "font-mono text-[10.5px] font-medium uppercase tracking-[0.08em] text-subtle";
+const LABEL = "font-sans text-[11px] font-semibold uppercase tracking-[0.08em] text-subtle";
 
 /** Curves from each left point to each right point (y in %), drawn edge to edge. */
 function Connector({ left, right }: { left: number[]; right: number[] }) {
